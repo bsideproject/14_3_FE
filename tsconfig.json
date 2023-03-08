@@ -18,7 +18,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",                     //base 경로 src로 설정. @/~ : src/~
+    "paths": {
+      "@components/*": ["components/*"],  //@components 로 사용 가능
+      "@pages/*": ["pages/*"],            //@pages 로 사용 가능
+      "@utils/*": ["utils/*"],            //@utils 로 사용 가능
+      "@hooks/*": ["hooks/*"],          //@hooks  로 사용 가능
+      "@services/*": ["services/*"],  //@services   로 사용 가능
+      "@store/*": ["store/*"],          //@store  로 사용 가능
+    }
   },
   "include": [
     "src"
