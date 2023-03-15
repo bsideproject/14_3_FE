@@ -111,6 +111,7 @@ const Register: React.FC = () => {
       // navigate(`/login`);
       // const result = await axios.post('/api/register', {email,password,nickName,birthDt,gender})
       insertId({
+        usr_no: registerInfo.length,
         email,
         nickName,
         password,
