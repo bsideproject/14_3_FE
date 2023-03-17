@@ -1,12 +1,13 @@
-/***
- * @desc 로그인 페이지
- * @작성자 김상훈
- * @date 2023.03.08. 수요일
- */
 import React, { useState } from 'react';
 import useAuthStore from '@store/modules/Auth';
 import { useNavigate } from 'react-router-dom';
-
+/**
+ * @설명 로그인 페이지
+ * @작성자 김상훈
+ * @일자 2023.03.08. 수요일
+ * @내용 비밀번호 확인 후 이동
+ * @TODO backend-connection
+ */
 const Login:React.FC = () =>{
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
