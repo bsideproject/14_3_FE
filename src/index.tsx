@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "pages/auth/login";
+import Login from "pages/auth/Login";
 import Register from "pages/auth/Register";
+import Mypage from "pages/mypage/Mypage";
+import PasswordCheck from "pages/mypage/PasswordCheck";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,6 +17,8 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/password-check" element={<PasswordCheck />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
