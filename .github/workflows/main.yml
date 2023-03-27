@@ -1,0 +1,55 @@
+
+name: React Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: checkout master
+      uses: actions/checkout@v3
+      
+    - name: cache node modules
+      uses: actions/cache@v2.1.8
+      with:
+        path: node_modules
+        key: ${{runner.OS}}-build-${{hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-build-
+          ${{ runner.OS }}
+        
+    - name: Install Dependencies
+      run: npm install
+      
+    - name: Build
+      run: npm run build
+    
+    #grant
+#     - name: Run chmod to make gradlew executable
+#       run: chmod +x ./gradlew
+      
+      
+#     #Deploy to server 2
+#     - name: Deploy to server
+#       env:
+#           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#           HOST: ${{ secrets.SERVER_HOST }}
+#           USERNAME: ${{ secrets.SERVER_USERNAME }}
+#           PORT: ${{ secrets.SERVER_PORT }}
+          #password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
+#       run: |
+#           echo "$PRIVATE_KEY" > private_key.pem
+#           chmod 400 private_key.pem
+#           scp -i private_key.pem -P $PORT -o StrictHostKeyChecking=no -r build/libs/*.jar $USERNAME@$HOST:/var/www/html/test/
+#           ssh -i private_key.pem -p $PORT -o StrictHostKeyChecking=no $USERNAME@$HOST 'bash -s' <<- EOF
+#             pgrep java | xargs kill -9 || true
+#             nohup java -jar /var/www/html/test/*.jar > /dev/null 2>&1 & disown
+#             exit
+#           EOF
+#           rm -f private_key.pem
