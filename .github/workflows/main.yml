@@ -60,7 +60,7 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 400 private_key.pem
-        scp -i private_key.pem -P $PORT -o StrictHostKeyChecking=no -r build/ $USERNAME@$HOST:/var/www/html/fe-test/
+        scp -i private_key.pem -P $PORT -o StrictHostKeyChecking=no -r $USERNAME@$HOST:/var/www/html/fe-test/
         ssh -i private_key.pem -p $PORT -o StrictHostKeyChecking=no $USERNAME@$HOST 'bash -s' <<- EOF
         npm install
         rm -f private_key.pem
