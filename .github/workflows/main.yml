@@ -55,10 +55,12 @@ jobs:
         server: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
+        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
         local_path: ./build/
         remote_path: /var/www/html/fe-test/
         exclude: ".git*"
 
     - name: Start React App
       run: |
-        ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /var/www/html/fe-test/ && npm install && npm start"
+        ssh -p ${{ secrets.SERVER_PORT }} -i ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /var/www/html/fe-test/ && npm install && npm start"
