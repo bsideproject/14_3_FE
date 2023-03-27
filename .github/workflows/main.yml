@@ -27,29 +27,38 @@ jobs:
     - name: Install Dependencies
       run: npm install
       
+      #Build : ./build 디렉토리에 폴더 생성
     - name: Build
       run: CI=false npm run build
-    
-    #grant
-#     - name: Run chmod to make gradlew executable
-#       run: chmod +x ./gradlew
       
-      
-#     #Deploy to server 2
+    #Deploy to server 
 #     - name: Deploy to server
 #       env:
 #           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 #           HOST: ${{ secrets.SERVER_HOST }}
 #           USERNAME: ${{ secrets.SERVER_USERNAME }}
 #           PORT: ${{ secrets.SERVER_PORT }}
-          #password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
+#           password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
 #       run: |
 #           echo "$PRIVATE_KEY" > private_key.pem
 #           chmod 400 private_key.pem
-#           scp -i private_key.pem -P $PORT -o StrictHostKeyChecking=no -r build/libs/*.jar $USERNAME@$HOST:/var/www/html/test/
+#           scp -i private_key.pem -P $PORT -o StrictHostKeyChecking=no -r build/ $USERNAME@$HOST:/var/www/html/test/
 #           ssh -i private_key.pem -p $PORT -o StrictHostKeyChecking=no $USERNAME@$HOST 'bash -s' <<- EOF
-#             pgrep java | xargs kill -9 || true
-#             nohup java -jar /var/www/html/test/*.jar > /dev/null 2>&1 & disown
+#             nohup java -jar /var/www/html/test > /dev/null 2>&1 & disown
 #             exit
 #           EOF
 #           rm -f private_key.pem
+          
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      with:
+        server: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
+        local_path: ./build/
+        remote_path: /var/www/html/fe-test/
+        exclude: ".git*"
+
+    - name: Start React App
+      run: |
+        ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd /var/www/html/fe-test/ && npm install && npm start"
