@@ -106,7 +106,7 @@ const Login:React.FC = () =>{
           <button type="submit">로그인</button><br/>
 
           <button type="button" onClick={kakaoLogin}>Kakao Login Btn</button><br />
-          <div><Link to="/lostInfo">아이디/비밀번호 찾기</Link></div>
+          <div><Link to="/lost-info">아이디/비밀번호 찾기</Link></div>
           <button type="button">회원가입</button><br/>
         </form>
       </div>
