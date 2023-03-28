@@ -10,6 +10,7 @@ function App() {
       <Link to="/register">Register</Link><br/>
       <Link to="/mypage">mypage</Link><br/>
       <Link to="/password-check">password-check</Link><br/>
+      <Link to="/lost-info">lostinfo</Link><br/>
     </div>
   );
 }
