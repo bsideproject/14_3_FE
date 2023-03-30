@@ -1,5 +1,14 @@
 import { createGlobalStyle } from "styled-components";
 
+/**
+ * @설명 전역 스타일
+ * @작성자 김상훈
+ * @생성일자 2023.03.30.
+ * ---------------------------------------- 
+ *  수정일자      수정자      내용
+ * ---------------------------------------- (공백3회)
+ * 2023.03.30.   김상훈   container 전역 추가
+ */
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -43,6 +52,14 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+/* custom 내용입니다 */
+.container{
+	width: 100%;
+	max-width: 420px;
+	margin: 0 auto;
+	padding: 18px 16px; /*디자인에서 지정한 고정 padding입니다*/
 }
 `;
 
