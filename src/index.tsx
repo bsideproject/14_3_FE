@@ -7,6 +7,7 @@ import Register from "pages/auth/Register";
 import Mypage from "pages/mypage/Mypage";
 import PasswordCheck from "pages/mypage/PasswordCheck";
 import LostInfo from "pages/auth/LostInfo";
+import GlobalStyle from 'assets/GlobalStyles'
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,6 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <GlobalStyle></GlobalStyle>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
