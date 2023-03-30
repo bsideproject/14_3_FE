@@ -1,8 +1,7 @@
-import testRegisterStore from "store/modules/TestRegister";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import fetch from "utils/fetch";
 const Register: React.FC = () => {
-  const { registerInfo, insertId } = testRegisterStore((state) => state);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -14,6 +13,11 @@ const Register: React.FC = () => {
   const [passwordLengthChk, setpasswordLengthChk] = useState<boolean>(true);
   const [nickNameLengthChk, setNickNameLengthChk] = useState<boolean>(true);
   const [nickNameExistChk, setNickNameExistChk] = useState<boolean>(true); //* 닉네임 중복체크 미개발
+  const [today, setToday] = useState<string>("");
+
+  useEffect(() => {
+    setToday(getToday());
+  }, []);
 
   function isValidEmail(email: string) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -63,6 +67,18 @@ const Register: React.FC = () => {
   const handleBirthDateUpdate = (e: any) => {
     setBirthDt(e.target.value);
   };
+  const handleBirthDateBlur = (e: any) => {
+    const inputDate = new Date(e.target.value);
+    const minDate = new Date("1900-01-01");
+    const maxDate = new Date(today);
+    if (inputDate < minDate) {
+      setBirthDt("1900-01-01");
+      alert("입력할 수 없습니다.");
+    } else if (inputDate > maxDate) {
+      setBirthDt(today);
+      alert("입력할 수 없습니다.");
+    }
+  };
 
   const handleEmailExistCheck = async (): Promise<void> => {
     if (!email) {
@@ -78,51 +94,60 @@ const Register: React.FC = () => {
     setGender(e.target.value === "M" ? true : false);
   };
   const handleRegister = async (e: any): Promise<void> => {
-    e.preventDefault();
-    if (!email) {
-      alert("이메일을 입력하세요.");
-      document.getElementById("email")?.focus();
-    } else if (!password) {
-      alert("비밀번호를 입력하세요.");
-      document.getElementById("password")?.focus();
-    } else if (!nickName) {
-      alert("닉네임을 입력하세요.");
-      document.getElementById("nickName")?.focus();
-    } else if (!birthDt) {
-      alert("생년월일을 입력하세요.");
-      document.getElementById("birthDt")?.focus();
-    } else if (!emailFormChk) {
-      alert("이메일형식이 올바르지 않습니다.");
-      document.getElementById("email")?.focus();
-    } else if (!passwordLengthChk) {
-      alert("비밀번호 길이가 짧습니다(4글자이상).");
-      document.getElementById("password")?.focus();
-    } else if (!nickNameLengthChk) {
-      alert("닉네임 길이가 짧습니다(4글자이상)");
-      document.getElementById("nickName")?.focus();
-    } else if (!emailExistChk) {
-      alert("중복된 이메일입니다.");
-      document.getElementById("email")?.focus();
-    } else if (!nickNameExistChk) {
-      alert("중복된 닉네임입니다.");
-      document.getElementById("email")?.focus();
-    } else {
-      alert("회원가입이 되었습니다.");
-      // navigate(`/login`);
-      // const result = await axios.post('/api/register', {email,password,nickName,birthDt,gender})
-      insertId({
-        usr_no: registerInfo.length,
-        email,
-        nickName,
-        password,
-        gender,
-        birthDt,
-      });
+    try {
+      e.preventDefault();
+
+      if (!email) {
+        alert("이메일을 입력하세요.");
+        document.getElementById("email")?.focus();
+      } else if (!password) {
+        alert("비밀번호를 입력하세요.");
+        document.getElementById("password")?.focus();
+      } else if (!nickName) {
+        alert("닉네임을 입력하세요.");
+        document.getElementById("nickName")?.focus();
+      } else if (!birthDt) {
+        alert("생년월일을 입력하세요.");
+        document.getElementById("birthDt")?.focus();
+      } else if (!emailFormChk) {
+        alert("이메일형식이 올바르지 않습니다.");
+        document.getElementById("email")?.focus();
+      } else if (!passwordLengthChk) {
+        alert("비밀번호 길이가 짧습니다(4글자이상).");
+        document.getElementById("password")?.focus();
+      } else if (!nickNameLengthChk) {
+        alert("닉네임 길이가 짧습니다(4글자이상)");
+        document.getElementById("nickName")?.focus();
+      } else if (!emailExistChk) {
+        alert("중복된 이메일입니다.");
+        document.getElementById("email")?.focus();
+      } else if (!nickNameExistChk) {
+        alert("중복된 닉네임입니다.");
+        document.getElementById("email")?.focus();
+      } else {
+        await fetch
+          .post("/user/signUp", {
+            eml: email,
+            password,
+            usrNm: nickName,
+            brdt: birthDt,
+            gndrClsCd: gender ? "M" : "F",
+          })
+          .then((e: any) => {
+            if (e.status === 200) {
+              alert("회원가입이 완료 되었습니다.");
+              navigate("/login");
+            }
+          })
+          .catch((e: any) => {
+            console.log(e);
+          });
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
-  const handleCheck = () => {
-    console.log(registerInfo);
-  };
+
   return (
     <>
       <div>
@@ -168,8 +193,10 @@ const Register: React.FC = () => {
             placeholder="생년월일 입력"
             id="birthDt"
             onChange={handleBirthDateUpdate}
+            onBlur={handleBirthDateBlur}
             value={birthDt}
-            max={getToday()}
+            max={today}
+            min={"1900-01-01"}
           />
           <br />
           남자 :
@@ -190,9 +217,6 @@ const Register: React.FC = () => {
           />
           <br />
           <button type="submit">완료</button>
-          <button type="button" onClick={handleCheck}>
-            만들어진 회원 체크
-          </button>
         </form>
       </div>
     </>
