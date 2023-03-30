@@ -10,7 +10,7 @@ import { createGlobalStyle } from "styled-components";
  * 2023.03.30.   김상훈   container 전역 추가
  */
 const GlobalStyle = createGlobalStyle`
-html, body, div, span, applet, object, iframe,
+html, body, #root, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -29,6 +29,10 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	vertical-align: baseline;
+}
+
+input {
+  box-sizing : border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -58,8 +62,20 @@ table {
 .container{
 	width: 100%;
 	max-width: 420px;
+	min-height: 100vh;
 	margin: 0 auto;
-	padding: 18px 16px; /*디자인에서 지정한 고정 padding입니다*/
+	padding: 0 16px; /*디자인에서 지정한 고정 padding입니다*/
+	background-color: #FAF9F6;
+}
+:root {
+	--border-color-1: #E9E7E2; /* input border-color */
+	--main-text-color-1: #121212; /* 메인 텍스트색*/
+	--button-bg-color-1: #3D3938; /*로그인버튼배경색*/
+}
+html, body, #root {
+	max-height: 100vh;
+	background-color: #FAF9F6;
+
 }
 `;
 
