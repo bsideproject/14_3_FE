@@ -4,6 +4,7 @@ const FindEmail = () => {
   const [findName, setFindName] = useState<string>('')
   const [findNameVerify, setFindNameVerify] = useState<boolean>(false)
 
+
   const handleFindName = ():void => { //keyup : 유효성
     if (findNameVerify === false) {
       if (findName.length > 4) {
@@ -13,6 +14,7 @@ const FindEmail = () => {
       if (findName.length < 4) {
         setFindNameVerify(false)
       } 
+
     }
   }
   const submitForm = (e:any):void => { //submit
