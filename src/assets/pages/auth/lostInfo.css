@@ -1,0 +1,26 @@
+.btn {
+  width: 100%;
+  margin-top: 3px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.reset-password-btn{
+  padding: 14px 110px;
+  background-color: var(--button-bg-color-1);
+  color: white;
+}
+.goto-login-btn{
+  margin-top: 5px;
+  background-color: #FFFFFF;
+  padding: 14px 124.5px;
+  color: #3D3938;
+  border: 1px solid #3D3938;
+  font-weight: 700;
+}
+.find-id-caption-text{
+  color: var(--caption-text-color-1);
+  font-size: 12px; 
+  margin-bottom: 8px;
+  line-height: 16px;
+}
