@@ -30,6 +30,9 @@ time, mark, audio, video {
 	font-size: 100%;
 	vertical-align: baseline;
 }
+button{
+	font-family: 'NanumSquareNeo-Variable';
+}
 
 input {
   box-sizing : border-box;
@@ -71,11 +74,11 @@ table {
 	--border-color-1: #E9E7E2; /* input border-color */
 	--main-text-color-1: #121212; /* 메인 텍스트색*/
 	--button-bg-color-1: #3D3938; /*로그인버튼배경색*/
+	--caption-text-color-1: #7A7670 /* 캡션 글자 색 */
 }
 html, body, #root {
 	max-height: 100vh;
 	background-color: #FAF9F6;
-
 }
 `;
 
