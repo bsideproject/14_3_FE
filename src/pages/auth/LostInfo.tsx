@@ -1,6 +1,7 @@
 import Header from "components/auth/Header"
 import { useState } from "react"
 import 'assets/pages/auth/lostInfo.css'
+import AlertText from "components/AlertText";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LostInfo = () => {
@@ -46,6 +47,7 @@ const LostInfo = () => {
           </div>
         </form>
       </div>
+      <AlertText text={"이메일로 임시 비밀번호가 전송되었습니다!"} duration={0} bgColor={""} textColor={""} />
     </>
   )
 }
