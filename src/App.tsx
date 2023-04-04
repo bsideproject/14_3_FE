@@ -9,6 +9,7 @@ function App() {
       <Link to="/login">Login</Link><br/>
       <Link to="/register">Register</Link><br/>
       <Link to="/mypage">mypage</Link><br/>
+      <Link to="/mypage-category">mypage-category</Link><br/>
       <Link to="/password-check">password-check</Link><br/>
       <Link to="/lost-info">lostinfo</Link><br/>
     </div>
