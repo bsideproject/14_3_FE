@@ -20,7 +20,7 @@ const Login:React.FC = () =>{
   const [passwordVerify, setPasswordVerify] = useState<boolean>(false)
   const [rememberEmail, setRememberEmail] = useState<boolean>(true) //id저장여부 확인
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
-  const [invalid, setInvalid] = useState<boolean>(false) //아이디비밀번호 일치x
+  const [invalid, setInvalid] = useState<boolean>(true) //아이디비밀번호 일치x
 
   useEffect(()=>{
     if (localStorage.getItem('bside-remember-login')) { //로컬스토리지에서 email 가져오기
@@ -111,7 +111,7 @@ const Login:React.FC = () =>{
           </div>
           <div className='checkbox-area'>
             <input type="checkbox" className='save-id-check-box' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
-            <label htmlFor="rememberId">이메일 주소 기억하기</label>
+            <label htmlFor="rememberId" className='save-id-label'>이메일 주소 기억하기</label>
           </div>
           <div>
             <label htmlFor="password" className='login-label-text'>비밀번호</label>
