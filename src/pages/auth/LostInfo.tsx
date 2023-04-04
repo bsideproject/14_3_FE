@@ -1,7 +1,7 @@
 import Header from "components/auth/Header"
 import { useState } from "react"
 import 'assets/pages/auth/lostInfo.css'
-import AlertText from "components/AlertText";
+import ToastPopup from "components/ToastPopup";
 import { useNavigate } from "react-router-dom";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -10,9 +10,21 @@ const LostInfo = () => {
   const [email, setEmail] = useState<string>('')
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
   const [emailVerify, setEmailVerify] = useState<boolean>(false)
+  const [toastAlert, setToastAlert] = useState<boolean>(false)
 
+  // 이메일로 비밀번호 초기화 보내기 
   const submitEmail = (e:any):void => {
     e.preventDefault()
+    if (emailVerify === true && emailFormChk === true) {
+      // fetch  axios~~~
+      const rst = true
+      if (rst === true) { //결과
+        setToastAlert(true)
+        updateToastPopup()
+      } else { //이메일이 존재하지 않을 때
+        alert('존재하지 않는 이메일입니다. 다시 확인해주세요')
+      }
+    }
   }
  const handleEmailBlur = () => { //focusout 
     setEmailFormChk(emailRegex.test(email)) //이메일형식체크
@@ -30,6 +42,14 @@ const LostInfo = () => {
   const goToLogin = () => {
     navigate('/login')
   }
+
+  //toastpopup 3초 제어
+  const updateToastPopup = () => {
+    setTimeout(() => {
+      setToastAlert(false)
+    }, 3000);
+  }
+
   return (
     <>
       <div className="container">
@@ -38,11 +58,11 @@ const LostInfo = () => {
         <form onSubmit={submitEmail}>
           <div className='inputArea'>
             <label htmlFor="email" className='login-label-text text-color'>이메일</label>
-            <input type="email" className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+            <input type="email" autoComplete="true"  className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
           </div>
           <div className='login-btn-area'>
             <button type="submit" className='btn reset-password-btn'>비밀번호 초기화하기</button>
-            <button type="submit" className='btn goto-login-btn' onClick={()=>goToLogin()}>로그인 하러가기</button>
+            <button type="button" className='btn goto-login-btn' onClick={()=>goToLogin()}>로그인 하러가기</button>
           </div>
           <div>
             <p className="find-id-caption-text">
@@ -54,7 +74,12 @@ const LostInfo = () => {
           </div>
         </form>
       </div>
-      <AlertText text={"이메일로 임시 비밀번호가 전송되었습니다!"} duration={0} bgColor={""} textColor={""} />
+      {
+        toastAlert === true ? (
+          <ToastPopup text={"이메일로 임시 비밀번호가 전송되었습니다!"} bgColor={"#4D99DE"} textColor={"#FFFFFF"} />
+        ) : ''
+      }
+      
     </>
   )
 }
