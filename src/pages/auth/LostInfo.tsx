@@ -2,9 +2,11 @@ import Header from "components/auth/Header"
 import { useState } from "react"
 import 'assets/pages/auth/lostInfo.css'
 import AlertText from "components/AlertText";
+import { useNavigate } from "react-router-dom";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LostInfo = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>('')
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
   const [emailVerify, setEmailVerify] = useState<boolean>(false)
@@ -23,10 +25,15 @@ const LostInfo = () => {
       setEmailVerify(true)
     }
   }
+
+  // 로그인 페이지로 이동
+  const goToLogin = () => {
+    navigate('/login')
+  }
   return (
     <>
       <div className="container">
-        <Header />
+        <Header title="비밀번호 찾기" />
         <h1 className='startGomingText text-color'>비밀번호 찾기</h1>
         <form onSubmit={submitEmail}>
           <div className='inputArea'>
@@ -35,7 +42,7 @@ const LostInfo = () => {
           </div>
           <div className='login-btn-area'>
             <button type="submit" className='btn reset-password-btn'>비밀번호 초기화하기</button>
-            <button type="submit" className='btn goto-login-btn'>로그인 하러가기</button>
+            <button type="submit" className='btn goto-login-btn' onClick={()=>goToLogin()}>로그인 하러가기</button>
           </div>
           <div>
             <p className="find-id-caption-text">
