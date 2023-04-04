@@ -1,6 +1,7 @@
 .startGomingText {
   font-size: 20px;
   text-align: center;
+  line-height: 32px;
   margin-top: 60px;
 }
 .inputArea {

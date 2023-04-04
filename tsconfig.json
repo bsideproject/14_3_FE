@@ -22,6 +22,7 @@
     "baseUrl": "src",                     //base 경로 src로 설정. @/~ : src/~
   },
   "include": [
-    "src"
+    "src",
+    "index.d.ts"
   ]
 }
