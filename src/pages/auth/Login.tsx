@@ -102,7 +102,7 @@ const Login:React.FC = () =>{
     <>
       <div className="container">
         <div>
-        <Header />
+        <Header title="로그인" />
         <h1 className='startGomingText text-color'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
         <form onSubmit={loginAttempt}>
           <div className='inputArea'>
