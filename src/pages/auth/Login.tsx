@@ -3,6 +3,7 @@ import useAuthStore from 'store/modules/Auth';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from 'components/auth/Header';
 import 'assets/pages/auth/login.css'
+import RectangleDived from 'assets/images/rectangleDived.png'
 
 /**
  * @설명 로그인 페이지
@@ -133,7 +134,7 @@ const Login:React.FC = () =>{
           </div>
           <div className='link-btn-area'>
             <Link className='link-btn' to="/register" type="button">회원가입하러가기</Link>
-            &nbsp; | &nbsp;
+            <img src={RectangleDived} alt="|" width={1} height={12} className='dived-link-img'/>
             <Link className='link-btn' to="/lost-info">비밀번호 찾기</Link>
           </div>
         </form>
