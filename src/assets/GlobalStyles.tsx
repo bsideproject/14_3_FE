@@ -67,8 +67,11 @@ table {
 	max-width: 420px;
 	min-height: 100vh;
 	margin: 0 auto;
-	padding: 0 16px; /*디자인에서 지정한 고정 padding입니다*/
+}
+.inside-container{
 	background-color: #FAF9F6;
+  padding: 0 16px; /*고정 padding*/
+  min-height: 100vh;
 }
 :root {
 	--border-color-1: #E9E7E2; /* input border-color */
@@ -77,8 +80,8 @@ table {
 	--caption-text-color-1: #7A7670 /* 캡션 글자 색 */
 }
 html, body, #root {
-	max-height: 100vh;
-	background-color: #FAF9F6;
+	min-height: 100vh;
+	background-color: #FFFFFF;
 }
 `;
 

@@ -17,15 +17,21 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle></GlobalStyle>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/mypage-category" element={<MyPageCategoryList />} />
-        <Route path="/lost-info" element={<LostInfo />} />
-        <Route path="/password-check" element={<PasswordCheck />} />
-      </Routes>
+      <div className="container">
+        <div className="inside-container">
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage-category" element={<MyPageCategoryList />} />
+            <Route path="/lost-info" element={<LostInfo />} />
+            <Route path="/password-check" element={<PasswordCheck />} />
+          </Routes>
+
+        </div>
+
+      </div>
     </BrowserRouter>
   </React.StrictMode>
 );
