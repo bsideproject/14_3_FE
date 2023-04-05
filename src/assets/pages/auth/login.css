@@ -78,3 +78,10 @@
 label[for="myCheckbox"] {/* 체크박스와 라벨을 연결 */
   margin-left: 10px;
 }
+
+.dived-link-img{
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 12px;
+  margin-right: 12px;
+}
