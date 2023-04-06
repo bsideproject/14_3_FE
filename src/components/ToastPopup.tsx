@@ -22,7 +22,6 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
   } as React.CSSProperties;
 
   const styleAlertCoverDiv = {
-    
     position: 'absolute',
     bottom: '64px',
     width: '100%',
