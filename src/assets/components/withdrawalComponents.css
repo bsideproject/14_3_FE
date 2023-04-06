@@ -13,6 +13,10 @@
 .withdrawal-font-size-16 {
   font-size: 16px;
 }
+/* 폰트사이즈 16 */
+.withdrawal-font-size-14 {
+  font-size: 14px;
+}
 /* 폰트사이즈 12 */
 .withdrawal-font-size-12 {
   font-size: 12px;
@@ -97,6 +101,9 @@
   padding: 16px;
   border: 1px solid #E9E7E2;
   border-radius: 8px;
+}
+.withdrawal-textarea:read-only {
+  background: #F2F1ED;
 }
 /* textarea 에러 */
 .withdrawal-error-area{

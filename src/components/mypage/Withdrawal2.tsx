@@ -122,6 +122,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
                 '1px solid' + (withdrawalTextError === true ? '#EA4343' : '#E9E7E2' )
               }}
               ></textarea>
+              {/* 작성오류영역 */}
               <div className="withdrawal-error-area" >
                 <div style={{flex: 1}}>
                   <p 
@@ -135,6 +136,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
                 <p>{withdrawalText.length}/150</p>
               </div>
           </div>
+          {/* 버튼영역 */}
           <div className="withdrawal-button-area">
             <button 
               disabled={!itemChecked}
