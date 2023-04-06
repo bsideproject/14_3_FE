@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import useAuthStore from '@store/modules/Auth';
+import useAuthStore from 'store/modules/Auth';
 import { Link, useNavigate } from 'react-router-dom';
+import Header from 'components/auth/Header';
+import 'assets/pages/auth/login.css'
+import RectangleDived from 'assets/images/rectangleDived.png'
+
 /**
  * @설명 로그인 페이지
  * @작성자 김상훈
@@ -16,9 +20,10 @@ const Login:React.FC = () =>{
   const [emailVerify, setEmailVerify] = useState<boolean>(false)
   const [passwordVerify, setPasswordVerify] = useState<boolean>(false)
   const [rememberEmail, setRememberEmail] = useState<boolean>(true) //id저장여부 확인
-  const [emailFormChk, setEmailFormChk] = useState<boolean>(false); //* 이메일 형식체크
+  const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
+  const [invalid, setInvalid] = useState<boolean>(true) //아이디비밀번호 일치x
 
-  useEffect(()=>{ //useEffect 사용
+  useEffect(()=>{
     if (localStorage.getItem('bside-remember-login')) { //로컬스토리지에서 email 가져오기
       const LSrememberEmail:string = String(localStorage.getItem('bside-remember-login'))
       if (LSrememberEmail.length > 0) {
@@ -96,20 +101,41 @@ const Login:React.FC = () =>{
 
   return (
     <>
-      <div>
-        <h3>Login</h3>
-        <form onSubmit={loginAttempt}>
-          <input type="email" placeholder='type email' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
-          <input type="password" placeholder='type password' id="password" value={password} onChange={handlePasswordValue} onKeyUp={handlePasswordValue} maxLength={30} /><br/>
-          <input type="checkbox" name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
-          <label htmlFor="rememberId">ID저장</label><br></br><br></br>
-          <button type="submit">로그인</button><br/>
-
-          <button type="button" onClick={kakaoLogin}>Kakao Login Btn</button><br />
-          <div><Link to="/lost-info">아이디/비밀번호 찾기</Link></div>
-          <button type="button">회원가입</button><br/>
-        </form>
-      </div>
+      <Header title="로그인" />
+      <h1 className='startGomingText text-color'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
+      <form onSubmit={loginAttempt}>
+        <div className='inputArea'>
+          <label htmlFor="email" className='login-label-text text-color'>이메일</label>
+          <input type="email" className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+        </div>
+        <div className='checkbox-area'>
+          <input type="checkbox" className='save-id-check-box' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
+          <label htmlFor="rememberId" className='save-id-label'>이메일 주소 기억하기</label>
+        </div>
+        <div>
+          <label htmlFor="password" className='login-label-text'>비밀번호</label>
+          <input type="password" className='input-style' placeholder='비밀번호를 입력해주세요' id="password" 
+            autoComplete='true'
+            value={password} 
+            onChange={handlePasswordValue} 
+            onKeyUp={handlePasswordValue} 
+            maxLength={30} />
+        </div>
+        <div className='login-btn-area'>
+          {
+            invalid 
+              ? <p className='blank-height-12'></p> 
+              : <p style={{color: '#EA4343', fontSize: '12px'}}>*이메일 혹은 비밀번호가 일치하지 않습니다.</p>
+          }
+          <button type="submit" className='login-btn'>로그인하기</button><br/>
+          {/* <button disabled type="button" className='login-btn' onClick={kakaoLogin}>Kakao Login Btn</button><br /> */}
+        </div>
+        <div className='link-btn-area'>
+          <Link className='link-btn' to="/register" type="button">회원가입하러가기</Link>
+          <img src={RectangleDived} alt="|" width={1} height={12} className='dived-link-img'/>
+          <Link className='link-btn' to="/lost-info">비밀번호 찾기</Link>
+        </div>
+      </form>
     </>
   )
 }
