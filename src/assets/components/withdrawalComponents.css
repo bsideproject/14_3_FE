@@ -1,0 +1,115 @@
+.withdrawal-content {
+  margin-top: 32px;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 26px;
+}
+/* 첫번째 컨텐츠 (소제목) */
+.withdrawal-content-info{
+  margin-top: 24px;
+  line-height: 24px;
+}
+/* 폰트사이즈 16 */
+.withdrawal-font-size-16 {
+  font-size: 16px;
+}
+/* 폰트사이즈 12 */
+.withdrawal-font-size-12 {
+  font-size: 12px;
+}
+/* 작은 회색 텍스트 */
+.withdrawal-small-info {
+  margin-top: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.025em;
+  color: #7A7670;
+}
+/* 버튼 영역 */
+.withdrawal-button-area{
+  width: 100%;
+  height: 48px;
+  margin-top: 54px;
+  display: flex;
+  gap: 8px;
+}
+.withdrawal-button {
+  flex: 1;
+  border-radius: 8px;
+  padding: 14px 16px 14px 16px;
+  cursor: pointer;
+}
+.withdrawal-button:disabled{
+  border: none;
+  background-color: #C9C6C0
+;
+}
+/* 예 버튼 */
+.withdrawal-yes { 
+  background: #FFFFFF;
+  color: #3D3938;
+}
+/* 아니오버튼 */
+.withdrawal-no { 
+  background: #3D3938;
+  color: #FFFFFF;
+}
+.withdrawal-checkbox-wrap{
+  margin-top: 26px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.withdrawal-checkbox-wrap div {
+  height: 20px;
+  margin-bottom: 20px;
+}
+.withdrawal-checkbox-wrap label {
+  vertical-align: top;
+}
+/* 체크박스 스타일 */
+.withdrawal-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #3D3938;
+  border-radius: 4px;
+  outline: none;
+  transition: 0.3s;
+}
+.withdrawal-checkbox:checked {/* 체크박스가 체크됐을 때의 색상 */
+  background-color: #3D3938;
+}
+
+.withdrawal-textarea-area {
+  height: 186px;
+  margin-bottom: 49px;
+}
+/* textarea */
+.withdrawal-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 388px;
+  resize: none;
+  padding: 16px;
+  border: 1px solid #E9E7E2;
+  border-radius: 8px;
+}
+/* textarea 에러 */
+.withdrawal-error-area{
+  height: 12px;
+  display: flex;
+  font-size: 10px;
+  justify-content: space-between;
+  line-height: 12px;
+}
+.withdrawal-textarea-error {
+  border: 1px solid #EA4343;
+}
+.withdrawal-text-error {
+  font-size: 10px;
+ color: #EA4343; 
+}
