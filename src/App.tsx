@@ -12,6 +12,8 @@ function App() {
       <Link to="/mypage-category">mypage-category</Link><br/>
       <Link to="/password-check">password-check</Link><br/>
       <Link to="/lost-info">lostinfo</Link><br/>
+      <Link to="/withdrawal">회원탈퇴</Link><br/>
+      
     </div>
   );
 }
