@@ -72,6 +72,7 @@ table {
 	background-color: #FAF9F6;
   padding: 0 16px; /*고정 padding*/
   min-height: 100vh;
+	position: relative;
 }
 :root {
 	--border-color-1: #E9E7E2; /* input border-color */

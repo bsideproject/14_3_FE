@@ -1,5 +1,5 @@
-/** default header **/
-.default-login-header {
+/** 헤더 공통 **/
+.header {
   width: 100%;
   height: 60px;
   display: flex;
@@ -7,6 +7,7 @@
   color: #121212;
   border-bottom: 1px solid #E9E7E2;
 }
+/** default header **/
 .default-header-textarea{
   width: 100%;
   padding: 19px 0 0 16px ;
@@ -19,13 +20,9 @@
 
 /** arrow custom header **/
 .login-header {
-  width: 100%;
-  height: 60px;
-  display: flex;
+
   font-size: 18px;
-  font-weight: bold;
   justify-content: center;
-  color: #121212;
   vertical-align: middle;
   line-height: 60px;
   border-bottom: 1px solid #E9E7E2;
