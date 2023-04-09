@@ -26,48 +26,44 @@ const MyPageCategoryList = () => {
   }
   return (
     <>
-      <div className="container">
-        <div className="display-flex-column">
-          <div className="bg-F2F1ED padding-bottom-24px">
-            {/* header */}
-            <DefaultHeader /> 
+      <div className="padding-bottom-24px">
+        {/* header */}
+        <DefaultHeader /> 
 
-            {/* welcome & logout */}
-            <div className="welcome-logout">
+        {/* welcome & logout */}
+        <div className="welcome-logout">
 
-              {/* welcome */}
-              <div className="welcome-text"> 
-                <h3>반가워요!</h3>
-                <h3 style={{color: '#6E8DBA'}}>카페인중독자님</h3>
-              </div>
-
-              {/* logout btn */}
-              <div className="logout-area">
-                <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
-              </div>
-            </div>
-            
-            {/** 이메일 */}
-            <div className="myinfo-email-area">
-              <p>madness-of-coffee@google.com</p>
-            </div>
-            
+          {/* welcome */}
+          <div className="welcome-text"> 
+            <h3>반가워요!</h3>
+            <h3 style={{color: '#6E8DBA'}}>카페인중독자님</h3>
           </div>
 
-          {/* 카테고리 영역 */}
-          <div className="myinfo-category-area">
-            { /** 카테고리 반복 **/
-            categoryList.map((item)=> (
-              <button type="button" className="myinfo-category-btn" onClick={()=>movePage(item.location)}>
-                <span className="">{item.text}</span>
-                <span className="padding-right-24px">
-                  <img src={RightVector} alt="right-vector" width={6} height={10} />
-                </span>
-              </button>
-            ))
-            }
+          {/* logout btn */}
+          <div className="logout-area">
+            <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
           </div>
         </div>
+        
+        {/** 이메일 */}
+        <div className="myinfo-email-area">
+          <p>madness-of-coffee@google.com</p>
+        </div>
+        
+      </div>
+
+      {/* 카테고리 영역 */}
+      <div className="myinfo-category-area">
+        { /** 카테고리 반복 **/
+        categoryList.map((item)=> (
+          <button type="button" className="myinfo-category-btn" onClick={()=>movePage(item.location)}>
+            <span className="">{item.text}</span>
+            <span className="padding-right-24px">
+              <img src={RightVector} alt="right-vector" width={6} height={10} />
+            </span>
+          </button>
+        ))
+        }
       </div>
     </>
   )

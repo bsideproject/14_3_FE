@@ -52,8 +52,6 @@ const LostInfo = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="inside-container">
           <Header title="비밀번호 찾기" />
           <div style={{height:'32px'}}></div>
           <form onSubmit={submitEmail}>
@@ -74,8 +72,6 @@ const LostInfo = () => {
               </p>
             </div>
           </form>
-        </div>
-      </div>   
       {
         toastAlert === true ? (
           <ToastPopup text={"이메일로 임시 비밀번호가 전송되었습니다!"} bgColor={"#4D99DE"} textColor={"#FFFFFF"} />
