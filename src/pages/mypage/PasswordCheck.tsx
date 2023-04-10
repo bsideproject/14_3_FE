@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import useAuthStore from 'store/modules/Auth'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Header from "components/auth/Header";
+import 'assets/pages/auth/passwordCheck.css'
 /**
  * @설명 마이페이지 - 비밀번호 확인
  * @작성자 김상훈
@@ -41,7 +43,7 @@ const PasswordCheck: React.FC = () => {
       //   {usr_no: userInfo.usr_no, password: password}
       // )
       // if (rst.status === 'success') { //일치확인
-      //   navigate('/MyPage')
+      //   navigate('/MyPage',{replace: true}) //해당 history를 제거
       // } else {
       //   alert('비밀번호가 일치하지 않습니다.')
       // }
@@ -50,17 +52,26 @@ const PasswordCheck: React.FC = () => {
   
   return (
     <>
+      <Header title="개인 정보 수정" />
       <div>
-        <h3>비밀번호 확인</h3>
-        <input type="password" 
-          value={password} 
-          onKeyUp={handlePassword}
-          onChange={(e)=>setPassword(e.target.value)}
-          style={{ background: passwordVerify ? "" : "tomato" }} 
-          onBlur={handlePassword}
-          maxLength={30}
-          />
-          <button type="button" onClick={verifyCheck}>confirm</button>
+        <h1 className="pw-check-title">비밀번호 재확인</h1>
+        <p className="pw-check-text">개인 정보를 수정하기 전에,  비밀번호를 다시 한 번 확인해주세요.</p>
+
+        <div>
+          <label className="pw-check-label" htmlFor="password">비밀번호</label>
+          <input type="password" 
+            id="password"
+            className="pw-check-input"
+            value={password} 
+            onKeyUp={handlePassword}
+            onChange={(e)=>setPassword(e.target.value)}
+            style={{ background: passwordVerify ? "" : "tomato" }} 
+            onBlur={handlePassword}
+            maxLength={30}
+            placeholder="현재 비밀번호를 입력해주세요."
+            />
+        </div>
+        <button className="pw-check-btn" type="button" onClick={verifyCheck}>확인</button>
       </div>
     </>
   )
