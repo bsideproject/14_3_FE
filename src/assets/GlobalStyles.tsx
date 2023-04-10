@@ -75,10 +75,24 @@ table {
 	position: relative;
 }
 :root {
-	--border-color-1: #E9E7E2; /* input border-color */
-	--main-text-color-1: #121212; /* 메인 텍스트색*/
 	--button-bg-color-1: #3D3938; /*로그인버튼배경색*/
 	--caption-text-color-1: #7A7670 /* 캡션 글자 색 */
+	--wgray13: #121212;					/* 타이틀에 주로 사용 */
+	--wgray12: #3D3938;					/* 본문에 주로 사용 */
+	--wgray11: #49484C;
+	--wgray10: #5E5C5A;
+	--wgray08: #96938C;
+	--wgray07: #AEABA2;
+	--wgray06: #C9C6C0;
+	--wgray05: #E4E2DD;					/* Disabled 색 */
+	--wgray04: #E9E7E2;					/* border-color1 */
+	--wgray03: #F2F1ED;
+	--wgray02: #FAF9F6;					/* background-color */
+	--wgray01: #FFFFFF;					/* 흰색 */
+	--error: #EA4343; 					/* error color */
+	--info: #4D99DE;						/* info color */
+	--success: #59B757; 				/* success color */
+	--warning: #F09B4D; 				/* warning color */
 }
 html, body, #root {
 	min-height: 100vh;
