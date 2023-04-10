@@ -26,7 +26,7 @@ const MyPageCategoryList = () => {
   }
   return (
     <>
-      <div className="padding-bottom-24px">
+      <div className="padding-bottom-32px">
         {/* header */}
         <DefaultHeader /> 
 
@@ -46,9 +46,9 @@ const MyPageCategoryList = () => {
         </div>
         
         {/** 이메일 */}
-        <div className="myinfo-email-area">
+        {/* <div className="myinfo-email-area">
           <p>madness-of-coffee@google.com</p>
-        </div>
+        </div> */}
         
       </div>
 

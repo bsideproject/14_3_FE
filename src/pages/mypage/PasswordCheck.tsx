@@ -16,6 +16,7 @@ const PasswordCheck: React.FC = () => {
   const { isLogin, userInfo } = useAuthStore((state) => state)
   const [password, setPassword] = useState<string>('');
   const [passwordVerify, setPasswrodVerify] = useState<boolean>(true);
+  const [passwordChecked, setPasswordChecked] = useState<boolean>(true) //비밀번호 데이터베이스 확인 결과
 
   //미로그인 시 로그인 화면으로 이동
   useEffect(() => { 
@@ -47,6 +48,17 @@ const PasswordCheck: React.FC = () => {
       // } else {
       //   alert('비밀번호가 일치하지 않습니다.')
       // }
+
+      /**
+       * 임시구현, 
+       */
+      // eslint-disable-next-line no-restricted-globals
+      const rs = confirm('비밀번호가 틀린경우? 예/아니오');
+      if (rs) {
+        setPasswordChecked(false)
+      } else {
+        setPasswordChecked(true)
+      }
     }
   }
   
@@ -57,19 +69,33 @@ const PasswordCheck: React.FC = () => {
         <h1 className="pw-check-title">비밀번호 재확인</h1>
         <p className="pw-check-text">개인 정보를 수정하기 전에,  비밀번호를 다시 한 번 확인해주세요.</p>
 
-        <div>
+        <div className="pw-check-input-area">
           <label className="pw-check-label" htmlFor="password">비밀번호</label>
-          <input type="password" 
-            id="password"
-            className="pw-check-input"
-            value={password} 
-            onKeyUp={handlePassword}
-            onChange={(e)=>setPassword(e.target.value)}
-            style={{ background: passwordVerify ? "" : "tomato" }} 
-            onBlur={handlePassword}
-            maxLength={30}
-            placeholder="현재 비밀번호를 입력해주세요."
-            />
+          <div className="pw-check-input-wrap">
+            <input type="password" 
+              id="password"
+              className="pw-check-input"
+              value={password} 
+              onKeyUp={handlePassword}
+              onChange={(e)=>setPassword(e.target.value)}
+              style={{ border: '1px solid'+ !passwordVerify ? "" : "tomato" }} 
+              onBlur={handlePassword}
+              maxLength={30}
+              placeholder="현재 비밀번호를 입력해주세요."
+              />
+            {/* <button type="button">
+              
+            </button> */}
+          </div>
+          
+            {
+              passwordChecked ? (<p className="pw-check-error-before-area">&nbsp;</p>) : (
+                <p className="pw-check-color-error">
+                비밀번호가 일치하지 않습니다. 다시 입력해주세요.
+                </p>
+              )
+            }
+            
         </div>
         <button className="pw-check-btn" type="button" onClick={verifyCheck}>확인</button>
       </div>

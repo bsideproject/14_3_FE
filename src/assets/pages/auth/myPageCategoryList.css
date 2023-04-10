@@ -1,8 +1,8 @@
 .bg-F2F1ED{
   background-color: #F2F1ED;
 }
-.padding-bottom-24px {
-  padding-bottom: 24px;
+.padding-bottom-32px {
+  padding-bottom: 32px;
 }
 .padding-right-24px {
   padding-right: 24px;
@@ -15,7 +15,7 @@
 }
 .welcome-logout{
   height: 64px;
-  padding: 48px 0 0 16px;
+  padding: 48px 0 0 0;
   display: flex;
 }
 
