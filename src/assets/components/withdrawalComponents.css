@@ -4,6 +4,9 @@
   font-size: 18px;
   line-height: 26px;
 }
+.color-wgray12 {
+  color: var(--wgray12);
+}
 /* 첫번째 컨텐츠 (소제목) */
 .withdrawal-content-info{
   margin-top: 24px;
