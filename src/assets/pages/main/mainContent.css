@@ -41,6 +41,9 @@
 
 .flip-exit-done {
     transform: rotateY(180deg);
+    /* transition-duration: 1500ms;
+    scale: 5; */
+    z-index: 2; 
 }
 
 .flip-enter {
