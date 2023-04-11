@@ -14,14 +14,16 @@ const Header = ({title}: HEADER_INFO) => {
     navigate(-1)
   }
   return (
-    <div className='login-header'>
-      <div className='go-back-iconimg' onClick={goBack}>
-        <img src={LeftVector} alt="뒤로가기" width={7} height={14}  />
+    <>
+      <div className='login-header header'>
+        <div className='go-back-iconimg' onClick={goBack}>
+          <img src={LeftVector} alt="뒤로가기" width={7} height={14}  />
+        </div>
+        <div className='header-text'>
+          <p>{title}</p>
+        </div>
       </div>
-      <div className='header-text'>
-        <p>{title}</p>
-      </div>
-    </div>
+    </>
   ) 
 }
 type HEADER_INFO = {

@@ -7,7 +7,7 @@
 }
 .reset-password-btn{
   padding: 14px 110px;
-  background-color: var(--button-bg-color-1);
+  background-color: var(--wgray12);
   color: white;
 }
 .goto-login-btn{

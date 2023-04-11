@@ -1,8 +1,8 @@
 .bg-F2F1ED{
   background-color: #F2F1ED;
 }
-.padding-bottom-24px {
-  padding-bottom: 24px;
+.padding-bottom-32px {
+  padding-bottom: 32px;
 }
 .padding-right-24px {
   padding-right: 24px;
@@ -15,7 +15,7 @@
 }
 .welcome-logout{
   height: 64px;
-  padding: 48px 0 0 16px;
+  padding: 48px 0 0 0;
   display: flex;
 }
 
@@ -53,6 +53,10 @@
 .myinfo-category-area{
   background-color: #FFFFFF;
   flex:1 ;
+  position: absolute;
+  width: 100%;
+  margin-left: -16px;
+  padding-right: 16px;
 }
 
 .myinfo-email-area{
@@ -64,7 +68,6 @@
 .myinfo-email-area > p {
   color: #96938C;
   font-style: normal;
-  /* font-weight: 700; */
   font-size: 12px;
   letter-spacing: -0.025em;
 }
@@ -94,8 +97,4 @@
   font-size: 14px;
   line-height: 60px;
   font-weight: 700;
-}
-
-.myinfo-category-text{
-
 }

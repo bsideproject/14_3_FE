@@ -1,7 +1,7 @@
 
 import { useState } from "react"
 import WithdrawalInformation from "./WithdrawalInformation"
-
+import bullet from 'assets/images/bullet.png'
 /**
  * @설명 회원탈퇴 첫번째 페이지의 내용 컴포넌트
  * @작성자 김상훈
@@ -77,11 +77,16 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
         <div className="withdrawal-content-info">
           <p>
             고밍을 탈퇴하시기에 앞서,<br />
-            탈퇴하시는 이유를 알려주세요. <span className="withdrawal-font-size-12">(중복 선택 가능)</span>
+            탈퇴하시는 이유를 알려주세요. <span className="withdrawal-font-size-12 color-wgray12">(중복 선택 가능)</span>
           </p>
-          <p className="withdrawal-font-size-12 withdrawal-small-info">
-            불편사항을 알려주시면, 고밍이 더 나은 서비스를 만드는 데에 큰 도움이 됩니다.
-          </p>
+          <div className='withdrawal-info word-break-keep-all'>
+            <div>
+              <img src={bullet} alt="*" style={{marginRight: '4px'}} width={4} height={4}/>
+            </div>
+            <p className='withdrawal-font-size-12 withdrawal-small-info'>
+              불편사항을 알려주시면, 고밍이 더 나은 서비스를 만드는 데에 큰 도움이 됩니다.
+            </p>
+          </div>
           <div className="withdrawal-checkbox-wrap">
             <div>
               <input className="withdrawal-checkbox" name="checkbox" type="checkbox" id="nofun" onChange={checkedHandler} value={1} />

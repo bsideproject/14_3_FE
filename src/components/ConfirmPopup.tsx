@@ -4,9 +4,10 @@ import 'assets/components/alertTextPopup.css'
  * @작성자 김상훈
  * @생성일자 2023.04.06.
  * @param {string} text text 내용
- * @param 
+ * @param {Function} callbackFunction 확인 콜백 함수
+ * @param {Function} closeCallbackFuntion 아니오 콜백 함수
  */
-const ConfirmPopup = ({text, step, callbackFunction}: CONFIRM_POPUP) => {
+const ConfirmPopup = ({text, callbackFunction, closeCallbackFuntion}: CONFIRM_POPUP) => {
   // '네'를 눌렀을 경우
   const confirmCheck = () => {
     callbackFunction()
@@ -14,7 +15,7 @@ const ConfirmPopup = ({text, step, callbackFunction}: CONFIRM_POPUP) => {
 
   // 아니오를 눌렀을 경우
   const closeConfirmPopup = () => {
-    
+    closeCallbackFuntion()
   }
   
   return (
@@ -37,8 +38,8 @@ const ConfirmPopup = ({text, step, callbackFunction}: CONFIRM_POPUP) => {
 }
 type CONFIRM_POPUP = {
   text: string
-  step: number
   callbackFunction: Function
+  closeCallbackFuntion: Function
 }
 
 export default ConfirmPopup

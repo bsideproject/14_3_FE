@@ -131,7 +131,7 @@
 }
 .register-button {
   /* justify-content: center; */
-  background: var(--button-bg-color-1);
+  background: var(--wgray12);
   border-radius: 8px;
   /* padding: 16px 14px; */
   width: 88px;

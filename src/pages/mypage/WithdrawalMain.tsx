@@ -35,8 +35,6 @@ const WithdrawalMain = () => {
     navigate('/login', {replace: true}) //navigate 초기화
   }
 
-const WithdrawalMain = () => {
-  const [step, setStep] = useState(1) //컴포넌트 단계 제어
   return (
     <>
       <Header title="회원 탈퇴" />
@@ -59,7 +57,7 @@ const WithdrawalMain = () => {
 
       { //step === 4 일시 탈퇴하기 알림 팝업
         step === 4 ? (
-        <ConfirmPopup text="고밍을 탈퇴하시겠습니까?" step={step} callbackFunction={withdrawalAction} />
+        <ConfirmPopup text="고밍을 탈퇴하시겠습니까?" callbackFunction={withdrawalAction} closeCallbackFuntion={() => setStep(3)} />
         ) : ''
       }
       { //회원 탈퇴 완료시
@@ -67,9 +65,6 @@ const WithdrawalMain = () => {
         <AlertTextPopup text='고밍의 탈퇴가 완료되었습니다.' text2="감사합니다!" callbackFunction={moveToMain} />
         ) : ''
       }
-          : (step === 2 ? (<Withdrawal2 step={step} setStep={setStep}/>) : '' )
-      }
-      </motion.div>
     </>
   ) 
 }
