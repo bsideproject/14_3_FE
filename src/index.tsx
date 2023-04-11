@@ -11,6 +11,7 @@ import GlobalStyle from 'assets/GlobalStyles'
 import MyPageCategoryList from "pages/mypage/MyPageCategoryList";
 import WithdrawalMain from "pages/mypage/WithdrawalMain";
 import MainContent from "pages/MainContent";
+import OnePagerMain from "pages/onpager/OnePagerMain";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -31,6 +32,8 @@ root.render(
             <Route path="/password-check" element={<PasswordCheck />} />
             <Route path="/withdrawal" element={<WithdrawalMain />} />
             <Route path="/main" element={<MainContent />} />
+            <Route path="/onepager" element={<OnePagerMain />} />
+            
           </Routes>
 
         </div>
