@@ -120,37 +120,37 @@ html, body, #root {
 .body1-bold {
 	font-size: 18px;
 	font-weight: 700;
-	line-height: 26px;
+	line-height: 28px;
 	letter-spacing: -0.025em;
 }
 .body1-regular {
 	font-size: 18px;
 	font-weight: 400;
-	line-height: 26px;
+	line-height: 28px;
 	letter-spacing: -0.025em;
 }
 .body2-bold {
 	font-size: 16px;
 	font-weight: 700;
-	line-height: 24px;
+	line-height: 26px;
 	letter-spacing: -0.025em;
 }
 .body2-regular {
 	font-size: 16px;
 	font-weight: 400;
-	line-height: 24px;
+	line-height: 26px;
 	letter-spacing: -0.025em;
 }
 .body3-bold {
 	font-size: 14px;
 	font-weight: 700;
-	line-height: 20px;
+	line-height: 24px;
 	letter-spacing: -0.025em;
 }
 .body3-regular {
 	font-size: 14px;
 	font-weight: 400;
-	line-height: 20px;
+	line-height: 24px;
 	letter-spacing: -0.025em;
 }
 .caption1-bold {
