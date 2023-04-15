@@ -23,7 +23,6 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	font-family: 'NanumSquareNeo-Variable';
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -31,7 +30,6 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 button{
-	font-family: 'NanumSquareNeo-Variable';
 }
 
 input {
@@ -97,6 +95,83 @@ table {
 html, body, #root {
 	min-height: 100vh;
 	background-color: #FFFFFF;
+}
+/* custom font */
+.headline1 {
+	font-size: 28px;
+	font-weight: 800;
+	line-height: 40px;
+	letter-spacing: 0em;
+}
+.headline2 {
+	font-size: 24px;
+	font-weight: 800;
+	line-height: 36px;
+	letter-spacing: 0em;
+}
+.headline3 {
+	font-size: 20px;
+	font-weight: 800;
+	line-height: 32px;
+	letter-spacing: 0em;
+}
+.body1-bold {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 28px;
+	letter-spacing: -0.025em;
+}
+.body1-regular {
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 28px;
+	letter-spacing: -0.025em;
+}
+.body2-bold {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 26px;
+	letter-spacing: -0.025em;
+}
+.body2-regular {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 26px;
+	letter-spacing: -0.025em;
+}
+.body3-bold {
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 24px;
+	letter-spacing: -0.025em;
+}
+.body3-regular {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 24px;
+	letter-spacing: -0.025em;
+}
+.caption1-bold {
+	font-weight: 700;
+	line-height: 16px;
+	letter-spacing: 0em;
+}
+.caption1-regular {
+	font-weight: 400;
+	line-height: 16px;
+	letter-spacing: 0em;
+c}
+.caption2-bold {
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 12px;
+	letter-spacing: -0.025em;
+}
+.caption2-regular {
+	font-size: 10px;
+	font-weight: 400;
+	line-height: 12px;
+	letter-spacing: -0.025em;
 }
 `;
 
