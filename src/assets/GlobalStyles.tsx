@@ -23,7 +23,6 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	font-family: 'NanumSquareNeo-Variable';
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -31,7 +30,6 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 button{
-	font-family: 'NanumSquareNeo-Variable';
 }
 
 input {
