@@ -9,7 +9,7 @@
 }
 /* 첫번째 컨텐츠 (소제목) */
 .withdrawal-content-info{
-  margin-top: 24px;
+  margin-top: 16px;
   line-height: 24px;
 }
 /* 폰트사이즈 16 */
@@ -26,7 +26,7 @@
 }
 /* 작은 회색 텍스트 */
 .withdrawal-small-info {
-  margin-top: 12px;
+  margin-top: 8px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
@@ -136,7 +136,8 @@
   padding: auto;
 }
 .withdrawal-info img {
-  text-align: center;
+  margin:0 auto;
+  padding-bottom:4px;
 }
 .withdrawal-info div {
   height: 44px;
