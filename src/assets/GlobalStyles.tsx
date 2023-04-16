@@ -67,7 +67,7 @@ table {
 	margin: 0 auto;
 }
 .inside-container{
-	background-color: #FAF9F6;
+	background-color: #F2F1ED;
   padding: 0 16px; /*고정 padding*/
   min-height: 100vh;
 	position: relative;
@@ -154,13 +154,14 @@ html, body, #root {
 .caption1-bold {
 	font-weight: 700;
 	line-height: 16px;
-	letter-spacing: 0em;
+	letter-spacing: -0.025em;
 }
 .caption1-regular {
+	font-size: 10px;
 	font-weight: 400;
 	line-height: 16px;
-	letter-spacing: 0em;
-c}
+	letter-spacing: -0.025em;
+}
 .caption2-bold {
 	font-size: 10px;
 	font-weight: 700;
