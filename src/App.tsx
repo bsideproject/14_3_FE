@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'assets/font/font.css'
+import MyCalendar from 'components/main/MyCalendar';
 
 function App() {
   return (
@@ -13,7 +14,12 @@ function App() {
       <Link to="/password-check">password-check</Link><br/>
       <Link to="/lost-info">lostinfo</Link><br/>
       <Link to="/withdrawal">회원탈퇴</Link><br/>
-      
+      <Link to="/main">메인화면(미완료)</Link><br/>
+      <Link to="/onepager">원페이저(미완료)</Link><br/>
+
+      <div>
+        <MyCalendar />
+      </div>
     </div>
   );
 }

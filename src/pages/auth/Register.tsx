@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "assets/pages/auth/register.css";
 import fetch from "utils/fetch";
 import Select from "react-select";
-import { Scrollbars } from "react-custom-scrollbars-2";
+import AlertText from "components/ToastPopup";
+import AlertTextPopup from "components/AlertTextPopup";
 const Register: React.FC = () => {
   const initCalendar = useMemo(() => {
     const date = new Date();
@@ -17,27 +18,38 @@ const Register: React.FC = () => {
       { value: nowDay, label: nowDay },
     ];
   }, []);
+  const ReconfirmRef = useRef(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passwordCheck, setPasswordCheck] = useState<string>("");
+  const [passwordReconfirm, setPasswordReconfirm] = useState<string>("");
   const [birthDt, setBirthDt] = useState<string>("");
   const [gender, setGender] = useState<boolean>(true);
+
+  const [emailChk, setEmailChk] = useState<boolean>(false);
   const [emailFormChk, setEmailFormChk] = useState<boolean>(true); //* 이메일 형식체크만 개발완료
   const [emailExistChk, setEmailExistChk] = useState<boolean>(true); //* 이메일 중복체크 미개발
-  const [passwordLengthChk, setpasswordLengthChk] = useState<boolean>(true);
-  const [nickNameLengthChk, setNickNameLengthChk] = useState<boolean>(true);
+
+  const [passwordErrorChk, setPasswordErrorChk] = useState<boolean>(false); //비밀번호 에러 체크(조건 불일치,미입력)
+  const [passwordReconfirmSuccessChk, setPasswordReconfirmSuccessChk] = // 비밀번호 재입력칸 에러 체크(비밀번호와 같은지 여부)
+    useState<boolean | null>(null);
+
+  const [nickNameChk, setNickNameChk] = useState<boolean>(true); // 닉네임 여부 체크
   const [nickNameExistChk, setNickNameExistChk] = useState<boolean>(true); //* 닉네임 중복체크 미개발
-  const [authNumber, setAuthNumber] = useState<string>("");
+
+  const [authNumber, setAuthNumber] = useState<string>(""); // 인증코드 미완료
+  const [authNumberChk, setAuthNumberChk] = useState<boolean>(true); // * 이메일 인증코드 입력 체크
+
   const [year, setYear] = useState<string>(initCalendar[0].value);
   const [month, setMonth] = useState<string>(initCalendar[1].value);
   const [day, setDay] = useState<string>(initCalendar[2].value);
   const [emailAgree, setEmailAgree] = useState<boolean>(false);
-  const [check1, setCheck1] = useState<boolean>(false);
-  const [check2, setCheck2] = useState<boolean>(false);
-  const [check3, setCheck3] = useState<boolean>(false);
-  const [check4, setCheck4] = useState<boolean>(false);
+
+  const [allCheck, setAllCheck] = useState<boolean>(false);
+  const [checkAgeAgree, setCheckAgeAgree] = useState<boolean>(false);
+  const [checkInfoAgree, setCheckInfoAgree] = useState<boolean>(false);
+  const [checkServiceAgree, setCheckServiceAgree] = useState<boolean>(false);
 
   const [calendar, setCalendar] = useState<{
     year: { value: string; label: string }[];
@@ -53,10 +65,18 @@ const Register: React.FC = () => {
     setTodayDate(initCalendar);
   }, []);
 
-  function isValidEmail(email: string) {
+  function isValidEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     setEmailFormChk(emailRegex.test(email));
+
+    console.log(emailRegex.test(email));
+
+    if (emailRegex.test(email)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   const setTodayDate = (
@@ -89,30 +109,49 @@ const Register: React.FC = () => {
     setEmail(e.target.value);
   };
 
-  const handleEmailBlur = (e: any) => {
-    isValidEmail(email);
-  };
-
   const handlePasswordBlur = (e: any) => {
-    if (password.length < 4) {
-      setpasswordLengthChk(false);
+    const Regexp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+
+    if (!Regexp.test(password) && password.length > 1) {
+      setPasswordErrorChk(true);
     } else {
-      setpasswordLengthChk(true);
+      setPasswordErrorChk(false);
+    }
+
+    if (password === passwordReconfirm && passwordReconfirm.length > 0) {
+      setPasswordReconfirmSuccessChk(false); //성공
+    } else if (passwordReconfirm.length === 0) {
+      setPasswordReconfirmSuccessChk(null); //기본값
+    } else {
+      setPasswordReconfirmSuccessChk(true); // 실패
     }
   };
-  const handleNickNameBlur = (e: any) => {
-    if (nickName.length < 4) {
-      setNickNameLengthChk(false);
+  const handlePasswordReconfirmBlur = (e: any) => {
+    if (password === passwordReconfirm && passwordReconfirm.length > 0) {
+      setPasswordReconfirmSuccessChk(false); //성공
+    } else if (password.length === 0) {
+      setPasswordReconfirmSuccessChk(null); //기본값
     } else {
-      setNickNameLengthChk(true);
+      setPasswordReconfirmSuccessChk(true); // 실패
+    }
+  };
+  const handleNickNameCheck = () => {
+    if (nickName.length > 0 && nickName.length < 9) {
+      setNickNameChk(true);
+      return false;
+    } else {
+      setNickNameChk(false);
+      return true;
     }
   };
 
   const handlePasswordUpdate = (e: any) => {
     setPassword(e.target.value);
   };
-  const handlePasswordCheckUpdate = (e: any) => {
-    setPasswordCheck(e.target.value);
+
+  const handlePasswordReconfirmUpdate = (e: any) => {
+    console.log(ReconfirmRef);
+    setPasswordReconfirm(e.target.value);
   };
 
   const handlenickNameUpdate = (e: any) => {
@@ -152,31 +191,27 @@ const Register: React.FC = () => {
     try {
       e.preventDefault();
 
-      if (!email) {
-        alert("이메일을 입력하세요.");
-        document.getElementById("email")?.focus();
-      } else if (!password) {
-        alert("비밀번호를 입력하세요.");
-        document.getElementById("password")?.focus();
-      } else if (!nickName) {
-        alert("닉네임을 입력하세요.");
+      if (handleNickNameCheck()) {
+        // 닉네임 존재여부 체크
         document.getElementById("nickName")?.focus();
-      } else if (!birthDt) {
-        alert("생년월일을 입력하세요.");
-        document.getElementById("birthDt")?.focus();
-      } else if (!emailFormChk) {
-        alert("이메일형식이 올바르지 않습니다.");
+      } else if (email.length === 0) {
+        setEmailChk(true);
+      } else if (isValidEmail()) {
+        // 이메일 유효성 검사
         document.getElementById("email")?.focus();
-      } else if (!passwordLengthChk) {
-        alert("비밀번호 길이가 짧습니다(4글자이상).");
+      } else if (authNumber.length === 0) {
+        setAuthNumberChk(false);
+        document.getElementById("authNumber")?.focus();
+      } else if (passwordErrorChk) {
         document.getElementById("password")?.focus();
-      } else if (!nickNameLengthChk) {
-        alert("닉네임 길이가 짧습니다(4글자이상)");
-        document.getElementById("nickName")?.focus();
+      } else if (passwordReconfirmSuccessChk) {
+        document.getElementById("passwordReconfirm")?.focus();
       } else if (!emailExistChk) {
+        // 미완료
         alert("중복된 이메일입니다.");
         document.getElementById("email")?.focus();
       } else if (!nickNameExistChk) {
+        //미완료
         alert("중복된 닉네임입니다.");
         document.getElementById("email")?.focus();
       } else {
@@ -208,6 +243,60 @@ const Register: React.FC = () => {
   const handleEmailAgree = (e: any) => {
     setEmailAgree(!emailAgree);
   };
+  const handleAllCheck = (e: any) => {
+    setAllCheck(!allCheck);
+    setCheckAgeAgree(!allCheck);
+    setCheckInfoAgree(!allCheck);
+    setCheckServiceAgree(!allCheck);
+  };
+  const handleAgeAgree = (e: any) => {
+    setCheckAgeAgree(!checkAgeAgree);
+    if (
+      !checkAgeAgree === false &&
+      checkInfoAgree === true &&
+      checkServiceAgree === true
+    ) {
+      setAllCheck(false);
+    } else if (
+      !checkAgeAgree === true &&
+      checkInfoAgree === true &&
+      checkServiceAgree === true
+    ) {
+      setAllCheck(true);
+    }
+  };
+  const handleInfoAgree = (e: any) => {
+    setCheckInfoAgree(!checkInfoAgree);
+    if (
+      !checkInfoAgree === false &&
+      checkAgeAgree === true &&
+      checkServiceAgree === true
+    ) {
+      setAllCheck(false);
+    } else if (
+      !checkInfoAgree === true &&
+      checkAgeAgree === true &&
+      checkServiceAgree === true
+    ) {
+      setAllCheck(true);
+    }
+  };
+  const handleServiceAgree = (e: any) => {
+    setCheckServiceAgree(!checkServiceAgree);
+    if (
+      !checkServiceAgree === false &&
+      checkInfoAgree === true &&
+      checkAgeAgree === true
+    ) {
+      setAllCheck(false);
+    } else if (
+      !checkServiceAgree === true &&
+      checkInfoAgree === true &&
+      checkAgeAgree === true
+    ) {
+      setAllCheck(true);
+    }
+  };
 
   const handleYaerUpdate = (e: any) => {
     setYear(e.value);
@@ -231,9 +320,9 @@ const Register: React.FC = () => {
                 placeholder="8글자 이내로 만들어주세요."
                 id="nickName"
                 className="register-input margintop-8"
-                // style={{ background: nickNameLengthChk ? "" : "red" }}
+                // style={{ background: nickNameChk ? "" : "red" }}
                 onChange={handlenickNameUpdate}
-                onBlur={handleNickNameBlur}
+                // onBlur={handleNickNameBlur}
                 value={nickName}
                 maxLength={30}
               />
@@ -246,18 +335,25 @@ const Register: React.FC = () => {
               중복 확인
             </button>
           </div>
+          {nickNameChk === false ? (
+            <div className="register-input-error-msg">
+              닉네임을 입력해주세요.
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="register-flex-row-gap8 margintop-32">
             <div className="register-box">
               <div>이메일</div>
               <input
-                type="email"
+                // type="email"
                 placeholder="이메일을 입력해주세요."
                 id="email"
                 className="register-input margintop-8"
                 onChange={handleEmailUpdate}
-                onBlur={handleEmailBlur}
+                // onBlur={handleEmailBlur}
                 value={email}
-                style={{ background: emailFormChk ? "" : "red" }}
+                // style={{ background: emailFormChk ? "" : "red" }}
                 maxLength={30}
               />
             </div>
@@ -269,6 +365,17 @@ const Register: React.FC = () => {
               인증하기
             </button>
           </div>
+          {emailChk === true ? (
+            <div className="register-input-error-msg">
+              이메일을 입력해주세요.
+            </div>
+          ) : emailFormChk === false ? ( //이메일 형식이 바르지 않다면
+            <div className="register-input-error-msg">
+              이메일을 형식을 확인해주세요.
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="register-flex-row-gap8">
             <input
               type="text"
@@ -276,9 +383,10 @@ const Register: React.FC = () => {
               id="authNumber"
               className="register-box register-input margintop-8"
               onChange={handleAuthNumberUpdate}
-              onBlur={handleEmailBlur}
+              // onBlur={handleEmailBlur}
               value={authNumber}
-              style={{ background: emailFormChk ? "" : "red" }}
+              // style={{ background: emailFormChk ? "" : "red" }}
+
               maxLength={6}
             />
             <button
@@ -289,6 +397,13 @@ const Register: React.FC = () => {
               확인
             </button>
           </div>
+          {authNumberChk === false ? (
+            <div className="register-input-error-msg">
+              이메일 인증 코드를 입력해주세요.
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="register-flex-row-gap0 margintop-8">
             <input
               type="checkbox"
@@ -314,30 +429,90 @@ const Register: React.FC = () => {
               버튼을 눌러보세요.
             </div>
           </div>
-          <div className="register-flex-column-gap8 margintop-32">
+          <div className="register-flex-column-gap0 margintop-32">
             <div>비밀번호</div>
-            <input
-              type="password"
-              placeholder="8~20자의 영문, 숫자, 특수문자로 구성해주세요."
-              id="password"
-              className="register-input"
-              style={{ background: passwordLengthChk ? "" : "red" }}
-              onChange={handlePasswordUpdate}
-              onBlur={handlePasswordBlur}
-              value={password}
-              maxLength={30}
-            />
-            <input
-              type="password"
-              placeholder="비밀번호를 다시 입력해주세요."
-              id="password"
-              className="register-input"
-              style={{ background: passwordLengthChk ? "" : "red" }}
-              onChange={handlePasswordCheckUpdate}
-              onBlur={handlePasswordBlur}
-              value={passwordCheck}
-              maxLength={30}
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type="password"
+                placeholder="8~20자의 영문, 숫자, 특수문자로 구성해주세요."
+                id="password"
+                className={
+                  passwordErrorChk === false
+                    ? "register-input margintop-8"
+                    : "register-input-error margintop-8"
+                }
+                // style={{ background: passwordErrorChk ? "" : "red" }}
+                onChange={handlePasswordUpdate}
+                onBlur={handlePasswordBlur}
+                value={password}
+                maxLength={30}
+              />
+              {passwordErrorChk === true ? (
+                <>
+                  <label
+                    htmlFor="passwordReconfirm"
+                    className="register-input-close"
+                    onClick={() => {
+                      setPassword("");
+                    }}
+                  ></label>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+            {passwordErrorChk ? (
+              <div className="register-input-error-msg">
+                비밀번호는 8~20자의 영문, 숫자, 특수문자로 구성해주세요.
+              </div>
+            ) : (
+              <></>
+            )}
+            <div style={{ position: "relative" }}>
+              <input
+                ref={ReconfirmRef}
+                id="passwordReconfirm"
+                type="password"
+                placeholder="비밀번호를 다시 입력해주세요."
+                className={
+                  passwordReconfirmSuccessChk === null
+                    ? "register-input margintop-8"
+                    : passwordReconfirmSuccessChk === false
+                    ? "register-input-success margintop-8"
+                    : "register-input-error margintop-8"
+                }
+                onChange={handlePasswordReconfirmUpdate}
+                onBlur={handlePasswordReconfirmBlur}
+                value={passwordReconfirm}
+                maxLength={30}
+              />
+              {passwordReconfirmSuccessChk === true ? (
+                <>
+                  <label
+                    htmlFor="passwordReconfirm"
+                    className="register-input-close"
+                    onClick={() => {
+                      setPasswordReconfirm("");
+                    }}
+                  ></label>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+            {passwordReconfirmSuccessChk === true ? (
+              <>
+                <div className="register-input-error-msg">
+                  비밀번호가 일치하지 않습니다. 다시 입력해주세요.
+                </div>
+              </>
+            ) : passwordReconfirmSuccessChk === false ? (
+              <div className="register-input-success-msg">
+                비밀번호가 일치합니다.
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="register-flex-column-gap10 margintop-32">
             <div>성별(선택)</div>
@@ -408,12 +583,12 @@ const Register: React.FC = () => {
                 className="register-email-check-box"
                 name="allcheck"
                 id="allcheck"
-                checked={emailAgree}
-                onChange={handleEmailAgree}
+                checked={allCheck}
+                onChange={handleAllCheck}
               />
               <label
                 htmlFor="allcheck"
-                className="register-all-agree margintop-2"
+                className="register-all-agree middleFont margintop-2"
               >
                 전체 동의
               </label>
@@ -425,12 +600,12 @@ const Register: React.FC = () => {
                 className="register-email-check-box"
                 name="allcheck"
                 id="allcheck"
-                checked={emailAgree}
-                onChange={handleEmailAgree}
+                checked={checkAgeAgree}
+                onChange={handleAgeAgree}
               />
               <label
                 htmlFor="allcheck"
-                className="register-all-agree margintop-2"
+                className="register-all-agree smallFont margintop-2"
               >
                 (필수) 만 14세 이상입니다.
               </label>
@@ -441,12 +616,12 @@ const Register: React.FC = () => {
                 className="register-email-check-box"
                 name="allcheck"
                 id="allcheck"
-                checked={emailAgree}
-                onChange={handleEmailAgree}
+                checked={checkInfoAgree}
+                onChange={handleInfoAgree}
               />
               <label
                 htmlFor="allcheck"
-                className="register-all-agree margintop-2"
+                className="register-all-agree smallFont margintop-2"
               >
                 (필수) 개인정보 수집 및 이용 동의
               </label>
@@ -458,21 +633,33 @@ const Register: React.FC = () => {
                 className="register-email-check-box"
                 name="allcheck"
                 id="allcheck"
-                checked={emailAgree}
-                onChange={handleEmailAgree}
+                checked={checkServiceAgree}
+                onChange={handleServiceAgree}
               />
               <label
                 htmlFor="allcheck"
-                className="register-all-agree margintop-2"
+                className="register-all-agree smallFont margintop-2"
               >
                 (필수) 서비스 이용약관 동의
               </label>
               <div style={{ width: "27px" }}>보기</div>
             </div>
           </div>
-          <button type="submit">완료</button>
+          <button
+            type="submit"
+            className="register-button"
+            style={{ width: "100%", marginTop: "64px" }}
+          >
+            완료
+          </button>
         </form>
       </div>
+
+      {/* <AlertTextPopup
+        text={"이메일 인증이 완료되었습니다!"}
+        text2={""}
+        callbackFunction={() => {}}
+      /> */}
     </>
   );
 };

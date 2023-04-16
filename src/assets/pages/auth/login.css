@@ -23,7 +23,7 @@
   margin-bottom: 4px;
 }
 .text-color {
-  color: var(--main-text-color-1);
+  color: var(--wgray13);
 }
 .checkbox-area{
   margin-bottom: 32px;
@@ -56,9 +56,9 @@
 }
 .login-btn{
   width: 100%;
-  padding: 14px 137px;
+  padding: 14px 0;
   margin-top: 3px;
-  background-color: var(--button-bg-color-1);
+  background-color: var(--wgray12);
   color: white;
   border-radius: 8px;
   cursor: pointer;

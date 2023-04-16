@@ -10,7 +10,7 @@
 /** default header **/
 .default-header-textarea{
   width: 100%;
-  padding: 19px 0 0 16px ;
+  padding: 19px 0 0 0 ;
 }
 .default-header-text {
   font-size: 22.4px;
