@@ -6,15 +6,28 @@
   font-style: normal;
 }
 
-/* Prompt 폰트 */
+/* Prompt bold 폰트 */
 @font-face {
-  font-family: 'Prompt';
-  src: url('./Prompt-Bold.ttf') format('woff'),
-  url('./Prompt-Regular.ttf') format('woff'),
-  url('./Prompt-SemiBold.ttf') format('woff');
+  font-family: 'Prompt-bold';
+  src: url('./Prompt-Bold.ttf') format('woff');
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+/* Prompt regular 폰트 */
+@font-face {
+  font-family: 'Prompt-regular';
+  src: url('./Prompt-Regular.ttf') format('woff');
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+/* Prompt SemiBold 폰트 */
+@font-face {
+  font-family: 'Prompt-SemiBold';
+  src: url('./Prompt-SemiBold.ttf') format('woff');
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
+
 .f-n { font-family: 'NanumSquareNeo-Variable'; }
-.f-p { font-family: 'Prompt'; }
-*{ font-family: 'Prompt', 'NanumSquareNeo-Variable', sans-serif; }
+.f-p-b { font-family: 'Prompt-bold'; }
+.f-p-r { font-family: 'Prompt-regular'; }
+.f-p-sb { font-family: 'Prompt-SemiBold'; }
+*{ font-family: 'NanumSquareNeo-Variable', sans-serif; }
