@@ -80,6 +80,7 @@ table {
 	--wgray12: #3D3938;					/* 본문에 주로 사용 */
 	--wgray11: #49484C;
 	--wgray10: #5E5C5A;
+	--wgray09: #7A7670;
 	--wgray08: #96938C;
 	--wgray07: #AEABA2;
 	--wgray06: #C9C6C0;
