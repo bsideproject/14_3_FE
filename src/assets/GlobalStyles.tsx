@@ -69,6 +69,7 @@ table {
 .inside-container{
 	background-color: #FAF9F6;
   padding: 0 16px; /*고정 padding*/
+	padding-top: 60px;
   min-height: 100vh;
 	position: relative;
 }
