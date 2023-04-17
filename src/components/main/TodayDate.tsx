@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import useAuthStore from "store/modules/Auth"
+import 'assets/components/card-select-main/todayDate.css'
 /**
  * @설명 금일일자, 사용자명 노출
  * @작성자 김상훈
@@ -28,10 +29,10 @@ const TodayDate = () => {
   return (
     <>
       <div className="todaydate-area">
-        <p>{todayDate}</p>
-        <h1>
-          {nickName}님,<br />
-          오늘의 회고 질문을 선택해보세요!
+        <p className="caption1-bold" style={{color: '#49484C'}}>{todayDate}</p>
+        <h1 className="todaydate-name headline3">
+          <span className="today-name-blue">{nickName}님,</span><br />
+          <span className="today-name-info">오늘의 회고 질문을 선택해보세요!</span>
         </h1>
       </div>
     </>
