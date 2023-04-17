@@ -39,8 +39,13 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
       >
         <div ref={nodeRef} className='card' onClick={() => clickHandler(item)}>
           {/* 카드 앞면 내용: 컨텐츠 */}
-          <div className='inner-card card-front'>
-            무슨카드일까요?
+          <div className='inner-card'>
+            <div className='card-front img-area'>
+              <img src={item.img} alt={item.desc} />
+            </div>
+            <div className='card-title'>
+              Goming
+            </div>
           </div>
 
           {/* 카드 뒷면 영역 */}
