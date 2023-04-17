@@ -8,7 +8,7 @@ const stepList = [{index: 1}, {index: 2}, {index: 3}];
  * @내용 잔여 질문뽑기 횟수 안내
  */
 const NowSelectionStep = () => {
-  const [nowSelectionStep, setSelectionStep] = useState<number>(2);
+  const [nowSelectionStep, setSelectionStep] = useState<number>(1);
   useEffect(()=>{
     let todayAnswerStep = 1;  //기본 세팅
 
@@ -21,7 +21,7 @@ const NowSelectionStep = () => {
     //} else {
      setSelectionStep(todayAnswerStep)               //질문회차 값 세팅
     //}
-  })
+  },[])
   return (
     <>
       <div className="leftselection-wrap">
