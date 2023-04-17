@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import 'assets/components/card-select-main/leftselection.css'
+import 'assets/components/card-select-main/nowSelectionStep.css'
 const stepList = [{index: 1}, {index: 2}, {index: 3}];
 /**
  * @설명 잔여 질문뽑기 횟수 안내
