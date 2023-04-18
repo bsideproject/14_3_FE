@@ -7,11 +7,12 @@ import DinnerImg from 'assets/images/main/category-dinner.png'
 import FlowerImg from 'assets/images/main/category-flower.png'
 import LampImg from 'assets/images/main/category-lamp.png'
 import BookImg from 'assets/images/main/category-book.png'
+import SelectedLampImg from 'assets/images/main/category-selected-lamp.png'
 
 const testData = [
   {index: 251521, q: 'Question 1 ?', img: DinnerImg, desc: 'dinner'},
   {index: 124452, q: 'Question 1 ?', img: FlowerImg, desc: 'dinner'},
-  {index: 125622, q: 'Question 1 ?', img: LampImg, desc: 'dinner'},
+  {index: 125622, q: 'Question 1 ?', img: LampImg, desc: 'lamp', aftrImg: SelectedLampImg},
   {index: 746432, q: 'Question 1 ?', img: BookImg, desc: 'dinner'},
 ]
 const SelectionCard = () => {

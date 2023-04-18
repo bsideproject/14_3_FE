@@ -10,11 +10,14 @@
   border-bottom: 1px solid #E9E7E2;
   margin-left: -16px;
 }
-/** default header **/
-.default-header-textarea{
-  width: 100%;
+/* 로고 */
+.header-logo-area{
+  flex: 1;
   padding-top: 18px;
   padding-left: 16px;
+}
+.header-logo-area img {
+  vertical-align: top;
 }
 /** arrow custom header **/
 .login-header {
@@ -25,19 +28,22 @@
   border-bottom: 1px solid #E9E7E2;
 }
 .go-back-iconimg{
-  width: 20px;
-  height: 100%;
+  padding-top: 24px;
+  padding-left: 24px;
 }
 .go-back-iconimg:hover{
   cursor: pointer;
+}
+.go-back-iconimg img {
+  vertical-align: top;
 }
 .header-text{
   flex: 1;
 }
 .header-text > p {
   width: fit-content;
-  padding: 17px auto 17px 162px;
   margin: 0 auto;
+  padding-right: 24px;
 }
 
 

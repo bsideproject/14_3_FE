@@ -12,7 +12,7 @@ const TodayDate = () => {
   const days = ["일", "월", "화", "수", "목", "금", "토"]
   //금일날짜
   const today = new Date()
-  const todayDate = today.getMonth() + '월 ' + today.getDate() + '일 ' + days[today.getDay()] + '요일'
+  const todayDate = (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + days[today.getDay()] + '요일'
   const [nickName, setNickName] = useState<string>('커피중독자');
   //사용자명 정의
   const {userInfo} = useAuthStore((state) => state);

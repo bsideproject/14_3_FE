@@ -20,6 +20,7 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
       //   itemIndex: item.index,
       // }
       //fetch('/api/selectCard', selectedInfo)
+
       setTimeout(() => {
         navigate('/answer', 
           {
@@ -35,27 +36,24 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
         nodeRef={nodeRef}
         in={showFront}
         timeout={300}
-        classNames='flip'
+        classNames='scaling'
       >
         <div ref={nodeRef} className='card' onClick={() => clickHandler(item)}>
           {/* 카드 앞면 내용: 컨텐츠 */}
-          <div className='inner-card'>
-            <div className='card-front img-area'>
-              <img src={item.img} alt={item.desc} />
+          <div className='card-front'>
+            <div className='card-in'>
+              {
+                showFront ? (
+                  <img src={item.img} alt={item.desc} width={148} height={136} className="card-scale"/>
+                ) : (
+                  <img src={item.aftrImg} alt={item.desc} width={148} height={136} className='card-fade' />
+                )
+              }
             </div>
             <div className='card-title'>
               Goming
             </div>
           </div>
-
-          {/* 카드 뒷면 영역 */}
-          <div className='outer-card card-back'>
-            <h1>
-              {item.index}
-            </h1>
-            <p>{item.q}</p>
-          </div>
-
         </div>
       </CSSTransition>
       
