@@ -1,4 +1,5 @@
-import DefaultHeader from "components/auth/DefaultHeader";
+
+import Header from "components/auth/Header";
 import { useLocation } from "react-router";
 
 const Answer = () => {
@@ -14,7 +15,7 @@ const Answer = () => {
   return (
     <>
       <div>
-        <DefaultHeader />
+        <Header />
         
       </div>
     

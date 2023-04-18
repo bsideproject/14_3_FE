@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 import canvasToImage from 'canvas-to-image'
 import Masonry from 'react-masonry-css'
 import 'assets/pages/onepager/onepagermain.css'
-import DefaultHeader from 'components/auth/DefaultHeader'
+import Header from 'components/auth/Header';
 const testData = [
   {index: 1, content: 'contentsssssssssssssssssssss'},
   {index: 2, content: 'contensssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssstssssssss'},
@@ -49,7 +49,7 @@ const OnePagerMain = () => {
   }
   return (
     <>
-      <DefaultHeader />
+      <Header title={'원페이저 다운로드'} />
       <h1 style={{marginTop: '20px'}}>Onepager</h1>
       <div>
         <button onClick={onepager}>원페이저다운로드</button>
