@@ -168,11 +168,6 @@ const Register: React.FC = () => {
         alert("중복된 닉네임입니다.");
         document.getElementById("email")?.focus();
       } else {
-        console.log(year);
-
-        console.log(month);
-
-        console.log(day);
         await fetch
           .post("/user/signUp", {
             eml: email,
