@@ -69,6 +69,7 @@ table {
 .inside-container{
 	background-color: #F2F1ED;
   padding: 0 16px; /*고정 padding*/
+	padding-top: 60px;
   min-height: 100vh;
 	position: relative;
 }
@@ -79,6 +80,7 @@ table {
 	--wgray12: #3D3938;					/* 본문에 주로 사용 */
 	--wgray11: #49484C;
 	--wgray10: #5E5C5A;
+	--wgray09: #7A7670;
 	--wgray08: #96938C;
 	--wgray07: #AEABA2;
 	--wgray06: #C9C6C0;
@@ -152,6 +154,7 @@ html, body, #root {
 	letter-spacing: -0.025em;
 }
 .caption1-bold {
+	font-size: 12px;
 	font-weight: 700;
 	line-height: 16px;
 	letter-spacing: -0.025em;

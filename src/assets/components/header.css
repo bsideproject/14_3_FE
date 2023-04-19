@@ -1,26 +1,26 @@
 /** 헤더 공통 **/
 .header {
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 60px;
   display: flex;
   font-weight: bold;
   color: #121212;
   border-bottom: 1px solid #E9E7E2;
+  margin-left: -16px;
 }
-/** default header **/
-.default-header-textarea{
-  width: 100%;
-  padding: 19px 0 0 0 ;
+/* 로고 */
+.header-logo-area{
+  flex: 1;
+  padding-top: 18px;
+  padding-left: 16px;
 }
-.default-header-text {
-  font-size: 22.4px;
-  font-weight: 700;
-  font-style: bold;
+.header-logo-area img {
+  vertical-align: top;
 }
-
 /** arrow custom header **/
 .login-header {
-
   font-size: 18px;
   justify-content: center;
   vertical-align: middle;
@@ -28,19 +28,22 @@
   border-bottom: 1px solid #E9E7E2;
 }
 .go-back-iconimg{
-  width: 20px;
-  height: 100%;
+  padding-top: 24px;
+  padding-left: 24px;
 }
 .go-back-iconimg:hover{
   cursor: pointer;
+}
+.go-back-iconimg img {
+  vertical-align: top;
 }
 .header-text{
   flex: 1;
 }
 .header-text > p {
   width: fit-content;
-  padding: 17px auto 17px 162px;
   margin: 0 auto;
+  padding-right: 24px;
 }
 
 
