@@ -1,12 +1,16 @@
 import testRegisterStore from "store/modules/TestRegister";
+import Auth from "store/modules/Auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "components/auth/Header";
 import { InputActionMeta } from "react-select";
 import SelectBox from "components/common/SelectBox";
+import Footer from "components/Footer";
 
 const Mypage: React.FC = () => {
-  const { registerInfo, updateId } = testRegisterStore((state) => state);
+  const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
+  const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>(registerInfo[0].email);
   const [nickName, setNickName] = useState<string>(registerInfo[0].nickName);
   const [password, setPassword] = useState<string>(registerInfo[0].password);
@@ -25,6 +29,7 @@ const Mypage: React.FC = () => {
   const [month, setMonth] = useState<string>();
   const [day, setDay] = useState<string>();
 
+  const [emailAgree, setEmailAgree] = useState<boolean>(false);
   const handleGenderCheck = (e: any) => {
     setGender(
       e.target.value === "M" ? true : e.target.value === "F" ? false : null
@@ -97,11 +102,14 @@ const Mypage: React.FC = () => {
   const handleDayUpdate = (e: any) => {
     setDay(e.value);
   };
+
+  const handleEmailAgree = (e: any) => {
+    setEmailAgree(!emailAgree);
+  };
   return (
     <>
       <div className="register-main">
         <Header title="개인 정보 관리" />
-
         <div className="register-box margintop-32">
           <div>닉네임</div>
           <input
@@ -114,6 +122,7 @@ const Mypage: React.FC = () => {
             // onBlur={handleNickNameBlur}
             value={nickName}
             maxLength={30}
+            disabled={!isInfoChange}
           />
         </div>
         <div className="register-box margintop-36">
@@ -128,6 +137,7 @@ const Mypage: React.FC = () => {
             // onBlur={handleNickNameBlur}
             value={email}
             maxLength={30}
+            disabled={!isInfoChange}
           />
         </div>
         <div className="register-flex-column-gap0 margintop-36">
@@ -147,6 +157,7 @@ const Mypage: React.FC = () => {
               onBlur={handlePasswordBlur}
               value={password}
               maxLength={30}
+              disabled={!isInfoChange}
             />
             {passwordErrorChk === true ? (
               <>
@@ -170,7 +181,6 @@ const Mypage: React.FC = () => {
             <></>
           )}
         </div>
-
         <div className="register-flex-column-gap10 margintop-32">
           <div>성별(선택)</div>
           <div>
@@ -181,6 +191,7 @@ const Mypage: React.FC = () => {
               type="radio"
               checked={gender === true}
               onChange={handleGenderCheck}
+              disabled={!isInfoChange}
             />
             <label htmlFor="male" className="register-gender-label">
               남성
@@ -192,6 +203,7 @@ const Mypage: React.FC = () => {
               type="radio"
               checked={gender === false}
               onChange={handleGenderCheck}
+              disabled={!isInfoChange}
             />
             <label className="register-gender-label" htmlFor="feMale">
               여성
@@ -203,6 +215,7 @@ const Mypage: React.FC = () => {
               type="radio"
               checked={gender === null}
               onChange={handleGenderCheck}
+              disabled={!isInfoChange}
             />
             <label className="register-gender-label" htmlFor="feMale">
               선택안함
@@ -216,52 +229,49 @@ const Mypage: React.FC = () => {
               handleYaerUpdate={handleYaerUpdate}
               handleMonthUpdate={handleMonthUpdate}
               handleDayUpdate={handleDayUpdate}
+              disabled={!isInfoChange}
             />
           </div>
         </div>
-        <input
-          type="password"
-          placeholder="비밀번호 입력"
-          id="password"
-          style={{ background: passwordLengthChk ? "" : "red" }}
-          onChange={handlePasswordUpdate}
-          onBlur={handlePasswordBlur}
-          value={password}
-          readOnly={modifyStatus ? false : true}
-          maxLength={30}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="닉네임"
-          id="nickName"
-          style={{ background: nickNameLengthChk ? "" : "red" }}
-          onChange={handlenickNameUpdate}
-          onBlur={handleNickNameBlur}
-          value={nickName}
-          readOnly={modifyStatus ? false : true}
-          maxLength={30}
-        />
-        <button type="button">중복 체크(미구현)</button>
-        <br />
-        <div>생년월일 : {birthDt}</div>
-        <br />
-        <div>성별 : {gender === true ? "남자" : "여자"}</div>
-        <br />
+        <div className="register-flex-row-gap0 margintop-32">
+          <input
+            type="checkbox"
+            className="register-email-check-box"
+            name="rememberme"
+            id="emailAgree"
+            checked={emailAgree}
+            onChange={handleEmailAgree}
+          />
+          <label htmlFor="emailAgree" className="body3-regular marginleft-7">
+            이메일 수신 동의(선택)
+          </label>
+        </div>
+        <div className="caption1-regular margintop-8">
+          *이메일 수신을 동의하시면, 매월 말 월간 회고를 위한 원페이저를
+          보내드립니다.
+        </div>
         {/* <button type="button">저장</button> */}
         {modifyStatus === false ? (
-          <button type="button" onClick={handleModify}>
-            회원정보수정
+          <button
+            className="register-button margintop-48"
+            style={{ width: "100%" }}
+            onClick={() => {
+              navigate("/password-check");
+            }}
+          >
+            수정하기
           </button>
         ) : (
-          <button type="button" onClick={handleComplete}>
+          <button
+            type="submit"
+            className="register-button"
+            style={{ width: "100%", marginTop: "64px" }}
+          >
             완료
           </button>
         )}
-        <button type="button" onClick={handleCheck}>
-          만들어진 회원 체크
-        </button>
       </div>
+      <Footer type={false} />
     </>
   );
 };

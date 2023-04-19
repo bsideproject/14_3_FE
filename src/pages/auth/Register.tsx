@@ -3,9 +3,7 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "assets/pages/auth/register.css";
 import fetch from "utils/fetch";
-import Select from "react-select";
-import AlertText from "components/ToastPopup";
-import AlertTextPopup from "components/AlertTextPopup";
+
 import SelectBox from "components/common/SelectBox";
 const Register: React.FC = () => {
   const ReconfirmRef = useRef(null);

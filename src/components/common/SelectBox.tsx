@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Select from "react-select";
 
 const SelectBox = React.memo(
@@ -7,6 +7,7 @@ const SelectBox = React.memo(
     handleYaerUpdate,
     handleMonthUpdate,
     handleDayUpdate,
+    disabled = false,
     userYear = null,
     userMonth = null,
     userDay = null,
@@ -14,6 +15,7 @@ const SelectBox = React.memo(
     handleYaerUpdate: any;
     handleMonthUpdate: any;
     handleDayUpdate: any;
+    disabled?: boolean;
     userYear?: string | null;
     userMonth?: string | null;
     userDay?: string | null;
@@ -67,7 +69,7 @@ const SelectBox = React.memo(
       month: [{ value: userMonth || "01", label: userMonth || "01" }],
       day: [{ value: userDay || "01", label: userDay || "01" }],
     });
-    useEffect(() => {
+    useLayoutEffect(() => {
       setTodayDate();
     }, []);
     return (
@@ -78,7 +80,22 @@ const SelectBox = React.memo(
           placeholder="년도"
           onChange={handleYaerUpdate}
           defaultValue={calendar.year[0]}
+          isDisabled={disabled}
           // styles={styles}
+          styles={{
+            control: (styles) => ({
+              ...styles,
+              width: "auto",
+              height: "48px",
+              fontWeight: 400,
+              fontSize: "14px",
+              border: "1px solid #e9e7e2",
+              borderRadius: "8px",
+            }),
+          }}
+          components={{
+            IndicatorSeparator: () => null,
+          }}
         />
         <Select
           className="register-selectBox"
@@ -86,6 +103,21 @@ const SelectBox = React.memo(
           onChange={handleMonthUpdate}
           defaultValue={calendar.month[0]}
           placeholder="월"
+          isDisabled={disabled}
+          styles={{
+            control: (styles) => ({
+              ...styles,
+              width: "auto",
+              height: "48px",
+              fontWeight: 400,
+              fontSize: "14px",
+              border: "1px solid #e9e7e2",
+              borderRadius: "8px",
+            }),
+          }}
+          components={{
+            IndicatorSeparator: () => null,
+          }}
         />
         <Select
           className="register-selectBox"
@@ -93,6 +125,21 @@ const SelectBox = React.memo(
           onChange={handleDayUpdate}
           defaultValue={calendar.day[0]}
           placeholder="일"
+          isDisabled={disabled}
+          styles={{
+            control: (styles) => ({
+              ...styles,
+              width: "auto",
+              height: "48px",
+              fontWeight: 400,
+              fontSize: "14px",
+              border: "1px solid #e9e7e2",
+              borderRadius: "8px",
+            }),
+          }}
+          components={{
+            IndicatorSeparator: () => null,
+          }}
         />
       </>
     );

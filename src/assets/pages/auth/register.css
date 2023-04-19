@@ -223,25 +223,7 @@
 .register-selectBox {
   width: 100%;
 }
-.css-13cymwt-control {
-  width: auto;
-  height: 48px;
-  font-weight: 400;
-  font-size: 14px;
-  border: 1px solid #e9e7e2;
-  border-radius: 8px;
-}
-.css-t3ipsp-control {
-  width: auto;
-  height: 48px;
-  font-weight: 400;
-  font-size: 14px;
-  border: 1px solid #e9e7e2;
-  border-radius: 8px;
-}
-.css-1u9des2-indicatorSeparator {
-  width: 0px !important;
-}
+
 .register-all-agree {
   /* font-weight: 700; */
   /* font-size: 16px; */
