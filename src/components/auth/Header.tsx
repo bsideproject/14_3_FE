@@ -2,6 +2,7 @@ import LeftVector from 'assets/images/Vector.png';
 import 'assets/components/header.css'
 import { useNavigate } from 'react-router-dom';
 import MainLogo from 'assets/images/main-goming-logo.png'
+import LeftArrow from 'assets/images/left-arrow.png'
 /**
  * @설명 Header 컴포넌트
  * @작성자 김상훈
@@ -24,7 +25,7 @@ const Header = ({isLeftArrow = true, title}: HEADER_INFO) => {
         {// Left Arrow
           isLeftArrow && (
             <div className='go-back-iconimg' onClick={goBack}>
-              <img src={LeftVector} alt="뒤로가기" width={9} height={16} />
+              <img src={LeftArrow} alt="뒤로가기" width={24} height={24} />
             </div>
           )
         }

@@ -46,7 +46,9 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
                 showFront ? (
                   <img src={item.img} alt={item.desc} width={148} height={136} className="card-scale"/>
                 ) : (
-                  <img src={item.aftrImg} alt={item.desc} width={148} height={136} className='card-fade' />
+                  <div className='selected-card-area card-fade'>
+                    <img src={item.aftrImg} alt={item.desc} width={148} height={136} className='card-fade' />
+                  </div>
                 )
               }
             </div>
