@@ -1,8 +1,8 @@
-
 import Header from "components/auth/Header";
 import { useLocation } from "react-router";
 import 'assets/pages/main/answerContents.css'
 import AnswerNowStep from "components/main/AnswerNowStep";
+
 
 const Answer = () => {
   const location = useLocation();
@@ -34,7 +34,6 @@ const Answer = () => {
           </div>
         </div>
       </div>
-    
     </>
   )
 }

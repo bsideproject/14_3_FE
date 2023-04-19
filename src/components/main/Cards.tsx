@@ -20,7 +20,7 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
       //   itemIndex: item.index,
       // }
       //fetch('/api/selectCard', selectedInfo)
-
+      
       setTimeout(() => {
         navigate('/answer', 
           {
