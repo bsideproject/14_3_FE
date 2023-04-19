@@ -6,18 +6,8 @@ import fetch from "utils/fetch";
 import Select from "react-select";
 import AlertText from "components/ToastPopup";
 import AlertTextPopup from "components/AlertTextPopup";
+import SelectBox from "components/common/SelectBox";
 const Register: React.FC = () => {
-  const initCalendar = useMemo(() => {
-    const date = new Date();
-    const nowYear = date.getFullYear();
-    const nowMonth = ("0" + (1 + date.getMonth())).slice(-2);
-    const nowDay = ("0" + date.getDate()).slice(-2);
-    return [
-      { value: String(nowYear), label: String(nowYear) },
-      { value: nowMonth, label: nowMonth },
-      { value: nowDay, label: nowDay },
-    ];
-  }, []);
   const ReconfirmRef = useRef(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
@@ -25,7 +15,7 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordReconfirm, setPasswordReconfirm] = useState<string>("");
   const [birthDt, setBirthDt] = useState<string>("");
-  const [gender, setGender] = useState<boolean>(true);
+  const [gender, setGender] = useState<boolean | null>(null);
 
   const [emailChk, setEmailChk] = useState<boolean>(false);
   const [emailFormChk, setEmailFormChk] = useState<boolean>(true); //* 이메일 형식체크만 개발완료
@@ -41,29 +31,15 @@ const Register: React.FC = () => {
   const [authNumber, setAuthNumber] = useState<string>(""); // 인증코드 미완료
   const [authNumberChk, setAuthNumberChk] = useState<boolean>(true); // * 이메일 인증코드 입력 체크
 
-  const [year, setYear] = useState<string>(initCalendar[0].value);
-  const [month, setMonth] = useState<string>(initCalendar[1].value);
-  const [day, setDay] = useState<string>(initCalendar[2].value);
+  const [year, setYear] = useState<string>();
+  const [month, setMonth] = useState<string>();
+  const [day, setDay] = useState<string>();
   const [emailAgree, setEmailAgree] = useState<boolean>(false);
 
   const [allCheck, setAllCheck] = useState<boolean>(false);
   const [checkAgeAgree, setCheckAgeAgree] = useState<boolean>(false);
   const [checkInfoAgree, setCheckInfoAgree] = useState<boolean>(false);
   const [checkServiceAgree, setCheckServiceAgree] = useState<boolean>(false);
-
-  const [calendar, setCalendar] = useState<{
-    year: { value: string; label: string }[];
-    month: { value: string; label: string }[];
-    day: { value: string; label: string }[];
-  }>({
-    year: [],
-    month: [],
-    day: [],
-  });
-
-  useEffect(() => {
-    setTodayDate(initCalendar);
-  }, []);
 
   function isValidEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -79,32 +55,6 @@ const Register: React.FC = () => {
     }
   }
 
-  const setTodayDate = (
-    initCalendar: {
-      value: string;
-      label: string;
-    }[]
-  ) => {
-    // cal.current = [String(year), month, day];
-    const yearList = [];
-    const monthList = [];
-    const dayList = [];
-    // 년도 구하기
-    for (let i = Number(initCalendar[0].value); i >= 1931; i--) {
-      yearList.push({ value: String(i), label: String(i) });
-    }
-    //월 구하기
-    for (let i = 1; i <= 12; i++) {
-      const input = i > 9 ? String(i) : "0" + i;
-      monthList.push({ value: input, label: input });
-    }
-    //일 구하기
-    for (let i = 1; i <= 31; i++) {
-      var input = i > 9 ? String(i) : "0" + i;
-      dayList.push({ value: input, label: input });
-    }
-    setCalendar({ year: yearList, month: monthList, day: dayList });
-  };
   const handleEmailUpdate = (e: any) => {
     setEmail(e.target.value);
   };
@@ -150,7 +100,6 @@ const Register: React.FC = () => {
   };
 
   const handlePasswordReconfirmUpdate = (e: any) => {
-    console.log(ReconfirmRef);
     setPasswordReconfirm(e.target.value);
   };
 
@@ -185,7 +134,9 @@ const Register: React.FC = () => {
     // *
   };
   const handleGenderCheck = (e: any) => {
-    setGender(e.target.value === "M" ? true : false);
+    setGender(
+      e.target.value === "M" ? true : e.target.value === "F" ? false : null
+    );
   };
   const handleRegister = async (e: any): Promise<void> => {
     try {
@@ -199,10 +150,12 @@ const Register: React.FC = () => {
       } else if (isValidEmail()) {
         // 이메일 유효성 검사
         document.getElementById("email")?.focus();
-      } else if (authNumber.length === 0) {
-        setAuthNumberChk(false);
-        document.getElementById("authNumber")?.focus();
-      } else if (passwordErrorChk) {
+      }
+      // else if (authNumber.length === 0) {
+      //   setAuthNumberChk(false);
+      //   document.getElementById("authNumber")?.focus();
+      // }
+      else if (passwordErrorChk) {
         document.getElementById("password")?.focus();
       } else if (passwordReconfirmSuccessChk) {
         document.getElementById("passwordReconfirm")?.focus();
@@ -215,6 +168,11 @@ const Register: React.FC = () => {
         alert("중복된 닉네임입니다.");
         document.getElementById("email")?.focus();
       } else {
+        console.log(year);
+
+        console.log(month);
+
+        console.log(day);
         await fetch
           .post("/user/signUp", {
             eml: email,
@@ -526,7 +484,7 @@ const Register: React.FC = () => {
                 onChange={handleGenderCheck}
               />
               <label htmlFor="male" className="register-gender-label">
-                남성
+                여성
               </label>
               <input
                 className="register-gender-box marginleft-35"
@@ -537,14 +495,19 @@ const Register: React.FC = () => {
                 onChange={handleGenderCheck}
               />
               <label className="register-gender-label" htmlFor="feMale">
-                여성
+                남성
               </label>
             </div>
           </div>
           <div className="register-flex-column-gap8 margintop-35">
             <div>생년월일</div>
             <div className="register-flex-row-gap8">
-              <Select
+              <SelectBox
+                handleYaerUpdate={handleYaerUpdate}
+                handleMonthUpdate={handleMonthUpdate}
+                handleDayUpdate={handleDayUpdate}
+              />
+              {/* <Select
                 className="register-selectBox"
                 options={calendar.year}
                 placeholder="년도"
@@ -562,7 +525,7 @@ const Register: React.FC = () => {
                 options={calendar.day}
                 onChange={handleDayUpdate}
                 placeholder="일"
-              />
+              /> */}
               {/* <input
                 type="year"
                 placeholder="생년월일 입력"
