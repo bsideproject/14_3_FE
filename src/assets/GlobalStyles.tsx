@@ -67,7 +67,7 @@ table {
 	margin: 0 auto;
 }
 .inside-container{
-	background-color: #F2F1ED;
+	background-color: #FAF9F6;
   padding: 0 16px; /*고정 padding*/
 	padding-top: 60px;
   min-height: 100vh;
