@@ -1,0 +1,26 @@
+.answer-wrap {
+  margin-top: 32px;
+}
+
+.question-wrap {
+  width: 100%;
+  height: 216px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #F2F1ED;
+  border: 1px solid #E9E7E2;
+  border-radius: 8px;
+}
+
+.question-content{
+  margin: 16px;
+  color: var(--wgray12);
+}
+
+/* 답변영역 */
+.answer-content{
+  border: 1px solid #E9E7E2;
+  background: #F2F1ED;
+  height: 240px;
+}

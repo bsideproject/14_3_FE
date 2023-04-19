@@ -1,7 +1,7 @@
-import DefaultHeader from "components/auth/DefaultHeader"
 import { useNavigate } from "react-router-dom"
 import 'assets/pages/auth/myPageCategoryList.css'
 import RightVector from 'assets/images/RightVector.png'
+import Header from "components/auth/Header"
 
 const categoryList = [ //카테고리목록
   { text: '개인정보관리', location: '/mypage' },
@@ -28,7 +28,7 @@ const MyPageCategoryList = () => {
     <>
       <div className="padding-bottom-32px">
         {/* header */}
-        <DefaultHeader /> 
+        <Header isLeftArrow={false}/> 
 
         {/* welcome & logout */}
         <div className="welcome-logout">

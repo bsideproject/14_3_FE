@@ -1,0 +1,18 @@
+.footer-area{
+  position: absolute;
+  bottom: 0;
+  font-weight: 100;
+}
+.mb-12 {
+  margin-bottom: 12px;
+}
+.mb-40 {
+  margin-bottom: 40px;
+}
+.footer-service-area{
+  display: flex;
+  gap: 12px;
+}
+.footer-title {
+  margin-bottom: 16.53px;
+}
