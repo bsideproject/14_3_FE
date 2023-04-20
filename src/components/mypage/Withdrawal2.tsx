@@ -84,7 +84,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               <img src={bullet} alt="*" style={{marginRight: '4px'}} width={4} height={4}/>
             </div>
             <p className='withdrawal-font-size-12 withdrawal-small-info'>
-              불편사항을 알려주시면, 고밍이 더 나은 서비스를 만드는 데에 큰 도움이 됩니다.
+              불편사항을 알려주시면, <br />고밍이 더 나은 서비스를 만드는 데에 큰 도움이 됩니다.
             </p>
           </div>
           <div className="withdrawal-checkbox-wrap">
@@ -121,7 +121,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               value={withdrawalText}
               onChange={withdrawalTextKeyupHandler}
               className="withdrawal-textarea" cols={30} rows={10} 
-              placeholder="기타 탈퇴 이유를 작성해주시면, 서비스 개선에 많은 도움이 됩니다."
+              placeholder="맘에 드시는 이유가 없다면, 직접 이유를 작성해주세요."
               maxLength={150} 
               style={{border:
                 '1px solid' + (withdrawalTextError === true ? '#EA4343' : '#E9E7E2' )
@@ -136,7 +136,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
                   }}
                   className="withdrawal-text-error"
                   >
-                    기타 선택시 답변을 입력해주셔야 합니다.</p>
+                    기타 선택 시, 답변을 입력해주셔야 합니다.</p>
                 </div>
                 <p>{withdrawalText.length}/150</p>
               </div>
