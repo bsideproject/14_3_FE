@@ -22,19 +22,53 @@
 
 /* 답변영역 */
 .answer-content{
-  border: 1px solid #E9E7E2;
+  width: 388px;
+  /* border: 1px solid #E9E7E2;
   background: #F2F1ED;
   height: 240px;
-  padding: 16px;
+  padding: 16px; */
 }
 .answer-content textarea {
-  resize: none;
-  border: 1px solid var(--wgray04);
-  border-radius: 8px;
+  width: 356px;
 }
-.answer-content textarea::placeholder {
-  color: var(--wgray09);
+/* 에러 및 글자수 문구 */
+.answer-comment-area{
+  display: flex;
 }
 .answer-text-count{
-  color: var();
+  color: var(--wgray08);
+}
+.answer-error {
+  color: var(--error);
+}
+.answer-error-text{
+  flex: 1;
+}
+
+/* 버튼영역 */
+.answer-btn-area{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 48px;
+}
+.answer-btn-area button {
+  height: 48px;
+  width: 100%;
+  border-radius: 8px;
+}
+.answer-btn-confirm {
+  background-color: var(--wgray12);
+  color: var(--wgray01);
+}
+.answer-btn-cancel{
+  background-color: var(--wgray01);
+  color: var(--wgray12);
+  border: 1px solid var(--wgray12);
+}
+/* disabled */
+.answer-btn-area button:disabled { 
+  color: var(--wgray01);
+  background-color: var(--wgray06);
+  border: none;
 }

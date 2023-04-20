@@ -33,10 +33,6 @@ button:hover {
   top: 30%;
 }
 .modal-text-area > p{
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: -0.025em;
   text-align: center;
 }
 .modal-text-area > p:last-of-type {
@@ -64,8 +60,12 @@ button:hover {
 /* confirm  */
 .confirm-btn-area{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 8px;
+}
+.btns-isflex {
+  flex-direction: row;
+  justify-content: space-between;
 }
 .confirm-btn-area > button{
   width: 100%;
@@ -77,12 +77,12 @@ button:hover {
   line-height: 20px;
   letter-spacing: -0.025em;
 }
-.modal-btn-confirm {
+.modal-btn-confirm-cancel{
   background-color: #FFFFFF;
   color: #3D3938;
   border: 1px solid #3D3938;
 }
-.modal-btn-confirm-cancel {
+.modal-btn-confirm {
   background-color: #3D3938;
   color: #FFFFFF;
 }
