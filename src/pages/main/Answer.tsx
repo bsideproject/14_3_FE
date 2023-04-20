@@ -2,6 +2,7 @@ import Header from "components/auth/Header";
 import { useLocation } from "react-router";
 import 'assets/pages/main/answerContents.css'
 import AnswerNowStep from "components/main/AnswerNowStep";
+import { useState } from "react";
 
 
 const Answer = () => {
@@ -14,6 +15,7 @@ const Answer = () => {
     index: itemIndex,
     q: '질문입니다?'
   }
+
   return (
     <>
       <div>
@@ -30,7 +32,8 @@ const Answer = () => {
 
           {/* 답변영역 */}
           <div className="answer-content">
-            <textarea name="" id="" cols={30} rows={10} ></textarea>
+            <textarea name="" id="" cols={30} rows={10} placeholder="클릭해서 나의 답변을 작성해보세요!"></textarea>
+            <p className="answer-text-count"></p>
           </div>
         </div>
       </div>

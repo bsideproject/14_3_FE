@@ -11,9 +11,11 @@
   background-color: #F2F1ED;
   border: 1px solid #E9E7E2;
   border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .question-content{
+  height: 112px;
   margin: 16px;
   color: var(--wgray12);
 }
@@ -23,4 +25,16 @@
   border: 1px solid #E9E7E2;
   background: #F2F1ED;
   height: 240px;
+  padding: 16px;
+}
+.answer-content textarea {
+  resize: none;
+  border: 1px solid var(--wgray04);
+  border-radius: 8px;
+}
+.answer-content textarea::placeholder {
+  color: var(--wgray09);
+}
+.answer-text-count{
+  color: var();
 }
