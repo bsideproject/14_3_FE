@@ -9,7 +9,6 @@ import useAuthStore from "store/modules/Auth";
 import AlertTextPopup from "components/AlertTextPopup";
 import { useNavigate } from "react-router-dom";
 
-
 const Answer = () => {
   /******************************************************************/
   /* @desc 질문                                                     */
@@ -24,7 +23,6 @@ const Answer = () => {
     index: itemIndex,
     q: '질문입니다?'
   }
-  
 
   /******************************************************************/
   /* @desc 답변                                                     */
@@ -155,6 +153,7 @@ const Answer = () => {
               onClick={handleSave}
               >저장하기</button>
             <button type="button" className="answer-btn-cancel" onClick={()=>setSkipPopup(true)}>이번 질문은 넘어갈래요</button>
+
           </div>
         </div>
       </div>
