@@ -177,6 +177,21 @@ html, body, #root {
 	line-height: 12px;
 	letter-spacing: -0.025em;
 }
+
+//textarea
+.common-textarea {
+	height: 240px;
+	padding: 16px;
+	resize: none;
+	background-color: var(--wgray03);
+	margin-bottom: 8px;	
+  border: 1px solid var(--wgray04);
+  border-radius: 8px;
+	color: var(--wgray12);
+}
+.common-textarea::placeholder {
+	color: var(--wgray09);
+}
 `;
 
 export default GlobalStyle;
