@@ -18,20 +18,20 @@ const Withdrawal1 = ({step, setStep}: WITHDRAWAL) => {
         {/* 회원탈퇴 공통 텍스트 */}
         <WithdrawalInformation /> 
         {/* 본문 */}
-        <div className='withdrawal-content-info'>
-          <p className='withdrawal-font-size-16 color-wgray12  word-break-keep-all'>
+        <div className='withdrawal-content-info color-wgray12'>
+          <p className='body2-bold  word-break-keep-all'>
             고밍에서 작성하신 모든 질문과 답변이 삭제되며,<br />
             삭제된 정보는 다시 복구할 수 없습니다."
           </p>
-          <p className='withdrawal-font-size-16 color-wgray12  word-break-keep-all'  style={{marginTop: "12px"}}>
+          <p className='body2-bold word-break-keep-all' style={{marginTop: "12px"}}>
             탈퇴를 계속 진행하시겠습니까?
           </p>
           
-          <div className='withdrawal-info word-break-keep-all'>
+          <div className='caption1-regular withdrawal-info word-break-keep-all'>
             <div>
               <img src={bullet} alt="*" style={{marginRight: '4px'}} width={4} height={4}/>
             </div>
-            <p className='withdrawal-font-size-12 withdrawal-small-info'>
+            <p className='caption1-regular withdrawal-small-info'>
               탈퇴하시기 전에 간직하고 싶은 답변이 있다면,<br/>
               <strong>고밍 기록</strong>에서 그간의 기록을 다운받아 주세요.
             </p>

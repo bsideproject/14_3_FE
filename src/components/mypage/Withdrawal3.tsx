@@ -13,10 +13,10 @@ const Withdrawal3 = ({step, setStep}: WITHDRAWAL) => {
       <div className='withdrawal-content'>
         {/* 회원탈퇴 공통 텍스트 */}
         <WithdrawalInformation /> 
-        <div className='withdrawal-content-info'>
-          <p className='withdrawal-font-size-16 word-break-keep-all'>
-            그동안 고밍을 사용하시면서
-            ‘나’를 돌아보고 하루하루를 의미있는 습관으로
+        <div className='body2-bold withdrawal-content-info'>
+          <p className='word-break-keep-all mb-12'>
+            그동안 고밍을 사용하시면서<br/>
+            ‘나’를 돌아보고 하루하루를 의미있는 습관으로<br/>
             채워나가는 경험을 하셨길 바랍니다. 
           </p>
           <p className='withdrawal-font-size-16 word-break-keep-all' style={{marginTop: '12px'}}>
@@ -27,8 +27,8 @@ const Withdrawal3 = ({step, setStep}: WITHDRAWAL) => {
           <div style={{marginTop: '12px'}}>
             <textarea 
               id="withdrawalTextarea"
-              className="withdrawal-font-size-14 withdrawal-textarea" cols={30} rows={10} 
-              placeholder="글자 수 제한없이, 고밍에게 하고 싶은 말을 자유롭게 남겨 주세요.&#13;&#10;좋았던 점, 개선되었으면 하는 점 등, 뭐든지 좋아요."
+              className="body3-regular withdrawal-textarea" cols={30} rows={10} 
+              placeholder="글자 수 제한없이, 고밍에게 하고 싶은 말을 자유롭게&#13;&#10;남겨 주세요.&#13;&#10;좋았던 점, 개선되었으면 하는 점 등, 뭐든지 좋아요."
               maxLength={150} 
               ></textarea>
           </div>

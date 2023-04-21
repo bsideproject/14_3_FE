@@ -62,7 +62,7 @@ const WithdrawalMain = () => {
       }
       { //회원 탈퇴 완료시
         withdrawalCompleted === true ? (
-        <AlertTextPopup text='고밍의 탈퇴가 완료되었습니다.' text2="감사합니다!" callbackFunction={moveToMain} />
+        <AlertTextPopup strongText='고밍의 탈퇴가 완료되었습니다.' text="감사합니다!" callbackFunction={moveToMain} />
         ) : ''
       }
     </>

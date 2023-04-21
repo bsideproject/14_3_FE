@@ -14,7 +14,7 @@ const AlertTextPopup = ({strongText, text, text2, confirmText='확인', callback
   return (
     <>
       <div className="alert-bg" id='alertModal'>
-        <div className='padding-x-24 relative'>
+        <div className='relative'>
           <div className="modal">
             { strongText && (
               <h1 className='headline3' style={{textAlign:'center', wordBreak:'keep-all', marginBottom:'12px'}}>

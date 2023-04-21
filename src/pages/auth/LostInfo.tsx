@@ -31,7 +31,7 @@ const LostInfo = () => {
   }
   const handleEmailValue = ({target}:any) => { //keyup
     setEmail(target.value)
-    if(email.length < 4) {
+    if(target.value < 4) {
       setEmailVerify(false)
     } else {
       setEmailVerify(true)
@@ -53,21 +53,20 @@ const LostInfo = () => {
   return (
     <>
           <Header title="비밀번호 찾기" />
-          <div style={{height:'32px'}}></div>
           <form onSubmit={submitEmail}>
             <div className='inputArea'>
               <label htmlFor="email" className='login-label-text text-color'>이메일</label>
               <input type="email" autoComplete="true"  className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
             </div>
-            <div className='login-btn-area'>
+            <div className='lostinfo-btn-area'>
               <button type="submit" className='btn reset-password-btn'>비밀번호 초기화</button>
               <button type="button" className='btn goto-login-btn' onClick={()=>goToLogin()}>로그인하러 가기</button>
             </div>
             <div>
-              <p className="find-id-caption-text">
+              <p className="find-id-caption-text caption1-regular">
                 *비밀번호 초기화 버튼 클릭 시 기존에 설정한 비밀번호가 초기화되며, 회원가입 시 등록한 메일로 임시비밀번호를 전송해 드립니다.
               </p>
-              <p className="find-id-caption-text">
+              <p className="find-id-caption-text caption1-regular">
                 *임시비밀번호를 받지 못 했을 경우, 스팸메일함 혹은 프로모션함을 확인하시거나 비밀번호 초기화 버튼을 다시 한 번 눌러주세요.
               </p>
             </div>

@@ -11,7 +11,7 @@ const MainContent = () => {
     <>
       <div className="main-content-area">
         <Header isLeftArrow={false} /> {/* 헤더 */}
-        <TodayDate />      {/* 잔여 답변개수 */}
+        <TodayDate />      {/* 금일자, 사용자정보 */}
         <NowSelectionStep /> {/* 잔여 선택회수 */}
         <SelectionCard />  {/* 카드 4개 출력 */}
         <Footer type={false}/>

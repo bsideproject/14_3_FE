@@ -12,23 +12,22 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
     backgroundColor: `${bgColor}`,
     borderRadius: '8px',
     color: `${textColor}`,
-    padding: '17px 16px 17px ',
+    padding: '17px 16px 17px 16px',
     fontSize: '14px',
     fontWeight: 700,
     lineHeight: '20px',
     letter: '-2.5%',
-    maxWidth: '420px',
+    maxWidth: '100%',
     margin: '0 auto',
   } as React.CSSProperties;
 
   const styleAlertCoverDiv = {
     position: 'absolute',
     bottom: '64px',
-    width: '100%',
+    width: '380px',
     height: '64px',
     zIndex: '2',
-    padding: '0 auto',
-    alignItems: 'center'
+    alignItems: 'center',
   } as React.CSSProperties;
 
   return (
