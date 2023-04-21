@@ -10,7 +10,7 @@ import LostInfo from "pages/auth/LostInfo";
 import GlobalStyle from 'assets/GlobalStyles'
 import MyPageCategoryList from "pages/mypage/MyPageCategoryList";
 import WithdrawalMain from "pages/mypage/WithdrawalMain";
-import MainContent from "pages/MainContent";
+import MainContent from "pages/main/MainContent";
 import OnePagerMain from "pages/onpager/OnePagerMain";
 import Answer from "pages/main/Answer";
 
