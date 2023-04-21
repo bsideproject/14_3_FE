@@ -10,9 +10,10 @@
 .relative {
   position: relative;
   width: 100%;
-  max-width: 372px;
-  height: 100%;
-  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 button{
   outline: none;
@@ -20,17 +21,12 @@ button{
 button:hover {
   cursor: pointer;
 }
-.padding-x-24{
-  padding: 0 24px;
-}
 .modal, .confirm-modal {
-  width: 100%;
-  max-width: 324px;
+  max-width: 320px;
   border-radius: 16px;
   padding: 40px 24px;
   background-color: #FFFFFF;
-  position: absolute;
-  top: 30%;
+  color: var(--wgray12);
 }
 .modal-text-area > p{
   text-align: center;

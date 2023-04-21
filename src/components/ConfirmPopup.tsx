@@ -28,7 +28,7 @@ const ConfirmPopup = (
   return (
     <>
       <div className='alert-bg'> 
-        <div className='padding-x-24 relative'>
+        <div className='relative'>
           <div className='confirm-modal'>
             {/* 강조 텍스트 */}
             <div className='headline3' style={{textAlign:'center', marginBottom:'12px'}}>

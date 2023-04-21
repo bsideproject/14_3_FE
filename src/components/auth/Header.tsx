@@ -1,4 +1,3 @@
-import LeftVector from 'assets/images/Vector.png';
 import 'assets/components/header.css'
 import { useNavigate } from 'react-router-dom';
 import MainLogo from 'assets/images/main-goming-logo.png'

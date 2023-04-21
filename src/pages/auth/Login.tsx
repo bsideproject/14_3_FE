@@ -19,7 +19,7 @@ const Login:React.FC = () =>{
   const [password, setPassword] = useState<string>('')
   const [emailVerify, setEmailVerify] = useState<boolean>(false)
   const [passwordVerify, setPasswordVerify] = useState<boolean>(false)
-  const [rememberEmail, setRememberEmail] = useState<boolean>(true) //id저장여부 확인
+  const [rememberEmail, setRememberEmail] = useState<boolean>(false) //id저장여부 확인
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
   const [invalid, setInvalid] = useState<boolean>(true) //아이디비밀번호 일치x
 
@@ -102,7 +102,7 @@ const Login:React.FC = () =>{
   return (
     <>
       <Header title="로그인" />
-      <h1 className='startGomingText text-color'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
+      <h1 className='startGomingText text-color headline3'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
       <form onSubmit={loginAttempt}>
         <div className='inputArea'>
           <label htmlFor="email" className='login-label-text text-color'>이메일</label>
@@ -131,9 +131,9 @@ const Login:React.FC = () =>{
           {/* <button disabled type="button" className='login-btn' onClick={kakaoLogin}>Kakao Login Btn</button><br /> */}
         </div>
         <div className='link-btn-area'>
-          <Link className='link-btn' to="/register" type="button">회원가입</Link>
+          <Link className='link-btn caption1-regular' to="/register" type="button">회원가입</Link>
           <img src={RectangleDived} alt="|" width={1} height={12} className='dived-link-img'/>
-          <Link className='link-btn' to="/lost-info">비밀번호 찾기</Link>
+          <Link className='link-btn caption1-regular' to="/lost-info">비밀번호 찾기</Link>
         </div>
       </form>
     </>
