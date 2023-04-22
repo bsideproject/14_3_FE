@@ -31,35 +31,26 @@ const MyPageCategoryList = () => {
     <>
       <div className="categorylist-top">
         {/* header */}
-        {/* <Header isLeftArrow={false}/>  */}
         <div className="category-other-bg-color">
-          <div className='login-header header'>
-            <div className='header-logo-area'>
+          <div className='custom-login-header'>
+            <div className='custom-header-logo-area'>
               <img src={MainLogo} alt="Goming logo" />
             </div>
           </div>
-        {/* welcome & logout */}
-        <div className="welcome-logout">
 
-          {/* welcome */}
-          <div className="welcome-text"> 
-            <h3 className="headline3 ">반가워요!</h3>
-            <h3 className="headline3" style={{color: '#6E8DBA'}}>카페인중독자님</h3>
-          </div>
+          <div className="welcome-logout">
+            {/* welcome */}
+            <div className="welcome-text"> 
+              <h3 className="headline3">반가워요!</h3>
+              <h3 className="headline3" style={{color: '#6E8DBA'}}>카페인중독자님</h3>
+            </div>
 
-          {/* logout btn */}
-          <div className="logout-area">
-            <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
+            {/* logout btn */}
+            <div className="logout-area">
+              <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
+            </div>
           </div>
         </div>
-
-        </div>
-        
-        {/** 이메일 */}
-        {/* <div className="myinfo-email-area">
-          <p>madness-of-coffee@google.com</p>
-        </div> */}
-        
       </div>
 
       {/* 카테고리 영역 */}
@@ -72,9 +63,6 @@ const MyPageCategoryList = () => {
           </button>
         ))
         }
-
-
-
         
       </div>
       {/* Footer */}
