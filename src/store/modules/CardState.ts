@@ -6,7 +6,11 @@ const useCardState = create<CARD>((set) => ({
   /**
    * @desc 카드 선택 단계
    */
-  todayCardSelectStep: 2,
+  todayCardSelectStep: 4,
+  /**
+   * @desc 카드 선택 가능여부 (3번의 답변이 완료되었을 경우)
+   */
+  todayCardSelectStatus: false,
 
   /**
    * @desc 카드단계 업데이트
