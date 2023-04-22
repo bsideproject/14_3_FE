@@ -8,14 +8,25 @@ import fetch from "utils/fetch";
 import useAuthStore from "store/modules/Auth";
 import AlertTextPopup from "components/AlertTextPopup";
 import { useNavigate } from "react-router-dom";
+import useCardState from "store/modules/CardState";
 
 const Answer = () => {
-  /******************************************************************/
-  /* @desc 질문                                                     */
-  /******************************************************************/
   const location = useLocation();
   const navigate = useNavigate();
   const itemIndex:number = location.state.itemIndex;
+  const [answer, setAnswer] = useState<string>('')               //답변
+  const [isError, setIsError] = useState<boolean>(false)         //에러
+  const [btnActive, setBtnActive] = useState<boolean>(true)      //버튼제어
+  const [saveClicked, setSaveClicked] = useState<boolean>(false) //저장버튼 클릭여부
+  // const {isLogin} = useAuthStore((state) => state);           //사용자계정정보 조회 -> isLogin
+  const [isSaved, setIsSaved] = useState<boolean>(false)         //DB연동 성공여부 (저장성공)
+  const [needToLogin, setNeedToLogin] = useState<boolean>(false) //로그인안했을 경우 출력 confirm 팝업 처리
+  const {todayCardSelectStep, updateCardSelectStep} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
+
+  /******************************************************************/
+  /* @desc 질문                                                     */
+  /******************************************************************/
+
   //index, q
   //const result = fetch('/api/getCardInfo', itemIndex)  //카드 정보 조회
   // const cardInfo = result.data
@@ -27,10 +38,6 @@ const Answer = () => {
   /******************************************************************/
   /* @desc 답변                                                     */
   /******************************************************************/
-  const [answer, setAnswer] = useState<string>('')               //답변
-  const [isError, setIsError] = useState<boolean>(false)         //에러
-  const [btnActive, setBtnActive] = useState<boolean>(true)      //버튼제어
-
   //답변 작성 핸들러
   const handleAnswer = ({target}:any) => { 
     setAnswer(target.value)
@@ -49,11 +56,6 @@ const Answer = () => {
   /******************************************************************/
   /* @desc 답변 저장로직                                             */
   /******************************************************************/
-  const [saveClicked, setSaveClicked] = useState<boolean>(false) //저장버튼 클릭여부
-  // const {isLogin} = useAuthStore((state) => state);           //사용자계정정보 조회 -> isLogin
-  const [isSaved, setIsSaved] = useState<boolean>(false)         //DB연동 성공여부 (저장성공)
-  const [needToLogin, setNeedToLogin] = useState<boolean>(false) //로그인안했을 경우 출력 confirm 팝업 처리
-
   //1.답변 저장여부 체크 - confirm popup
   const handleSave = () => {
     setSaveClicked(true)  //confirmpopup 출력
@@ -99,6 +101,7 @@ const Answer = () => {
 
   //다음 질문 카드 뽑으러 가기
   const goToNextQuestion = () => {
+    updateCardSelectStep(todayCardSelectStep + 1)
     navigate('/main', {replace:true})   //새로운 카드 출력 or 캘린더 화면으로 이동처리
   }
 
@@ -173,13 +176,24 @@ const Answer = () => {
 
       {/* 2.로그인 했을 경우 출력 */
         isSaved && (
-          <AlertTextPopup 
-            strongText="작성하신 오늘의 회고가 저장되었습니다."     //강조문구
-            text="참 잘했어요:)"                                  //일반문구1
-            text2="이제 다음 질문을 선택하러 가볼까요?"            //일반문구2
-            confirmText="질문 선택하러 가기"                      //confirm 문구
-            callbackFunction={goToNextQuestion}                 //cancel 팝업 닫기
+          // 3번째 답변이었을 경우
+          todayCardSelectStep === 3 ? (
+              <AlertTextPopup 
+                strongText="작성하신 오늘의 회고가 저장되었습니다."    //강조문구
+                text="오늘 하루도 수고 많았어요 :)"                   //일반문구1
+                confirmText="고밍페이지로 돌아가기"                   //confirm 문구
+                callbackFunction={goToNextQuestion}                 //메인페이지로 이동
           />
+          ) : (
+            <AlertTextPopup 
+              strongText="작성하신 오늘의 회고가 저장되었습니다."     //강조문구
+              text="참 잘했어요:)"                                  //일반문구1
+              text2="이제 다음 질문을 선택하러 가볼까요?"             //일반문구2
+              confirmText="질문 선택하러 가기"                       //confirm 문구
+              callbackFunction={goToNextQuestion}                  //메인페이지로 이동
+            />
+          )
+          
         )
       }
 

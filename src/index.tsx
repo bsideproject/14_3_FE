@@ -13,6 +13,7 @@ import WithdrawalMain from "pages/mypage/WithdrawalMain";
 import MainContent from "pages/main/MainContent";
 import OnePagerMain from "pages/onpager/OnePagerMain";
 import Answer from "pages/main/Answer";
+import AnsweredList from "pages/main/AnsweredList";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -35,6 +36,7 @@ root.render(
             <Route path="/main" element={<MainContent />} />
             <Route path="/onepager" element={<OnePagerMain />} />
             <Route path="/answer" element={<Answer />} />
+            <Route path="/answered-list" element={<AnsweredList />} />
             
           </Routes>
 

@@ -25,12 +25,8 @@ const NowSelectionStep = () => {
     //TODO: db에서 값이 주어지지 않을 경우, 전체 카드 검색 조회로 분기처리 
     console.log(todayCardSelectStep)
     //3번 모두 답변했을 경우
-    if(todayAnswerStep === 3) {  
-     navigate('/my-calendar-list', {replace: true})  //현재페이지를 대체
-    } else {
-      //3번 미만 답변 혹은 처음 방문일 경우
-      getFourSelectCards()
-    }
+    //3번 미만 답변 혹은 처음 방문일 경우
+    getFourSelectCards()
 
     
   },[])
