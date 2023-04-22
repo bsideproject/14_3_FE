@@ -21,7 +21,8 @@ const Answer = () => {
   // const {isLogin} = useAuthStore((state) => state);           //사용자계정정보 조회 -> isLogin
   const [isSaved, setIsSaved] = useState<boolean>(false)         //DB연동 성공여부 (저장성공)
   const [needToLogin, setNeedToLogin] = useState<boolean>(false) //로그인안했을 경우 출력 confirm 팝업 처리
-  const {todayCardSelectStep} = useCardState()                   //카드답변횟수(총답변개수(2개일때 마지막))
+  const {todayCardSelectStep, updateCardSelectStep} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
+
   /******************************************************************/
   /* @desc 질문                                                     */
   /******************************************************************/
@@ -100,6 +101,7 @@ const Answer = () => {
 
   //다음 질문 카드 뽑으러 가기
   const goToNextQuestion = () => {
+    updateCardSelectStep(todayCardSelectStep + 1)
     navigate('/main', {replace:true})   //새로운 카드 출력 or 캘린더 화면으로 이동처리
   }
 
@@ -175,7 +177,7 @@ const Answer = () => {
       {/* 2.로그인 했을 경우 출력 */
         isSaved && (
           // 3번째 답변이었을 경우
-          todayCardSelectStep === 2 ? (
+          todayCardSelectStep === 3 ? (
               <AlertTextPopup 
                 strongText="작성하신 오늘의 회고가 저장되었습니다."    //강조문구
                 text="오늘 하루도 수고 많았어요 :)"                   //일반문구1

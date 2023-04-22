@@ -1,4 +1,5 @@
 import 'assets/components/navigationBar.css'
+import { useNavigate } from 'react-router-dom';
 import useNavBarStatus from 'store/modules/NavBar';
 
 /**
@@ -9,11 +10,22 @@ import useNavBarStatus from 'store/modules/NavBar';
  */
 const NavigationBar = () => {
   const { status, updateStatus } = useNavBarStatus((state) => state);
+  const navigate = useNavigate()
+  const moveToPage = (newStatus: number) => {
+    updateStatus(newStatus)
+    if (newStatus === 1) {
+      navigate('/main', {replace: true});
+    } else if (newStatus === 2) {
+      navigate('/answered-list', {replace: true});
+    } else if (newStatus === 3) {
+      navigate('/mypage-category', {replace: true});
+    }
+  }
   return (
     <>
       <div className="navbar-area">
         {/* 오늘의고밍 */}
-        <div className='navbar-item' onClick={() => updateStatus(1)}>
+        <div className='navbar-item' onClick={() => moveToPage(1)}>
           <TodyGomingSvg status={status === 1 ? true : false}/>
           <p 
             style={{color: status === 1 ? '': 'var(--wgray08)'}}
@@ -22,7 +34,7 @@ const NavigationBar = () => {
         </div>
 
         {/* 고밍 기록 */}
-        <div className='navbar-item' onClick={() => updateStatus(2)}>
+        <div className='navbar-item' onClick={() => moveToPage(2)}>
           <CalendarSvg status={status === 2 ? true : false}/>
           <p 
             style={{color: status === 2 ? '': 'var(--wgray08)'}}
@@ -31,7 +43,7 @@ const NavigationBar = () => {
         </div>
 
         {/* 고밍 설정 */}
-        <div className='navbar-item' onClick={() => updateStatus(3)}>
+        <div className='navbar-item' onClick={() => moveToPage(3)}>
           <SettingSvg status={status === 3 ? true : false}/>
           <p 
             style={{color: status === 3 ? '': 'var(--wgray08)'}}

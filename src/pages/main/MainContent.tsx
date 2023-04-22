@@ -14,9 +14,8 @@ import TodayAnswerCompleted from "components/main/TodayAnswerCompleted"
  * @일자 2023.04.11.
  */
 const MainContent = () => {
-  const {todayCardSelectStep} = useCardState()  //card State - zustand 사용하기
-  console.log('aaa', todayCardSelectStep)
-  if (todayCardSelectStep === 4) {  //3개의 답변이 완료되었을 때
+  const {todayCardSelectStatus} = useCardState()  //카드 선택 가능여부
+  if (!todayCardSelectStatus) {  //더이상 안될경우 (3개초과)
     return (
       <>
         <div className="main-content-area">

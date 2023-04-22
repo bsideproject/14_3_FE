@@ -16,6 +16,7 @@ function App() {
       <Link to="/withdrawal">회원탈퇴</Link><br/>
       <Link to="/main">메인화면(미완료)</Link><br/>
       <Link to="/onepager">원페이저(미완료)</Link><br/>
+      <Link to="/answered-list">메인화면-답변한목록</Link><br/>
 
       <div>
         <MyCalendar />
