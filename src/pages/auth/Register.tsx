@@ -437,7 +437,7 @@ const Register: React.FC = () => {
             <br />
             마이페이지에서 이메일 알람 수신 동의 여부를 변경할 수 있습니다.
           </div>
-          <div className="register-flex-column-gap8 register-auth-content  margintop-16">
+          <div className="register-flex-column-gap4 register-auth-content  margintop-16">
             <div className="body3-Bold">인증코드가 오지 않는다면?</div>
             <div className="caption1-regular">
               스팸메일함 혹은 프로모션함을 확인해보고 다시 한번 ‘인증하기’
