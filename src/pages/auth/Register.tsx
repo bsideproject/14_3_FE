@@ -39,7 +39,7 @@ const Register: React.FC = () => {
   const [checkAgeAgree, setCheckAgeAgree] = useState<boolean>(false);
   const [checkInfoAgree, setCheckInfoAgree] = useState<boolean>(false);
   const [checkServiceAgree, setCheckServiceAgree] = useState<boolean>(false);
-
+  const [needCheck, setNeedCheck] = useState<boolean>(false);
   function isValidEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -166,7 +166,10 @@ const Register: React.FC = () => {
         //미완료
         alert("중복된 닉네임입니다.");
         document.getElementById("email")?.focus();
+      } else if (!allCheck) {
+        setNeedCheck(true);
       } else {
+        setNeedCheck(false);
         await fetch
           .post("/user/signUp", {
             eml: email,
@@ -383,9 +386,9 @@ const Register: React.FC = () => {
             id={"authNumber"}
             inputClassName={"register-flex-row-gap8"}
             inputChange={handlenickNameUpdate}
-            inputValue={nickName}
+            inputValue={authNumber}
             buttonClick={handleEmailExistCheck}
-            inputCheck={nickNameChk}
+            inputCheck={authNumberChk}
             errMsg={"닉네임을 입력해주세요."}
             errObject={
               authNumberChk === false ? (
@@ -418,7 +421,6 @@ const Register: React.FC = () => {
               확인
             </button>
           </div> */}
-
           <div className="register-flex-row-gap4 margintop-11">
             <input
               type="checkbox"
@@ -679,13 +681,23 @@ const Register: React.FC = () => {
               <div style={{ width: "27px" }}>보기</div>
             </div>
           </div>
-          <button
-            type="submit"
-            className="register-button"
-            style={{ width: "100%", marginTop: "48px" }}
-          >
-            회원 가입하기
-          </button>
+
+          <div className="margintop-48">
+            {needCheck === true ? (
+              <div className="register-input-error-msg">
+                *필수 항목에 동의하셔야 가입할 수 있습니다.
+              </div>
+            ) : (
+              <></>
+            )}
+            <button
+              type="submit"
+              className="register-button"
+              style={{ width: "100%" }}
+            >
+              회원 가입하기
+            </button>
+          </div>
         </form>
       </div>
 
