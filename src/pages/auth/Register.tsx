@@ -544,7 +544,10 @@ const Register: React.FC = () => {
                 checked={gender === true}
                 onChange={handleGenderCheck}
               />
-              <label htmlFor="male" className="register-gender-label">
+              <label
+                htmlFor="male"
+                className="register-gender-label body3-regular"
+              >
                 여성
               </label>
               <input
@@ -555,7 +558,10 @@ const Register: React.FC = () => {
                 checked={gender === false}
                 onChange={handleGenderCheck}
               />
-              <label className="register-gender-label" htmlFor="feMale">
+              <label
+                className="register-gender-label body3-regular"
+                htmlFor="feMale"
+              >
                 남성
               </label>
             </div>

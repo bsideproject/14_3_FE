@@ -111,7 +111,7 @@
   position: absolute;
   /* display: block; */
   margin-top: 20px;
-  left: 340px;
+  left: 330px;
   z-index: 10;
   width: 24px;
   height: 24px;
@@ -123,12 +123,12 @@
 }
 @media (max-width: 375px) {
   .register-input-close {
-    left: 295px;
+    left: 285px;
   }
 }
 @media (max-width: 360px) {
   .register-input-close {
-    left: 280px;
+    left: 270px;
   }
 }
 .register-input-success {
@@ -232,8 +232,8 @@
   background-color: #3d3938;
 }
 .register-gender-label {
-  display: inline-block;
-  padding-bottom: 10px;
+  /* display: inline-block; */
+  /* padding-bottom: 10px; */
   vertical-align: 5px;
   font-weight: 400;
 }
