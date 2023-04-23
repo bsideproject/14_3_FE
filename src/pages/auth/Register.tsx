@@ -5,6 +5,7 @@ import "assets/pages/auth/register.css";
 import fetch from "utils/fetch";
 
 import SelectBox from "components/common/SelectBox";
+import InputBox from "components/common/InputBox";
 const Register: React.FC = () => {
   const ReconfirmRef = useRef(null);
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Register: React.FC = () => {
   const handlePasswordBlur = (e: any) => {
     const Regexp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
 
-    if (!Regexp.test(password) && password.length > 1) {
+    if (!Regexp.test(password) && password.length > 0) {
       setPasswordErrorChk(true);
     } else {
       setPasswordErrorChk(false);
@@ -263,7 +264,29 @@ const Register: React.FC = () => {
       <div className="register-main">
         <Header title="회원 가입하기" />
         <form onSubmit={handleRegister}>
-          <div className="register-flex-row-gap8 margintop-32">
+          <InputBox
+            title={"닉네임"}
+            buttonTitle="중복 확인"
+            inputPlaceholader={"8글자 이내로 만들어주세요."}
+            inputMaxLength={8}
+            id={"nickName"}
+            inputClassName={"register-flex-row-gap8 margintop-32"}
+            inputChange={handlenickNameUpdate}
+            inputValue={nickName}
+            buttonClick={handleEmailExistCheck}
+            inputCheck={nickNameChk}
+            errMsg={"닉네임을 입력해주세요."}
+            errObject={
+              nickNameChk === false ? (
+                <div className="register-input-error-msg">
+                  닉네임을 입력해주세요.
+                </div>
+              ) : (
+                <></>
+              )
+            }
+          />
+          {/* <div className="register-flex-row-gap8 margintop-32">
             <div className="register-box">
               <div>닉네임</div>
               <input
@@ -292,8 +315,34 @@ const Register: React.FC = () => {
             </div>
           ) : (
             <></>
-          )}
-          <div className="register-flex-row-gap8 margintop-32">
+          )} */}
+          <InputBox
+            title="이메일"
+            buttonTitle="인증하기"
+            inputPlaceholader={"이메일을 입력해주세요."}
+            inputMaxLength={30}
+            id={"email"}
+            inputClassName={"register-flex-row-gap8 margintop-32"}
+            inputChange={handleEmailUpdate}
+            inputValue={email}
+            buttonClick={handleEmailExistCheck}
+            inputCheck={emailChk}
+            errObject={
+              emailChk === true ? (
+                <div className="register-input-error-msg">
+                  이메일을 입력해주세요.
+                </div>
+              ) : emailFormChk === false ? ( //이메일 형식이 바르지 않다면
+                <div className="register-input-error-msg">
+                  이메일을 형식을 확인해주세요.
+                </div>
+              ) : (
+                <></>
+              )
+            }
+            errMsg={"닉네임을 입력해주세요."}
+          />
+          {/* <div className="register-flex-row-gap8 margintop-32">
             <div className="register-box">
               <div>이메일</div>
               <input
@@ -326,13 +375,34 @@ const Register: React.FC = () => {
             </div>
           ) : (
             <></>
-          )}
-          <div className="register-flex-row-gap8">
+          )} */}
+          <InputBox
+            buttonTitle="확인"
+            inputPlaceholader={"인증코드 6자리를 입력해주세요."}
+            inputMaxLength={6}
+            id={"authNumber"}
+            inputClassName={"register-flex-row-gap8"}
+            inputChange={handlenickNameUpdate}
+            inputValue={nickName}
+            buttonClick={handleEmailExistCheck}
+            inputCheck={nickNameChk}
+            errMsg={"닉네임을 입력해주세요."}
+            errObject={
+              authNumberChk === false ? (
+                <div className="register-input-error-msg">
+                  이메일 인증 코드를 입력해주세요.
+                </div>
+              ) : (
+                <></>
+              )
+            }
+          />
+          {/* <div className="register-flex-row-gap8">
             <input
               type="text"
               placeholder="인증코드 6자리를 입력해주세요."
               id="authNumber"
-              className="register-box register-input margintop-8"
+              className="register-box register-input body3-regular margintop-8"
               onChange={handleAuthNumberUpdate}
               // onBlur={handleEmailBlur}
               value={authNumber}
@@ -342,20 +412,14 @@ const Register: React.FC = () => {
             />
             <button
               type="button"
-              className="register-button margintop-8"
+              className="register-button body3-bold margintop-8"
               // onClick={handleEmailExistCheck}
             >
               확인
             </button>
-          </div>
-          {authNumberChk === false ? (
-            <div className="register-input-error-msg">
-              이메일 인증 코드를 입력해주세요.
-            </div>
-          ) : (
-            <></>
-          )}
-          <div className="register-flex-row-gap0 margintop-8">
+          </div> */}
+
+          <div className="register-flex-row-gap4 margintop-11">
             <input
               type="checkbox"
               className="register-email-check-box"
@@ -373,9 +437,9 @@ const Register: React.FC = () => {
             <br />
             마이페이지에서 이메일 알람 수신 동의 여부를 변경할 수 있습니다.
           </div>
-          <div className="register-flex-column-gap8 register-auth-content register-auth-title margintop-16">
-            <div>인증코드가 오지 않는다면?</div>
-            <div className="register-auth-subtitle">
+          <div className="register-flex-column-gap8 register-auth-content  margintop-16">
+            <div className="body3-Bold">인증코드가 오지 않는다면?</div>
+            <div className="caption1-regular">
               스팸메일함 혹은 프로모션함을 확인해보고 다시 한번 ‘인증하기’
               버튼을 눌러보세요.
             </div>
@@ -405,6 +469,10 @@ const Register: React.FC = () => {
                     className="register-input-close"
                     onClick={() => {
                       setPassword("");
+                      setTimeout(
+                        () => document.getElementById("password")?.focus(),
+                        1
+                      );
                     }}
                   ></label>
                 </>
@@ -492,7 +560,7 @@ const Register: React.FC = () => {
               </label>
             </div>
           </div>
-          <div className="register-flex-column-gap8 margintop-35">
+          <div className="register-flex-column-gap8 margintop-32">
             <div>생년월일</div>
             <div className="register-flex-row-gap8">
               <SelectBox
@@ -533,7 +601,7 @@ const Register: React.FC = () => {
           </div>
           <div className="register-flex-column-gap8 margintop-32">
             <div>이용 약관 동의 </div>
-            <div className="register-flex-row-gap8 ">
+            <div className="register-flex-row-gap8">
               <input
                 type="checkbox"
                 className="register-email-check-box"
@@ -549,52 +617,56 @@ const Register: React.FC = () => {
                 전체 동의
               </label>
             </div>
-            <hr style={{ width: "100%" }} color="#E9E7E2" />
-            <div className="register-flex-row-gap8 ">
+            <hr
+              className="margintop-8"
+              style={{ width: "100%" }}
+              color="#E9E7E2"
+            />
+            <div className="register-flex-row-gap4 margintop-8">
               <input
                 type="checkbox"
                 className="register-email-check-box"
-                name="allcheck"
-                id="allcheck"
+                name="ageCheck"
+                id="ageCheck"
                 checked={checkAgeAgree}
                 onChange={handleAgeAgree}
               />
               <label
-                htmlFor="allcheck"
-                className="register-all-agree smallFont margintop-2"
+                htmlFor="ageCheck"
+                className="register-all-agree body3-regular"
               >
                 (필수) 만 14세 이상입니다.
               </label>
             </div>
-            <div className="register-flex-row-gap8 ">
+            <div className="register-flex-row-gap4 margintop-8">
               <input
                 type="checkbox"
                 className="register-email-check-box"
-                name="allcheck"
-                id="allcheck"
+                name="infoCheck"
+                id="infoCheck"
                 checked={checkInfoAgree}
                 onChange={handleInfoAgree}
               />
               <label
-                htmlFor="allcheck"
-                className="register-all-agree smallFont margintop-2"
+                htmlFor="infoCheck"
+                className="register-all-agree body3-regular"
               >
                 (필수) 개인정보 수집 및 이용 동의
               </label>
               <div style={{ width: "27px" }}>보기</div>
             </div>
-            <div className="register-flex-row-gap8 ">
+            <div className="register-flex-row-gap4 margintop-8">
               <input
                 type="checkbox"
                 className="register-email-check-box"
-                name="allcheck"
-                id="allcheck"
+                name="serviceCheck"
+                id="serviceCheck"
                 checked={checkServiceAgree}
                 onChange={handleServiceAgree}
               />
               <label
-                htmlFor="allcheck"
-                className="register-all-agree smallFont margintop-2"
+                htmlFor="serviceCheck"
+                className="register-all-agree body3-regular"
               >
                 (필수) 서비스 이용약관 동의
               </label>
@@ -604,9 +676,9 @@ const Register: React.FC = () => {
           <button
             type="submit"
             className="register-button"
-            style={{ width: "100%", marginTop: "64px" }}
+            style={{ width: "100%", marginTop: "48px" }}
           >
-            완료
+            회원 가입하기
           </button>
         </form>
       </div>
