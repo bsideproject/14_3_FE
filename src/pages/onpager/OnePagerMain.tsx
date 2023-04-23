@@ -1,9 +1,10 @@
 
 import html2canvas from 'html2canvas';
-import canvasToImage from 'canvas-to-image'
 import Masonry from 'react-masonry-css'
 import 'assets/pages/onepager/onepagermain.css'
 import Header from 'components/auth/Header';
+import downloadjs from 'downloadjs'
+
 const testData = [
   {index: 1, content: 'contentsssssssssssssssssssss'},
   {index: 2, content: 'contensssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssstssssssss'},
@@ -29,23 +30,16 @@ const testData = [
   {index: 22, content: 'contentssssssss'},
   {index: 23, content: 'contentssssssss'},
 ]
-const options = {
-  name: 'Goming-Onpager', // default image
-  type: 'png',         // default png, accepted values jpg or png
-  quality: 1         // default 1, can select any value from 0 to 1 range
-}
+
 const OnePagerMain = () => {
-  const onepager = () => {
+  const onepager = async () => {
     const wrapper = document.querySelector('.onepager-download') as HTMLElement;
-    wrapper.style.width = "1920px"
-    html2canvas(wrapper).then(function(canvas) {
-      // document.body.appendChild(canvas);
-
-      canvasToImage(canvas, options);
-
-    });
-
-   
+    wrapper.style.display = ''                              //hidden 시 canvas가 안그려지는 현상있음
+    const canvas = await html2canvas(wrapper, {scale:2})    //scale 4 옵션으로 출력   => 3840px
+    // canvas.style.width = '1920px'                        //가로넓이 1920으로 설정: 안됨
+    const dataURL = canvas.toDataURL('image/png')           //이미지변환      
+    wrapper.style.display = 'none'                          //canvas hidden 처리
+    downloadjs(dataURL, 'goming', 'image/png')              //다운로드
   }
   return (
     <>
@@ -71,7 +65,7 @@ const OnePagerMain = () => {
 
       </div>
 
-      <div className='onepager-wrap onepager-download' style={{display: 'none'}}>
+      <div className='onepager-wrap onepager-download' style={{display:'none'}}>
         <Masonry
           width={1920}
           breakpointCols={12}                          //컬럼수

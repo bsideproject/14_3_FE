@@ -112,6 +112,7 @@ const Answer = () => {
   const [skipPopup, setSkipPopup] = useState<boolean>(false);
   //질문건너뛰기
   const skipThisQuestion = () => {
+    updateCardSelectStep(todayCardSelectStep + 1) //단계 추가(답변없음)
     navigate('/main', {replace:true})
   }
 

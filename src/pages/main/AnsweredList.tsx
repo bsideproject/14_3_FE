@@ -1,4 +1,9 @@
+import Footer from "components/Footer"
+import NavigationBar from "components/NavigationBar"
 import Header from "components/auth/Header"
+import AnsweredListContent from "components/main/AnsweredListContent"
+import LeftAnswerPeriod from "components/main/LeftAnswerPeriod"
+import MyCalendar from "components/main/MyCalendar"
 
 /**
  * @설명 답변목록 조회
@@ -11,8 +16,10 @@ const AnsweredList = () => {
     <>
     <div>
       <Header isLeftArrow={false} />
-      <br />
-      답변목록 조회 화면
+      <LeftAnswerPeriod />
+      <MyCalendar />
+      <AnsweredListContent />
+
     </div>
     </>
   )

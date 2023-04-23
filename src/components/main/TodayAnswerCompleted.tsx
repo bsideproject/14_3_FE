@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 const TodayAnswerCompleted = () => {
   const navigate = useNavigate()
   const goToCalendarList = () => {
-    navigate('', {replace: true})
+    navigate('/answered-list', {replace: true})
   }
   return (
     <>
