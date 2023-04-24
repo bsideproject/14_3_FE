@@ -6,21 +6,25 @@
   font-size: 16px;
 }
 .reset-password-btn{
-  padding: 14px 110px;
+  padding-top: 14px;
+  padding-bottom: 14px;
   background-color: var(--wgray12);
   color: white;
+}
+.lostinfo-btn-area{
+  margin-top: 48px;
+  margin-bottom: 24px;
 }
 .goto-login-btn{
   margin-top: 5px;
   background-color: #FFFFFF;
-  padding: 14px 124.5px;
+  padding-top: 14px;
+  padding-bottom: 14px;
   color: #3D3938;
   border: 1px solid #3D3938;
   font-weight: 700;
 }
 .find-id-caption-text{
-  color: var(--caption-text-color-1);
-  font-size: 12px; 
+  color: var(--wgray09);
   margin-bottom: 8px;
-  line-height: 16px;
 }

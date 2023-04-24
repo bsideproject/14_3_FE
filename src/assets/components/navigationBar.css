@@ -1,8 +1,8 @@
 .navbar-area{
-  width: 100%;
+  width: 420px;
   height: 64px;
   display: flex;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   z-index:2;
   height: 64px;

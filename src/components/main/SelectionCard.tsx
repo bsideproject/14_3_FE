@@ -25,10 +25,16 @@ const testData = [
   // {index: 746432, q: 'Question 1 ?', img: BookImg, desc: 'exercise', aftrImg: SelectedExcercise},
   // {index: 746432, q: 'Question 1 ?', img: BookImg, desc: 'shower', aftrImg: SelectedShower},
 ]
+/**
+ * @설명 카드 뽑기 컴포넌트 - 목록 조회
+ * @작성자 김상훈
+ * @일자 2023.04.11.
+ */
 const SelectionCard = () => {
   const navigate = useNavigate()
-  //const [cards, setCards] = useState<Object>({})          //카드 목록
   const [selected, setSelected] = useState<boolean>(false)  //카드 선택 확인용
+  
+
   const clickedEventHandler = () => {
     setSelected(true)
   }

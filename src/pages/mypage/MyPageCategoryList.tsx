@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import 'assets/pages/auth/myPageCategoryList.css'
-import RightVector from 'assets/images/RightVector.png'
 import Header from "components/auth/Header"
+import RightArrow from 'assets/images/right-arrow.png'
+import Footer from "components/Footer"
+import NavigationBar from "components/NavigationBar"
+import MainLogo from 'assets/images/main-goming-logo.png'
 
 const categoryList = [ //카테고리목록
   { text: '개인정보관리', location: '/mypage' },
@@ -26,30 +29,28 @@ const MyPageCategoryList = () => {
   }
   return (
     <>
-      <div className="padding-bottom-32px">
+      <div className="categorylist-top">
         {/* header */}
-        <Header isLeftArrow={false}/> 
-
-        {/* welcome & logout */}
-        <div className="welcome-logout">
-
-          {/* welcome */}
-          <div className="welcome-text"> 
-            <h3>반가워요!</h3>
-            <h3 style={{color: '#6E8DBA'}}>카페인중독자님</h3>
+        <div className="category-other-bg-color">
+          <div className='custom-login-header'>
+            <div className='custom-header-logo-area'>
+              <img src={MainLogo} alt="Goming logo" />
+            </div>
           </div>
 
-          {/* logout btn */}
-          <div className="logout-area">
-            <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
+          <div className="welcome-logout">
+            {/* welcome */}
+            <div className="welcome-text"> 
+              <h3 className="headline3">반가워요!</h3>
+              <h3 className="headline3" style={{color: '#6E8DBA'}}>카페인중독자님</h3>
+            </div>
+
+            {/* logout btn */}
+            <div className="logout-area">
+              <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
+            </div>
           </div>
         </div>
-        
-        {/** 이메일 */}
-        {/* <div className="myinfo-email-area">
-          <p>madness-of-coffee@google.com</p>
-        </div> */}
-        
       </div>
 
       {/* 카테고리 영역 */}
@@ -58,13 +59,15 @@ const MyPageCategoryList = () => {
         categoryList.map((item)=> (
           <button type="button" className="myinfo-category-btn" onClick={()=>movePage(item.location)}>
             <span className="">{item.text}</span>
-            <span className="padding-right-24px">
-              <img src={RightVector} alt="right-vector" width={6} height={10} />
-            </span>
+            <img className="right-arrow-img" src={RightArrow} alt="right-vector" width={24} height={24} />
           </button>
         ))
         }
+        
       </div>
+      {/* Footer */}
+      <Footer type={false} />
+      <NavigationBar />
     </>
   )
 }

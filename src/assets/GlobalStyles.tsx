@@ -29,9 +29,6 @@ time, mark, audio, video {
 	font-size: 100%;
 	vertical-align: baseline;
 }
-button{
-}
-
 input {
   box-sizing : border-box;
 }
@@ -71,11 +68,12 @@ table {
   padding: 0 16px; /*고정 padding*/
 	padding-top: 60px;
   min-height: 100vh;
+	height: auto;
 	position: relative;
 }
 :root {
 	--button-bg-color-1: #3D3938; /*로그인버튼배경색*/
-	--caption-text-color-1: #7A7670 /* 캡션 글자 색 */
+	--caption-text-color-1: #7A7670; /* 캡션 글자 색 */
 	--wgray13: #121212;					/* 타이틀에 주로 사용 */
 	--wgray12: #3D3938;					/* 본문에 주로 사용 */
 	--wgray11: #49484C;
@@ -97,6 +95,10 @@ table {
 html, body, #root {
 	min-height: 100vh;
 	background-color: #FFFFFF;
+}
+button {
+	outline: none;
+	border: none;
 }
 /* custom font */
 .headline1 {
@@ -160,13 +162,13 @@ html, body, #root {
 	letter-spacing: -0.025em;
 }
 .caption1-regular {
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: 400;
 	line-height: 16px;
 	letter-spacing: -0.025em;
 }
 .caption2-bold {
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: 700;
 	line-height: 12px;
 	letter-spacing: -0.025em;
@@ -176,6 +178,29 @@ html, body, #root {
 	font-weight: 400;
 	line-height: 12px;
 	letter-spacing: -0.025em;
+}
+
+//textarea
+.common-textarea {
+	height: 240px;
+	padding: 16px;
+	resize: none;
+	background-color: var(--wgray03);
+	margin-bottom: 8px;	
+  border: 1px solid var(--wgray04);
+  border-radius: 8px;
+	color: var(--wgray12);
+}
+.common-textarea::placeholder {
+	color: var(--wgray09);
+}
+.primary-button {
+	background: var(--wgray02);
+	border: none;
+}
+.secondary-button {
+	border: 1px solid var(--wgray02);
+	background: var(--wgray01);
 }
 `;
 
