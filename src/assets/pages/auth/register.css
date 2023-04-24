@@ -232,6 +232,10 @@
   transition: 0.5s;
   margin-right: 4px;
 }
+
+.register-gender-box:disabled {
+  background-color: #c9c6c0;
+}
 .register-gender-box:checked {
   /* 체크박스가 체크됐을 때의 색상 */
   background-color: #3d3938;

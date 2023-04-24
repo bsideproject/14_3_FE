@@ -385,7 +385,7 @@ const Register: React.FC = () => {
             inputMaxLength={6}
             id={"authNumber"}
             inputClassName={"register-flex-row-gap8"}
-            inputChange={handlenickNameUpdate}
+            inputChange={handleAuthNumberUpdate}
             inputValue={authNumber}
             buttonClick={handleEmailExistCheck}
             inputCheck={authNumberChk}
