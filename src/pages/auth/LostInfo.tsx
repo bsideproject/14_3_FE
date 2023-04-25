@@ -1,11 +1,12 @@
-import Header from "components/auth/Header"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import 'assets/pages/auth/lostInfo.css'
 import ToastPopup from "components/ToastPopup";
 import { useNavigate } from "react-router-dom";
+import useDefaultSets from "store/modules/Defaults";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LostInfo = () => {
+  const {setHeaderText} = useDefaultSets()
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('')
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
@@ -50,9 +51,12 @@ const LostInfo = () => {
     }, 3000);
   }
 
+  useEffect(() => {
+    setHeaderText('비밀번호 찾기')
+  },[])
+
   return (
     <>
-          <Header title="비밀번호 찾기" />
           <form onSubmit={submitEmail}>
             <div className='inputArea'>
               <label htmlFor="email" className='login-label-text text-color'>이메일</label>

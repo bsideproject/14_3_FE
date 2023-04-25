@@ -6,7 +6,14 @@ import fetch from "utils/fetch";
 
 import SelectBox from "components/common/SelectBox";
 import InputBox from "components/common/InputBox";
+import useDefaultSets from "store/modules/Defaults";
 const Register: React.FC = () => {
+  //헤더설정
+  const {setHeaderText} = useDefaultSets()
+  useEffect(()=> {
+    setHeaderText('회원 가입하기')
+  },[])
+
   const ReconfirmRef = useRef(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
@@ -40,6 +47,7 @@ const Register: React.FC = () => {
   const [checkInfoAgree, setCheckInfoAgree] = useState<boolean>(false);
   const [checkServiceAgree, setCheckServiceAgree] = useState<boolean>(false);
   const [needCheck, setNeedCheck] = useState<boolean>(false);
+
   function isValidEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -265,7 +273,6 @@ const Register: React.FC = () => {
   return (
     <>
       <div className="register-main">
-        <Header title="회원 가입하기" />
         <form onSubmit={handleRegister}>
           <InputBox
             title={"닉네임"}

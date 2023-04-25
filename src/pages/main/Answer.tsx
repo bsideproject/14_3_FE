@@ -2,15 +2,17 @@ import Header from "components/auth/Header";
 import { useLocation } from "react-router";
 import 'assets/pages/main/answerContents.css'
 import AnswerNowStep from "components/main/AnswerNowStep";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmPopup from "components/ConfirmPopup";
 import fetch from "utils/fetch";
 import useAuthStore from "store/modules/Auth";
 import AlertTextPopup from "components/AlertTextPopup";
 import { useNavigate } from "react-router-dom";
 import useCardState from "store/modules/CardState";
+import useDefaultSets from "store/modules/Defaults";
 
 const Answer = () => {
+  const {setHeaderText} = useDefaultSets()
   const location = useLocation();
   const navigate = useNavigate();
   const itemIndex:number = location.state.itemIndex;
@@ -22,6 +24,10 @@ const Answer = () => {
   const [isSaved, setIsSaved] = useState<boolean>(false)         //DB연동 성공여부 (저장성공)
   const [needToLogin, setNeedToLogin] = useState<boolean>(false) //로그인안했을 경우 출력 confirm 팝업 처리
   const {todayCardSelectStep, updateCardSelectStep} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
+
+  useEffect(() => { 
+    setHeaderText('답변 작성하기')
+  },[])
 
   /******************************************************************/
   /* @desc 질문                                                     */
@@ -119,8 +125,6 @@ const Answer = () => {
   return (
     <>
       <div>
-        <Header title={"답변 작성하기"} />
-        
         <div className="answer-wrap">
           <div className="question-wrap">
             {/* 질문 컴포넌트 */}

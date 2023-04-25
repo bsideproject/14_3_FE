@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useAuthStore from 'store/modules/Auth';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from 'components/auth/Header';
 import 'assets/pages/auth/login.css'
 import RectangleDived from 'assets/images/rectangleDived.png'
+import useDefaultSets from 'store/modules/Defaults';
 
 /**
  * @설명 로그인 페이지
@@ -14,6 +14,7 @@ import RectangleDived from 'assets/images/rectangleDived.png'
  */
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Login:React.FC = () =>{
+  const {setHeaderText} = useDefaultSets()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -33,6 +34,7 @@ const Login:React.FC = () =>{
         document.getElementById('password')?.focus()
       }
     }
+    setHeaderText('로그인')
   },[])
 
   const loginAttempt = async (e:any): Promise<void> => {
@@ -101,7 +103,6 @@ const Login:React.FC = () =>{
 
   return (
     <>
-      <Header title="로그인" />
       <h1 className='startGomingText text-color headline3'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
       <form onSubmit={loginAttempt}>
         <div className='inputArea'>

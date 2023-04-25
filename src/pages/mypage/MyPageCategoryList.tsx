@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import 'assets/pages/auth/myPageCategoryList.css'
-import Header from "components/auth/Header"
 import RightArrow from 'assets/images/right-arrow.png'
-import Footer from "components/Footer"
-import NavigationBar from "components/NavigationBar"
 import MainLogo from 'assets/images/main-goming-logo.png'
+import useDefaultSets from "store/modules/Defaults"
+import { useEffect } from "react"
 
 const categoryList = [ //카테고리목록
   { text: '개인정보관리', location: '/mypage' },
@@ -13,6 +12,15 @@ const categoryList = [ //카테고리목록
 ]
 
 const MyPageCategoryList = () => {
+  //헤더설정
+  const {setHeaderText, setHeaderBgColor} = useDefaultSets()
+  useEffect(()=> {
+    setHeaderText()
+    setHeaderBgColor(true)
+
+    return (()=> setHeaderBgColor(false))
+  },[])
+
   const navigate = useNavigate()
 
   //페이지이동처리
@@ -29,30 +37,26 @@ const MyPageCategoryList = () => {
   }
   return (
     <>
+    <div className="categorylist-wrap">
+
       <div className="categorylist-top">
         {/* header */}
-        <div className="category-other-bg-color">
-          <div className='custom-login-header'>
-            <div className='custom-header-logo-area'>
-              <img src={MainLogo} alt="Goming logo" />
-            </div>
-          </div>
-
           <div className="welcome-logout">
             {/* welcome */}
-            <div className="welcome-text"> 
+            <div> 
               <h3 className="headline3">반가워요!</h3>
               <h3 className="headline3" style={{color: '#6E8DBA'}}>카페인중독자님</h3>
             </div>
 
             {/* logout btn */}
             <div className="logout-area">
-              <button className="logout-btn" type="button" onClick={handleLogout}>로그아웃</button>
+              <button className="logout-btn caption1-bold" type="button" onClick={handleLogout}>로그아웃</button>
             </div>
           </div>
-        </div>
-      </div>
+          
 
+      </div>
+      
       {/* 카테고리 영역 */}
       <div className="myinfo-category-area">
         { /** 카테고리 반복 **/
@@ -63,11 +67,9 @@ const MyPageCategoryList = () => {
           </button>
         ))
         }
-        
       </div>
-      {/* Footer */}
-      <Footer type={false} />
-      <NavigationBar />
+    </div>
+
     </>
   )
 }

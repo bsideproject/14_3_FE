@@ -43,7 +43,6 @@ const OnePagerMain = () => {
   }
   return (
     <>
-      <Header title={'원페이저 다운로드'} />
       <h1 style={{marginTop: '20px'}}>Onepager</h1>
       <div>
         <button onClick={onepager}>원페이저다운로드</button>

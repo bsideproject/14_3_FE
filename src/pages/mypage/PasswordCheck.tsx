@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "components/auth/Header";
 import 'assets/pages/auth/passwordCheck.css'
+import useDefaultSets from "store/modules/Defaults";
 /**
  * @설명 마이페이지 - 비밀번호 확인
  * @작성자 김상훈
@@ -12,6 +13,7 @@ import 'assets/pages/auth/passwordCheck.css'
  * @TODO backend-connection
  */
 const PasswordCheck: React.FC = () => {
+  const {setHeaderText} = useDefaultSets()
   const navigate = useNavigate()
   const { isLogin, userInfo } = useAuthStore((state) => state)
   const [password, setPassword] = useState<string>('');
@@ -23,7 +25,8 @@ const PasswordCheck: React.FC = () => {
     if (!isLogin) { 
       //navigate('/login') //임시주석
     }
-  })
+    setHeaderText('개인 정보 수정')
+  },[])
   
   //유효성 검사 이벤트
   const handlePassword = ():void => { 
@@ -64,7 +67,6 @@ const PasswordCheck: React.FC = () => {
   
   return (
     <>
-      <Header title="개인 정보 수정" />
       <div>
         <h1 className="pw-check-title">비밀번호 재확인</h1>
         <p className="pw-check-text">개인 정보를 수정하기 전에,  비밀번호를 다시 한 번 확인해주세요.</p>

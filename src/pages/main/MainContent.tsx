@@ -7,6 +7,8 @@ import Footer from "components/Footer"
 import Header from "components/auth/Header"
 import useCardState from "store/modules/CardState"
 import TodayAnswerCompleted from "components/main/TodayAnswerCompleted"
+import { useEffect } from "react"
+import useDefaultSets from "store/modules/Defaults"
 
 /**
  * @설명 카드 뽑기 메인 화면
@@ -15,14 +17,17 @@ import TodayAnswerCompleted from "components/main/TodayAnswerCompleted"
  */
 const MainContent = () => {
   const {todayCardSelectStatus} = useCardState()  //카드 선택 가능여부
+  const {setHeaderText} = useDefaultSets()
+
+  useEffect(() => {
+    setHeaderText()
+  },[])
+
   if (!todayCardSelectStatus) {  //더이상 안될경우 (3개초과)
     return (
       <>
         <div className="main-content-area">
-          <Header isLeftArrow={false} /> {/* 헤더 */}
           <TodayAnswerCompleted />
-          <Footer type={false}/>
-          <NavigationBar />   {/* 네비게이션 바 */}
         </div>
       </>
     )
@@ -30,12 +35,9 @@ const MainContent = () => {
     return (
         <>
           <div className="main-content-area">
-            <Header isLeftArrow={false} /> {/* 헤더 */}
             <TodayDate />      {/* 금일자, 사용자정보 */}
             <NowSelectionStep /> {/* 잔여 선택회수 */}
             <SelectionCard />  {/* 카드 4개 출력 */}
-            <Footer type={false}/>
-            <NavigationBar />   {/* 네비게이션 바 */}
           </div>
         </>
       )

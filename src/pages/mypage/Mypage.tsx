@@ -1,13 +1,18 @@
 import testRegisterStore from "store/modules/TestRegister";
 import Auth from "store/modules/Auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "components/auth/Header";
 import { InputActionMeta } from "react-select";
 import SelectBox from "components/common/SelectBox";
 import Footer from "components/Footer";
+import useDefaultSets from "store/modules/Defaults";
 
 const Mypage: React.FC = () => {
+  //헤더설정
+  const {setHeaderText} = useDefaultSets()
+  useEffect(()=> {
+    setHeaderText('개인 정보 수정')
+  },[])
   const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
   const navigate = useNavigate();
@@ -109,7 +114,6 @@ const Mypage: React.FC = () => {
   return (
     <>
       <div className="register-main">
-        <Header title="개인 정보 관리" />
         <div className="register-box margintop-32">
           <div>닉네임</div>
           <input
@@ -271,7 +275,6 @@ const Mypage: React.FC = () => {
           </button>
         )}
       </div>
-      <Footer type={false} />
     </>
   );
 };
