@@ -1,21 +1,59 @@
+.category-other-bg-color{
+  width: 100%;
+  margin-left: 16px;
+  background-color: var(--wgray03);
+  padding-bottom: 32px;
+}
+/** 헤더 **/
+.custom-header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  font-weight: bold;
+  color: #121212;
+  border-bottom: 1px solid #E9E7E2;
+  margin-left: -16px;
+}
+/** arrow custom header **/
+.custom-login-header {
+  font-size: 18px;
+  justify-content: center;
+  vertical-align: middle;
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #E9E7E2;
+}
+/* 로고 */
+.custom-header-logo-area{
+  flex: 1;
+  padding-left: 16px;
+}
+.custom-header-logo-area img {
+  margin-top: 18px;
+}
 .bg-F2F1ED{
   background-color: #F2F1ED;
 }
-.padding-bottom-32px {
-  padding-bottom: 32px;
-}
-.padding-right-24px {
-  padding-right: 24px;
-}
-.display-flex-column{
+.categorylist-top{
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: -16px;
+  margin-bottom: 32px;
+}
+.right-arrow-area{
+  height: 100%;
+}
+.right-arrow-img{
+  margin-top: 18px;
 }
 .welcome-logout{
+  width: 388px;
   height: 64px;
-  padding: 48px 0 0 0;
+  margin-top: 48px;
+  margin-left: 16px;
   display: flex;
 }
 
@@ -35,11 +73,10 @@
 .logout-btn {
   text-align: center;
   margin-top: 34px;
-  margin-right: 16px;
   width: 64px;
   height: 28px;
   padding: 6px 8px;
-  background: #5E5C5A;
+  background: var(--wgray12);
   color: #FFFFFF;
   border-radius: 4px;
   font-size: 12px;
@@ -51,9 +88,10 @@
 }
 
 .myinfo-category-area{
+  flex: 1;
   background-color: #FFFFFF;
-  flex:1 ;
   position: absolute;
+  top: 204px;
   width: 100%;
   margin-left: -16px;
   padding-right: 16px;
@@ -78,12 +116,13 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color:var(--wgray02);
   border: none;
   outline: none;
   border-bottom: 1px solid #E9E7E2;
   padding: 0 auto;
   padding-left: 16px;
+  padding-right: 16px;
   vertical-align: middle;
 }
 .myinfo-category-btn:hover{

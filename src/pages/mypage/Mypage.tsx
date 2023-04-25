@@ -1,23 +1,55 @@
 import testRegisterStore from "store/modules/TestRegister";
+import Auth from "store/modules/Auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "components/auth/Header";
+import { InputActionMeta } from "react-select";
+import SelectBox from "components/common/SelectBox";
+import Footer from "components/Footer";
+
 const Mypage: React.FC = () => {
-  const { registerInfo, updateId } = testRegisterStore((state) => state);
+  const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
+  const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>(registerInfo[0].email);
   const [nickName, setNickName] = useState<string>(registerInfo[0].nickName);
   const [password, setPassword] = useState<string>(registerInfo[0].password);
   const [birthDt, setBirthDt] = useState<string>(registerInfo[0].birthDt);
-  const [gender, setGender] = useState<boolean>(registerInfo[0].gender);
+  const [gender, setGender] = useState<boolean | null>(registerInfo[0].gender);
   const [modifyStatus, setModifyStatus] = useState<boolean>(false); // *true : 수정상태, false: 조회상태
   const [passwordLengthChk, setpasswordLengthChk] = useState<boolean>(true);
   const [nickNameLengthChk, setNickNameLengthChk] = useState<boolean>(true);
   const [nickNameExistChk, setNickNameExistChk] = useState<boolean>(true); //* 닉네임 중복체크 미개발
+  const [passwordErrorChk, setPasswordErrorChk] = useState<boolean>(false); //비밀번호 에러 체크(조건 불일치,미입력)
+  const [passwordReconfirm, setPasswordReconfirm] = useState<string>(""); //
+  const [passwordReconfirmSuccessChk, setPasswordReconfirmSuccessChk] = // 비밀번호 재입력칸 에러 체크(비밀번호와 같은지 여부)
+    useState<boolean | null>(null);
 
+  const [year, setYear] = useState<string>();
+  const [month, setMonth] = useState<string>();
+  const [day, setDay] = useState<string>();
+
+  const [emailAgree, setEmailAgree] = useState<boolean>(false);
+  const handleGenderCheck = (e: any) => {
+    setGender(
+      e.target.value === "M" ? true : e.target.value === "F" ? false : null
+    );
+  };
   const handlePasswordBlur = (e: any) => {
-    if (password.length < 4) {
-      setpasswordLengthChk(false);
+    const Regexp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+
+    if (!Regexp.test(password) && password.length > 1) {
+      setPasswordErrorChk(true);
     } else {
-      setpasswordLengthChk(true);
+      setPasswordErrorChk(false);
+    }
+
+    if (password === passwordReconfirm && passwordReconfirm.length > 0) {
+      setPasswordReconfirmSuccessChk(false); //성공
+    } else if (passwordReconfirm.length === 0) {
+      setPasswordReconfirmSuccessChk(null); //기본값
+    } else {
+      setPasswordReconfirmSuccessChk(true); // 실패
     }
   };
   const handleNickNameBlur = (e: any) => {
@@ -61,56 +93,185 @@ const Mypage: React.FC = () => {
   const handleCheck = () => {
     console.log(registerInfo);
   };
+  const handleYaerUpdate = (e: any) => {
+    setYear(e.value);
+  };
+  const handleMonthUpdate = (e: any) => {
+    setMonth(e.value);
+  };
+  const handleDayUpdate = (e: any) => {
+    setDay(e.value);
+  };
+
+  const handleEmailAgree = (e: any) => {
+    setEmailAgree(!emailAgree);
+  };
   return (
     <>
-      <div>
-        <div placeholder="이메일" id="email">
-          {email}
+      <div className="register-main">
+        <Header title="개인 정보 관리" />
+        <div className="register-box margintop-32">
+          <div>닉네임</div>
+          <input
+            type="text"
+            placeholder="8글자 이내로 만들어주세요."
+            id="nickName"
+            className="register-input margintop-8"
+            // style={{ background: nickNameChk ? "" : "red" }}
+            onChange={handlenickNameUpdate}
+            // onBlur={handleNickNameBlur}
+            value={nickName}
+            maxLength={30}
+            disabled={!isInfoChange}
+          />
         </div>
-        <br />
-        <input
-          type="password"
-          placeholder="비밀번호 입력"
-          id="password"
-          style={{ background: passwordLengthChk ? "" : "red" }}
-          onChange={handlePasswordUpdate}
-          onBlur={handlePasswordBlur}
-          value={password}
-          readOnly={modifyStatus ? false : true}
-          maxLength={30}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="닉네임"
-          id="nickName"
-          style={{ background: nickNameLengthChk ? "" : "red" }}
-          onChange={handlenickNameUpdate}
-          onBlur={handleNickNameBlur}
-          value={nickName}
-          readOnly={modifyStatus ? false : true}
-          maxLength={30}
-        />
-        <button type="button">중복 체크(미구현)</button>
-        <br />
-        <div>생년월일 : {birthDt}</div>
-        <br />
-        <div>성별 : {gender === true ? "남자" : "여자"}</div>
-        <br />
+        <div className="register-box margintop-36">
+          <div>이메일</div>
+          <input
+            type="text"
+            placeholder="이메일을 입력해주세요."
+            id="nickName"
+            className="register-input margintop-8"
+            // style={{ background: nickNameChk ? "" : "red" }}
+            onChange={handlenickNameUpdate}
+            // onBlur={handleNickNameBlur}
+            value={email}
+            maxLength={30}
+            disabled={!isInfoChange}
+          />
+        </div>
+        <div className="register-flex-column-gap0 margintop-36">
+          <div>비밀번호</div>
+          <div style={{ position: "relative" }}>
+            <input
+              type="password"
+              placeholder="8~20자의 영문, 숫자, 특수문자로 구성해주세요."
+              id="password"
+              className={
+                passwordErrorChk === false
+                  ? "register-input margintop-8"
+                  : "register-input-error margintop-8"
+              }
+              // style={{ background: passwordErrorChk ? "" : "red" }}
+              onChange={handlePasswordUpdate}
+              onBlur={handlePasswordBlur}
+              value={password}
+              maxLength={30}
+              disabled={!isInfoChange}
+            />
+            {passwordErrorChk === true ? (
+              <>
+                <label
+                  htmlFor="passwordReconfirm"
+                  className="register-input-close"
+                  onClick={() => {
+                    setPassword("");
+                  }}
+                ></label>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
+          {passwordErrorChk ? (
+            <div className="register-input-error-msg">
+              비밀번호는 8~20자의 영문, 숫자, 특수문자로 구성해주세요.
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="register-flex-column-gap10 margintop-32">
+          <div>성별(선택)</div>
+          <div>
+            <input
+              className="register-gender-box"
+              value="M"
+              id="male"
+              type="radio"
+              checked={gender === true}
+              onChange={handleGenderCheck}
+              disabled={!isInfoChange}
+            />
+            <label htmlFor="male" className="register-gender-label">
+              남성
+            </label>
+            <input
+              className="register-gender-box marginleft-35"
+              value="F"
+              id="feMale"
+              type="radio"
+              checked={gender === false}
+              onChange={handleGenderCheck}
+              disabled={!isInfoChange}
+            />
+            <label className="register-gender-label" htmlFor="feMale">
+              여성
+            </label>
+            <input
+              className="register-gender-box marginleft-35"
+              value="N"
+              id="not"
+              type="radio"
+              checked={gender === null}
+              onChange={handleGenderCheck}
+              disabled={!isInfoChange}
+            />
+            <label className="register-gender-label" htmlFor="feMale">
+              선택안함
+            </label>
+          </div>
+        </div>
+        <div className="register-flex-column-gap8 margintop-35">
+          <div>생년월일</div>
+          <div className="register-flex-row-gap8">
+            <SelectBox
+              handleYaerUpdate={handleYaerUpdate}
+              handleMonthUpdate={handleMonthUpdate}
+              handleDayUpdate={handleDayUpdate}
+              disabled={!isInfoChange}
+            />
+          </div>
+        </div>
+        <div className="register-flex-row-gap0 margintop-32">
+          <input
+            type="checkbox"
+            className="register-email-check-box"
+            name="rememberme"
+            id="emailAgree"
+            checked={emailAgree}
+            onChange={handleEmailAgree}
+          />
+          <label htmlFor="emailAgree" className="body3-regular marginleft-7">
+            이메일 수신 동의(선택)
+          </label>
+        </div>
+        <div className="caption1-regular margintop-8">
+          *이메일 수신을 동의하시면, 매월 말 월간 회고를 위한 원페이저를
+          보내드립니다.
+        </div>
         {/* <button type="button">저장</button> */}
         {modifyStatus === false ? (
-          <button type="button" onClick={handleModify}>
-            회원정보수정
+          <button
+            className="register-button margintop-48"
+            style={{ width: "100%" }}
+            onClick={() => {
+              navigate("/password-check");
+            }}
+          >
+            수정하기
           </button>
         ) : (
-          <button type="button" onClick={handleComplete}>
+          <button
+            type="submit"
+            className="register-button"
+            style={{ width: "100%", marginTop: "64px" }}
+          >
             완료
           </button>
         )}
-        <button type="button" onClick={handleCheck}>
-          만들어진 회원 체크
-        </button>
       </div>
+      <Footer type={false} />
     </>
   );
 };

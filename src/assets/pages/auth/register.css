@@ -1,5 +1,14 @@
+.marginleft-7 {
+  margin-left: 7px;
+}
+.margintop-48 {
+  margin-top: 32px;
+}
 .marginleft-35 {
   margin-left: 35px;
+}
+.margintop-36 {
+  margin-top: 35px;
 }
 .margintop-35 {
   margin-top: 35px;
@@ -12,6 +21,9 @@
 }
 .margintop-16 {
   margin-top: 16px;
+}
+.margintop-11 {
+  margin-top: 11px;
 }
 .margintop-8 {
   margin-top: 8px;
@@ -39,6 +51,7 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 20px;
+  color: var(--wgray13);
 }
 .register-box {
   width: 100%;
@@ -53,10 +66,20 @@
   flex-direction: row;
   gap: 8px;
 }
+.register-flex-row-gap4 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
 .register-flex-column-gap8 {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.register-flex-column-gap4 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .register-flex-column-gap10 {
   display: flex;
@@ -86,22 +109,32 @@
   width: 100%;
   background-image: url("../../images/icon_warning_filled.png");
   background-repeat: no-repeat;
-  background-size: 20px;
-  background-position: 360px center;
+  background-size: 24px;
+  background-position: 99.5% center;
 }
 .register-input-close {
   position: absolute;
   /* display: block; */
-  margin-top: 22px;
-  left: 340px;
+  margin-top: 20px;
+  left: 330px;
   z-index: 10;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   background-image: url("../../images/icon_close_filled.png");
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
   cursor: pointer;
+}
+@media (max-width: 375px) {
+  .register-input-close {
+    left: 285px;
+  }
+}
+@media (max-width: 360px) {
+  .register-input-close {
+    left: 270px;
+  }
 }
 .register-input-success {
   border: 1px solid #59b757;
@@ -113,7 +146,7 @@
   background-image: url("../../images/icon_check.png");
   background-repeat: no-repeat;
   background-size: 20px;
-  background-position: 360px center;
+  background-position: 99.5% center;
 }
 
 .register-input-error-msg {
@@ -162,14 +195,15 @@
   vertical-align: middle;
   padding-bottom: 9px;
   flex: 1;
+  color: var(--wgray12);
 }
 .register-email-explain {
   font-weight: 400;
-  line-height: 12px;
+  line-height: 16 px;
   font-size: 12px;
   display: inline-block;
   vertical-align: middle;
-  color: #7a7670;
+  color: var(--wgray12);
 }
 .register-auth-content {
   width: auto;
@@ -177,10 +211,6 @@
   border-radius: 8px;
   height: auto;
   padding: 12px;
-}
-.register-auth-title {
-  font-weight: 700;
-  font-size: 14px;
 }
 
 .register-auth-subtitle {
@@ -200,46 +230,32 @@
   height: 18px;
   border-radius: 10px;
   transition: 0.5s;
-  margin-right: 7px;
+  margin-right: 4px;
+}
+
+.register-gender-box:disabled {
+  background-color: #c9c6c0;
 }
 .register-gender-box:checked {
   /* 체크박스가 체크됐을 때의 색상 */
   background-color: #3d3938;
 }
 .register-gender-label {
-  display: inline-block;
-  padding-bottom: 10px;
+  /* display: inline-block; */
+  /* padding-bottom: 10px; */
   vertical-align: 5px;
+  font-weight: 400;
 }
 .register-selectBox {
   width: 100%;
 }
-.css-13cymwt-control {
-  width: auto;
-  height: 48px;
-  font-weight: 400;
-  font-size: 14px;
-  border: 1px solid #e9e7e2;
-  border-radius: 8px;
-}
-.css-t3ipsp-control {
-  width: auto;
-  height: 48px;
-  font-weight: 400;
-  font-size: 14px;
-  border: 1px solid #e9e7e2;
-  border-radius: 8px;
-}
-.css-1u9des2-indicatorSeparator {
-  width: 0px !important;
-}
+
 .register-all-agree {
   /* font-weight: 700; */
   /* font-size: 16px; */
   width: 100%;
-  height: 20px;
+  height: 24px;
   display: inline-block;
   vertical-align: middle;
-  padding-bottom: 9px;
   flex: 1;
 }

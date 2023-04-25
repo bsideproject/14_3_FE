@@ -1,14 +1,15 @@
 /** 헤더 공통 **/
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
-  width: 100%;
+  width: 420px;
   height: 60px;
   display: flex;
   font-weight: bold;
   color: #121212;
   border-bottom: 1px solid #E9E7E2;
   margin-left: -16px;
+  background-color: var(--wgray02);
 }
 /* 로고 */
 .header-logo-area{
@@ -28,8 +29,8 @@
   border-bottom: 1px solid #E9E7E2;
 }
 .go-back-iconimg{
-  padding-top: 24px;
-  padding-left: 24px;
+  padding-top: 19px;
+  padding-left: 16px;
 }
 .go-back-iconimg:hover{
   cursor: pointer;

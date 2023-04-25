@@ -1,6 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import {create, StateCreator} from 'zustand'
 import { persist, PersistOptions } from "zustand/middleware";
-
 const useNavBarStatus = create<PillListState>((persist as pillListPersist)
   (
     (set) => ({

@@ -78,8 +78,12 @@
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
   animation-direction: alternate-reverse;
-  transition:0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
   scale: 1.1;
+}
+
+.selected-card-area{
+  background-color: #2D4577;
 }
 
 /* 카드 각각의 개체 설정 - 공통 */
