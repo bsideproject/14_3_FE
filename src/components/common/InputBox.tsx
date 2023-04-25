@@ -2,33 +2,39 @@ import React from "react";
 
 const InputBox = React.memo(
   ({
-    title,
-    buttonTitle,
+    title, //  제목
+    buttonTitle, // 버튼 제목
     inputPlaceholader,
-    inputMaxLength,
+    inputMaxLength = 30,
     id,
     inputClassName,
     inputChange,
     inputValue,
+    inputBlur,
     buttonClick,
-    inputCheck,
-    errMsg,
-    errClassName = "register-input-error-msg",
     errObject,
+    isButton = true,
+    isDisable = false,
+    inputType = "text",
+    isClose = false,
+    closeClick,
   }: {
     title?: string;
-    buttonTitle: string;
-    inputPlaceholader: string;
-    inputMaxLength: number;
+    buttonTitle?: string;
+    inputPlaceholader?: string;
+    inputMaxLength?: number;
     id: string;
     inputClassName: string;
-    inputChange: any;
+    inputChange?: any;
+    inputBlur?: any;
     inputValue: string;
-    buttonClick: any;
-    inputCheck: boolean;
-    errMsg?: string;
-    errClassName?: string;
+    buttonClick?: any;
     errObject?: any;
+    isButton?: boolean;
+    isDisable?: boolean;
+    inputType?: string;
+    isClose?: boolean;
+    closeClick?: any;
   }) => {
     return (
       <>
@@ -45,28 +51,54 @@ const InputBox = React.memo(
               <></>
             )}
             <input
-              type="text"
+              type={inputType}
               placeholder={inputPlaceholader}
               id={id}
-              className={"register-input body3-regular margintop-8"}
+              className={
+                isClose === true
+                  ? "register-input-error body3-regular margintop-8"
+                  : "register-input body3-regular margintop-8"
+              }
               // style={{ background: nickNameChk ? "" : "red" }}
               onChange={inputChange}
-              // onBlur={handleNickNameBlur}
+              onBlur={inputBlur}
               value={inputValue}
               maxLength={inputMaxLength}
+              disabled={isDisable}
             />
           </div>
-          <button
-            type="button"
-            className={
-              title
-                ? "register-button body3-bold margintop-28"
-                : "register-button body3-bold margintop-8"
-            }
-            onClick={buttonClick}
-          >
-            {buttonTitle}
-          </button>
+          {isClose === true ? (
+            <>
+              <label
+                htmlFor="passwordReconfirm"
+                className={
+                  isButton
+                    ? "register-inputBox-close"
+                    : "register-inputBoxButton-close"
+                }
+                onClick={() => {
+                  closeClick();
+                }}
+              ></label>
+            </>
+          ) : (
+            <></>
+          )}
+          {isButton ? (
+            <button
+              type="button"
+              className={
+                title
+                  ? "register-button body3-bold margintop-28"
+                  : "register-button body3-bold margintop-8"
+              }
+              onClick={buttonClick}
+            >
+              {buttonTitle}
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
         {errObject}
         {/* {inputCheck === false ? (
