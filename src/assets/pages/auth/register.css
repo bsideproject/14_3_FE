@@ -112,6 +112,35 @@
   background-size: 24px;
   background-position: 99.5% center;
 }
+.register-inputBox-close {
+  position: absolute;
+  /* display: block; */
+  margin-top: 40px;
+  left: 260px;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../images/icon_close_filled.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  cursor: pointer;
+}
+
+.register-inputBoxButton-close {
+  position: absolute;
+  /* display: block; */
+  margin-top: 40px;
+  left: 345px;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../images/icon_close_filled.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  cursor: pointer;
+}
 .register-input-close {
   position: absolute;
   /* display: block; */
@@ -130,12 +159,25 @@
   .register-input-close {
     left: 285px;
   }
+  .register-inputBoxButton-close {
+    left: 300px;
+  }
+  .register-inputBox-close {
+    left: 210px;
+  }
 }
 @media (max-width: 360px) {
   .register-input-close {
     left: 270px;
   }
+  .register-inputBoxButton-close {
+    left: 300px;
+  }
+  .register-inputBox-close {
+    left: 190px;
+  }
 }
+
 .register-input-success {
   border: 1px solid #59b757;
   border-radius: 8px;
@@ -180,6 +222,9 @@
   border-radius: 4px;
   outline: none;
   transition: 0.5s;
+}
+.register-email-check-box:disabled {
+  background-color: #c9c6c0;
 }
 .register-email-check-box:checked {
   /* 체크박스가 체크됐을 때의 색상 */

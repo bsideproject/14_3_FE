@@ -9,10 +9,10 @@ import InputBox from "components/common/InputBox";
 import useDefaultSets from "store/modules/Defaults";
 const Register: React.FC = () => {
   //헤더설정
-  const {setHeaderText} = useDefaultSets()
-  useEffect(()=> {
-    setHeaderText('회원 가입하기')
-  },[])
+  const { setHeaderText } = useDefaultSets();
+  useEffect(() => {
+    setHeaderText("회원 가입하기");
+  }, []);
 
   const ReconfirmRef = useRef(null);
   const navigate = useNavigate();
@@ -284,8 +284,6 @@ const Register: React.FC = () => {
             inputChange={handlenickNameUpdate}
             inputValue={nickName}
             buttonClick={handleEmailExistCheck}
-            inputCheck={nickNameChk}
-            errMsg={"닉네임을 입력해주세요."}
             errObject={
               nickNameChk === false ? (
                 <div className="register-input-error-msg">
@@ -336,7 +334,6 @@ const Register: React.FC = () => {
             inputChange={handleEmailUpdate}
             inputValue={email}
             buttonClick={handleEmailExistCheck}
-            inputCheck={emailChk}
             errObject={
               emailChk === true ? (
                 <div className="register-input-error-msg">
@@ -350,7 +347,6 @@ const Register: React.FC = () => {
                 <></>
               )
             }
-            errMsg={"닉네임을 입력해주세요."}
           />
           {/* <div className="register-flex-row-gap8 margintop-32">
             <div className="register-box">
@@ -395,8 +391,6 @@ const Register: React.FC = () => {
             inputChange={handleAuthNumberUpdate}
             inputValue={authNumber}
             buttonClick={handleEmailExistCheck}
-            inputCheck={authNumberChk}
-            errMsg={"닉네임을 입력해주세요."}
             errObject={
               authNumberChk === false ? (
                 <div className="register-input-error-msg">
