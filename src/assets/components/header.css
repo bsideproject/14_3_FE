@@ -1,25 +1,43 @@
-/** 헤더 공통 **/
+/* 헤더 */
 .header {
-  position: fixed;
-  top: 0;
-  width: 420px;
+  width: 100%;
+  max-width: 430px;
   height: 60px;
   display: flex;
-  font-weight: bold;
-  color: #121212;
+  position: fixed;
+  top: 0;
   border-bottom: 1px solid #E9E7E2;
-  margin-left: -16px;
   background-color: var(--wgray02);
+  z-index: 2;
 }
-/* 로고 */
-.header-logo-area{
-  flex: 1;
-  padding-top: 18px;
-  padding-left: 16px;
+
+/* 1. leftArrow & text */
+.header-istext{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
-.header-logo-area img {
+.go-back-iconimg, .header-text{
+  padding-top: 19px;
+}
+.go-back-iconimg:hover{
+  cursor: pointer;
+}
+.go-back-iconimg img {
   vertical-align: top;
+  margin-left: 16px;
 }
+
+
+/* 2. 로고만 */
+.header-logo-area{
+  padding-top: 18px;
+  margin-left: 16px;
+}
+
+
+
+
 /** arrow custom header **/
 .login-header {
   font-size: 18px;
@@ -28,16 +46,7 @@
   line-height: 60px;
   border-bottom: 1px solid #E9E7E2;
 }
-.go-back-iconimg{
-  padding-top: 19px;
-  padding-left: 16px;
-}
-.go-back-iconimg:hover{
-  cursor: pointer;
-}
-.go-back-iconimg img {
-  vertical-align: top;
-}
+
 .header-text{
   flex: 1;
 }

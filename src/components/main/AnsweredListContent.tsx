@@ -60,8 +60,6 @@ const AnsweredListContent = () => {
           }
         </div>
 
-        <Footer type={false} />
-        <NavigationBar />
       </div>
             
     </>

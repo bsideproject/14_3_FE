@@ -1,73 +1,23 @@
-.category-other-bg-color{
-  width: 100%;
-  margin-left: 16px;
-  background-color: var(--wgray03);
-  padding-bottom: 32px;
-}
-/** 헤더 **/
-.custom-header {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 60px;
+.categorylist-wrap{
   display: flex;
-  font-weight: bold;
-  color: #121212;
-  border-bottom: 1px solid #E9E7E2;
-  margin-left: -16px;
-}
-/** arrow custom header **/
-.custom-login-header {
-  font-size: 18px;
-  justify-content: center;
-  vertical-align: middle;
-  height: 60px;
-  line-height: 60px;
-  border-bottom: 1px solid #E9E7E2;
-}
-/* 로고 */
-.custom-header-logo-area{
-  flex: 1;
-  padding-left: 16px;
-}
-.custom-header-logo-area img {
-  margin-top: 18px;
-}
-.bg-F2F1ED{
-  background-color: #F2F1ED;
+  flex-direction: column;
+  align-items: stretch;
 }
 .categorylist-top{
   width: 100%;
+  max-width: 430px;
   position: absolute;
-  top: 0;
-  left: -16px;
-  margin-bottom: 32px;
-}
-.right-arrow-area{
-  height: 100%;
-}
-.right-arrow-img{
-  margin-top: 18px;
+  margin-left: -16px;
+  background-color: var(--wgray03);
 }
 .welcome-logout{
-  width: 388px;
-  height: 64px;
+  max-width: 408px;
   margin-top: 48px;
   margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 32px;
   display: flex;
-}
-
-.welcome-text{
-  font-weight: 800;
-  line-height: 32px;
-  flex: 1;
-}
-
-.logout-area {
-  box-sizing: border-box;
-  width: fit-content;
-  height: 100%;
-  vertical-align: bottom;
+  justify-content: space-between;
 }
 
 .logout-btn {
@@ -87,19 +37,20 @@
   cursor: pointer;
 }
 
+/* 카테고리목록 */
 .myinfo-category-area{
+  width: 100%;
+  height: 90%;
   flex: 1;
-  background-color: #FFFFFF;
+  max-width: 430px;
   position: absolute;
   top: 204px;
-  width: 100%;
   margin-left: -16px;
-  padding-right: 16px;
+  background-color: #FFFFFF;
 }
 
 .myinfo-email-area{
   margin-top: 12px;
-  padding-left: 16px;
   height: 16px;
 }
 
@@ -111,12 +62,12 @@
 }
 
 .myinfo-category-btn{
-  height: 60px;
+  height: 64px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  background-color:var(--wgray02);
+  background-color:var(--wgray01);
   border: none;
   outline: none;
   border-bottom: 1px solid #E9E7E2;
@@ -128,12 +79,18 @@
 .myinfo-category-btn:hover{
   cursor: pointer;
 }
-
+.myinfo-category-btn:nth-of-type(1) {
+  border-top: 1px solid #E9E7E2;
+}
 .myinfo-category-btn span {
   align-items: center;
   letter-spacing: -0.025em;
   color: #3D3938;
   font-size: 14px;
-  line-height: 60px;
+  line-height: 64px;
   font-weight: 700;
+}
+.right-arrow-img{
+  display: block;
+  margin-top: 20px;
 }

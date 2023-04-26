@@ -37,7 +37,6 @@ const WithdrawalMain = () => {
 
   return (
     <>
-      <Header title="회원 탈퇴" />
       <motion.div
           // key={step}
 					// src={imgList[page]}

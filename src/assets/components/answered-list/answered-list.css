@@ -1,8 +1,6 @@
 /* wrap */
 .answered-list-wrap{
-  position: absolute;
-  width: 420px;
-  padding-bottom: 420px;
+  width: 430px;
 }
 /* divider */
 .answered-list-divider{
@@ -10,7 +8,7 @@
   margin-top: 32px;
   margin-left: -16px;
   margin-bottom: 12px;
-  width: 100%;
+  max-width: 430px;
   height: 8px;
 }
 .answered-list-item-count-wrap {
@@ -22,11 +20,12 @@
 /* lists-wrap */
 
 .answered-list-item {
+  box-sizing: border-box;
   background-color: var(--wgray01);
   border: 1px solid var(--wgray04);
   max-height: 270px;
   overflow: hidden;
-  width: 388px;
+  max-width: 398px;
   border-radius: 8px;
   margin-bottom: 16px;
   

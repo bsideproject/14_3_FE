@@ -1,12 +1,12 @@
 .navbar-area{
-  width: 420px;
+  width: 100%;
+  max-width: 430px;
   height: 64px;
   display: flex;
   position: fixed;
   bottom: 0;
   z-index:2;
   height: 64px;
-  margin-left: -16px;
   vertical-align: middle;
   background-color: var(--wgray02);
   border-top: 1px solid var(--wgray04);

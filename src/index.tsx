@@ -14,6 +14,9 @@ import MainContent from "pages/main/MainContent";
 import OnePagerMain from "pages/onpager/OnePagerMain";
 import Answer from "pages/main/Answer";
 import AnsweredList from "pages/main/AnsweredList";
+import Footer from "components/Footer";
+import NavigationBar from "components/NavigationBar";
+import Header from "components/auth/Header";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -23,6 +26,7 @@ root.render(
     <BrowserRouter>
       <GlobalStyle></GlobalStyle>
       <div className="container">
+        <Header /> {/* 헤더 */}
         <div className="inside-container">
           <Routes>
             <Route path="/" element={<App />} />
@@ -37,12 +41,13 @@ root.render(
             <Route path="/onepager" element={<OnePagerMain />} />
             <Route path="/answer" element={<Answer />} />
             <Route path="/answered-list" element={<AnsweredList />} />
-            
           </Routes>
 
-        </div>
-
+        </div>  
+        <Footer type={false}/>
+        <NavigationBar />   {/* 네비게이션 바 */}
       </div>
+
     </BrowserRouter>
   </React.StrictMode>
 );

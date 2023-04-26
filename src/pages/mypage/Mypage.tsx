@@ -1,19 +1,28 @@
 import testRegisterStore from "store/modules/TestRegister";
 import Auth from "store/modules/Auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "components/auth/Header";
 import { InputActionMeta } from "react-select";
 import SelectBox from "components/common/SelectBox";
 import Footer from "components/Footer";
+import useDefaultSets from "store/modules/Defaults";
+import InputBox from "components/common/InputBox";
 
 const Mypage: React.FC = () => {
+  //헤더설정
+  const { setHeaderText } = useDefaultSets();
+  useEffect(() => {
+    setHeaderText("개인 정보 수정");
+  }, []);
   const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>(registerInfo[0].email);
   const [nickName, setNickName] = useState<string>(registerInfo[0].nickName);
   const [password, setPassword] = useState<string>(registerInfo[0].password);
+  const [rePassword, setRePassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [newRePassword, setNewRePassword] = useState<string>("");
   const [birthDt, setBirthDt] = useState<string>(registerInfo[0].birthDt);
   const [gender, setGender] = useState<boolean | null>(registerInfo[0].gender);
   const [modifyStatus, setModifyStatus] = useState<boolean>(false); // *true : 수정상태, false: 조회상태
@@ -21,14 +30,15 @@ const Mypage: React.FC = () => {
   const [nickNameLengthChk, setNickNameLengthChk] = useState<boolean>(true);
   const [nickNameExistChk, setNickNameExistChk] = useState<boolean>(true); //* 닉네임 중복체크 미개발
   const [passwordErrorChk, setPasswordErrorChk] = useState<boolean>(false); //비밀번호 에러 체크(조건 불일치,미입력)
-  const [passwordReconfirm, setPasswordReconfirm] = useState<string>(""); //
+  const [passwordReconfirm, setPasswordReconfirm] = useState<string>(""); // 비밀번호 확인
+  const [passwordChangeChk, setPasswordChangeChk] = useState<boolean>(false); // 비밀번호 변경 버튼 클릭 여부
   const [passwordReconfirmSuccessChk, setPasswordReconfirmSuccessChk] = // 비밀번호 재입력칸 에러 체크(비밀번호와 같은지 여부)
     useState<boolean | null>(null);
 
+  const [rePasswordChk, setRePasswordChk] = useState<boolean>(false);
   const [year, setYear] = useState<string>();
   const [month, setMonth] = useState<string>();
   const [day, setDay] = useState<string>();
-
   const [emailAgree, setEmailAgree] = useState<boolean>(false);
   const handleGenderCheck = (e: any) => {
     setGender(
@@ -38,13 +48,15 @@ const Mypage: React.FC = () => {
   const handlePasswordBlur = (e: any) => {
     const Regexp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
 
-    if (!Regexp.test(password) && password.length > 1) {
+    // if (password == 1) {
+    // } else
+    if (!Regexp.test(newPassword) && newPassword.length > 1) {
       setPasswordErrorChk(true);
     } else {
       setPasswordErrorChk(false);
     }
 
-    if (password === passwordReconfirm && passwordReconfirm.length > 0) {
+    if (newPassword === passwordReconfirm && passwordReconfirm.length > 0) {
       setPasswordReconfirmSuccessChk(false); //성공
     } else if (passwordReconfirm.length === 0) {
       setPasswordReconfirmSuccessChk(null); //기본값
@@ -52,16 +64,18 @@ const Mypage: React.FC = () => {
       setPasswordReconfirmSuccessChk(true); // 실패
     }
   };
-  const handleNickNameBlur = (e: any) => {
-    if (nickName.length < 4) {
-      setNickNameLengthChk(false);
-    } else {
-      setNickNameLengthChk(true);
-    }
-  };
 
   const handlePasswordUpdate = (e: any) => {
     setPassword(e.target.value);
+  };
+  const handleRePasswordUpdate = (e: any) => {
+    setRePassword(e.target.value);
+  };
+  const handleNewPasswordUpdate = (e: any) => {
+    setNewPassword(e.target.value);
+  };
+  const handlePasswordChagneUpdate = (e: any) => {
+    setPasswordChangeChk(!passwordChangeChk);
   };
 
   const handlenickNameUpdate = (e: any) => {
@@ -106,40 +120,109 @@ const Mypage: React.FC = () => {
   const handleEmailAgree = (e: any) => {
     setEmailAgree(!emailAgree);
   };
+  const handleRePasswordDiff = (e: any) => {
+    if (password === rePassword || rePassword.length === 0) {
+      setRePasswordChk(true);
+    } else {
+      setRePasswordChk(false);
+    }
+  };
+
+  const handleRePasswordReset = (e: any) => {
+    setRePassword("");
+  };
   return (
     <>
       <div className="register-main">
-        <Header title="개인 정보 관리" />
-        <div className="register-box margintop-32">
-          <div>닉네임</div>
-          <input
-            type="text"
-            placeholder="8글자 이내로 만들어주세요."
-            id="nickName"
-            className="register-input margintop-8"
-            // style={{ background: nickNameChk ? "" : "red" }}
-            onChange={handlenickNameUpdate}
-            // onBlur={handleNickNameBlur}
-            value={nickName}
-            maxLength={30}
-            disabled={!isInfoChange}
+        <InputBox
+          title={"닉네임"}
+          buttonTitle="중복 확인"
+          inputPlaceholader={"8글자 이내로 만들어주세요."}
+          inputMaxLength={8}
+          id={"nickName"}
+          inputClassName={"register-flex-row-gap8 margintop-32"}
+          inputValue={nickName}
+          isButton={false}
+          isDisable={true}
+        />
+
+        <InputBox
+          title={"이메일"}
+          inputPlaceholader={"이메일을 입력해주세요."}
+          id={"nickName"}
+          inputClassName={"register-flex-row-gap8 margintop-32"}
+          inputValue={email}
+          isButton={false}
+          isDisable={true}
+        />
+
+        {!isInfoChange ? (
+          <InputBox
+            title={"비밀번호"}
+            id={"password"}
+            inputType={"password"}
+            inputClassName={"register-flex-row-gap8 margintop-32"}
+            buttonClick={handlePasswordChagneUpdate}
+            inputValue={password}
+            isButton={false}
+            // inputBlur={}
+            isDisable={true}
+            buttonTitle={!passwordChangeChk ? "변경" : "취소"}
           />
-        </div>
-        <div className="register-box margintop-36">
-          <div>이메일</div>
-          <input
-            type="text"
-            placeholder="이메일을 입력해주세요."
-            id="nickName"
-            className="register-input margintop-8"
-            // style={{ background: nickNameChk ? "" : "red" }}
-            onChange={handlenickNameUpdate}
-            // onBlur={handleNickNameBlur}
-            value={email}
-            maxLength={30}
-            disabled={!isInfoChange}
-          />
-        </div>
+        ) : (
+          <>
+            <InputBox
+              title={"기존 비밀번호"}
+              inputPlaceholader={"기존 비밀번호를 입력해주세요."}
+              id={"passwordChange"}
+              inputType={"password"}
+              inputClassName={"register-flex-row-gap8 margintop-32"}
+              buttonClick={handlePasswordChagneUpdate}
+              inputChange={handleRePasswordUpdate}
+              inputValue={!passwordChangeChk ? password : rePassword}
+              isButton={true}
+              inputBlur={handleRePasswordDiff}
+              isDisable={!passwordChangeChk}
+              buttonTitle={!passwordChangeChk ? "변경" : "취소"}
+              isClose={!rePasswordChk}
+              closeClick={handleRePasswordReset}
+            />
+            <InputBox
+              title={"새 비밀번호"}
+              inputPlaceholader={
+                "8~20자의 영문, 숫자, 특수문자로 구성해주세요."
+              }
+              id={"newPassword"}
+              inputType={"password"}
+              inputClassName={"register-flex-row-gap8 margintop-32"}
+              inputChange={handleNewPasswordUpdate}
+              inputValue={newPassword}
+              isButton={false}
+              inputBlur={handlePasswordBlur}
+              isDisable={isInfoChange && !passwordChangeChk}
+              buttonTitle={!passwordChangeChk ? "변경" : "취소"}
+              isClose={passwordErrorChk}
+              closeClick={handleRePasswordReset}
+            />
+            <InputBox
+              title={"새 비밀번호 확인"}
+              inputPlaceholader={"새 비밀번호를 다시 입력해주세요."}
+              id={"passwordChange"}
+              inputType={"password"}
+              inputClassName={"register-flex-row-gap8 margintop-32"}
+              buttonClick={handlePasswordChagneUpdate}
+              inputChange={handleRePasswordUpdate}
+              inputValue={rePassword}
+              isButton={isInfoChange}
+              inputBlur={handleRePasswordDiff}
+              isDisable={isInfoChange && !passwordChangeChk}
+              buttonTitle={!passwordChangeChk ? "변경" : "취소"}
+              isClose={rePasswordChk}
+              closeClick={handleRePasswordReset}
+            />
+          </>
+        )}
+
         <div className="register-flex-column-gap0 margintop-36">
           <div>비밀번호</div>
           <div style={{ position: "relative" }}>
@@ -241,6 +324,7 @@ const Mypage: React.FC = () => {
             id="emailAgree"
             checked={emailAgree}
             onChange={handleEmailAgree}
+            disabled={true}
           />
           <label htmlFor="emailAgree" className="body3-regular marginleft-7">
             이메일 수신 동의(선택)
@@ -251,7 +335,7 @@ const Mypage: React.FC = () => {
           보내드립니다.
         </div>
         {/* <button type="button">저장</button> */}
-        {modifyStatus === false ? (
+        {isInfoChange === false ? (
           <button
             className="register-button margintop-48"
             style={{ width: "100%" }}
@@ -259,19 +343,18 @@ const Mypage: React.FC = () => {
               navigate("/password-check");
             }}
           >
-            수정하기
+            개인 정보 수정
           </button>
         ) : (
           <button
             type="submit"
-            className="register-button"
-            style={{ width: "100%", marginTop: "64px" }}
+            className="register-button margintop-48"
+            style={{ width: "100%" }}
           >
-            완료
+            수정하기
           </button>
         )}
       </div>
-      <Footer type={false} />
     </>
   );
 };

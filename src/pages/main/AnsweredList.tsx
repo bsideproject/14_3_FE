@@ -1,6 +1,3 @@
-import Footer from "components/Footer"
-import NavigationBar from "components/NavigationBar"
-import Header from "components/auth/Header"
 import AnsweredListContent from "components/main/AnsweredListContent"
 import LeftAnswerPeriod from "components/main/LeftAnswerPeriod"
 import MyCalendar from "components/main/MyCalendar"
@@ -14,13 +11,11 @@ import MyCalendar from "components/main/MyCalendar"
 const AnsweredList = () => {
   return (
     <>
-    <div>
-      <Header isLeftArrow={false} />
-      <LeftAnswerPeriod />
-      <MyCalendar />
-      <AnsweredListContent />
-
-    </div>
+      <div style={{display:'flex', flexDirection:'column'}}>
+        <LeftAnswerPeriod />
+        <MyCalendar />
+        <AnsweredListContent />
+      </div>
     </>
   )
 }

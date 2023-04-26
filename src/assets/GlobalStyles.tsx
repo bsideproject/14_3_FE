@@ -57,19 +57,26 @@ table {
 }
 
 /* custom 내용입니다 */
+/* 웹포함 기준 */
 .container{
-	width: 100%;
-	max-width: 420px;
+	background-color: #FAF9F6;
+	max-width: 430px;
 	min-height: 100vh;
 	margin: 0 auto;
+  filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
+
 }
 .inside-container{
 	background-color: #FAF9F6;
-  padding: 0 16px; /*고정 padding*/
+	margin: 0 16px;
 	padding-top: 60px;
   min-height: 100vh;
-	height: auto;
-	position: relative;
+}
+// 모바일기준
+@media (max-width:430px) {
+	.container {
+		width: 100%;
+	}
 }
 :root {
 	--button-bg-color-1: #3D3938; /*로그인버튼배경색*/
