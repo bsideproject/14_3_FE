@@ -1,0 +1,14 @@
+.answered-view-wrap{
+  margin-top: 32px;
+  width: 100%;
+  background-color: var(--wgray03);
+  border: 1px solid var(--wgray04);
+  border-radius: 8px;
+}
+.answered-list-item-header-wrap{
+  margin-top: 24px;
+  margin-left: 16px;
+  display: flex;
+  width: fit-content;
+  gap: 4px;
+}
