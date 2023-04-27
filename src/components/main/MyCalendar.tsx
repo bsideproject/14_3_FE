@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import 'react-calendar/dist/Calendar.css';
+// import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar'
 import moment from 'react-moment'
 import LeftArrow from 'assets/images/left-vector.png'
@@ -16,6 +16,7 @@ import useAnsweredList from 'store/modules/Answers';
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
+  const {qnaDateList, getQnaDateList, updateIsThisMonth} = useAnsweredList()
   const [selectedDate, setValue] = useState<Date>(new Date())                 //calendar - 선택일자
   const [nextArrowActive, setNextArrowActive] = useState<boolean>(false)      //calendar - 다음달클릭 Arrow IMG 설정용
   const today = new Date()
@@ -34,10 +35,12 @@ const MyCalendar = () => {
     setTextLabel(activeStartDate)           //라벨영역제어
 
     const selectedMonth = activeStartDate.getMonth() + 1
-    if (selectedMonth >= todayMonth) {
+    if (activeStartDate.getMonth()+1 >= todayMonth) {
       setNextArrowActive(false)   //다음달표시안함
+      updateIsThisMonth(true)    //원페이저 다운로드 표시
     } else {
       setNextArrowActive(true)   //다음달표시
+      updateIsThisMonth(false)    //남은기간표시
     }
   }
 
@@ -51,46 +54,24 @@ const MyCalendar = () => {
   /****************************************************************************
    * 데이터 설정
    ****************************************************************************/
-  const {qnaDateList, getQnaDateList} = useAnsweredList()
 
   /**
    * @desc 데이터가 있는 날짜의 nodeList를 체크 -> 값과 비교 -> 클래스 추가
    */
   const updateCalendarWithDesign = () => {
     const dayLists = Array.from(document.querySelectorAll('abbr'))  //노드item
-    dayLists.forEach(item => {
-      item.classList.remove('hasinfo')
-      item.classList.add('body3-bold')
+    dayLists.forEach((item, index) => {
+      if (index < 7) {
+        item.classList.add('body3-regular') //[월-일] 폰트 지정
+      } else {
+        item.classList.add('body3-bold')    //일자 폰트 지정
+      }
     })
-    // const hasDayList = dayLists.filter(c => 
-    //   qndl.includes(c.textContent) === true
-    // )
-    // console.log(hasDayList);
-    // hasDayList.forEach(item => {
-    //   item.classList.add('hasinfo')
-    // })
-    
-    // const dayTextList = dayLists.map(item=> item.textContent)       //일자 전부 가져오기
-    // console.log(dayTextList)
   }
 
   // getQnaDateList()    //date, count 포맷 데이터 조회
   useEffect(()=>{
-    // getQnaDateList()    //date, count 포맷 데이터 조회
-    //데이터의 일수만 가져오기
-    // const qndl = qnaList.map(item => item?.date?.substring(8).replace(/(^0+)/, "")) 
-    // console.log(qndl);
-    
-    // updateCalendarWithDesign() 
-    console.log(qnaDateList)   
-    const dayLists = Array.from(document.querySelectorAll('abbr'))  //노드item
-    dayLists.forEach((item, index) => {
-      if (index < 7) {
-        item.classList.add('body3-regular')
-      } else {
-        item.classList.add('body3-bold')
-      }
-    })
+    updateCalendarWithDesign()
   }, [qnaDateList])
 
   return (

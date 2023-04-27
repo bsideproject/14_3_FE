@@ -1,6 +1,8 @@
 import AnsweredListContent from "components/main/AnsweredListContent"
 import LeftAnswerPeriod from "components/main/LeftAnswerPeriod"
 import MyCalendar from "components/main/MyCalendar"
+import GoToOnePagerBtn from "components/main/GoToOnePagerBtn"
+import useAnsweredList from "store/modules/Answers"
 
 /**
  * @설명 답변목록 조회
@@ -9,16 +11,22 @@ import MyCalendar from "components/main/MyCalendar"
  * @내용 사용자가 답변한 내용 조회
  */
 const AnsweredList = () => {
+  const {isThisMonth} = useAnsweredList()
+  
   return (
     <>
       <div style={{display:'flex', flexDirection:'column'}}>
-        <LeftAnswerPeriod />
+        {
+          isThisMonth ? (<LeftAnswerPeriod />) : (<GoToOnePagerBtn />)
+        }
         <MyCalendar />
         <AnsweredListContent />
       </div>
     </>
   )
 }
+
+
 
 export default AnsweredList
 

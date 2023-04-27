@@ -7,9 +7,11 @@ type ANSWER_LIST = {
   getNewList: Function
   qnaDateList: Array<QNA_DATE_ITEM>
   getQnaDateList: Function
+  isThisMonth: boolean                //MyCalendar 기준, 페이지의 당월 상태 유무
+  updateIsThisMonth: Function         //페이지의 당월 상태변경함수
 }
 
-type QNA_ITEM = { //qna 객체 1개
+type QNA_ITEM = { //qna 리스트 목록 객체
   index?: number  //답변의 index
   date?: string
   q?: string  //question
@@ -28,6 +30,7 @@ type QNA_DATE_ITEM = { //qna 객체 1개
 const useAnsweredList = create<ANSWER_LIST>((set) => ({
   qnaList: [...testData],
   qnaDateList: [...testData2],
+  isThisMonth: true,
 
   /**
    * @desc 해당 월의 qna 리스트 조회
@@ -56,6 +59,14 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     // const result = fetch('/api/getQnaDateList', param)
     const newList:Array<QNA_DATE_ITEM> = testData2
     set({qnaDateList: newList})
+  },
+
+  /**
+   * @desc 당월 view update 
+   * @param {boolean} newState
+   */
+  updateIsThisMonth: (newState: boolean):void => {
+    set({isThisMonth: newState})
   }
 }))
 
