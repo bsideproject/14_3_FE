@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar'
 import moment from 'react-moment'
-import RightArrow from 'assets/images/right-arrow.png'
+import LeftArrow from 'assets/images/left-vector.png'
+import RightArrow from 'assets/images/right-vector.png'
 import {SELECT_ICON, ANSWER_STEP_1,ANSWER_STEP_2,ANSWER_STEP_3} from './MyCalendar-Images.js'
+import 'assets/components/answered-list/custom-calendar.css'
+import useAnsweredList from 'store/modules/Answers';
 
 /**
  * @설명 캘린더
@@ -39,38 +42,89 @@ const MyCalendar = () => {
   }
 
   // [월] 이동 이벤트 - 목록 초기화 & 해당 월의 데이터 목록 재조회
-  const clearList = ({activeStartDate}:any) => {  //변경된 일자의 최소 일자
-    const watchingViewMonth = activeStartDate.getMonth() + 1    //view 로 보고 있는 해당 [월]
+  const clearList = ({value}:any) => {  //변경된 일자의 최소 일자
+    const watchingViewMonth = new Date(value).getMonth() + 1    //view 로 보고 있는 해당 [월]
     //const result = fetch('/api/getAnswerList', watchingViewMonth)       //db connection
-    console.log(watchingViewMonth + '월에 해당하는 데이터 조회')
-    
+    console.log(watchingViewMonth, '월에 해당하는 데이터 조회')
   }
+
+  /****************************************************************************
+   * 데이터 설정
+   ****************************************************************************/
+  const {qnaDateList, getQnaDateList} = useAnsweredList()
+
+  /**
+   * @desc 데이터가 있는 날짜의 nodeList를 체크 -> 값과 비교 -> 클래스 추가
+   */
+  const updateCalendarWithDesign = () => {
+    const dayLists = Array.from(document.querySelectorAll('abbr'))  //노드item
+    dayLists.forEach(item => {
+      item.classList.remove('hasinfo')
+      item.classList.add('body3-bold')
+    })
+    // const hasDayList = dayLists.filter(c => 
+    //   qndl.includes(c.textContent) === true
+    // )
+    // console.log(hasDayList);
+    // hasDayList.forEach(item => {
+    //   item.classList.add('hasinfo')
+    // })
+    
+    // const dayTextList = dayLists.map(item=> item.textContent)       //일자 전부 가져오기
+    // console.log(dayTextList)
+  }
+
+  // getQnaDateList()    //date, count 포맷 데이터 조회
+  useEffect(()=>{
+    // getQnaDateList()    //date, count 포맷 데이터 조회
+    //데이터의 일수만 가져오기
+    // const qndl = qnaList.map(item => item?.date?.substring(8).replace(/(^0+)/, "")) 
+    // console.log(qndl);
+    
+    // updateCalendarWithDesign() 
+    console.log(qnaDateList)   
+    const dayLists = Array.from(document.querySelectorAll('abbr'))  //노드item
+    dayLists.forEach((item, index) => {
+      if (index < 7) {
+        item.classList.add('body3-regular')
+      } else {
+        item.classList.add('body3-bold')
+      }
+    })
+  }, [qnaDateList])
 
   return (
     <>
        <Calendar
+        className="custom-calendar"
         onChange={updateDate} 
         value={selectedDate} 
-        nextLabel = {nextArrowActive ? (
-          <img src={RightArrow} alt={">"} width={24} height={24} />
-        ): null}
-        next2Label={null}           //마지막달선택 >> 없애기
+        formatDay={(locale, date) => date.getDate().toString()}
+        prevLabel = {<img src={LeftArrow} alt={"<"} width={24} height={24} /> }
         prev2Label={null}           //첫달선택  << 없애기
+        nextLabel = {<img src={RightArrow} alt={">"} width={24} height={24} /> }
+        next2Label={null}           //마지막달선택 >> 없애기
+        minDetail="month"           //최소 디테일 : [월]
         maxDetail={'month'}         //최대 디테일 : [월]
-        onActiveStartDateChange={({action, activeStartDate, value, view}) => {   //[월]이동 이벤트
-          clearList(activeStartDate)
-          isThisMonth({activeStartDate})
-        }}
-        // tileDisabled={tileDisabled}
-        // tileContent={({date,view}) => {
-        //   if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-        //     return (
-        //       <>
-        //         <div className='dot'></div>
-        //       </>
-        //     )
-        //   }
-        // }}
+        locale={'ko'}
+        showNeighboringMonth={false}   //이전,이후 날짜 show/hide
+        //tile 스타일지정
+        tileClassName={
+          ({ date, view }) => {
+            console.log(qnaDateList[0])
+            const index = qnaDateList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
+            if (index > -1) {
+              return 'cal-item-' + qnaDateList[index].count
+            }
+          }
+        }
+        //[월]이동 이벤트
+        onActiveStartDateChange={({action, activeStartDate, value, view}) => isThisMonth({activeStartDate})
+        }
+        onClickDay={(value, event) => clearList({value})}       //day 클릭 이벤트
+        // tileContent={({activeStartDate, date}) => 
+        //   qnaDateList.map(qd => new Date(qd).getDate() === date.getDate() ? (<div className='hasinfo'>ㅇ</div>): null)
+        // }
       />
 
 

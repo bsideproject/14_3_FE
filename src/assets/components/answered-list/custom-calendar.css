@@ -1,0 +1,51 @@
+  .custom-calendar{
+  width: 100%;
+  background-color: inherit;
+  border: none;
+}
+.react-calendar__navigation{
+  width: 50%;
+}
+.react-calendar__tile--active{
+  background: none;
+}
+
+
+/* 오늘날짜 배경 none 처리 */
+.react-calendar__tile--now{
+  background: none;
+}
+.cal-item-1, .cal-item-2, .cal-item-3 {
+  padding: 0 auto;
+}
+.cal-item-1 > abbr, .cal-item-2 > abbr, .cal-item-3 > abbr, .react-calendar__tile--active > abbr{
+  color: var(--wgray12);
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  margin: 0 auto;
+}
+.cal-item-1 > abbr {
+  padding: 3px 10px;
+  background: #C4DCF0;
+  color: var(--wgray12);
+}
+.cal-item-2 > abbr {
+  padding: 3px 10px;
+  background: #90ACCE;
+  color: var(--wgray01);
+}
+.cal-item-3 > abbr {
+  padding: 3px 10px;
+  background-color: #2D4577;
+  color: var(--wgray01);
+}
+.react-calendar__tile--active > abbr{
+    width: 36px;
+  height: 36px;
+  padding: 6px 8px;
+  width: 36px; height: 36px;
+  border: 1px solid #90ACCE;
+}
