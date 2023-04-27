@@ -58,10 +58,10 @@ const AnsweredView = () => {
           <DateFormatUI date={answer?.date} />
           <AnsweredCategoryUI category={answer?.qc} />
         </div>
-        <div>
+        <div className="body1-bold answered-list-item-q">
           {answer?.q}
         </div>
-        <div>
+        <div className="body2-regular answered-view-item-a">
           {answer?.a}
         </div>
       </div>
