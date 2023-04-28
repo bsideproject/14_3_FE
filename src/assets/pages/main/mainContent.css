@@ -17,7 +17,7 @@
 /* card */
 .card {
   box-sizing: border-box;
-  width: 180px;
+  width: 216px;
   height: 202px;
   transform-style: preserve-3d;
   position: relative;
@@ -34,28 +34,13 @@
 }
 
 .card-in {
-  width: 148px;
+  width: 180px;
   display: flex;
   justify-content: center;
   background-color: #F8F3ED;
   padding: 8px;
 }
 
-/* scaling */
-/* .scaling-enter {
-  opacity: 0;
-}
-.scaling-enter-active{
-  transition: opacity 300ms;
-}
-.scaling-exit {
-  opacity: 1;
-  transition: opacity 300ms;
-}
-.scaling-exit-active {
-  opacity: 1;
-  transition: opacity 300ms;
-} */
 .card-scale {
   background-color: #F8F3ED;
 }
@@ -80,27 +65,14 @@
   animation-direction: alternate-reverse;
   transition: 0.5s ease-in-out;
   scale: 1.1;
+  border-radius: 3px;
 }
 
 .selected-card-area{
   background-color: #2D4577;
 }
-
-/* 카드 각각의 개체 설정 - 공통 */
-/* .inner-card, .outer-card {
-  box-sizing: border-box;
-  width: 184px;
-  height: 148px;
-  padding: 8px;
-  border-radius: 10px;
-  cursor: pointer;
-  position: absolute;
+.selected-card-area img {
 }
-
-.card-back {
-  background-color: #ffad66;
-  transition: all 0.3s ease-in-out;
-} */
 
 /* visability */
 .card-back {
@@ -109,26 +81,7 @@
   display: none;
   position: absolute;
 }
-/*
-.img-area{
-  position: relative;
-  width: 168px;
-  height: 156px;
-  display: flex;
-  justify-content: center;
-}
 
-.img-area img{
-  display: block;
-  margin: auto;
-  transition: all 0.3s ease-in-out;
-
-}
-.img-area img:hover{
-  transition: all 0.3s ease-in-out;
-  scale: 1.1;
-}
- */
 .card-title{
   position: relative;
   font-family: 'Prompt';

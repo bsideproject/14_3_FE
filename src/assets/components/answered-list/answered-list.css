@@ -1,6 +1,6 @@
 /* wrap */
 .answered-list-wrap{
-  width: 430px;
+  width: 480px;
 }
 /* divider */
 .answered-list-divider{
@@ -8,7 +8,7 @@
   margin-top: 32px;
   margin-left: -16px;
   margin-bottom: 12px;
-  max-width: 430px;
+  max-width: 480px;
   height: 8px;
 }
 .answered-list-item-count-wrap {
@@ -25,7 +25,7 @@
   border: 1px solid var(--wgray04);
   max-height: 270px;
   overflow: hidden;
-  max-width: 398px;
+  max-width: 448px;
   border-radius: 8px;
   margin-bottom: 16px;
   
@@ -65,5 +65,21 @@
  text-overflow: ellipsis;
  white-space: normal;
  -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
+ -webkit-box-orient: vertical;
+}
+
+/* answer-list-labels-wrap */
+.answer-list-labels-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  margin-right: 25px;
+  gap: 8px;
+}
+.answer-list-labels{
+  display: flex;
+  gap: 4px;
+  color: var(--wgray10);
 }
