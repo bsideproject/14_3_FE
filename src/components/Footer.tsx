@@ -1,6 +1,7 @@
 import 'assets/components/footer.css'
 import RectangleDived from 'assets/images/rectangleDived.png'
 import GomingLogo from 'assets/images/goming-logo.png'
+import useDefaultSets from 'store/modules/Defaults'
 
 /**
  * @파일 Footer
@@ -11,9 +12,10 @@ import GomingLogo from 'assets/images/goming-logo.png'
  * @desc props 를 내려주지 않을 시, 하단여백 X
  */
 const Footer = ({type = true}: TYPE_FOOTER) => {
+  const {isNavigation} = useDefaultSets()
   return (
     <>
-      <div className="footer-area">
+      <div className="footer-area" style={{marginBottom: isNavigation ? '60px':'' }}>
         <div className='inside-footer-area'>
           <div className='footer-title'>
             <img src={GomingLogo} alt="Goming" />
@@ -31,10 +33,6 @@ const Footer = ({type = true}: TYPE_FOOTER) => {
           </div>
           <p className='caption1-regular mb-12'>문의사항 : goming.team@gmail.com</p>
           <p className='caption1-regular mb-40'>©Goming All rights reserved.</p>
-          {/* type 에 따른 영역 제어 */}
-          {
-            type === false ? (<div style={{height:'64px'}}></div>) : ''
-          }
         </div>
       </div>
     </>

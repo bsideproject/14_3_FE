@@ -16,7 +16,7 @@ import Footer from 'components/Footer';
  */
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Login:React.FC = () =>{
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText, setIsNavigation} = useDefaultSets()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -37,6 +37,8 @@ const Login:React.FC = () =>{
       }
     }
     setHeaderText('로그인')
+    setIsNavigation(false)
+    return () => setIsNavigation(true)
   },[])
 
   const loginAttempt = async (e:any): Promise<void> => {

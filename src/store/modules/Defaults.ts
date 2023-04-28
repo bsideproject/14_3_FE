@@ -19,6 +19,7 @@ const useDefaultSets = create<DEFAULT_SETS>((persist as pillListPersist)
 ((set) => ({
     headerText: '',
     headerIsBgColor: false,
+    isNavigation: true,
 
     /********************************
      * @desc 헤더의 텍스트를 설정한다.
@@ -32,6 +33,10 @@ const useDefaultSets = create<DEFAULT_SETS>((persist as pillListPersist)
 
     setHeaderBgColor: (headerIsBgColor: boolean): void => {
       headerIsBgColor ? set({headerIsBgColor: true}) : set({headerIsBgColor: false})
+    },
+
+    setIsNavigation: (newState: boolean):void => {
+      set({isNavigation: newState})
     }
 
   }),
@@ -41,9 +46,11 @@ const useDefaultSets = create<DEFAULT_SETS>((persist as pillListPersist)
 type DEFAULT_SETS = {
   // Header 영역 정의
   headerText?: string
+  isNavigation: boolean
   setHeaderText: Function
   headerIsBgColor: boolean   //카테고리목록에서만 사용하는 bgcolor 사용
   setHeaderBgColor: Function
+  setIsNavigation: Function //네비게이션바 존재유무 세팅
 }
 
 type pillListPersist = (
