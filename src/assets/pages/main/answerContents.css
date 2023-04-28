@@ -22,14 +22,15 @@
 
 /* 답변영역 */
 .answer-content{
-  width: 388px;
+  max-width: 450px;
   /* border: 1px solid #E9E7E2;
   background: #F2F1ED;
   height: 240px;
   padding: 16px; */
 }
 .answer-content textarea {
-  width: 356px;
+  width: calc(100% - 32px);
+  max-width: 416px;
 }
 /* 에러 및 글자수 문구 */
 .answer-comment-area{

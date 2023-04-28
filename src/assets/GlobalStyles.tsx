@@ -60,7 +60,7 @@ table {
 /* 웹포함 기준 */
 .container{
 	background-color: #FAF9F6;
-	max-width: 430px;
+	max-width: 480px;
 	min-height: 100vh;
 	margin: 0 auto;
   filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
@@ -73,7 +73,7 @@ table {
   min-height: 100vh;
 }
 // 모바일기준
-@media (max-width:430px) {
+@media (max-width:480px) {
 	.container {
 		width: 100%;
 	}
