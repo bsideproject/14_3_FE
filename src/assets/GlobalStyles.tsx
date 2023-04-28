@@ -209,6 +209,150 @@ button {
 	border: 1px solid var(--wgray02);
 	background: var(--wgray01);
 }
+
+// primary-button-styles
+.btn-p-xl {
+	padding: 12px 16px;
+	border-radius: 8px;
+	height: 48px;
+	background: var(--wgray12);
+	color: var(--wgray01);
+}
+.btn-p-l {
+	padding: 10px 16px;
+	border-radius: 8px;
+	height: 44px;
+	background: var(--wgray12);
+	color: var(--wgray01);
+}
+.btn-p-m {
+	padding: 6px 16px;
+	border-radius: 8px;
+	height: 36px;
+	background: var(--wgray12);
+	color: var(--wgray01);
+}
+.btn-p-s {
+	padding: 4px 8px;
+	border-radius: 4px;
+	height: 32px;
+	background: var(--wgray12);
+	color: var(--wgray01);
+}
+.btn-p-xs {
+	padding: 6px 8px;
+	border-radius: 4px;
+	height: 28px;
+	background: var(--wgray12);
+	color: var(--wgray01);
+}
+
+// secondary-button-styles
+.btn-s-xl {
+	padding: 12px 16px;
+	border-radius: 8px;
+	height: 48px;
+	background: var(--wgray01);
+	color: var(--wgray12);
+	border: 1px solid var(--wgray12);
+}
+.btn-s-l {
+	padding: 10px 16px;
+	border-radius: 8px;
+	height: 48px;
+	background: var(--wgray01);
+	color: var(--wgray12);
+	border: 1px solid var(--wgray12);
+}
+.btn-s-m {
+	padding: 6px 16px;
+	border-radius: 8px;
+	height: 48px;
+	background: var(--wgray01);
+	color: var(--wgray12);
+	border: 1px solid var(--wgray12);
+}
+.btn-s-s {
+	padding: 4px 8px;
+	border-radius: 8px;
+	height: 48px;
+	background: var(--wgray01);
+	color: var(--wgray12);
+	border: 1px solid var(--wgray12);
+}
+.btn-s-xs {
+	padding: 6px 8px;
+	border-radius: 8px;
+	height: 48px;
+	background: var(--wgray01);
+	color: var(--wgray12);
+	border: 1px solid var(--wgray12);
+}
+
+// button-hover-style
+.button:hover {	
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+// primary-button-clicked-styles
+.btn-p-xl:active, .btn-p-l:active, .btn-p-m:active, .btn-p-s:active, .btn-p-xs:active { 
+	background: var(--wgray13); 
+} 
+// secondary-button-clicked-styles
+.btn-s-xl:active, .btn-s-l:active, .btn-s-m:active, .btn-s-s:active, .btn-s-xs:active { 
+	border: 1px solid var(--wgray13);
+	color: var(--wgray13);
+} 
+
+// primary-button-disabled-styles
+.btn-p-xl:disabled, .btn-p-l:disabled, .btn-p-m:disabled, .btn-p-s:disabled, .btn-p-xs:disabled { background: var(--wgray06); 
+}
+// secondary-button-disabled-styles
+.btn-s-xl:disabled, .btn-s-l:disabled, .btn-s-m:disabled, .btn-s-s:disabled, .btn-s-xs:disabled { 
+	color: var(--wgray06);
+	border: var(--wgray06);
+}
+
+//radio-style
+input[type="radio"] {
+	display: none;
+	background: var(--wgray01);
+}
+input[type="radio"] {
+	display: inline-block;
+	padding: 3px;
+	color: var(--wgray12);
+	border: 2px solid var(--wgray12);
+}
+input[type="radio"]:hover {
+	background: var(--wgray04);
+}
+input[type="radio"]:checked {
+	background: none;
+	border: 4px solid var(--wgray12);
+}
+input[type="radio"]:disabled {
+	border-color: var(--wgray06);
+}
+
+//checkbox-style
+// input[type="checkbox"]+label {
+// 	display: block;
+// 	padding-left: 24px;
+// 	width: 24px;
+// 	height: 24px;
+// 	background: url(./images/unselected-checkbox.png) no-repeat 0 0px / contain;
+// 	cursor: pointer;
+// }
+// input[type="checkbox"]:checked+label {
+// 	display: inline-block;
+// 	border: none;
+// 	background-color: var(--wgray12);
+// 	background: url('./images/checked-img.png') no-repeat 0 0px / contain;
+// }
+// input[type="checkbox"] {
+// 	display: none;
+// }
 `;
 
 export default GlobalStyle;
