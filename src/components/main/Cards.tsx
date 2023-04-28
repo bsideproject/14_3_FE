@@ -11,6 +11,11 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
 
   //카드 선택 이벤트
   const clickHandler = (item: any) => {
+    //style 배경 설정
+    const id = item.index.toString()
+    const selectedItem = document.getElementById(id) as HTMLElement
+    selectedItem.style.backgroundColor = '#2D4577'
+
     if (selected === false) {
       setShowFront(false); 
       clickedEventHandler()
@@ -41,10 +46,10 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
         <div ref={nodeRef} className='card' onClick={() => clickHandler(item)}>
           {/* 카드 앞면 내용: 컨텐츠 */}
           <div className='card-front'>
-            <div className='card-in'>
+            <div className='card-in' id={item.index}>
               {
                 showFront ? (
-                  <img src={item.img} alt={item.desc} width={148} height={136} className="card-scale"/>
+                  <img src={item.img} alt={item.desc} width={'100%'} height={136} className="card-scale"/>
                 ) : (
                   <div className='selected-card-area card-fade'>
                     <img src={item.aftrImg} alt={item.desc} width={148} height={136} className='card-fade' />

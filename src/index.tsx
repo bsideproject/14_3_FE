@@ -17,6 +17,7 @@ import AnsweredList from "pages/main/AnsweredList";
 import Footer from "components/Footer";
 import NavigationBar from "components/NavigationBar";
 import Header from "components/auth/Header";
+import AnsweredView from "pages/main/AnsweredView";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -41,6 +42,7 @@ root.render(
             <Route path="/onepager" element={<OnePagerMain />} />
             <Route path="/answer" element={<Answer />} />
             <Route path="/answered-list" element={<AnsweredList />} />
+            <Route path="/answered-view" element={<AnsweredView />} />
           </Routes>
 
         </div>  

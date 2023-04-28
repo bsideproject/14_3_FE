@@ -1,10 +1,7 @@
 import SelectionCard from "components/main/SelectionCard"
 import 'assets/pages/main/mainContent.css'
 import NowSelectionStep from "components/main/NowSelectionStep"
-import NavigationBar from "components/NavigationBar"
 import TodayDate from "components/main/TodayDate"
-import Footer from "components/Footer"
-import Header from "components/auth/Header"
 import useCardState from "store/modules/CardState"
 import TodayAnswerCompleted from "components/main/TodayAnswerCompleted"
 import { useEffect } from "react"
@@ -20,7 +17,7 @@ const MainContent = () => {
   const {setHeaderText} = useDefaultSets()
 
   useEffect(() => {
-    setHeaderText()
+    setHeaderText('')
   },[])
 
   if (!todayCardSelectStatus) {  //더이상 안될경우 (3개초과)
