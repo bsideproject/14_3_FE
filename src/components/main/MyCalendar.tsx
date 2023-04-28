@@ -1,12 +1,35 @@
 import { useEffect, useState } from 'react';
-// import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar'
-import moment from 'react-moment'
 import LeftArrow from 'assets/images/left-vector.png'
 import RightArrow from 'assets/images/right-vector.png'
 import {SELECT_ICON, ANSWER_STEP_1,ANSWER_STEP_2,ANSWER_STEP_3} from './MyCalendar-Images.js'
 import 'assets/components/answered-list/custom-calendar.css'
 import useAnsweredList from 'store/modules/Answers';
+import useAuthStore from 'store/modules/Auth';
+
+/**
+ * @desc 날짜를 입력 시, 연월을 출력합니다.
+ * @param {any} date
+ * @returns {Date} "YYYY-MM"
+ */
+const getYearAndMonth = (date:any) => {
+  const year = new Date(date).getFullYear()
+  const month = (new Date(date).getMonth() + 1).toString()
+  const newMonth:string = month.length === 1 ? '0' + month : month
+
+  return year.toString() + '-' + newMonth
+}
+
+/**
+ * @desc 같은 일자인지 비교
+ * @param {Date} date1
+ * @param {Date} date2
+ * @returns {boolean} true: 같은일, false: 다른일
+ */
+const isSameDay = (date1:Date, date2:Date) => {
+  return new Date(date1).toLocaleDateString() === new Date(date2).toLocaleDateString() 
+}
+
 
 /**
  * @설명 캘린더
@@ -16,39 +39,50 @@ import useAnsweredList from 'store/modules/Answers';
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
-  const {qnaDateList, getQnaDateList, updateIsThisMonth} = useAnsweredList()
-  const [selectedDate, setValue] = useState<Date>(new Date())                 //calendar - 선택일자
-  const [nextArrowActive, setNextArrowActive] = useState<boolean>(false)      //calendar - 다음달클릭 Arrow IMG 설정용
+  const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList} = useAnsweredList()
+  const {userInfo} = useAuthStore((state) => state);
+  
+  /****************************************************************************************************
+   * 오늘 날짜 관련 요소 사용 - 캘린더관련
+  ****************************************************************************************************/
+  const [selectedDate, setValue] = useState<Date>(new Date())            //calendar - 선택일자
   const today = new Date()
-  const [textlabelControl, setTextLabel] = useState<Date>(today)          // [선택,오늘] 라벨 제어
+  const [textlabelControl, setTextLabel] = useState<Date>(today)         // [선택,오늘] 라벨 제어
+  const todayYearMonth = getYearAndMonth(today)                          //금일 연월
   const todayMonth = today.getMonth() + 1                                //이번달
   const minDate = today.getDate()                                        //오늘이후날짜 비활성화 -> 내일날짜
+
   const [mark, setMark] = useState<Array<string>>([])
 
-  //특정일자 클릭 이벤트
-  const updateDate = (nextValue:any) => { //:type=new Date()
-    setValue(nextValue)
+  //day 클릭 이벤트
+  const updateDate = (nextValue:any) => {
+    setTextLabel(nextValue)                  //[선택-오늘]변경제어
+    setValue(nextValue)                      //현재선택된날짜설정
+    getDayData(nextValue)                    //전체목록 초기화 및 재조회
   }
 
   // [월] 이동 이벤트 - RightArrow control
-  const isThisMonth = ({action, activeStartDate, value, view} : any) => {
-    setTextLabel(activeStartDate)           //라벨영역제어
-
-    const selectedMonth = activeStartDate.getMonth() + 1
-    if (activeStartDate.getMonth()+1 >= todayMonth) {
-      setNextArrowActive(false)   //다음달표시안함
-      updateIsThisMonth(true)    //원페이저 다운로드 표시
+  const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
+    setTextLabel(activeStartDate)                             //라벨영역제어
+    getMonthData(activeStartDate)                             //월간데이터 조회
+    if (getYearAndMonth(activeStartDate) >= todayYearMonth) { //활성화된날짜 >= 오늘연월 ?
+      updateIsThisMonth(true)                                 //원페이저 다운로드 표시
     } else {
-      setNextArrowActive(true)   //다음달표시
-      updateIsThisMonth(false)    //남은기간표시
+      updateIsThisMonth(false)                                //남은기간표시
     }
   }
 
-  // [월] 이동 이벤트 - 목록 초기화 & 해당 월의 데이터 목록 재조회
-  const clearList = ({value}:any) => {  //변경된 일자의 최소 일자
-    const watchingViewMonth = new Date(value).getMonth() + 1    //view 로 보고 있는 해당 [월]
-    //const result = fetch('/api/getAnswerList', watchingViewMonth)       //db connection
-    console.log(watchingViewMonth, '월에 해당하는 데이터 조회')
+  //& 해당 [월]의 데이터 목록 조회
+  const getMonthData = (date:Date) => {
+    const activeViewMonth = getYearAndMonth(date)    //view 로 보고 있는 해당 [연-월]
+    const param = {email: userInfo.eml, month: activeViewMonth}
+    getQnaDateList(param)    //date, count 포맷 데이터 조회
+  }
+
+  // 해당 월의 [일] 데이터 목록 조회
+  const getDayData = (date:Date) => {
+    const param = {email: userInfo.eml, month: date}
+    getOneDayQnaDateList(param)
   }
 
   /****************************************************************************
@@ -69,10 +103,17 @@ const MyCalendar = () => {
     })
   }
 
-  // getQnaDateList()    //date, count 포맷 데이터 조회
   useEffect(()=>{
     updateCalendarWithDesign()
-  }, [qnaDateList])
+  }, [textlabelControl])
+
+  //date format 변경
+  const transformDate = ({date, locale}:any) => {
+    const day:string = (new Date(date).getMonth() + 1).toString()                    //월-문자화
+    const newDay:string = day.length === 1 ? '0' + day : day
+    const newDate:string = new Date(date).getFullYear().toString() + '. ' + newDay + '.'    
+    return newDate
+  }
 
   return (
     <>
@@ -80,6 +121,7 @@ const MyCalendar = () => {
         className="custom-calendar"
         onChange={updateDate} 
         value={selectedDate} 
+        navigationLabel={({ date, label, locale, view }) => transformDate({date, locale}) }
         formatDay={(locale, date) => date.getDate().toString()}
         prevLabel = {<img src={LeftArrow} alt={"<"} width={24} height={24} /> }
         prev2Label={null}           //첫달선택  << 없애기
@@ -92,31 +134,25 @@ const MyCalendar = () => {
         //tile 스타일지정
         tileClassName={
           ({ date, view }) => {
-            console.log(qnaDateList[0])
             const index = qnaDateList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
             if (index > -1) {
               return 'cal-item-' + qnaDateList[index].count
             }
           }
         }
-        //[월]이동 이벤트
-        onActiveStartDateChange={({action, activeStartDate, value, view}) => isThisMonth({activeStartDate})
-        }
-        onClickDay={(value, event) => clearList({value})}       //day 클릭 이벤트
-        // tileContent={({activeStartDate, date}) => 
-        //   qnaDateList.map(qd => new Date(qd).getDate() === date.getDate() ? (<div className='hasinfo'>ㅇ</div>): null)
-        // }
+        onActiveStartDateChange={({action, activeStartDate, value, view}) => CheckIsThisMonth({activeStartDate})} //[월]이동 이벤트
       />
 
 
       {/* 하단 라벨 영역 */}
       <div className='answer-list-labels-wrap'>
         {
-          textlabelControl.getMonth() + 1 <= todayMonth && (
+          getYearAndMonth(textlabelControl) <= todayYearMonth && (  //선택일자 <= 금일자
             <div className='answer-list-labels caption1-bold'>
               <img src={SELECT_ICON} alt="" width={12} height={12}/>
               {
-                textlabelControl.getMonth() + 1 === todayMonth ? (
+                isSameDay(textlabelControl, today)
+                 ? (
                   /* 1. 당월 시점 */
                   <span>오늘</span>
                 ) : (

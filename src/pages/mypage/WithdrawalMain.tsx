@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Header from 'components/auth/Header'
 import { motion } from "framer-motion";
 import Withdrawal1 from 'components/mypage/Withdrawal1';
@@ -7,6 +7,9 @@ import Withdrawal3 from 'components/mypage/Withdrawal3';
 import ConfirmPopup from 'components/ConfirmPopup';
 import AlertTextPopup from 'components/AlertTextPopup';
 import { useNavigate } from 'react-router-dom';
+import useDefaultSets from 'store/modules/Defaults';
+import Footer from 'components/Footer';
+import NavigationBar from 'components/NavigationBar';
 
 /**
  * @설명 회원탈퇴 첫번째 페이지
@@ -15,6 +18,11 @@ import { useNavigate } from 'react-router-dom';
  * @TODO motion 적용, BE연결
  */
 const WithdrawalMain = () => {
+  const {setHeaderText} = useDefaultSets()
+  useEffect(()=>{
+    setHeaderText('회원 탈퇴')
+    return () => setHeaderText('')
+  },[])
   const navigate = useNavigate()
   const [step, setStep] = useState(1) //컴포넌트 단계 제어
   const [withdrawalCompleted, setWithdrawalCompleted] = useState<boolean>(false)
@@ -25,7 +33,6 @@ const WithdrawalMain = () => {
     //3. 값 합쳐서 BE로 전송
     //4. 끝나고 팝업으로 탈퇴가 완료되었음 전달
     setStep(5)
-    console.log('탈퇴누름')
     setWithdrawalCompleted(true)
   }
 
@@ -37,33 +44,40 @@ const WithdrawalMain = () => {
 
   return (
     <>
-      <motion.div
-          // key={step}
-					// src={imgList[page]}
-					// initial={{ opacity: 0, x: direction > 0 ? 1000 : -1000 }}
-					// animate={{ opacity: 1,  x: 0 }}
-					// exit={{ opacity: 0, x: direction < 0 ? 1000 : -1000 }}
-      >
+    <div>
+      <Header></Header>
+      <div style={{margin: '0 16px'}}>
+        <motion.div
+            // key={step}
+            // src={imgList[page]}
+            // initial={{ opacity: 0, x: direction > 0 ? 1000 : -1000 }}
+            // animate={{ opacity: 1,  x: 0 }}
+            // exit={{ opacity: 0, x: direction < 0 ? 1000 : -1000 }}
+        >
 
-      {
-        step === 1 ? (<Withdrawal1 step={step} setStep={setStep}/>)
-          : (step === 2 ? (<Withdrawal2 step={step} setStep={setStep}/>) 
-            : (<Withdrawal3 step={step} setStep={setStep}/>)
-          ) 
-      }
-      
-      </motion.div>
+        {
+          step === 1 ? (<Withdrawal1 step={step} setStep={setStep}/>)
+            : (step === 2 ? (<Withdrawal2 step={step} setStep={setStep}/>) 
+              : (<Withdrawal3 step={step} setStep={setStep}/>)
+            ) 
+        }
+        
+        </motion.div>
 
-      { //step === 4 일시 탈퇴하기 알림 팝업
-        step === 4 ? (
-        <ConfirmPopup text="고밍을 탈퇴하시겠습니까?" callbackFunction={withdrawalAction} closeCallbackFuntion={() => setStep(3)} />
-        ) : ''
-      }
-      { //회원 탈퇴 완료시
-        withdrawalCompleted === true ? (
-        <AlertTextPopup strongText='고밍의 탈퇴가 완료되었습니다.' text="감사합니다!" callbackFunction={moveToMain} />
-        ) : ''
-      }
+        { //step === 4 일시 탈퇴하기 알림 팝업
+          step === 4 ? (
+          <ConfirmPopup text="고밍을 탈퇴하시겠습니까?" callbackFunction={withdrawalAction} closeCallbackFuntion={() => setStep(3)} />
+          ) : ''
+        }
+        { //회원 탈퇴 완료시
+          withdrawalCompleted === true ? (
+          <AlertTextPopup strongText='고밍의 탈퇴가 완료되었습니다.' text="감사합니다!" callbackFunction={moveToMain} />
+          ) : ''
+        }
+      </div>
+    </div>
+    <Footer></Footer>
+    <NavigationBar />
     </>
   ) 
 }

@@ -1,21 +1,17 @@
 .categorylist-wrap{
-  width: 100%;
-  height: 100vh;
   max-width: 480px;
-  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  flex: 1;
 }
 .categorylist-top{
   width: 100%;
   max-width: 480px;
-  position: absolute;
-  margin-left: -16px;
   background-color: var(--wgray03);
 }
 .welcome-logout{
-  max-width: 408px;
+  max-width: 480px;
   margin-top: 48px;
   margin-left: 16px;
   margin-right: 16px;
@@ -46,9 +42,7 @@
   width: 100%;
   flex: 1;
   max-width: 480px;
-  position: absolute;
   top: 144px;
-  margin-left: -16px;
   background-color: #FFFFFF;
 }
 

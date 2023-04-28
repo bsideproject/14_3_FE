@@ -4,11 +4,10 @@
   max-width: 480px;
   height: 60px;
   display: flex;
-  position: fixed;
+  position: sticky;
   top: 0;
   border-bottom: 1px solid #E9E7E2;
   background-color: var(--wgray02);
-  z-index: 2;
 }
 
 /* 1. leftArrow & text */
@@ -28,15 +27,11 @@
   margin-left: 16px;
 }
 
-
 /* 2. 로고만 */
 .header-logo-area{
   padding-top: 18px;
   margin-left: 16px;
 }
-
-
-
 
 /** arrow custom header **/
 .login-header {

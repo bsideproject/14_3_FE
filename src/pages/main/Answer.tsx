@@ -10,6 +10,8 @@ import AlertTextPopup from "components/AlertTextPopup";
 import { useNavigate } from "react-router-dom";
 import useCardState from "store/modules/CardState";
 import useDefaultSets from "store/modules/Defaults";
+import Footer from "components/Footer";
+import NavigationBar from "components/NavigationBar";
 
 const Answer = () => {
   const {setHeaderText} = useDefaultSets()
@@ -125,6 +127,7 @@ const Answer = () => {
   return (
     <>
       <div>
+        <Header></Header>
         <div className="answer-wrap">
           <div className="question-wrap">
             {/* 질문 컴포넌트 */}
@@ -157,10 +160,10 @@ const Answer = () => {
             <button 
               type="button" 
               disabled={btnActive} 
-              className="answer-btn-confirm" 
+              className="answer-btn-confirm btn-p-xl" 
               onClick={handleSave}
               >저장하기</button>
-            <button type="button" className="answer-btn-cancel" onClick={()=>setSkipPopup(true)}>이번 질문은 넘어갈래요</button>
+            <button type="button" className="answer-btn-cancel btn-s-xl" onClick={()=>setSkipPopup(true)}>이번 질문은 넘어갈래요</button>
 
           </div>
         </div>
@@ -230,6 +233,8 @@ const Answer = () => {
       }
 
 
+      <Footer></Footer>
+      <NavigationBar /> 
     </>
   )
 }

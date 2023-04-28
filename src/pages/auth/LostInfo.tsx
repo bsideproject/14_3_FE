@@ -3,6 +3,7 @@ import 'assets/pages/auth/lostInfo.css'
 import ToastPopup from "components/ToastPopup";
 import { useNavigate } from "react-router-dom";
 import useDefaultSets from "store/modules/Defaults";
+import Header from "components/auth/Header";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LostInfo = () => {
@@ -57,29 +58,36 @@ const LostInfo = () => {
 
   return (
     <>
-          <form onSubmit={submitEmail}>
-            <div className='inputArea'>
-              <label htmlFor="email" className='login-label-text text-color'>이메일</label>
-              <input type="email" autoComplete="true"  className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
-            </div>
-            <div className='lostinfo-btn-area'>
-              <button type="submit" className='btn reset-password-btn'>비밀번호 초기화</button>
-              <button type="button" className='btn goto-login-btn' onClick={()=>goToLogin()}>로그인하러 가기</button>
-            </div>
-            <div>
-              <p className="find-id-caption-text caption1-regular">
-                *비밀번호 초기화 버튼 클릭 시 기존에 설정한 비밀번호가 초기화되며, 회원가입 시 등록한 메일로 임시비밀번호를 전송해 드립니다.
-              </p>
-              <p className="find-id-caption-text caption1-regular">
-                *임시비밀번호를 받지 못 했을 경우, 스팸메일함 혹은 프로모션함을 확인하시거나 비밀번호 초기화 버튼을 다시 한 번 눌러주세요.
-              </p>
-            </div>
-          </form>
-      {
-        toastAlert === true ? (
-          <ToastPopup text={"이메일로 임시 비밀번호가 전송되었습니다!"} bgColor={"#4D99DE"} textColor={"#FFFFFF"} />
-        ) : ''
-      }
+    <div>
+      <Header ></Header>
+      <div className="find-pw-wrap">
+        <form onSubmit={submitEmail}>
+          <div className='inputArea'>
+            <label htmlFor="email" className='login-label-text text-color'>이메일</label>
+            <input type="email" autoComplete="true"  className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+          </div>
+          <div className='lostinfo-btn-area'>
+            <button type="submit" className='btn reset-password-btn btn-p-xl'>비밀번호 초기화</button>
+            <button type="button" className='btn goto-login-btn btn-s-xl' onClick={()=>goToLogin()}>로그인하러 가기</button>
+          </div>
+          <div>
+            <p className="find-id-caption-text caption1-regular">
+              *비밀번호 초기화 버튼 클릭 시 기존에 설정한 비밀번호가 초기화되며, 회원가입 시 등록한 메일로 임시비밀번호를 전송해 드립니다.
+            </p>
+            <p className="find-id-caption-text caption1-regular">
+              *임시비밀번호를 받지 못 했을 경우, 스팸메일함 혹은 프로모션함을 확인하시거나 비밀번호 초기화 버튼을 다시 한 번 눌러주세요.
+            </p>
+          </div>
+        </form>
+        {
+          toastAlert === true ? (
+            <ToastPopup text={"이메일로 임시 비밀번호가 전송되었습니다!"} bgColor={"#4D99DE"} textColor={"#FFFFFF"} />
+          ) : ''
+        }
+
+      </div>
+
+    </div>
     </>
   )
 }

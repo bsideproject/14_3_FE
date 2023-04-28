@@ -1,6 +1,8 @@
 import tacImg from 'assets/images/main/today-answer-completed.png'
 import 'assets/components/card-select-main/todayAnswerCompleted.css'
 import { useNavigate } from 'react-router-dom'
+import Header from 'components/auth/Header'
+import useNavBarStatus from 'store/modules/NavBar'
 /**
  * @설명 고밍 기록 안내유도 페이지
  * @작성자 김상훈
@@ -9,7 +11,9 @@ import { useNavigate } from 'react-router-dom'
  */
 const TodayAnswerCompleted = () => {
   const navigate = useNavigate()
+  const { updateStatus } = useNavBarStatus((state) => state);
   const goToCalendarList = () => {
+    updateStatus(2)
     navigate('/answered-list', {replace: true})
   }
   return (
@@ -23,7 +27,7 @@ const TodayAnswerCompleted = () => {
           <p className='body2-regular'>이번 달, 나의 고밍 기록 현황을<br/> 보러 가볼까요?<br/></p>
         </div>
         <div className='info-btn-wrap'>
-          <button className='body3-bold' onClick={goToCalendarList}>나의 고밍 기록 보러 가기</button>
+          <button className='btn-p-xl body3-bold' onClick={goToCalendarList}>나의 고밍 기록 보러 가기</button>
         </div>
       </div>
     </>

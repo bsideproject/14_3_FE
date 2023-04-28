@@ -1,6 +1,8 @@
+.login-wrap{
+  margin: 32px 16px 0 16px;
+}
 .startGomingText {
   text-align: center;
-  margin-top: 32px;
   color: var(--wgray13);
 }
 .inputArea {
