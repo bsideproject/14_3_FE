@@ -104,10 +104,12 @@
 
 .react-calendar__tile {
   max-width: 100%;
-  padding: 10px 6.6667px;
+  /* padding: 10px 6.6667px; */
+  padding: 3px 10px;
   background: none;
   text-align: center;
   line-height: 16px;
+  height: 42px;
 }
 
 
@@ -119,7 +121,7 @@
   padding: 0 auto;
 }
 .cal-item-1 > abbr, .cal-item-2 > abbr, .cal-item-3 > abbr, .react-calendar__tile--active > abbr{
-  color: var(--wgray12);
+  /* color: var(--wgray12); */
   display: flex;
   justify-content: center;
   width: 30px;
@@ -146,9 +148,10 @@
   width: 36px;
   height: 36px;
   padding: 6px 8px;
-  width: 36px; height: 36px;
+  /* border: double 6px #90ACCE; */
   border: 1px solid #90ACCE;
+  box-shadow:inset 0 0 3px 3px #FFFFFF;
 }
-
-/* calendar 내용 수정 */
-.react-calendar__tile--active {}
+.abbr {
+  height :36px;
+}

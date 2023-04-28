@@ -3,6 +3,7 @@ import {CSSTransition} from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import useCardState from 'store/modules/CardState';
+import GomingTextImg from 'assets/images/main/goming-text.png'
 
 const Cards = ({item, selected, clickedEventHandler}: any) => {
   const navigate = useNavigate()
@@ -49,16 +50,16 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
             <div className='card-in' id={item.index}>
               {
                 showFront ? (
-                  <img src={item.img} alt={item.desc} width={'100%'} height={136} className="card-scale"/>
+                  <img src={item.img} alt={item.desc} width={'100%'}  height={'100%'} className="card-scale"/>
                 ) : (
                   <div className='selected-card-area card-fade'>
-                    <img src={item.aftrImg} alt={item.desc} width={148} height={136} className='card-fade' />
+                    <img src={item.aftrImg} alt={item.desc} width={'100%'} height={'100%'} className='card-fade' />
                   </div>
                 )
               }
             </div>
             <div className='card-title'>
-              Goming
+              <img src={GomingTextImg} alt="" width={48} height={12}/>
             </div>
           </div>
         </div>

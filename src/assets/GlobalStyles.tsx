@@ -26,26 +26,14 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
-	vertical-align: baseline;
 }
-input {
-  box-sizing : border-box;
+button {
+	outline: none;
+	border: none;
 }
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
+* { box-sizing : border-box;}
+ol, ul {	list-style: none; }
+blockquote, q {	quotes: none; }
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
@@ -58,23 +46,21 @@ table {
 
 /* custom 내용입니다 */
 /* 웹포함 기준 */
-.container{
+#root{
+	width: 100%;
+  min-height: 100vh;
 	background-color: #FAF9F6;
 	max-width: 480px;
-	min-height: 100vh;
 	margin: 0 auto;
-  filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+  // filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
+}
 
-}
-.inside-container{
-	background-color: #FAF9F6;
-	margin: 0 16px;
-	padding-top: 60px;
-  min-height: 100vh;
-}
 // 모바일기준
 @media (max-width:480px) {
-	.container {
+	html, body,	.container {
 		width: 100%;
 	}
 }
@@ -99,14 +85,7 @@ table {
 	--success: #59B757; 				/* success color */
 	--warning: #F09B4D; 				/* warning color */
 }
-html, body, #root {
-	min-height: 100vh;
-	background-color: #FFFFFF;
-}
-button {
-	outline: none;
-	border: none;
-}
+
 /* custom font */
 .headline1 {
 	font-size: 28px;

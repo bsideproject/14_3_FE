@@ -28,7 +28,7 @@ const Withdrawal3 = ({step, setStep}: WITHDRAWAL) => {
             <textarea 
               id="withdrawalTextarea"
               className="body3-regular withdrawal-textarea" cols={30} rows={10} 
-              placeholder="글자 수 제한없이, 고밍에게 하고 싶은 말을 자유롭게&#13;&#10;남겨 주세요.&#13;&#10;좋았던 점, 개선되었으면 하는 점 등, 뭐든지 좋아요."
+              placeholder="글자 수 제한없이, 고밍에게 하고 싶은 말을 자유롭게 남겨 주세요.&#13;&#10;좋았던 점, 개선되었으면 하는 점 등, 뭐든지 좋아요."
               maxLength={150} 
               ></textarea>
           </div>

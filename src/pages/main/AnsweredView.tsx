@@ -5,6 +5,9 @@ import { useLocation } from "react-router-dom"
 import fetch from "utils/fetch"
 import DateFormatUI from "components/main/DateFormatUI"
 import AnsweredCategoryUI from "components/main/AnsweredCategoryUI"
+import Header from "components/auth/Header"
+import Footer from "components/Footer"
+import NavigationBar from "components/NavigationBar"
 
 const testData = {
     index: 124156,
@@ -54,17 +57,22 @@ const AnsweredView = () => {
   return (
     <>
       <div className="answered-view-wrap">
-        <div className="answered-list-item-header-wrap caption1-regular">
-          <DateFormatUI date={answer?.date} />
-          <AnsweredCategoryUI category={answer?.qc} />
-        </div>
-        <div className="body1-bold answered-list-item-q">
-          {answer?.q}
-        </div>
-        <div className="body2-regular answered-view-item-a">
-          {answer?.a}
-        </div>
+          <Header></Header>
+          <div className="answered-view-inner-wrap">
+            <div className="answered-list-item-header-wrap caption1-regular">
+              <DateFormatUI date={answer?.date} />
+              <AnsweredCategoryUI category={answer?.qc} />
+            </div>
+            <div className="body1-bold answered-list-item-q">
+              {answer?.q}
+            </div>
+            <div className="body2-regular answered-view-item-a">
+              {answer?.a}
+            </div>
+          </div>
       </div>
+      <Footer></Footer>
+      <NavigationBar></NavigationBar>
     </>
   )
 }

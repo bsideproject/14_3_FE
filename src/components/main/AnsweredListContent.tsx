@@ -30,9 +30,6 @@ const AnsweredListContent = () => {
     <>
       <div className="answered-list-wrap">
 
-        {/* divider */}
-        <div className="answered-list-divider"></div> 
-
         {/* 목록 개수 출력 */}
         <div className="answered-list-item-count-wrap body2-bold">
           총 <span className="answered-list-count-text">{answeredList.length}개</span>의 답변이 있습니다.
