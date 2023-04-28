@@ -9,6 +9,7 @@ type ANSWER_LIST = {
   getQnaDateList: Function
   isThisMonth: boolean                //MyCalendar 기준, 페이지의 당월 상태 유무
   updateIsThisMonth: Function         //페이지의 당월 상태변경함수
+  getOneDayQnaDateList: Function      //선택일 date,count조회
 }
 
 type QNA_ITEM = { //qna 리스트 목록 객체
@@ -48,8 +49,8 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   },
 
   /**
-   * @desc 해당 월의 qna 리스트: 날짜와 카운트 조회
-   * @return qnaDateList update
+   * @desc 해당 [월]의 qna 리스트 조회
+   * @return update
    */
   getQnaDateList: ({email, month}: GET_LIST):void => {
     const param = {
@@ -57,8 +58,26 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
       month: month
     }
     // const result = fetch('/api/getQnaDateList', param)
-    const newList:Array<QNA_DATE_ITEM> = testData2
-    set({qnaDateList: newList})
+    const newList1:Array<QNA_ITEM> = testData
+    const newList2:Array<QNA_DATE_ITEM> = testData2
+    set({qnaList: newList1})                        //리스트출력
+    set({qnaDateList: newList2})                    //date내용출력
+  },
+
+  /**
+   * @desc 해당 [일]의 qna 리스트 조회
+   * @return update
+   */
+  getOneDayQnaDateList: ({email, date}: GET_LIST):void => {
+    const param = {
+      email: email,
+      date: date
+    }
+    // const result = fetch('/api/getOneDayQnaDateList', param)
+    const newList1:Array<QNA_ITEM> = testData
+    const newList2:Array<QNA_DATE_ITEM> = testData2
+    set({qnaList: newList1})                        //리스트출력
+    set({qnaDateList: newList2})                    //date내용출력
   },
 
   /**
@@ -67,11 +86,13 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   updateIsThisMonth: (newState: boolean):void => {
     set({isThisMonth: newState})
-  }
+  },
+
 }))
 
 type GET_LIST = {
   email: string
-  month: string|number
+  month?: string|number
+  date?: Date
 }
 export default useAnsweredList

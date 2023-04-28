@@ -6,7 +6,7 @@
 .answered-list-divider{
   background-color: var(--wgray04) ;
   margin-top: 32px;
-  margin-bottom: 12px;
+  margin-bottom: 32px;
   width: 100%;
   max-width: 480px;
   height: 8px;
