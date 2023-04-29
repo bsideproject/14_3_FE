@@ -42,27 +42,35 @@ const MyCalendar = () => {
   const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
   
-  /****************************************************************************************************
-   * 오늘 날짜 관련 요소 사용 - 캘린더관련
-  ****************************************************************************************************/
   const [selectedDate, setValue] = useState<Date>(new Date())            //calendar - 선택일자
   const today = new Date()
   const [textlabelControl, setTextLabel] = useState<Date>(today)         // [선택,오늘] 라벨 제어
   const todayYearMonth = getYearAndMonth(today)                          //금일 연월
   const todayMonth = today.getMonth() + 1                                //이번달
   const minDate = today.getDate()                                        //오늘이후날짜 비활성화 -> 내일날짜
+  const [showCalendar, setShowCalendar] = useState<boolean> (true)       //calendar 보이기 숨기기 처리
+  const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(true) //calendar 보이기숨기기 버튼 - active/disabled 처리
 
   const [mark, setMark] = useState<Array<string>>([])
 
+  /****************************************************************************
+   * 오늘 날짜 관련 요소 사용 - 캘린더관련
+   ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = (nextValue:any) => {
     setTextLabel(nextValue)                  //[선택-오늘]변경제어
     setValue(nextValue)                      //현재선택된날짜설정
     getDayData(nextValue)                    //전체목록 초기화 및 재조회
+    
+    //리스트만보기 버튼 disabled
+    // const isToday = isSameDay(nextValue, today)
+    // isToday ? setActiveCalendarBtn(true) : 
+    setActiveCalendarBtn(false)
   }
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
+    setActiveCalendarBtn(true)                  //리스트만보기 버튼 active
     setTextLabel(activeStartDate)                             //라벨영역제어
     getMonthData(activeStartDate)                             //월간데이터 조회
     if (getYearAndMonth(activeStartDate) >= todayYearMonth) { //활성화된날짜 >= 오늘연월 ?
@@ -103,6 +111,18 @@ const MyCalendar = () => {
     })
   }
 
+  /****************************************************************************
+   * 일반 기능 함수
+   ****************************************************************************/
+  // 달력 보이기/숨기기 처리 
+  const controlCalendarArea = () => {
+    const calendarContent = document.getElementsByClassName('react-calendar__viewContainer')[0] as HTMLBodyElement
+    const calendarLabels = document.getElementById('calendarLabels') as HTMLBodyElement
+    calendarContent.style.display = showCalendar ? 'none' : 'block'   //true -> hide, false -> show
+    calendarLabels.style.display = showCalendar ? 'none' : 'flex'   //true -> hide, false -> show
+    setShowCalendar(!showCalendar)                                    //state 변경
+  }
+
   useEffect(()=>{
     updateCalendarWithDesign()
   }, [textlabelControl])
@@ -117,35 +137,51 @@ const MyCalendar = () => {
 
   return (
     <>
-       <Calendar
-        className="custom-calendar"
-        onChange={updateDate} 
-        value={selectedDate} 
-        navigationLabel={({ date, label, locale, view }) => transformDate({date, locale}) }
-        formatDay={(locale, date) => date.getDate().toString()}
-        prevLabel = {<img src={LeftArrow} alt={"<"} width={24} height={24} /> }
-        prev2Label={null}           //첫달선택  << 없애기
-        nextLabel = {<img src={RightArrow} alt={">"} width={24} height={24} /> }
-        next2Label={null}           //마지막달선택 >> 없애기
-        minDetail="month"           //최소 디테일 : [월]
-        maxDetail={'month'}         //최대 디테일 : [월]
-        locale={'ko'}
-        showNeighboringMonth={false}   //이전,이후 날짜 show/hide
-        //tile 스타일지정
-        tileClassName={
-          ({ date, view }) => {
-            const index = qnaDateList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
-            if (index > -1) {
-              return 'cal-item-' + qnaDateList[index].count
+      <div className='calendar-wrap'>
+        {/* 달력 */}
+        <Calendar
+          className="custom-calendar"
+          onChange={updateDate} 
+          value={selectedDate} 
+          navigationLabel={({ date, label, locale, view }) => transformDate({date, locale}) }
+          formatDay={(locale, date) => date.getDate().toString()}
+          prevLabel = {<img src={LeftArrow} alt={"<"} width={24} height={24} /> }
+          prev2Label={null}           //첫달선택  << 없애기
+          nextLabel = {<img src={RightArrow} alt={">"} width={24} height={24} /> }
+          next2Label={null}           //마지막달선택 >> 없애기
+          minDetail="month"           //최소 디테일 : [월]
+          maxDetail={'month'}         //최대 디테일 : [월]
+          locale={'ko'}
+          showNeighboringMonth={false}   //이전,이후 날짜 show/hide
+          //tile 스타일지정
+          tileClassName={
+            ({ date, view }) => {
+              const index = qnaDateList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
+              if (index > -1) {
+                return 'cal-item-' + qnaDateList[index].count
+              }
             }
           }
-        }
-        onActiveStartDateChange={({action, activeStartDate, value, view}) => CheckIsThisMonth({activeStartDate})} //[월]이동 이벤트
-      />
+          onActiveStartDateChange={({action, activeStartDate, value, view}) => CheckIsThisMonth({activeStartDate})} //[월]이동 이벤트
+        />
 
+        {/* 달력 숨기기 버튼 */}
+        <div className='calendar-aside-btn-wrap'>
+          <button 
+            className='btn-p-xs caption1-bold' 
+            onClick={controlCalendarArea}
+            disabled={!activeCalendarBtn}
+          >
+            {// 1. 캘린터 보일 경우/ 안보일 경우      - text
+             // 2. 날짜를 선택했을 경우 / 안했을 경우 - disabled
+              showCalendar ? '리스트만 보기': '캘린더도 보기'
+            }
+            </button>
+        </div>
+      </div>
 
       {/* 하단 라벨 영역 */}
-      <div className='answer-list-labels-wrap'>
+      <div className='answer-list-labels-wrap' id='calendarLabels'>
         {
           getYearAndMonth(textlabelControl) <= todayYearMonth && (  //선택일자 <= 금일자
             <div className='answer-list-labels caption1-bold'>

@@ -36,7 +36,7 @@ const AnsweredListContent = () => {
         </div>
 
         {/* 목록 내용 출력 */}
-        <div style={{marginBottom: '160px'}}>
+        <div>
           { answeredList.length > 0 && (  //목록이 있을 경우에만 노출
               answeredList.map((item:any) => (
                 <div key={item.index} className="answered-list-item" onClick={()=>viewAnswer(item.index)}>

@@ -1,3 +1,14 @@
+.calendar-wrap{
+  position: relative;
+  display: flex;
+}
+.calendar-aside-btn-wrap{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
 .react-calendar {
   width: 350px;
   max-width: 100%;

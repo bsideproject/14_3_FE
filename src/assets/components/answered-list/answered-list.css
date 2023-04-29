@@ -46,6 +46,7 @@
   padding: 4px 8px;
   background-color: var(--wgray02);
   color: var(--wgray12);
+  border-radius: 4px;
 }
 .answered-list-item-q {
   min-height: 26px;

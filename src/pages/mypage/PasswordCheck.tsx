@@ -14,7 +14,7 @@ import Footer from "components/Footer";
  * @TODO backend-connection
  */
 const PasswordCheck: React.FC = () => {
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText,setIsNavigation} = useDefaultSets()
   const navigate = useNavigate()
   const { isLogin, userInfo } = useAuthStore((state) => state)
   const [password, setPassword] = useState<string>('');
@@ -27,6 +27,7 @@ const PasswordCheck: React.FC = () => {
       //navigate('/login') //임시주석
     }
     setHeaderText('개인 정보 수정')
+    setIsNavigation(false)
   },[])
   
   //유효성 검사 이벤트

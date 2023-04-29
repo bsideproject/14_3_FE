@@ -2,10 +2,13 @@ import { useNavigate } from "react-router-dom"
 import 'assets/pages/auth/myPageCategoryList.css'
 import RightArrow from 'assets/images/right-arrow.png'
 import useDefaultSets from "store/modules/Defaults"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Header from "components/auth/Header"
 import Footer from "components/Footer"
 import NavigationBar from "components/NavigationBar"
+import useAuthStore from "store/modules/Auth"
+import { TYPE_USER_INFO } from "types/authTypes";
+import ConfirmPopup from "components/ConfirmPopup"
 
 const categoryList = [ //카테고리목록
   { text: '개인정보관리', location: '/mypage' },
@@ -20,11 +23,13 @@ const categoryList = [ //카테고리목록
  */
 const MyPageCategoryList = () => {
   //헤더설정
-  const {setHeaderText, setHeaderBgColor} = useDefaultSets()
+  const {setHeaderText, setHeaderBgColor,setIsNavigation} = useDefaultSets()
+  const {updateLoginStatus} = useAuthStore((state)=>state)
+  const [logoutCheck, setLogoutCheck] = useState<boolean>(false)
   useEffect(()=> {
     setHeaderText()
     setHeaderBgColor(true)
-
+    setIsNavigation(true)
     return (()=> setHeaderBgColor(false))
   },[])
 
@@ -36,11 +41,25 @@ const MyPageCategoryList = () => {
   }
 
   //로그아웃 프로세스
-  const handleLogout = () => {
-    //TODO
-    //1.BE로그아웃처리
-    //2.store 비우기
-    alert('로그아웃처리')
+  const handleLogout = () => { 
+    const resetUserInfo = {
+      usr_no: "",
+      eml: "",
+      usr_nm: "",
+      sns_cls_cd: undefined,
+      sns_token: undefined,
+      gndr_cls_cd: null,
+      brdt: null,
+      join_dtm: null,
+      last_lgn_dtm: undefined,
+      update_dtm: undefined,
+      whdwl_dtm: undefined,
+    }
+    //로그아웃, store 초기화
+    updateLoginStatus(false, resetUserInfo) //초기화
+
+    //로그인으로 이동
+    navigate('/login', {replace: true})
   }
   return (
     <>
@@ -57,7 +76,7 @@ const MyPageCategoryList = () => {
 
             {/* logout btn */}
             <div className="logout-area">
-              <button className="logout-btn caption1-bold" type="button" onClick={handleLogout}>로그아웃</button>
+              <button className="logout-btn caption1-bold" type="button" onClick={()=> setLogoutCheck(true)}>로그아웃</button>
             </div>
           </div>
         </div>
@@ -76,6 +95,20 @@ const MyPageCategoryList = () => {
       </div>
       <Footer></Footer>
       <NavigationBar></NavigationBar>
+
+
+      {/* logout popup */}
+      {
+        logoutCheck && (
+          <ConfirmPopup 
+            text="로그아웃 하시겠어요?" 
+            callbackFunction={handleLogout} 
+            confirmText={'로그아웃'}
+            closeCallbackFuntion={() => setLogoutCheck(false)}  
+            cancelText={'아니오'}
+          />
+        )
+      }
     </>
   )
 }

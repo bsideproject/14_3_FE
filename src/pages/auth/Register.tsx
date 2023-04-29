@@ -7,11 +7,14 @@ import fetch from "utils/fetch";
 import SelectBox from "components/common/SelectBox";
 import InputBox from "components/common/InputBox";
 import useDefaultSets from "store/modules/Defaults";
+import Footer from "components/Footer";
 const Register: React.FC = () => {
   //헤더설정
-  const { setHeaderText } = useDefaultSets();
+  const { setHeaderText,setIsNavigation } = useDefaultSets();
   useEffect(() => {
     setHeaderText("회원 가입하기");
+    setIsNavigation(false)
+    return () => setIsNavigation(true)
   }, []);
 
   const ReconfirmRef = useRef(null);
@@ -708,6 +711,7 @@ const Register: React.FC = () => {
         text2={""}
         callbackFunction={() => {}}
       /> */}
+      <Footer></Footer>
     </>
   );
 };

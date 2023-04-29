@@ -33,7 +33,7 @@ const InputBox = React.memo(
     isButton?: boolean;
     isDisable?: boolean;
     inputType?: string;
-    isClose?: boolean;
+    isClose?: boolean | null;
     closeClick?: any;
   }) => {
     return (
@@ -57,7 +57,11 @@ const InputBox = React.memo(
               className={
                 isClose === true
                   ? "register-input-error body3-regular margintop-8"
-                  : "register-input body3-regular margintop-8"
+                  : isClose === false
+                  ? "register-input body3-regular margintop-8"
+                  : isClose === null
+                  ? "register-input-success body3-regular margintop-8"
+                  : ""
               }
               // style={{ background: nickNameChk ? "" : "red" }}
               onChange={inputChange}

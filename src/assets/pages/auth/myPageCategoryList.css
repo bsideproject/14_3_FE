@@ -43,7 +43,7 @@
   flex: 1;
   max-width: 480px;
   top: 144px;
-  background-color: #FFFFFF;
+  background-color: var(--wgray02);
 }
 
 .myinfo-email-area{
@@ -64,7 +64,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  background-color:var(--wgray01);
+  background-color: var(--wgray02);
   border: none;
   outline: none;
   border-bottom: 1px solid #E9E7E2;
