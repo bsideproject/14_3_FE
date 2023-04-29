@@ -72,7 +72,7 @@ const InputBox = React.memo(
             />
           </div>
           {isClose === true ? (
-            <>
+            <div style={{ position: "relative" }}>
               <label
                 htmlFor="passwordReconfirm"
                 className={
@@ -84,7 +84,7 @@ const InputBox = React.memo(
                   closeClick();
                 }}
               ></label>
-            </>
+            </div>
           ) : (
             <></>
           )}

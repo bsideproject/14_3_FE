@@ -46,7 +46,7 @@
   font-weight: 700;
   font-size: 16px;
 }
-.register-wrap{
+.register-wrap {
   margin: 0 auto;
 }
 .register-main {
@@ -120,7 +120,7 @@
   position: absolute;
   /* display: block; */
   margin-top: 40px;
-  left: 260px;
+  left: -80px;
   z-index: 10;
   width: 24px;
   height: 24px;
@@ -135,7 +135,7 @@
   position: absolute;
   /* display: block; */
   margin-top: 40px;
-  left: 345px;
+  left: -80px;
   z-index: 10;
   width: 24px;
   height: 24px;
@@ -149,7 +149,7 @@
   position: absolute;
   /* display: block; */
   margin-top: 20px;
-  left: 330px;
+  left: -80px;
   z-index: 10;
   width: 24px;
   height: 24px;
@@ -159,7 +159,7 @@
   background-position: center;
   cursor: pointer;
 }
-@media (max-width: 375px) {
+/* @media (max-width: 375px) {
   .register-input-close {
     left: 285px;
   }
@@ -180,7 +180,7 @@
   .register-inputBox-close {
     left: 190px;
   }
-}
+} */
 
 .register-input-success {
   border: 1px solid #59b757;
