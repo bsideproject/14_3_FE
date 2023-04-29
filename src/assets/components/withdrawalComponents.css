@@ -97,12 +97,17 @@
 .withdrawal-textarea {
   box-sizing: border-box;
   width: 100%;
+  height: 100%;
   max-width: 480px;
   resize: none;
   padding: 16px;
   border: 1px solid #E9E7E2;
   border-radius: 8px;
-   outline-color: var(--wgray06);
+  outline-color: var(--wgray06);
+  color: var(--wgray12);
+}
+.withdrawal-textarea:focus {
+  color: var(--wgray12);
 }
 
 .withdrawal-textarea:read-only {

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import useDefaultSets from 'store/modules/Defaults';
 import Footer from 'components/Footer';
 import NavigationBar from 'components/NavigationBar';
+import useAuthStore from 'store/modules/Auth';
 
 /**
  * @설명 회원탈퇴 첫번째 페이지
@@ -19,21 +20,22 @@ import NavigationBar from 'components/NavigationBar';
  */
 const WithdrawalMain = () => {
   const {setHeaderText} = useDefaultSets()
+
   useEffect(()=>{
     setHeaderText('회원 탈퇴')
     return () => setHeaderText('')
   },[])
+
   const navigate = useNavigate()
   const [step, setStep] = useState(1) //컴포넌트 단계 제어
   const [withdrawalCompleted, setWithdrawalCompleted] = useState<boolean>(false)
-  const withdrawalAction = () => { //탈퇴버튼을 최종적으로 눌렀을 경우
-    //axios 회원 탈퇴 로직
-    //1. auth : email (id) 가져오기
-    //2. 저장한 정보(설문) 가져오기
-    //3. 값 합쳐서 BE로 전송
-    //4. 끝나고 팝업으로 탈퇴가 완료되었음 전달
-    setStep(5)
-    setWithdrawalCompleted(true)
+  const {userInfo, withdrawalUser} = useAuthStore((state)=>state)
+
+  //탈퇴버튼을 최종적으로 눌렀을 경우
+  const withdrawalAction = () => { 
+    setStep(5)                     //popup안보이게 처리
+    withdrawalUser(userInfo.eml)   //회원탈퇴로직
+    setWithdrawalCompleted(true)   //메인으로이동 팝업출력
   }
 
   //탈퇴 완료 시 이동할 페이지 : 로그인
@@ -66,7 +68,13 @@ const WithdrawalMain = () => {
 
         { //step === 4 일시 탈퇴하기 알림 팝업
           step === 4 ? (
-          <ConfirmPopup text="고밍을 탈퇴하시겠습니까?" callbackFunction={withdrawalAction} closeCallbackFuntion={() => setStep(3)} />
+          <ConfirmPopup 
+            text="고밍을 탈퇴하시겠습니까?" 
+            confirmText={'아니오'}
+            cancelText={'네'}
+            callbackFunction={() => setStep(3)} 
+            closeCallbackFuntion={withdrawalAction} 
+            />
           ) : ''
         }
         { //회원 탈퇴 완료시

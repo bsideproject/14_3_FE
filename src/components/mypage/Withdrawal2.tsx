@@ -119,26 +119,27 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               readOnly
               value={withdrawalText}
               onChange={withdrawalTextKeyupHandler}
-              className="withdrawal-textarea" cols={30} rows={10} 
+              className="withdrawal-textarea body3-regular" cols={30} rows={10} 
               placeholder="맘에 드시는 이유가 없다면, 직접 이유를 작성해주세요."
               maxLength={300} 
               style={{border:
                 '1px solid' + (withdrawalTextError === true ? '#EA4343' : '#E9E7E2' )
               }}
-              ></textarea>
-              {/* 작성오류영역 */}
-              <div className="withdrawal-error-area" >
-                <div style={{flex: 1}}>
-                  <p 
-                  style={{display:
-                    (withdrawalTextError === true ? '' : 'none' )
-                  }}
-                  className="withdrawal-text-error"
-                  >
-                    기타 선택 시, 답변을 입력해주셔야 합니다.</p>
-                </div>
-                <p className={withdrawalTextError ? 'withdrawal-text-error' : ''}>{withdrawalText.length}/300</p>
+            ></textarea>
+
+            {/* 작성오류영역 */}
+            <div className="withdrawal-error-area" >
+              <div style={{flex: 1}}>
+                <p 
+                style={{display:
+                  (withdrawalTextError === true ? '' : 'none' )
+                }}
+                className="withdrawal-text-error"
+                >
+                  기타 선택 시, 답변을 입력해주셔야 합니다.</p>
               </div>
+              <p className={withdrawalTextError ? 'withdrawal-text-error' : ''}>{withdrawalText.length}/300</p>
+            </div>
           </div>
           {/* 버튼영역 */}
           <div className="withdrawal-button-area">
