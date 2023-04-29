@@ -1,5 +1,5 @@
 .answer-wrap {
-  margin: 32px 16px 0 16px;
+  margin-top: 32px;
 }
 
 .question-wrap {
@@ -7,6 +7,7 @@
   height: 216px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   background-color: #F2F1ED;
   border: 1px solid #E9E7E2;
   border-radius: 8px;
@@ -21,14 +22,14 @@
 
 /* 답변영역 */
 .answer-content{
-  width: 100%;
+  width: 388px;
   /* border: 1px solid #E9E7E2;
   background: #F2F1ED;
   height: 240px;
   padding: 16px; */
 }
 .answer-content textarea {
-  width: 100%;
+  width: 356px;
 }
 /* 에러 및 글자수 문구 */
 .answer-comment-area{
@@ -50,7 +51,6 @@
   flex-direction: column;
   gap: 8px;
   margin-top: 48px;
-  margin-bottom: 160px;
 }
 .answer-btn-area button {
   height: 48px;

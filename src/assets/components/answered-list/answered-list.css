@@ -1,14 +1,14 @@
 /* wrap */
 .answered-list-wrap{
-  max-width: 480px;
+  width: 430px;
 }
 /* divider */
 .answered-list-divider{
   background-color: var(--wgray04) ;
   margin-top: 32px;
-  margin-bottom: 32px;
-  width: 100%;
-  max-width: 480px;
+  margin-left: -16px;
+  margin-bottom: 12px;
+  max-width: 430px;
   height: 8px;
 }
 .answered-list-item-count-wrap {
@@ -20,14 +20,15 @@
 /* lists-wrap */
 
 .answered-list-item {
-  max-width: 448px;
   box-sizing: border-box;
   background-color: var(--wgray01);
   border: 1px solid var(--wgray04);
   max-height: 270px;
   overflow: hidden;
+  max-width: 398px;
   border-radius: 8px;
   margin-bottom: 16px;
+  
 }
 .answered-list-item:hover {
   filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
@@ -65,21 +66,5 @@
  text-overflow: ellipsis;
  white-space: normal;
  -webkit-line-clamp: 4;
- -webkit-box-orient: vertical;
-}
-
-/* answer-list-labels-wrap */
-.answer-list-labels-wrap{
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 20px;
-  margin-right: 25px;
-  gap: 8px;
-}
-.answer-list-labels{
-  display: flex;
-  gap: 4px;
-  color: var(--wgray10);
+    -webkit-box-orient: vertical;
 }

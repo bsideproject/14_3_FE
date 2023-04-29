@@ -21,7 +21,7 @@ const Withdrawal1 = ({step, setStep}: WITHDRAWAL) => {
         <div className='withdrawal-content-info color-wgray12'>
           <p className='body2-bold  word-break-keep-all'>
             고밍에서 작성하신 모든 질문과 답변이 삭제되며,<br />
-            삭제된 정보는 다시 복구할 수 없습니다.
+            삭제된 정보는 다시 복구할 수 없습니다."
           </p>
           <p className='body2-bold word-break-keep-all' style={{marginTop: "12px"}}>
             탈퇴를 계속 진행하시겠습니까?
@@ -38,8 +38,8 @@ const Withdrawal1 = ({step, setStep}: WITHDRAWAL) => {
           </div>
 
           <div className='withdrawal-button-area'>
-            <button className='withdrawal-button withdrawal-yes btn-s-xl' type="button" onClick={() => setStep(++step)}>네</button>
-            <button className='withdrawal-button withdrawal-no btn-p-xl' type="button" onClick={() => navigate(-1)}>아니오</button>
+            <button className='withdrawal-button withdrawal-yes' type="button" onClick={() => setStep(++step)}>네</button>
+            <button className='withdrawal-button withdrawal-no' type="button" onClick={() => navigate(-1)}>아니오</button>
           </div>
         </div>
       </div>

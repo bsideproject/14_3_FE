@@ -6,6 +6,7 @@ import useNavBarStatus from 'store/modules/NavBar';
  * @설명 네비게이션 하단바
  * @작성자 김상훈
  * @일자 2023.04.16.
+ * @TODO state 사용하여 navbar 선택된것 유지 시키기
  */
 const NavigationBar = () => {
   const { status, updateStatus } = useNavBarStatus((state) => state);

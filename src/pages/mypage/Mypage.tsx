@@ -7,7 +7,6 @@ import SelectBox from "components/common/SelectBox";
 import Footer from "components/Footer";
 import useDefaultSets from "store/modules/Defaults";
 import InputBox from "components/common/InputBox";
-import Header from "components/auth/Header";
 
 const Mypage: React.FC = () => {
   //헤더설정
@@ -136,7 +135,6 @@ const Mypage: React.FC = () => {
   };
   return (
     <>
-      <Header></Header>
       <div className="register-main">
         <InputBox
           title={"닉네임"}
@@ -144,7 +142,7 @@ const Mypage: React.FC = () => {
           inputPlaceholader={"8글자 이내로 만들어주세요."}
           inputMaxLength={8}
           id={"nickName"}
-          inputClassName={"register-flex-row-gap8"}
+          inputClassName={"register-flex-row-gap8 margintop-32"}
           inputValue={nickName}
           isButton={false}
           isDisable={true}
@@ -359,7 +357,6 @@ const Mypage: React.FC = () => {
           </button>
         )}
       </div>
-      <Footer></Footer>
     </>
   );
 };

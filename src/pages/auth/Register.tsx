@@ -272,7 +272,6 @@ const Register: React.FC = () => {
   };
   return (
     <>
-      <Header></Header>
       <div className="register-main">
         <form onSubmit={handleRegister}>
           <InputBox
@@ -281,7 +280,7 @@ const Register: React.FC = () => {
             inputPlaceholader={"8글자 이내로 만들어주세요."}
             inputMaxLength={8}
             id={"nickName"}
-            inputClassName={"register-flex-row-gap8"}
+            inputClassName={"register-flex-row-gap8 margintop-32"}
             inputChange={handlenickNameUpdate}
             inputValue={nickName}
             buttonClick={handleEmailExistCheck}

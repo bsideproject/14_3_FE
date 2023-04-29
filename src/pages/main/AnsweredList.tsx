@@ -1,11 +1,6 @@
 import AnsweredListContent from "components/main/AnsweredListContent"
 import LeftAnswerPeriod from "components/main/LeftAnswerPeriod"
 import MyCalendar from "components/main/MyCalendar"
-import GoToOnePagerBtn from "components/main/GoToOnePagerBtn"
-import useAnsweredList from "store/modules/Answers"
-import Header from "components/auth/Header"
-import Footer from "components/Footer"
-import NavigationBar from "components/NavigationBar"
 
 /**
  * @설명 답변목록 조회
@@ -14,32 +9,16 @@ import NavigationBar from "components/NavigationBar"
  * @내용 사용자가 답변한 내용 조회
  */
 const AnsweredList = () => {
-  const {isThisMonth} = useAnsweredList()
-  
   return (
     <>
-      <Header></Header>
       <div style={{display:'flex', flexDirection:'column'}}>
-        <div style={{margin: '0 16px'}}>
-          {
-            isThisMonth ? (<LeftAnswerPeriod />) : (<GoToOnePagerBtn />)
-          }
-          <MyCalendar />
-        </div>
-        {/* divider */}
-        <div className="answered-list-divider"></div> 
-        
-        <div style={{margin: '0 16px'}}>
-          <AnsweredListContent />
-        </div>  
+        <LeftAnswerPeriod />
+        <MyCalendar />
+        <AnsweredListContent />
       </div>
-      <Footer></Footer>
-      <NavigationBar></NavigationBar>
     </>
   )
 }
-
-
 
 export default AnsweredList
 

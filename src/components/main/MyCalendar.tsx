@@ -1,35 +1,10 @@
 import { useEffect, useState } from 'react';
+import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar'
-import LeftArrow from 'assets/images/left-vector.png'
-import RightArrow from 'assets/images/right-vector.png'
-import {SELECT_ICON, ANSWER_STEP_1,ANSWER_STEP_2,ANSWER_STEP_3} from './MyCalendar-Images.js'
-import 'assets/components/answered-list/custom-calendar.css'
-import useAnsweredList from 'store/modules/Answers';
+import moment from 'react-moment'
+import RightArrow from 'assets/images/right-arrow.png'
 import useAuthStore from 'store/modules/Auth';
-
-/**
- * @desc 날짜를 입력 시, 연월을 출력합니다.
- * @param {any} date
- * @returns {Date} "YYYY-MM"
- */
-const getYearAndMonth = (date:any) => {
-  const year = new Date(date).getFullYear()
-  const month = (new Date(date).getMonth() + 1).toString()
-  const newMonth:string = month.length === 1 ? '0' + month : month
-
-  return year.toString() + '-' + newMonth
-}
-
-/**
- * @desc 같은 일자인지 비교
- * @param {Date} date1
- * @param {Date} date2
- * @returns {boolean} true: 같은일, false: 다른일
- */
-const isSameDay = (date1:Date, date2:Date) => {
-  return new Date(date1).toLocaleDateString() === new Date(date2).toLocaleDateString() 
-}
-
+import useAnsweredList from 'store/modules/Answers';
 
 /**
  * @설명 캘린더
@@ -52,6 +27,9 @@ const MyCalendar = () => {
   const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(true) //calendar 보이기숨기기 버튼 - active/disabled 처리
 
   const [mark, setMark] = useState<Array<string>>([])
+  const todayMonth = new Date().getMonth() + 1                                //이번달
+  const minDate = new Date().getDate()                                        //오늘이후날짜 비활성화 -> 내일날짜
+
 
   /****************************************************************************
    * 오늘 날짜 관련 요소 사용 - 캘린더관련
@@ -68,6 +46,7 @@ const MyCalendar = () => {
     setActiveCalendarBtn(false)
   }
 
+
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
     setActiveCalendarBtn(true)                  //리스트만보기 버튼 active
@@ -76,15 +55,16 @@ const MyCalendar = () => {
     if (getYearAndMonth(activeStartDate) >= todayYearMonth) { //활성화된날짜 >= 오늘연월 ?
       updateIsThisMonth(true)                                 //원페이저 다운로드 표시
     } else {
-      updateIsThisMonth(false)                                //남은기간표시
+      setNextArrowActive(true)
     }
   }
 
-  //& 해당 [월]의 데이터 목록 조회
-  const getMonthData = (date:Date) => {
-    const activeViewMonth = getYearAndMonth(date)    //view 로 보고 있는 해당 [연-월]
-    const param = {email: userInfo.eml, month: activeViewMonth}
-    getQnaDateList(param)    //date, count 포맷 데이터 조회
+  // [월] 이동 이벤트 - 목록 초기화 & 해당 월의 데이터 목록 조회 (질문중)
+  const clearList = ({activeStartDate}:any) => {  //변경된 일자의 최소 일자
+    const watchingViewMonth = new Date(activeStartDate).getMonth() + 1    //view 로 보고 있는 해당 [월]
+    //const result = fetch('/api/getAnswerList', watchingViewMonth)       //db connection
+    console.log(watchingViewMonth + '월에 해당하는 데이터 조회')
+    
   }
 
   // 해당 월의 [일] 데이터 목록 조회

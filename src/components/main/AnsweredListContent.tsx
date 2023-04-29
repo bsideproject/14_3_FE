@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import useAnsweredList from "store/modules/Answers"
 import 'assets/components/answered-list/answered-list.css'
 import AnsweredCategoryUI from "./AnsweredCategoryUI";
-import { useNavigate } from "react-router-dom";
-import DateFormatUI from "./DateFormatUI";
+import Footer from "components/Footer";
+import NavigationBar from "components/NavigationBar";
 
 /**
  * @설명 답변목록 출력
@@ -14,21 +14,29 @@ import DateFormatUI from "./DateFormatUI";
 const AnsweredListContent = () => {
   const [answeredList, setAnsweredList] = useState<any>([{}])       //Q&A 목록
   const {qnaList} = useAnsweredList()
-  const navigate = useNavigate()
 
   useEffect(() => {
     setAnsweredList(qnaList)
   }, qnaList) //qnaList 가 업데이트 될 때마다 리렌더링
 
-  //상세페이지로 이동
-  const viewAnswer = (a_num:number):void => {
-    console.log(a_num)
-    navigate('/answered-view', { state: {a_num: a_num} })
+  const korean_days = ["일","월","화","수","목","금","토"];
+  //요일 반환 함수
+  const getThisDate = (date:any) => {
+
+    return (
+      new Date(date).toLocaleDateString() 
+      + ' ' 
+      + korean_days[new Date(date).getDay()] 
+      + '요일'
+    )
   }
 
   return (
     <>
       <div className="answered-list-wrap">
+
+        {/* divider */}
+        <div className="answered-list-divider"></div> 
 
         {/* 목록 개수 출력 */}
         <div className="answered-list-item-count-wrap body2-bold">
@@ -36,12 +44,12 @@ const AnsweredListContent = () => {
         </div>
 
         {/* 목록 내용 출력 */}
-        <div style={{marginBottom: '160px'}}>
+        <div>
           { answeredList.length > 0 && (  //목록이 있을 경우에만 노출
               answeredList.map((item:any) => (
-                <div key={item.index} className="answered-list-item" onClick={()=>viewAnswer(item.index)}>
+                <div key={item.index} className="answered-list-item">
                   <div className="answered-list-item-header-wrap caption1-regular">
-                    <DateFormatUI date={item.date} />
+                    <p  className="answered-list-item-date">{getThisDate(item.date)}</p>
                     <AnsweredCategoryUI category={item.qc} />
                   </div>
                   <div className="answered-list-item-q body2-bold">{item.q}</div>

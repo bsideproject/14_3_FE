@@ -3,7 +3,6 @@ import {CSSTransition} from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import useCardState from 'store/modules/CardState';
-import GomingTextImg from 'assets/images/main/goming-text.png'
 
 const Cards = ({item, selected, clickedEventHandler}: any) => {
   const navigate = useNavigate()
@@ -12,11 +11,6 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
 
   //카드 선택 이벤트
   const clickHandler = (item: any) => {
-    //style 배경 설정
-    const id = item.index.toString()
-    const selectedItem = document.getElementById(id) as HTMLElement
-    selectedItem.style.backgroundColor = '#2D4577'
-
     if (selected === false) {
       setShowFront(false); 
       clickedEventHandler()
@@ -47,19 +41,19 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
         <div ref={nodeRef} className='card' onClick={() => clickHandler(item)}>
           {/* 카드 앞면 내용: 컨텐츠 */}
           <div className='card-front'>
-            <div className='card-in' id={item.index}>
+            <div className='card-in'>
               {
                 showFront ? (
-                  <img src={item.img} alt={item.desc} width={'100%'}  height={'100%'} className="card-scale"/>
+                  <img src={item.img} alt={item.desc} width={148} height={136} className="card-scale"/>
                 ) : (
                   <div className='selected-card-area card-fade'>
-                    <img src={item.aftrImg} alt={item.desc} width={'100%'} height={'100%'} className='card-fade' />
+                    <img src={item.aftrImg} alt={item.desc} width={148} height={136} className='card-fade' />
                   </div>
                 )
               }
             </div>
             <div className='card-title'>
-              <img src={GomingTextImg} alt="" width={48} height={12}/>
+              Goming
             </div>
           </div>
         </div>
