@@ -11,9 +11,11 @@ import Header from "components/auth/Header";
 
 const Mypage: React.FC = () => {
   //헤더설정
-  const { setHeaderText } = useDefaultSets();
+  const { setHeaderText,setIsNavigation } = useDefaultSets();
   useEffect(() => {
     setHeaderText("개인 정보 수정");
+    setIsNavigation(false)
+    return () => setIsNavigation(true)
   }, []);
   const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터

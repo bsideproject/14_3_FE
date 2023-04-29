@@ -14,10 +14,16 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
   const [itemChecked, setItemChecked] = useState<boolean>(false) //아이템 체크 확인 -> 버튼 활성화용
   const [withdrawalText, setWithdrawalText] = useState<string>('') //textarea 값
   const [withdrawalTextError, setWithdrawalTextError] = useState<boolean>(false) //textarea 에러 확인 -> error 문구 출력용
+  const [textCountOverErrorText, setTextCountOverErrorText] = useState<string>('')  //textarea 글자수 관련 에러 문구 '텍스트'
 
   // textarea onchange event
   const withdrawalTextKeyupHandler = (e:any) => {
-    setWithdrawalTextError(false)
+    if (e.target.value.length > 300) {
+      setTextCountOverErrorText('최대 길이는 300자 입니다.')
+      setWithdrawalTextError(true)
+    } else {
+      setWithdrawalTextError(false)
+    }
     setWithdrawalText(e.target.value)
   }
 
@@ -54,6 +60,11 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
     const otherCheck = document.getElementById('other') as HTMLInputElement
     if (otherCheck.checked === true) {
       if( withdrawalText.length < 1 ) {//내용없을시 로직 종료
+        setTextCountOverErrorText('기타 선택 시, 답변을 입력해주셔야 합니다.')
+        setWithdrawalTextError(true)
+        return; 
+      } else if (withdrawalText.length > 300) {
+        setTextCountOverErrorText('최대 길이는 300자 입니다.')
         setWithdrawalTextError(true)
         return; 
       } else {
@@ -123,7 +134,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               placeholder="맘에 드시는 이유가 없다면, 직접 이유를 작성해주세요."
               maxLength={300} 
               style={{border:
-                '1px solid' + (withdrawalTextError === true ? '#EA4343' : '#E9E7E2' )
+                '1px solid' + (withdrawalTextError ? '#EA4343' : '#E9E7E2' )
               }}
             ></textarea>
 
@@ -131,12 +142,9 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
             <div className="withdrawal-error-area" >
               <div style={{flex: 1}}>
                 <p 
-                style={{display:
-                  (withdrawalTextError === true ? '' : 'none' )
-                }}
+                style={{ display: (withdrawalTextError ? '' : 'none' ) }}
                 className="withdrawal-text-error"
-                >
-                  기타 선택 시, 답변을 입력해주셔야 합니다.</p>
+                >{textCountOverErrorText}</p>
               </div>
               <p className={withdrawalTextError ? 'withdrawal-text-error' : ''}>{withdrawalText.length}/300</p>
             </div>
