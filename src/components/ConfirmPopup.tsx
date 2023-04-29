@@ -36,14 +36,14 @@ const ConfirmPopup = (
             </div>
             {/* 일반 텍스트 */}
             <div className='modal-text-area'>
-              <p>{text}</p>
+              <p className='body2-regular'>{text}</p>
             </div>
             {/* isFlex 전달여부에 따라 flex-direction 처리 */}
             <div className={'confirm-btn-area ' + (isFlex && ('btns-isflex'))}>
               {/* 취소 */}
-              <button className='modal-btn-confirm-cancel body3-bold' type="button" onClick={closeConfirmPopup}>{cancelText}</button>
+              <button className='modal-btn-confirm-cancel body3-bold btn-s-l' type="button" onClick={closeConfirmPopup}>{cancelText}</button>
               {/* 확인 */}
-              <button className='modal-btn-confirm body3-bold' type="button" onClick={confirmCheck}>{confirmText}</button>
+              <button className='modal-btn-confirm body3-bold btn-p-l' type="button" onClick={confirmCheck}>{confirmText}</button>
             </div>
           </div>
         </div>

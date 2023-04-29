@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import AnsweredListContent from "components/main/AnsweredListContent"
 import LeftAnswerPeriod from "components/main/LeftAnswerPeriod"
 import MyCalendar from "components/main/MyCalendar"
@@ -6,6 +7,7 @@ import useAnsweredList from "store/modules/Answers"
 import Header from "components/auth/Header"
 import Footer from "components/Footer"
 import NavigationBar from "components/NavigationBar"
+import useDefaultSets from "store/modules/Defaults"
 
 /**
  * @설명 답변목록 조회
@@ -15,7 +17,11 @@ import NavigationBar from "components/NavigationBar"
  */
 const AnsweredList = () => {
   const {isThisMonth} = useAnsweredList()
-  
+  const {setIsNavigation} = useDefaultSets()
+  useEffect(() => {
+    setIsNavigation(true)
+  },[])
+
   return (
     <>
       <Header></Header>
