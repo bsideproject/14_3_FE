@@ -179,7 +179,6 @@ table {
 }
 .common-textarea::placeholder {
 	color: var(--wgray09);
-	outline: 
 }
 .common-textarea:foucs {
 	color: var(--wgray12);
