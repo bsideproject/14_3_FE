@@ -14,13 +14,20 @@ const GoToOnePagerBtn = () => {
 
   return (
     <>
-      <button type="button" className="body3-bold" 
+      <button type="button" 
       style={{
-        background: '#3d3938', color: 'white', width: '100%', height: '44px', borderRadius: '8px', marginBottom: '32px', marginTop: '32px'
+        background: '#3d3938', color: 'white', width: '100%', borderRadius: '8px', marginBottom: '32px', marginTop: '32px', display: 'flex', gap: '11px',justifyContent:'center', alignItems: 'center'
       }}
+      className="btn-p-xl" 
       onClick={() => goToOnepager()}
       > 
-        원페이저 보기 & 다운로드
+        <span className='body3-bold' style={{display:'flex', justifyContent:'center'}}>
+          <img src={FileImg} alt="" width={20} height={20} />
+        </span>
+        <span>
+          원페이저 보기 & 다운로드
+
+        </span>
       </button>
     </>
   )

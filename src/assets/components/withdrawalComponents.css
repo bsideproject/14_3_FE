@@ -8,6 +8,9 @@
 .color-wgray12 {
   color: var(--wgray12);
 }
+.color-wgray06 {
+  color: var(--wgray06);
+}
 .mb-12 {
   margin-bottom: 12px;
 }
@@ -126,7 +129,7 @@
 }
 .withdrawal-text-error {
   font-size: 10px;
- color: #EA4343; 
+  color: #EA4343; 
 }
 .word-break-keep-all{
   word-break:keep-all;

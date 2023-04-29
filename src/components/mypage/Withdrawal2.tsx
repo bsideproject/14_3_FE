@@ -61,10 +61,12 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
     if (otherCheck.checked === true) {
       if( withdrawalText.length < 1 ) {//내용없을시 로직 종료
         setTextCountOverErrorText('기타 선택 시, 답변을 입력해주셔야 합니다.')
+        console.log(textCountOverErrorText)
         setWithdrawalTextError(true)
         return; 
       } else if (withdrawalText.length > 300) {
         setTextCountOverErrorText('최대 길이는 300자 입니다.')
+        console.log(textCountOverErrorText)
         setWithdrawalTextError(true)
         return; 
       } else {
@@ -142,11 +144,15 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
             <div className="withdrawal-error-area" >
               <div style={{flex: 1}}>
                 <p 
-                style={{ display: (withdrawalTextError ? '' : 'none' ) }}
-                className="withdrawal-text-error"
+                style={{ display: (withdrawalTextError ? 'inline-block' : 'none' ) }}
+                className={'caption2-bold ' + 
+                  (withdrawalTextError ? 'withdrawal-text-error' : 'color-wgray06')}
                 >{textCountOverErrorText}</p>
               </div>
-              <p className={withdrawalTextError ? 'withdrawal-text-error' : ''}>{withdrawalText.length}/300</p>
+              <p
+                className={'caption2-bold ' + 
+                  (withdrawalTextError ? 'withdrawal-text-error' : 'color-wgray06')}
+              >{withdrawalText.length}/300</p>
             </div>
           </div>
           {/* 버튼영역 */}
