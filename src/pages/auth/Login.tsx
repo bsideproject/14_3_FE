@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'assets/pages/auth/login.css'
 import RectangleDived from 'assets/images/rectangleDived.png'
 import useDefaultSets from 'store/modules/Defaults';
+import Header from 'components/auth/Header';
+import Footer from 'components/Footer';
 
 /**
  * @설명 로그인 페이지
@@ -14,7 +16,7 @@ import useDefaultSets from 'store/modules/Defaults';
  */
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Login:React.FC = () =>{
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText, setIsNavigation} = useDefaultSets()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -35,6 +37,8 @@ const Login:React.FC = () =>{
       }
     }
     setHeaderText('로그인')
+    setIsNavigation(false)
+    return () => setIsNavigation(true)
   },[])
 
   const loginAttempt = async (e:any): Promise<void> => {
@@ -103,40 +107,46 @@ const Login:React.FC = () =>{
 
   return (
     <>
-      <h1 className='startGomingText text-color headline3'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
-      <form onSubmit={loginAttempt}>
-        <div className='inputArea'>
-          <label htmlFor="email" className='login-label-text text-color'>이메일</label>
-          <input type="email" className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+      <div>
+        <Header />
+        <div className='login-wrap'>
+          <h1 className='startGomingText text-color headline3'>로그인하고<br />오늘의 Goming을 시작해보세요!</h1>
+          <form onSubmit={loginAttempt}>
+            <div className='inputArea'>
+              <label htmlFor="email" className='login-label-text text-color'>이메일</label>
+              <input type="email" className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+            </div>
+            <div className='checkbox-area'>
+              <input type="checkbox" className='save-id-check-box' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
+              <label htmlFor="rememberId" className='save-id-label'>이메일 주소 기억하기</label>
+            </div>
+            <div>
+              <label htmlFor="password" className='login-label-text'>비밀번호</label>
+              <input type="password" className='input-style' placeholder='비밀번호를 입력해주세요' id="password" 
+                autoComplete='true'
+                value={password} 
+                onChange={handlePasswordValue} 
+                onKeyUp={handlePasswordValue} 
+                maxLength={30} />
+            </div>
+            <div className='login-btn-area'>
+              {
+                invalid 
+                  ? <p className='blank-height-12'></p> 
+                  : <p style={{color: '#EA4343', fontSize: '12px'}}>*이메일 혹은 비밀번호가 일치하지 않습니다.</p>
+              }
+              <button type="submit" className='login-btn'>로그인</button><br/>
+              {/* <button disabled type="button" className='login-btn' onClick={kakaoLogin}>Kakao Login Btn</button><br /> */}
+            </div>
+            <div className='link-btn-area'>
+              <Link className='link-btn caption1-regular' to="/register" type="button">회원가입</Link>
+              <img src={RectangleDived} alt="|" width={1} height={12} className='dived-link-img'/>
+              <Link className='link-btn caption1-regular' to="/lost-info">비밀번호 찾기</Link>
+            </div>
+          </form>
         </div>
-        <div className='checkbox-area'>
-          <input type="checkbox" className='save-id-check-box' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
-          <label htmlFor="rememberId" className='save-id-label'>이메일 주소 기억하기</label>
-        </div>
-        <div>
-          <label htmlFor="password" className='login-label-text'>비밀번호</label>
-          <input type="password" className='input-style' placeholder='비밀번호를 입력해주세요' id="password" 
-            autoComplete='true'
-            value={password} 
-            onChange={handlePasswordValue} 
-            onKeyUp={handlePasswordValue} 
-            maxLength={30} />
-        </div>
-        <div className='login-btn-area'>
-          {
-            invalid 
-              ? <p className='blank-height-12'></p> 
-              : <p style={{color: '#EA4343', fontSize: '12px'}}>*이메일 혹은 비밀번호가 일치하지 않습니다.</p>
-          }
-          <button type="submit" className='login-btn'>로그인</button><br/>
-          {/* <button disabled type="button" className='login-btn' onClick={kakaoLogin}>Kakao Login Btn</button><br /> */}
-        </div>
-        <div className='link-btn-area'>
-          <Link className='link-btn caption1-regular' to="/register" type="button">회원가입</Link>
-          <img src={RectangleDived} alt="|" width={1} height={12} className='dived-link-img'/>
-          <Link className='link-btn caption1-regular' to="/lost-info">비밀번호 찾기</Link>
-        </div>
-      </form>
+      </div>
+      <Footer></Footer>
     </>
   )
 }

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "components/auth/Header";
 import 'assets/pages/auth/passwordCheck.css'
 import useDefaultSets from "store/modules/Defaults";
+import Footer from "components/Footer";
 /**
  * @설명 마이페이지 - 비밀번호 확인
  * @작성자 김상훈
@@ -13,7 +14,7 @@ import useDefaultSets from "store/modules/Defaults";
  * @TODO backend-connection
  */
 const PasswordCheck: React.FC = () => {
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText,setIsNavigation} = useDefaultSets()
   const navigate = useNavigate()
   const { isLogin, userInfo } = useAuthStore((state) => state)
   const [password, setPassword] = useState<string>('');
@@ -26,6 +27,7 @@ const PasswordCheck: React.FC = () => {
       //navigate('/login') //임시주석
     }
     setHeaderText('개인 정보 수정')
+    setIsNavigation(false)
   },[])
   
   //유효성 검사 이벤트
@@ -67,9 +69,11 @@ const PasswordCheck: React.FC = () => {
   
   return (
     <>
-      <div>
-        <h1 className="pw-check-title">비밀번호 재확인</h1>
-        <p className="pw-check-text">개인 정보를 수정하기 전에,  비밀번호를 다시 한 번 확인해주세요.</p>
+    <div className="pw-check-whole-wrap">
+      <Header></Header>
+      <div className="pw-check-wrap">
+        <h1 className="pw-check-title body1-bold">비밀번호 재확인</h1>
+        <p className="pw-check-text body3-regular">개인 정보를 수정하기 전에,<br />비밀번호를 다시 한 번 확인해주세요.</p>
 
         <div className="pw-check-input-area">
           <label className="pw-check-label" htmlFor="password">비밀번호</label>
@@ -101,6 +105,9 @@ const PasswordCheck: React.FC = () => {
         </div>
         <button className="pw-check-btn" type="button" onClick={verifyCheck}>확인</button>
       </div>
+      <Footer></Footer>
+
+    </div>
     </>
   )
 }

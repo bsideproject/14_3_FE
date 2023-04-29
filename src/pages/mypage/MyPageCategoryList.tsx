@@ -23,13 +23,13 @@ const categoryList = [ //카테고리목록
  */
 const MyPageCategoryList = () => {
   //헤더설정
-  const {setHeaderText, setHeaderBgColor} = useDefaultSets()
+  const {setHeaderText, setHeaderBgColor,setIsNavigation} = useDefaultSets()
   const {updateLoginStatus} = useAuthStore((state)=>state)
   const [logoutCheck, setLogoutCheck] = useState<boolean>(false)
   useEffect(()=> {
     setHeaderText()
     setHeaderBgColor(true)
-
+    setIsNavigation(true)
     return (()=> setHeaderBgColor(false))
   },[])
 

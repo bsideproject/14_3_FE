@@ -7,11 +7,14 @@ import fetch from "utils/fetch";
 import SelectBox from "components/common/SelectBox";
 import InputBox from "components/common/InputBox";
 import useDefaultSets from "store/modules/Defaults";
+import Footer from "components/Footer";
 const Register: React.FC = () => {
   //헤더설정
-  const { setHeaderText } = useDefaultSets();
+  const { setHeaderText,setIsNavigation } = useDefaultSets();
   useEffect(() => {
     setHeaderText("회원 가입하기");
+    setIsNavigation(false)
+    return () => setIsNavigation(true)
   }, []);
 
   const ReconfirmRef = useRef(null);
@@ -272,6 +275,7 @@ const Register: React.FC = () => {
   };
   return (
     <>
+      <Header></Header>
       <div className="register-main">
         <form onSubmit={handleRegister}>
           <InputBox
@@ -280,7 +284,7 @@ const Register: React.FC = () => {
             inputPlaceholader={"8글자 이내로 만들어주세요."}
             inputMaxLength={8}
             id={"nickName"}
-            inputClassName={"register-flex-row-gap8 margintop-32"}
+            inputClassName={"register-flex-row-gap8"}
             inputChange={handlenickNameUpdate}
             inputValue={nickName}
             buttonClick={handleEmailExistCheck}
@@ -707,6 +711,7 @@ const Register: React.FC = () => {
         text2={""}
         callbackFunction={() => {}}
       /> */}
+      <Footer></Footer>
     </>
   );
 };
