@@ -15,6 +15,7 @@ import OnePagerMain from "pages/onpager/OnePagerMain";
 import Answer from "pages/main/Answer";
 import AnsweredList from "pages/main/AnsweredList";
 import AnsweredView from "pages/main/AnsweredView";
+import Intro from "pages/etc/Intro";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -37,6 +38,7 @@ root.render(
           <Route path="/answer" element={<Answer />} />
           <Route path="/answered-list" element={<AnsweredList />} />
           <Route path="/answered-view" element={<AnsweredView />} />
+          <Route path="/intro" element={<Intro />} />
         </Routes>
     </BrowserRouter>
   </React.StrictMode>

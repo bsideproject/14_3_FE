@@ -17,6 +17,7 @@ function App() {
       <Link to="/main">메인화면(UI완료)</Link><br/>
       <Link to="/onepager">원페이저(미완료)</Link><br/>
       <Link to="/answered-list">메인화면-답변한목록</Link><br/>
+      <Link to="/intro">인트로</Link><br/>
 
       
     </div>
