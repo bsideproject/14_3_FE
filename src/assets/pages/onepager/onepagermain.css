@@ -34,25 +34,81 @@
 .onepager-download{
   position: absolute;
   width: 1920px;
+  margin: 0 240px;
+  background: #1B2E62;
+  /* background: linear-gradient(1.48deg, rgba(28, 31, 75, 0.2) 1.33%, rgba(28, 31, 75, 0) 98.83%); */
 
-  /* display: none; */
 }
 .my-masonry-grid-download {
   display: flex;
   width: 1440px; /* gutter 사이즈 */
   margin: 0 auto;
+  margin-bottom: 80px;
 }
 
 .my-masonry-grid_column-download{
   padding-left: 20px; /* gutter size */
   background-clip: padding-box;
-  width: 100px;
+  width: 340px;
 }
 .my-masonry-grid_column-download > div { 
-  width: 100px;
+  width: 340px;
   background: var(--wgray03);
   margin-bottom: 20px;
   font-size: 12px;
   border-radius: 8px;
   padding: 2px;
+}
+/* title */
+.onepager-download-header {
+  margin-top: 120px;
+  margin-bottom: 64px;
+  text-align: center;
+  color: var(--wgray01);
+}
+/* N월의 고밍 */
+.onepager-download-header > h1 {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 52px;
+  letter-spacing: 0em;
+}
+/* DATE~DATE */
+.onepager-download-header > p:nth-of-type(1) {
+  width: fit-content;
+  border-radius: 8px;
+  padding: 4px 12px;
+  background-color: var(--wgray03);
+  color: var(--wgray12);
+  margin: 20px auto 40px auto;
+}
+
+/* footer */
+.onepager-download-footer {
+  display: flex;
+  width: 100%;
+  background-color: rgba(72, 99, 148, 1);
+  color: var(--wgray03);
+  padding: 72px 0;
+  justify-content: center;
+  gap: 40px;
+}
+.onepager-download-footer > div{
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  justify-content: center;
+  vertical-align: middle;
+}
+.onepager-download-footer > div > svg {
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.onepager-download-copyright {
+  width: 100%;
+  padding: 23px 0;
+  color: var(--wgray01);
+  text-align: center;
+  background-color: #2D4577;
 }

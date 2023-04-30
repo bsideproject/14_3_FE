@@ -8,6 +8,8 @@ import useDefaultSets from 'store/modules/Defaults';
 import { useEffect } from 'react';
 import Footer from 'components/Footer';
 import NavigationBar from 'components/NavigationBar';
+import SVG from 'components/onepager/svg'
+import SVG2 from 'components/onepager/svg2'
 
 const testData = [
   {index: 1, content: 'contentsssssssssssssssssssss'},
@@ -82,11 +84,22 @@ const OnePagerMain = () => {
       </div>
 
       
+            {/* 파라미터
+              1. '달'
 
-      <div className='onepager-wrap onepager-download' style={{display:'none'}}>
+            */}
+
+      {/* Canvas */}
+      {/* <div className='onepager-download' style={{display:'none'}}> */}
+      <div className='onepager-download'>
+        <div className='onepager-download-header'>
+          <h1>N월의 고밍</h1>
+          <p className='body1-regular'>DATE~DATE</p>
+          <p className='headline2'>N월의 NICKNAME님은 어떤 하루하루를 보냈는지 돌아볼까요?</p>
+        </div>
         <Masonry
           width={1920}
-          breakpointCols={12}                          //컬럼수
+          breakpointCols={4}                          //컬럼수
           className="my-masonry-grid-download"
           columnClassName="my-masonry-grid_column-download">
           {
@@ -98,7 +111,35 @@ const OnePagerMain = () => {
             ))
           }
         </Masonry>
+
+        {/* 일러스트레이터 영역 */}
+        <div>
+          <SVG />
+        </div>
+
+        {/* 일러스트 하단 로고 */}
+        <div className='onepager-download-footer'>
+          <div>
+            <SVG2 />
+          </div>
+          <p className='headline3'>
+            매일 하나씩 써 내려간 작은 조각들이 모여,<br/>
+            오늘의 나를 만듭니다.<br/>
+            나를 돌아보는 회고 리추얼, 고밍. 
+          </p>
+        </div>
+
+        {/* copyright */}
+        <div className='onepager-download-copyright body2-regular'>
+          @Goming All right reserved.
+        </div>
+        
       </div>
+
+      
+
+
+
       <Footer></Footer>
       <NavigationBar></NavigationBar>
     </div>
