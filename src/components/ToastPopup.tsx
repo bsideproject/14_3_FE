@@ -23,7 +23,7 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
 
   const styleAlertCoverDiv = {
     position: 'absolute',
-    bottom: '64px',
+    bottom: '48px',
     width: '380px',
     height: '64px',
     zIndex: '2',
