@@ -132,10 +132,11 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               readOnly
               value={withdrawalText}
               onChange={withdrawalTextKeyupHandler}
+              onKeyUp={withdrawalTextKeyupHandler}
               className="withdrawal-textarea body3-regular" cols={30} rows={10} 
               placeholder="맘에 드시는 이유가 없다면, 직접 이유를 작성해주세요."
               maxLength={300} 
-              style={{border:
+              style={{outline:
                 '1px solid' + (withdrawalTextError ? '#EA4343' : '#E9E7E2' )
               }}
             ></textarea>
