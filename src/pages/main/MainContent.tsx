@@ -16,10 +16,12 @@ import NavigationBar from 'components/NavigationBar'
  */
 const MainContent = () => {
   const {todayCardSelectStatus} = useCardState()  //카드 선택 가능여부
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText, setIsNavigation} = useDefaultSets(state => state)
 
   useEffect(() => {
     setHeaderText('')
+    setIsNavigation(true)
+    return () => setIsNavigation(false)
   },[])
 
   if (!todayCardSelectStatus) {  //더이상 안될경우 (3개초과)

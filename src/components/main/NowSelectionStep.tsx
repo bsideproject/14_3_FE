@@ -34,7 +34,7 @@ const NowSelectionStep = () => {
     <>
       <div className="leftselection-wrap">
         <div className="leftselection-title">
-          <p className="wgray12 body3-bold">현재 질문 뽑기 회차</p>
+          <p className="color-wgray12 body3-bold">현재 질문 뽑기 회차</p>
         </div>
         <div className="leftselection-numbers-wrap">
           {

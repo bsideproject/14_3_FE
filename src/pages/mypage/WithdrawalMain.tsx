@@ -9,7 +9,6 @@ import AlertTextPopup from 'components/AlertTextPopup';
 import { useNavigate } from 'react-router-dom';
 import useDefaultSets from 'store/modules/Defaults';
 import Footer from 'components/Footer';
-import NavigationBar from 'components/NavigationBar';
 import useAuthStore from 'store/modules/Auth';
 
 /**
@@ -19,11 +18,15 @@ import useAuthStore from 'store/modules/Auth';
  * @TODO motion 적용, BE연결
  */
 const WithdrawalMain = () => {
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText,setIsNavigation} = useDefaultSets()
 
   useEffect(()=>{
     setHeaderText('회원 탈퇴')
-    return () => setHeaderText('')
+    setIsNavigation(false)
+    return () => {
+      setHeaderText('')
+      setIsNavigation(true)
+    }
   },[])
 
   const navigate = useNavigate()
@@ -85,7 +88,6 @@ const WithdrawalMain = () => {
       </div>
     </div>
     <Footer></Footer>
-    <NavigationBar />
     </>
   ) 
 }

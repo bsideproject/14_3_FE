@@ -17,7 +17,7 @@
   margin-bottom: 12px;
 }
 .info-text-wrap p:last-of-type{
-  color: var(wgray10);
+  color: var(--wgray10);
 }
 .info-btn-wrap button{
   width: 100%;

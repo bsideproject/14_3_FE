@@ -16,7 +16,7 @@
   width: 100%;
   padding: 14px 16px;
   border-radius: 8px;
-  border: 0.1px solid var(--border-color-1);
+  border: 1px solid var(--wgray04);
 }
 .login-label-text{
   display: block;

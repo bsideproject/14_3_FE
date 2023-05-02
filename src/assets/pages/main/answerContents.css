@@ -35,7 +35,7 @@
   display: flex;
 }
 .answer-text-count{
-  color: var(--wgray08);
+  color: var(--wgray06);
 }
 .answer-error {
   color: var(--error);

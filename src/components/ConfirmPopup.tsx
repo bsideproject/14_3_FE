@@ -1,4 +1,17 @@
 import 'assets/components/alertTextPopup.css'
+
+//개행처리
+const Item = ( text: string ) => {
+  return <p>
+    {text.split("/n").map((txt) => (
+        <>
+          {txt}
+          <br />
+        </>
+      ))}
+  </p>;
+};
+
 /**
  * @설명 확인 팝업 창
  * @작성자 김상훈
@@ -32,11 +45,11 @@ const ConfirmPopup = (
           <div className='confirm-modal'>
             {/* 강조 텍스트 */}
             <div className='headline3' style={{textAlign:'center', marginBottom:'12px'}}>
-              {strongText}
+              {strongText && Item(strongText.toString())}
             </div>
             {/* 일반 텍스트 */}
             <div className='modal-text-area'>
-              <p className='body2-regular'>{text}</p>
+              <p className='body2-regular'>{text && Item(text.toString())}</p>
             </div>
             {/* isFlex 전달여부에 따라 flex-direction 처리 */}
             <div className={'confirm-btn-area ' + (isFlex && ('btns-isflex'))}>

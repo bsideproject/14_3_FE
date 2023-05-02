@@ -22,9 +22,10 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
   } as React.CSSProperties;
 
   const styleAlertCoverDiv = {
-    position: 'absolute',
+    position: 'fixed',
     bottom: '48px',
-    width: '380px',
+    width: 'calc(100% - 32px)',
+    maxWidth: '448px',
     height: '64px',
     zIndex: '2',
     alignItems: 'center',
