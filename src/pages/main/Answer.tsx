@@ -160,10 +160,10 @@ const Answer = () => {
             <button 
               type="button" 
               disabled={btnActive} 
-              className="answer-btn-confirm btn-p-xl" 
+              className="answer-btn-confirm btn-p-xl body3-bold" 
               onClick={handleSave}
               >저장하기</button>
-            <button type="button" className="answer-btn-cancel btn-s-xl" onClick={()=>setSkipPopup(true)}>이번 질문은 넘어갈래요</button>
+            <button type="button" className="answer-btn-cancel btn-s-xl body3-bold" onClick={()=>setSkipPopup(true)}>이번 질문은 넘어갈래요</button>
 
           </div>
         </div>
