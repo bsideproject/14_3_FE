@@ -93,8 +93,8 @@ const InputBox = React.memo(
               type="button"
               className={
                 title
-                  ? "register-button body3-bold margintop-28"
-                  : "register-button body3-bold margintop-8"
+                  ? "register-button btn-p-xl body3-bold margintop-28"
+                  : "register-button btn-p-xl body3-bold margintop-8"
               }
               onClick={buttonClick}
             >

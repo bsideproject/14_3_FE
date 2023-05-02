@@ -26,7 +26,7 @@ const useAuthStore = create<AUTH_STATE>((set) => ({
     whdwl_dtm: undefined,
   },
   isLogin: false,
-  isInfoChange: true,
+  isInfoChange: false,
   updateLoginStatus: (
     newLoginState: boolean,
     userInfo: TYPE_USER_INFO

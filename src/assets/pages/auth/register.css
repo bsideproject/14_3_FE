@@ -278,7 +278,7 @@
   width: 18px;
   height: 18px;
   border-radius: 10px;
-  transition: 0.5s;
+  /* transition: 0.5s; */
   margin-right: 4px;
 }
 
@@ -288,6 +288,9 @@
 .register-gender-box:checked {
   /* 체크박스가 체크됐을 때의 색상 */
   background-color: #3d3938;
+}
+.register-gender-box:hover {
+  background-color: #e9e7e2;
 }
 .register-gender-label {
   /* display: inline-block; */

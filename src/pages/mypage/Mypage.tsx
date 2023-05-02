@@ -307,10 +307,10 @@ const Mypage: React.FC = () => {
             )}
 
             <div className="register-flex-column-gap10 margintop-32">
-              <div>성별(선택)</div>
+              <div>성별</div>
               <div>
                 <input
-                  className="register-gender-box"
+                  className="radio-btn"
                   value="M"
                   id="male"
                   type="radio"
@@ -319,10 +319,10 @@ const Mypage: React.FC = () => {
                   disabled={!isInfoChange}
                 />
                 <label htmlFor="male" className="register-gender-label">
-                  남성
+                  여성
                 </label>
                 <input
-                  className="register-gender-box marginleft-35"
+                  className="radio-btn marginleft-35"
                   value="F"
                   id="feMale"
                   type="radio"
@@ -331,10 +331,10 @@ const Mypage: React.FC = () => {
                   disabled={!isInfoChange}
                 />
                 <label className="register-gender-label" htmlFor="feMale">
-                  여성
+                  남성
                 </label>
                 <input
-                  className="register-gender-box marginleft-35"
+                  className="radio-btn marginleft-35"
                   value="N"
                   id="not"
                   type="radio"
@@ -343,7 +343,7 @@ const Mypage: React.FC = () => {
                   disabled={!isInfoChange}
                 />
                 <label className="register-gender-label" htmlFor="feMale">
-                  선택안함
+                  선택 안 함
                 </label>
               </div>
             </div>
@@ -361,7 +361,7 @@ const Mypage: React.FC = () => {
             <div className="register-flex-row-gap0 margintop-32">
               <input
                 type="checkbox"
-                className="register-email-check-box"
+                className="check-btn"
                 name="rememberme"
                 id="emailAgree"
                 checked={emailAgree}

@@ -10,11 +10,11 @@ import useDefaultSets from "store/modules/Defaults";
 import Footer from "components/Footer";
 const Register: React.FC = () => {
   //헤더설정
-  const { setHeaderText,setIsNavigation } = useDefaultSets();
+  const { setHeaderText, setIsNavigation } = useDefaultSets();
   useEffect(() => {
     setHeaderText("회원 가입하기");
-    setIsNavigation(false)
-    return () => setIsNavigation(true)
+    setIsNavigation(false);
+    return () => setIsNavigation(true);
   }, []);
 
   const ReconfirmRef = useRef(null);
@@ -429,7 +429,7 @@ const Register: React.FC = () => {
           <div className="register-flex-row-gap4 margintop-11">
             <input
               type="checkbox"
-              className="register-email-check-box"
+              className="check-btn"
               name="rememberme"
               id="rememberId"
               checked={emailAgree}
@@ -440,14 +440,14 @@ const Register: React.FC = () => {
             </label>
           </div>
           <div className="register-email-explain">
-            *이메일을 통해 매월 말 월간 회고 리추얼 북을 보내드립니다.
+            *이메일을 통해 매월 말 월간 회고를 위한 원페이저를 보내드립니다.
             <br />
             마이페이지에서 이메일 알람 수신 동의 여부를 변경할 수 있습니다.
           </div>
           <div className="register-flex-column-gap4 register-auth-content  margintop-16">
             <div className="body3-Bold">인증코드가 오지 않는다면?</div>
             <div className="caption1-regular">
-              스팸메일함 혹은 프로모션함을 확인해보고 다시 한번 ‘인증하기’
+              스팸메일함 혹은 프로모션함을 확인해보시고, 다시 한 번 '인증하기'
               버튼을 눌러보세요.
             </div>
           </div>
@@ -617,7 +617,7 @@ const Register: React.FC = () => {
             <div className="register-flex-row-gap8">
               <input
                 type="checkbox"
-                className="register-email-check-box"
+                className="check-btn"
                 name="allcheck"
                 id="allcheck"
                 checked={allCheck}
@@ -638,7 +638,7 @@ const Register: React.FC = () => {
             <div className="register-flex-row-gap4 margintop-8">
               <input
                 type="checkbox"
-                className="register-email-check-box"
+                className="check-btn"
                 name="ageCheck"
                 id="ageCheck"
                 checked={checkAgeAgree}
@@ -654,7 +654,7 @@ const Register: React.FC = () => {
             <div className="register-flex-row-gap4 margintop-8">
               <input
                 type="checkbox"
-                className="register-email-check-box"
+                className="check-btn"
                 name="infoCheck"
                 id="infoCheck"
                 checked={checkInfoAgree}
@@ -671,7 +671,7 @@ const Register: React.FC = () => {
             <div className="register-flex-row-gap4 margintop-8">
               <input
                 type="checkbox"
-                className="register-email-check-box"
+                className="check-btn"
                 name="serviceCheck"
                 id="serviceCheck"
                 checked={checkServiceAgree}
@@ -697,7 +697,7 @@ const Register: React.FC = () => {
             )}
             <button
               type="submit"
-              className="register-button"
+              className="register-button body3-bold"
               style={{ width: "100%" }}
             >
               회원 가입하기

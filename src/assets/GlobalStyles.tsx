@@ -4,7 +4,7 @@ import { createGlobalStyle } from "styled-components";
  * @설명 전역 스타일
  * @작성자 김상훈
  * @생성일자 2023.03.30.
- * ---------------------------------------- 
+ * ----------------------------------------
  *  수정일자      수정자      내용
  * ---------------------------------------- (공백3회)
  * 2023.03.30.   김상훈   container 전역 추가
@@ -276,6 +276,54 @@ table {
 .button:hover {	
 	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
 }
+//radio button
+.radio-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #ffffff;
+  border: 2px solid #3d3938;
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  /* transition: 0.5s; */
+  margin-right: 4px;
+}
+
+
+.radio-btn:checked {
+  /* 체크박스가 체크됐을 때의 색상 */
+  background-color: var(--wgray12); 
+}1
+.radio-btn:hover: {
+  background-color: var(--wgray04);
+}
+.radio-btn:disabled:hover { 
+	background: white; 
+	pointer-events: none;
+}
+.radio-btn:disabled:checked{ 
+	background: white; 
+}
+//checkbox
+.check-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #3d3938;
+  border-radius: 4px;
+  outline: none;
+  transition: 0.5s;
+}
+.check-btn:disabled {
+  background-color: #c9c6c0;
+}
+.check-btn:checked {
+  /* 체크박스가 체크됐을 때의 색상 */
+  background-color: #3d3938;
+}
 
 // primary-button-clicked-styles
 .btn-p-xl:active, .btn-p-l:active, .btn-p-m:active, .btn-p-s:active, .btn-p-xs:active { 
@@ -288,7 +336,7 @@ table {
 } 
 
 // primary-button-disabled-styles
-.btn-p-xl:disabled, .btn-p-l:disabled, .btn-p-m:disabled, .btn-p-s:disabled, .btn-p-xs:disabled { background: var(--wgray06); 
+.radio-btn, .btn-p-xl:disabled, .btn-p-l:disabled, .btn-p-m:disabled, .btn-p-s:disabled, .btn-p-xs:disabled { background: var(--wgray06); 
 }
 // secondary-button-disabled-styles
 .btn-s-xl:disabled, .btn-s-l:disabled, .btn-s-m:disabled, .btn-s-s:disabled, .btn-s-xs:disabled { 
@@ -359,6 +407,7 @@ input:autofill:active {
 	transition: background-color 5000s ease-in-out 0s;
 	border: 1px solid var(--wgray04);
 }
+
 
 `;
 
