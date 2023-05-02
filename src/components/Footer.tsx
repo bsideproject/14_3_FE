@@ -18,7 +18,7 @@ const Footer = ({type = true}: TYPE_FOOTER) => {
       <div className="footer-area" style={{marginBottom: isNavigation ? '60px':'' }}>
         <div className='inside-footer-area'>
           <div className='footer-title'>
-            <img src={GomingLogo} alt="Goming" />
+            <img src={GomingLogo} alt="Goming" width={76}/>
           </div>
           <div className="footer-service-area caption1-regular mb-12">
             <p>서비스 소개</p>

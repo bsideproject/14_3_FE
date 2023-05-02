@@ -3,6 +3,7 @@
   width: 100%;
   background-color: var(--wgray03);
   padding-top: 40px;
+  color: var(--wgray12);
 }
 .inside-footer-area{
   margin: 0 16px;
@@ -18,5 +19,5 @@
   gap: 12px;
 }
 .footer-title {
-  margin-bottom: 16.53px;
+  margin-bottom: 16px;
 }
