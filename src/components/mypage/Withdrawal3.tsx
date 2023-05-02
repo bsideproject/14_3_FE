@@ -12,7 +12,7 @@ const Withdrawal3 = ({step, setStep}: WITHDRAWAL) => {
     <>
       <div className='withdrawal-content'>
         {/* 회원탈퇴 공통 텍스트 */}
-        <WithdrawalInformation /> 
+        <WithdrawalInformation isLast={true}/> 
         <div className='body2-bold withdrawal-content-info'>
           <p className='word-break-keep-all mb-12'>
             그동안 고밍을 사용하시면서<br/>
@@ -20,7 +20,7 @@ const Withdrawal3 = ({step, setStep}: WITHDRAWAL) => {
             채워나가는 경험을 하셨길 바랍니다. 
           </p>
           <p className='withdrawal-font-size-16 word-break-keep-all' style={{marginTop: '12px'}}>
-            마지막으로 고밍에게 남기고 싶은 말씀이 있다면 남겨주세요 :) 
+            마지막으로 고밍에게 남기고 싶은 말이 있다면 남겨주세요 :) 
           </p>
 
           {/* textarea  */}

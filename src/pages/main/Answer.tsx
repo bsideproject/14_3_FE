@@ -152,7 +152,10 @@ const Answer = () => {
               {
                 isError ? (<p className="answer-error-text caption2-bold answer-error" >270자 이하로 적어주세요.</p>) : (<p className="answer-error-text caption2-bold">&nbsp;</p>)
               }
-              <p className={'answer-text-count caption2-bold ' + (isError ? 'answer-error' : '')}>{answer.length}/270</p>
+              <p 
+                className={'answer-text-count caption2-bold ' + (isError ? 'answer-error' : '')}
+                style={{color: btnActive ? '' : '#96938C'}}
+              >{answer.length}/270</p>
             </div>
           </div>
 
@@ -173,7 +176,7 @@ const Answer = () => {
         saveClicked && (
           <ConfirmPopup 
             strongText="작성하신 내용을 저장할까요?"            //강조문구
-            text="저장 후에는 수정이 불가하며, 저장된 회고록은 월말에 확인할 수 있게 됩니다."   //일반 텍스트 문구
+            text="저장 후에는 수정이 불가하며, 저장된/n회고록은 월말에 확인할 수 있게 됩니다."   //일반 텍스트 문구
             confirmText="저장하기"                             //confirm 문구
             cancelText="돌아가기"                              //cancel 문구
             callbackFunction={loginCheck}                     //confirm 확인
@@ -221,7 +224,7 @@ const Answer = () => {
       {/* skip 눌렀을 경우 */
         skipPopup && (
           <ConfirmPopup 
-            strongText="지금 이 페이지를 나가면 다시 돌아올 수 없어요!"
+            strongText="지금 이 페이지를 나가면/n다시 돌아올 수 없어요!"
             text="또한, 오늘의 질문 선택 기회도 그대로 1회 차감됩니다. 그래도 다음 질문 선택 페이지로 가시겠어요?"   //일반 텍스트 문구
             confirmText="질문 선택하러 가기"                    //confirm 문구
             cancelText="돌아가기"                              //cancel 문구
@@ -234,7 +237,6 @@ const Answer = () => {
 
 
       <Footer></Footer>
-      <NavigationBar /> 
     </>
   )
 }

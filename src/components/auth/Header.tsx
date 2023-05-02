@@ -38,7 +38,7 @@ const Header = () => {
 
             //그렇지 않은경우, Goming 이미지 출력
             <div className='header-logo-area'>
-              <img src={MainLogo} alt="Goming logo" width={90}/>
+              <img src={MainLogo} alt="Goming logo" width={90} height={24}/>
             </div>
 
           )

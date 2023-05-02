@@ -31,8 +31,11 @@
 /* 2. 로고만 */
 .header-logo-area{
   margin-left: 16px;
+  margin-top: 18px;
 }
-
+.header-logo-area img{
+  
+}
 /** arrow custom header **/
 .login-header {
   font-size: 18px;

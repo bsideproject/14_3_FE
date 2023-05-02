@@ -139,9 +139,9 @@
   vertical-align: middle;
   padding: auto;
 }
-.withdrawal-info img {
-  margin:0 auto;
-  padding-bottom:4px;
+.withdrawal-info svg {
+  margin-right: 4px;
+  margin-bottom: 1px;
 }
 .withdrawal-info div {
   height: 44px;

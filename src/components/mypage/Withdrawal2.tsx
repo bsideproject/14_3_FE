@@ -1,7 +1,6 @@
 
 import { useState } from "react"
 import WithdrawalInformation from "./WithdrawalInformation"
-import bullet from 'assets/images/bullet.png'
 /**
  * @설명 회원탈퇴 첫번째 페이지의 내용 컴포넌트
  * @작성자 김상훈
@@ -85,7 +84,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
     <>
       <div className='withdrawal-content'>
         {/* 회원탈퇴 공통 텍스트 */}
-        <WithdrawalInformation /> 
+        <WithdrawalInformation  isLast={false}/> 
         <div className="withdrawal-content-info color-wgray12">
           <p className="body2-bold color-wgray12">
             고밍을 탈퇴하시기에 앞서,<br />
@@ -93,7 +92,9 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
           </p>
           <div className='withdrawal-info word-break-keep-all'>
             <div>
-              <img src={bullet} alt="*" style={{marginRight: '4px'}} width={4} height={4}/>
+              <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="2" cy="2" r="2" fill="#7A7670"/>
+              </svg>
             </div>
             <p className='caption1-regular withdrawal-small-info'>
               불편사항을 알려주시면, <br />고밍이 더 나은 서비스를 만드는 데에 큰 도움이 됩니다.
@@ -106,7 +107,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
             </div>
             <div>
               <input className="withdrawal-checkbox" type="checkbox" name="checkbox" id="uncomfortable" onChange={checkedHandler} value={2}/>
-              <label htmlFor="uncomfortable">불편해요 (UI/UX)</label>
+              <label htmlFor="uncomfortable">불편해요 (UX/UI)</label>
             </div>
             <div>
               <input className="withdrawal-checkbox" type="checkbox" name="checkbox" id="dontUse" onChange={checkedHandler} value={3}/>

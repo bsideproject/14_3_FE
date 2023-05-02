@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import WithdrawalInformation from './WithdrawalInformation'
 import 'assets/components/withdrawalComponents.css'
-import bullet from 'assets/images/bullet.png'
 
 /**
  * @설명 회원탈퇴 첫번째 페이지의 내용 컴포넌트
@@ -16,7 +15,7 @@ const Withdrawal1 = ({step, setStep}: WITHDRAWAL) => {
     <>
       <div className='withdrawal-content'>
         {/* 회원탈퇴 공통 텍스트 */}
-        <WithdrawalInformation /> 
+        <WithdrawalInformation isLast={false}/> 
         {/* 본문 */}
         <div className='withdrawal-content-info color-wgray12'>
           <p className='body2-bold  word-break-keep-all'>
@@ -29,7 +28,9 @@ const Withdrawal1 = ({step, setStep}: WITHDRAWAL) => {
           
           <div className='caption1-regular withdrawal-info word-break-keep-all'>
             <div>
-              <img src={bullet} alt="*" style={{marginRight: '4px'}} width={4} height={4}/>
+              <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="2" cy="2" r="2" fill="#7A7670"/>
+              </svg>
             </div>
             <p className='caption1-regular withdrawal-small-info'>
               탈퇴하시기 전에 간직하고 싶은 답변이 있다면,<br/>
