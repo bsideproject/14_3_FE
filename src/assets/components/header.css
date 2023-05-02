@@ -18,7 +18,7 @@
   justify-content: center;
 }
 .go-back-iconimg, .header-text{
-  padding-top: 19px;
+  padding-top: 16px;
 }
 .go-back-iconimg:hover{
   cursor: pointer;
@@ -30,7 +30,6 @@
 
 /* 2. 로고만 */
 .header-logo-area{
-  padding-top: 18px;
   margin-left: 16px;
 }
 
@@ -49,7 +48,7 @@
 .header-text > p {
   width: fit-content;
   margin: 0 auto;
-  padding-right: 24px;
+  padding-right: 48px;
 }
 
 
