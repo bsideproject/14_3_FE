@@ -366,7 +366,7 @@ const Mypage: React.FC = () => {
                 id="emailAgree"
                 checked={emailAgree}
                 onChange={handleEmailAgree}
-                disabled={true}
+                // disabled={true}
               />
               <label
                 htmlFor="emailAgree"

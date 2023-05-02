@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
+import checkbox from "./images/icon_checkbox.png";
 /**
  * @설명 전역 스타일
  * @작성자 김상훈
@@ -317,12 +317,29 @@ table {
   outline: none;
   transition: 0.5s;
 }
+
 .check-btn:disabled {
-  background-color: #c9c6c0;
+  background-color: var(--wgray06);
 }
+.check-btn:disabled:checked {
+  background-color: var(--wgray06);
+  border: 0px solid #3d3938;
+}
+.check-btn:disabled:hover { 
+	
+	pointer-events: none;
+}
+.check-btn:hover {
+  background-color: var(--wgray04);
+}
+
 .check-btn:checked {
   /* 체크박스가 체크됐을 때의 색상 */
-  background-color: #3d3938;
+  background-color: var(--wgray12);
+  background-image: url(${checkbox});
+  background-repeat: no-repeat;
+  background-size: 90%;
+  background-position: center;
 }
 
 // primary-button-clicked-styles
