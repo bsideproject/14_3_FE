@@ -154,7 +154,7 @@ table {
 	letter-spacing: -0.025em;
 }
 .caption2-bold {
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: 700;
 	line-height: 12px;
 	letter-spacing: -0.025em;
