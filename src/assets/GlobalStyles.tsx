@@ -56,6 +56,7 @@ table {
 	flex-direction: column;
 	justify-content: space-between;
   // filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
+	color: #3D3938;
 }
 
 // 모바일기준
@@ -382,25 +383,6 @@ input[type="radio"]:checked {
 input[type="radio"]:disabled {
 	border-color: var(--wgray06);
 }
-
-//checkbox-style
-// input[type="checkbox"]+label {
-// 	display: block;
-// 	padding-left: 24px;
-// 	width: 24px;
-// 	height: 24px;
-// 	background: url(./images/unselected-checkbox.png) no-repeat 0 0px / contain;
-// 	cursor: pointer;
-// }
-// input[type="checkbox"]:checked+label {
-// 	display: inline-block;
-// 	border: none;
-// 	background-color: var(--wgray12);
-// 	background: url('./images/checked-img.png') no-repeat 0 0px / contain;
-// }
-// input[type="checkbox"] {
-// 	display: none;
-// }
 
 //custom input
 input:-webkit-autofill,
