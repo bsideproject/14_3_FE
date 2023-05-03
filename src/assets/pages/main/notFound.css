@@ -7,3 +7,10 @@
   background-size: 94px 114px;
   background-position: 50%;
 }
+
+.notfound-title {
+  color: var(--wgray13);
+}
+.notfound-subtitle {
+  color: var(--wgray10);
+}
