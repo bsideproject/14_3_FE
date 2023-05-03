@@ -7,7 +7,7 @@ import Register from "pages/auth/Register";
 import Mypage from "pages/mypage/Mypage";
 import PasswordCheck from "pages/mypage/PasswordCheck";
 import LostInfo from "pages/auth/LostInfo";
-import GlobalStyle from 'assets/GlobalStyles'
+import GlobalStyle from "assets/GlobalStyles";
 import MyPageCategoryList from "pages/mypage/MyPageCategoryList";
 import WithdrawalMain from "pages/mypage/WithdrawalMain";
 import MainContent from "pages/main/MainContent";
@@ -16,6 +16,7 @@ import Answer from "pages/main/Answer";
 import AnsweredList from "pages/main/AnsweredList";
 import AnsweredView from "pages/main/AnsweredView";
 import Intro from "pages/etc/Intro";
+import NotFound from "pages/main/NotFound";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -24,22 +25,23 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle></GlobalStyle>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/mypage-category" element={<MyPageCategoryList />} />
-          <Route path="/lost-info" element={<LostInfo />} />
-          <Route path="/password-check" element={<PasswordCheck />} />
-          <Route path="/withdrawal" element={<WithdrawalMain />} />
-          <Route path="/main" element={<MainContent />} />
-          <Route path="/onepager" element={<OnePagerMain />} />
-          <Route path="/answer" element={<Answer />} />
-          <Route path="/answered-list" element={<AnsweredList />} />
-          <Route path="/answered-view" element={<AnsweredView />} />
-          <Route path="/intro" element={<Intro />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/mypage-category" element={<MyPageCategoryList />} />
+        <Route path="/lost-info" element={<LostInfo />} />
+        <Route path="/password-check" element={<PasswordCheck />} />
+        <Route path="/withdrawal" element={<WithdrawalMain />} />
+        <Route path="/main" element={<MainContent />} />
+        <Route path="/onepager" element={<OnePagerMain />} />
+        <Route path="/answer" element={<Answer />} />
+        <Route path="/answered-list" element={<AnsweredList />} />
+        <Route path="/answered-view" element={<AnsweredView />} />
+        <Route path="/intro" element={<Intro />} />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
