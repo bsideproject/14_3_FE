@@ -49,13 +49,14 @@ const testData = [
  * @desc html -> canvas -> image -> download
  */
 const OnePagerMain = () => {
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText, setIsNavigation} = useDefaultSets()
   const {selectedMonth} = useAnsweredList()
   const [confirmEmailPopup, setConfirmEmailPopup] = useState<boolean>(false)  //confirm팝업제어
   const [toastPopup, setToastPopup] = useState<boolean>(false)  //toast팝업제어
 
   useEffect(()=>{
     setHeaderText('월간고밍 다운로드')
+    setIsNavigation(false)
     return () => setHeaderText('')
   },[])
   
@@ -207,7 +208,6 @@ const OnePagerMain = () => {
 
 
       <Footer></Footer>
-      <NavigationBar></NavigationBar>
     </div>
      
     </>

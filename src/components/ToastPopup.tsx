@@ -17,7 +17,6 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
     zIndex: '100',
     alignItems: 'center',
     padding: '0 auto',
-    marginLeft: '16px'
   } as React.CSSProperties;
 
   const styleAlertText = {
