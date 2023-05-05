@@ -59,13 +59,13 @@
   max-height: 96px;
   margin: 8px 16px 24px 16px;
   display: -webkit-box;
- white-space: nowrap;
- word-break: break-all;
- overflow: hidden; 
- text-overflow: ellipsis;
- white-space: normal;
- -webkit-line-clamp: 4;
- -webkit-box-orient: vertical;
+  white-space: nowrap;
+  word-break: break-all;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 /* answer-list-labels-wrap */
