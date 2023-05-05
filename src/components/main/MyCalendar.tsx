@@ -56,7 +56,7 @@ const MyCalendar = () => {
   const todayMonth = today.getMonth() + 1                                //이번달
   const minDate = today.getDate()                                        //오늘이후날짜 비활성화 -> 내일날짜
   const [showCalendar, setShowCalendar] = useState<boolean> (true)       //calendar 보이기 숨기기 처리
-  const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(true) //calendar 보이기숨기기 버튼 - active/disabled 처리
+  const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(false) //calendar 보이기숨기기 버튼 - active/disabled 처리
 
   const [mark, setMark] = useState<Array<string>>([])
 
@@ -70,23 +70,21 @@ const MyCalendar = () => {
       if( selectedDate.getDate() === nextValue.getDate() ) {
         //당월 목록 조회 + 해당일자 선택 해제
         getMonthData(nextValue)
-        setSelectedMonth(nextValue.getMonth()+1)            //선택된 월 store 세팅
+        setSelectedMonth(nextValue.getMonth()+1)   //선택된 월 store 세팅
         setValue(null)
+        setActiveCalendarBtn(true)                //리스트만보기 버튼
       } else {
         setTextLabel(nextValue)                  //[선택-오늘]변경제어
         setValue(nextValue)                      //현재선택된날짜설정
         getDayData(nextValue)                    //전체목록 초기화 및 재조회
+        setActiveCalendarBtn(false)               //리스트만보기 버튼
       }
     } else {
       setTextLabel(nextValue)                  //[선택-오늘]변경제어
       setValue(nextValue)                      //현재선택된날짜설정
       getDayData(nextValue)                    //전체목록 초기화 및 재조회
+      setActiveCalendarBtn(false)              //리스트만보기 버튼
     }
-    
-    //리스트만보기 버튼 disabled
-    // const isToday = isSameDay(nextValue, today)
-    // isToday ? setActiveCalendarBtn(true) : 
-    setActiveCalendarBtn(false)
   }
 
   // [월] 이동 이벤트 - RightArrow control
