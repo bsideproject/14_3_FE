@@ -10,6 +10,8 @@ type ANSWER_LIST = {
   isThisMonth: boolean                //MyCalendar 기준, 페이지의 당월 상태 유무
   updateIsThisMonth: Function         //페이지의 당월 상태변경함수
   getOneDayQnaDateList: Function      //선택일 date,count조회
+  selectedMonth: string               //현재선택되어진 월
+  setSelectedMonth: Function          //현재선택되어진 월 set
 }
 
 type QNA_ITEM = { //qna 리스트 목록 객체
@@ -32,6 +34,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   qnaList: [...testData],
   qnaDateList: [...testData2],
   isThisMonth: true,
+  selectedMonth: (new Date().getMonth() + 1).toString(),
 
   /**
    * @desc 해당 월의 qna 리스트 조회
@@ -88,6 +91,12 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     set({isThisMonth: newState})
   },
 
+  /**
+   * @desc 현재 선택된 월 set 함수
+   */
+  setSelectedMonth: (newState:number):void => {
+    set({selectedMonth: newState.toString()})
+  }
 }))
 
 type GET_LIST = {

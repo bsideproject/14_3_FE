@@ -5,11 +5,18 @@ import 'assets/pages/onepager/onepagermain.css'
 import Header from 'components/auth/Header';
 import downloadjs from 'downloadjs'
 import useDefaultSets from 'store/modules/Defaults';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from 'components/Footer';
 import NavigationBar from 'components/NavigationBar';
 import SVG from 'components/onepager/svg'
 import SVG2 from 'components/onepager/svg2'
+import DownloadIcon from 'components/onepager/DownloadIcon'
+import EmailIcon from 'components/onepager/EmailIcon'
+import ConfirmInputPopup from 'components/onepager/ConfirmInputPopup';
+import { AxiosResponse } from 'axios';
+import ToastPopup from "components/ToastPopup";
+import useAnsweredList from 'store/modules/Answers';
+import fetch from 'utils/fetch';
 
 const testData = [
   {index: 1, content: 'contentsssssssssssssssssssss'},
@@ -43,19 +50,53 @@ const testData = [
  */
 const OnePagerMain = () => {
   const {setHeaderText} = useDefaultSets()
+  const {selectedMonth} = useAnsweredList()
+  const [confirmEmailPopup, setConfirmEmailPopup] = useState<boolean>(false)  //confirm팝업제어
+  const [toastPopup, setToastPopup] = useState<boolean>(false)  //toast팝업제어
+
   useEffect(()=>{
-    setHeaderText('원페이저 다운로드')
+    setHeaderText('월간고밍 다운로드')
     return () => setHeaderText('')
   },[])
-
-  const onepager = async () => {
+  
+  //원페이저 이미지변환, img url return
+  const toOnepagerImage = async () => {
     const wrapper = document.querySelector('.onepager-download') as HTMLElement;
     wrapper.style.display = ''                              //hidden 시 canvas가 안그려지는 현상있음
-    const canvas = await html2canvas(wrapper, {scale:2})    //scale 4 옵션으로 출력   => 3840px
+    const canvas = await html2canvas(wrapper, {scale:2})    //scale 2 옵션으로 출력   => 1920px
     const dataURL = canvas.toDataURL('image/png')           //이미지변환      
     wrapper.style.display = 'none'                          //canvas hidden 처리
+    return dataURL
+  }
+
+  //원페이저 다운로드 클릭 이벤트
+  const downloadOnepager = async () => {
+    const dataURL = await toOnepagerImage()                 //url 주소 가져오기
     downloadjs(dataURL, 'goming', 'image/png')              //다운로드
   }
+
+  //이메일 보내기 클릭 이벤트
+  const sendEmail = async (email:string) => {
+    setConfirmEmailPopup(false) //팝업닫기
+    const imageURL = await toOnepagerImage()
+    const param:any = {
+      eml: email,
+      image: imageURL
+    }
+
+    //db connection
+    // const result:AxiosResponse<any> = await fetch('/api/onepager/sendEmail', param)
+    const result = true
+    if (result === true) {
+      setToastPopup(true)                 //토스트 팝업 출력
+      setTimeout(()=>{
+        setToastPopup(false)                 //토스트 팝업 종료
+      },3000)
+    } else {
+      return false
+    }
+  }
+
   return (
     <>
     <div>
@@ -63,7 +104,6 @@ const OnePagerMain = () => {
       <div style={{margin: '0 16px'}}>
         <div style={{marginTop: '32px'}}>
           <p className='body1-bold'>미리보기</p>
-          <button onClick={onepager}>원페이저다운로드</button>
         </div>
         <div className='onepager-wrap'>
           <Masonry
@@ -81,21 +121,27 @@ const OnePagerMain = () => {
           </Masonry>
 
         </div>
+        {/* 버튼영역 */}
+        <div className='onepager-btn-wrap'>
+          <button className='btn-p-xl' onClick={downloadOnepager}>
+            <DownloadIcon></DownloadIcon>
+            &nbsp;다운로드
+          </button>
+          <button className='btn-p-xl' onClick={() => setConfirmEmailPopup(true)}>
+            <EmailIcon></EmailIcon>
+            &nbsp;이메일로 보내기
+          </button>
+        </div>
       </div>
 
-      
-            {/* 파라미터
-              1. '달'
-
-            */}
 
       {/* Canvas */}
-      {/* <div className='onepager-download' style={{display:'none'}}> */}
-      <div className='onepager-download'>
+      <div className='onepager-download' style={{display:'none'}}>
+      {/* <div className='onepager-download'> */}
         <div className='onepager-download-header'>
-          <h1>N월의 고밍</h1>
+          <h1>{selectedMonth}월의 고밍</h1>
           <p className='body1-regular'>DATE~DATE</p>
-          <p className='headline2'>N월의 NICKNAME님은 어떤 하루하루를 보냈는지 돌아볼까요?</p>
+          <p className='headline2'>{selectedMonth}월의 NICKNAME님은 어떤 하루하루를 보냈는지 돌아볼까요?</p>
         </div>
         <Masonry
           width={1920}
@@ -136,7 +182,27 @@ const OnePagerMain = () => {
         
       </div>
 
-      
+      { //confirm popup
+        confirmEmailPopup && (
+          <ConfirmInputPopup
+            text="원페이저를 받을 이메일 주소가 맞나요?/n다른이메일로 받고 싶다면/n주소를 변경해주세요."
+            confirmText="이메일 보내기"
+            cancelText="취소하기"
+            confirmCallbackFunction={sendEmail}
+            cancelCallbackFunction={()=>setConfirmEmailPopup(false)}
+          />
+        )
+      }
+
+
+      { //toast popup
+        toastPopup && (
+          <ToastPopup 
+            text={"이메일로 원페이저가 전송되었습니다!"} 
+            bgColor={"#4D99DE"} textColor={"#FFFFFF"} 
+          />
+        )
+      }
 
 
 

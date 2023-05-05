@@ -11,7 +11,7 @@ import useAuthStore from 'store/modules/Auth';
  * @desc 날짜를 입력 시, 연월을 출력합니다.
  * @param {any} date
  * @returns {Date} "YYYY-MM"
- */
+ */ 
 const getYearAndMonth = (date:any) => {
   const year = new Date(date).getFullYear()
   const month = (new Date(date).getMonth() + 1).toString()
@@ -39,7 +39,7 @@ const isSameDay = (date1:Date, date2:Date) => {
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
-  const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList} = useAnsweredList()
+  const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList, setSelectedMonth} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
   
   const [selectedDate, setValue] = useState<Date>(new Date())            //calendar - 선택일자
@@ -70,9 +70,10 @@ const MyCalendar = () => {
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
-    setActiveCalendarBtn(true)                  //리스트만보기 버튼 active
+    setActiveCalendarBtn(true)                                //리스트만보기 버튼 active
     setTextLabel(activeStartDate)                             //라벨영역제어
     getMonthData(activeStartDate)                             //월간데이터 조회
+    setSelectedMonth(activeStartDate.getMonth()+1)            //선택된 월 store 세팅
     if (getYearAndMonth(activeStartDate) >= todayYearMonth) { //활성화된날짜 >= 오늘연월 ?
       updateIsThisMonth(true)                                 //원페이저 다운로드 표시
     } else {
