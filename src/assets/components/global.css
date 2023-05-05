@@ -1,0 +1,10 @@
+/* input:text 일경우 사용해주세요 */
+.input-error {
+  border: 1px solid var(--error);
+  align-items: flex-end;
+  width: 100%;
+  background-image: url("assets/images/icon_warning_filled.png");
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position: 97% center;
+}
