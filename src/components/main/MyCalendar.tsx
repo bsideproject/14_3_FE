@@ -6,6 +6,7 @@ import {SELECT_ICON, ANSWER_STEP_1,ANSWER_STEP_2,ANSWER_STEP_3} from './MyCalend
 import 'assets/components/answered-list/custom-calendar.css'
 import useAnsweredList from 'store/modules/Answers';
 import useAuthStore from 'store/modules/Auth';
+import useDefaultSets from 'store/modules/Defaults';
 
 /**
  * @desc 날짜를 입력 시, 연월을 출력합니다.
@@ -30,6 +31,11 @@ const isSameDay = (date1:Date, date2:Date) => {
   return new Date(date1).toLocaleDateString() === new Date(date2).toLocaleDateString() 
 }
 
+const KoreaLocale = {
+  weekdays: ['일','월','화','수','목','금','토'],
+  weekStartsOn: 0,
+}
+
 
 /**
  * @설명 캘린더
@@ -41,15 +47,16 @@ const isSameDay = (date1:Date, date2:Date) => {
 const MyCalendar = () => {
   const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList, setSelectedMonth} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
+  const {setHeaderText, setIsNavigation} = useDefaultSets()
   
-  const [selectedDate, setValue] = useState<Date>(new Date())            //calendar - 선택일자
+  const [selectedDate, setValue] = useState<any>(new Date())            //calendar - 선택일자
   const today = new Date()
   const [textlabelControl, setTextLabel] = useState<Date>(today)         // [선택,오늘] 라벨 제어
   const todayYearMonth = getYearAndMonth(today)                          //금일 연월
   const todayMonth = today.getMonth() + 1                                //이번달
   const minDate = today.getDate()                                        //오늘이후날짜 비활성화 -> 내일날짜
   const [showCalendar, setShowCalendar] = useState<boolean> (true)       //calendar 보이기 숨기기 처리
-  const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(true) //calendar 보이기숨기기 버튼 - active/disabled 처리
+  const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(false) //calendar 보이기숨기기 버튼 - active/disabled 처리
 
   const [mark, setMark] = useState<Array<string>>([])
 
@@ -58,18 +65,31 @@ const MyCalendar = () => {
    ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = (nextValue:any) => {
-    setTextLabel(nextValue)                  //[선택-오늘]변경제어
-    setValue(nextValue)                      //현재선택된날짜설정
-    getDayData(nextValue)                    //전체목록 초기화 및 재조회
-    
-    //리스트만보기 버튼 disabled
-    // const isToday = isSameDay(nextValue, today)
-    // isToday ? setActiveCalendarBtn(true) : 
-    setActiveCalendarBtn(false)
+    //선택한 일자가 같은 경우
+    if (selectedDate) {
+      if( selectedDate.getDate() === nextValue.getDate() ) {
+        //당월 목록 조회 + 해당일자 선택 해제
+        getMonthData(nextValue)
+        setSelectedMonth(nextValue.getMonth()+1)   //선택된 월 store 세팅
+        setValue(null)
+        setActiveCalendarBtn(true)                //리스트만보기 버튼
+      } else {
+        setTextLabel(nextValue)                  //[선택-오늘]변경제어
+        setValue(nextValue)                      //현재선택된날짜설정
+        getDayData(nextValue)                    //전체목록 초기화 및 재조회
+        setActiveCalendarBtn(false)               //리스트만보기 버튼
+      }
+    } else {
+      setTextLabel(nextValue)                  //[선택-오늘]변경제어
+      setValue(nextValue)                      //현재선택된날짜설정
+      getDayData(nextValue)                    //전체목록 초기화 및 재조회
+      setActiveCalendarBtn(false)              //리스트만보기 버튼
+    }
   }
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
+    setValue(null)                                            //선택한[일] 초기화
     setActiveCalendarBtn(true)                                //리스트만보기 버튼 active
     setTextLabel(activeStartDate)                             //라벨영역제어
     getMonthData(activeStartDate)                             //월간데이터 조회
@@ -126,6 +146,7 @@ const MyCalendar = () => {
 
   useEffect(()=>{
     updateCalendarWithDesign()
+    setHeaderText('')
   }, [textlabelControl])
 
   //date format 변경
@@ -154,6 +175,8 @@ const MyCalendar = () => {
           maxDetail={'month'}         //최대 디테일 : [월]
           locale={'ko'}
           showNeighboringMonth={false}   //이전,이후 날짜 show/hide
+          //[월]이동 이벤트
+          onActiveStartDateChange={({action, activeStartDate, value, view}) => CheckIsThisMonth({action, activeStartDate, value, view})} 
           //tile 스타일지정
           tileClassName={
             ({ date, view }) => {
@@ -163,7 +186,6 @@ const MyCalendar = () => {
               }
             }
           }
-          onActiveStartDateChange={({action, activeStartDate, value, view}) => CheckIsThisMonth({activeStartDate})} //[월]이동 이벤트
         />
 
         {/* 달력 숨기기 버튼 */}
@@ -190,11 +212,9 @@ const MyCalendar = () => {
               {
                 isSameDay(textlabelControl, today)
                  ? (
-                  /* 1. 당월 시점 */
-                  <span>오늘</span>
+                  <span>오늘</span> /* 1. 당월 */
                 ) : (
-                  /* 2. 전월 시점 */
-                  <span>선택</span>
+                  <span>선택</span> /* 2. 전월 */
                 ) 
               }
             </div>
