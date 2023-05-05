@@ -17,6 +17,7 @@ import AnsweredList from "pages/main/AnsweredList";
 import AnsweredView from "pages/main/AnsweredView";
 import Intro from "pages/etc/Intro";
 import NotFound from "pages/main/NotFound";
+import 'assets/components/global.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

@@ -243,7 +243,7 @@ table {
 .btn-s-l {
 	padding: 10px 16px;
 	border-radius: 8px;
-	height: 48px;
+	height: 44px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -251,7 +251,7 @@ table {
 .btn-s-m {
 	padding: 6px 16px;
 	border-radius: 8px;
-	height: 48px;
+	height: 36px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -259,7 +259,7 @@ table {
 .btn-s-s {
 	padding: 4px 8px;
 	border-radius: 8px;
-	height: 48px;
+	height: 32px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -267,7 +267,7 @@ table {
 .btn-s-xs {
 	padding: 6px 8px;
 	border-radius: 8px;
-	height: 48px;
+	height: 28px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -406,8 +406,6 @@ input:autofill:active {
 	transition: background-color 5000s ease-in-out 0s;
 	border: 1px solid var(--wgray04);
 }
-
-
 `;
 
 export default GlobalStyle;
