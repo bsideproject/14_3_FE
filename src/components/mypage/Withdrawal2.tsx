@@ -102,25 +102,25 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
           </div>
           <div className="withdrawal-checkbox-wrap body3-regular">
             <div>
-              <input className="withdrawal-checkbox" name="checkbox" type="checkbox" id="nofun" onChange={checkedHandler} value={1} />
+              <input className="check-btn" name="checkbox" type="checkbox" id="nofun" onChange={checkedHandler} value={1} />
               <label htmlFor="nofun">재미가 없어요</label>
             </div>
             <div>
-              <input className="withdrawal-checkbox" type="checkbox" name="checkbox" id="uncomfortable" onChange={checkedHandler} value={2}/>
+              <input className="check-btn" type="checkbox" name="checkbox" id="uncomfortable" onChange={checkedHandler} value={2}/>
               <label htmlFor="uncomfortable">불편해요 (UX/UI)</label>
             </div>
             <div>
-              <input className="withdrawal-checkbox" type="checkbox" name="checkbox" id="dontUse" onChange={checkedHandler} value={3}/>
+              <input className="check-btn" type="checkbox" name="checkbox" id="dontUse" onChange={checkedHandler} value={3}/>
               <label htmlFor="dontUse">잘 사용하지 않아요</label>
             </div>
             <div>
-              <input className="withdrawal-checkbox" type="checkbox" name="checkbox" id="noQuestionLike" onChange={checkedHandler} value={4}/>
+              <input className="check-btn" type="checkbox" name="checkbox" id="noQuestionLike" onChange={checkedHandler} value={4}/>
               <label htmlFor="noQuestionLike">마음에 드는 질문이 없어요</label>
             </div>
 
             <div>
               {/* 클릭시 textarea 활성화처리 */}
-              <input className="withdrawal-checkbox" type="checkbox" name="checkbox" id="other" onChange={checkedHandler} 
+              <input className="check-btn" type="checkbox" name="checkbox" id="other" onChange={checkedHandler} 
               value={5}
               />
               <label htmlFor="other">기타</label>
@@ -134,9 +134,10 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               value={withdrawalText}
               onChange={withdrawalTextKeyupHandler}
               onKeyUp={withdrawalTextKeyupHandler}
-              className="withdrawal-textarea body3-regular" cols={30} rows={10} 
+              cols={30} rows={10} 
               placeholder="맘에 드시는 이유가 없다면, 직접 이유를 작성해주세요."
               maxLength={300} 
+              className={"withdrawal-textarea body3-regular"}
               style={{outline:
                 '1px solid' + (withdrawalTextError ? '#EA4343' : '#E9E7E2' )
               }}

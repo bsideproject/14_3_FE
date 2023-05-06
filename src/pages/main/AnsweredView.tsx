@@ -21,7 +21,7 @@ const testData = {
  * @desc 만약 데이터 조회가 안될 시 이전페이지로 이동 하도록 처리
  */
 const AnsweredView = () => {
-  const {setHeaderText} = useDefaultSets()          //header
+  const {setHeaderText, setIsNavigation} = useDefaultSets()          //header
   const location = useLocation()                    //parameter
   const state = location.state as { a_num: number; };
   const a_num = state.a_num                         //getParameter
@@ -35,6 +35,7 @@ const AnsweredView = () => {
 
   useEffect(() => {
     setHeaderText('답변 상세 보기')
+    setIsNavigation(false)
     // 전달받은 값이 존재하지 않을경우
     if (!a_num) {
       window.history.back()
@@ -72,7 +73,6 @@ const AnsweredView = () => {
           </div>
       </div>
       <Footer></Footer>
-      <NavigationBar></NavigationBar>
     </>
   )
 }

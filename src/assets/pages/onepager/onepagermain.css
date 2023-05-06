@@ -7,6 +7,29 @@
   border: 1px solid var(--wgray12);
 }
 
+/* 미리보기영역 */
+/* max-height: 342px; */
+
+/* onepager-btn-wrap 원페이저 버튼 영역 */
+.onepager-btn-wrap{
+  width: 100%;
+  margin-top: 49px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.onepager-btn-wrap button{
+  flex: 1;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -2.5%;
+}
+.onepager-btn-wrap svg {
+  vertical-align: middle;
+}
+
 .my-masonry-grid {
   display: flex;
   width: 340px; /* gutter 사이즈 */
@@ -36,8 +59,6 @@
   width: 1920px;
   margin: 0 240px;
   background: #1B2E62;
-  /* background: linear-gradient(1.48deg, rgba(28, 31, 75, 0.2) 1.33%, rgba(28, 31, 75, 0) 98.83%); */
-
 }
 .my-masonry-grid-download {
   display: flex;
@@ -103,6 +124,7 @@
 .onepager-download-footer > div > svg {
   display: inline-block;
   margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .onepager-download-copyright {
@@ -111,4 +133,16 @@
   color: var(--wgray01);
   text-align: center;
   background-color: #2D4577;
+}
+
+.onepager-list-item-q {
+  min-height: 26px;
+  margin: 8px 16px;
+}
+.onepager-list-item-a {
+  min-height: 24px;
+  margin: 8px 16px 24px 16px;
+  white-space: nowrap;
+  word-break: break-all;
+  white-space: normal;
 }

@@ -16,7 +16,7 @@ import Footer from 'components/Footer';
  */
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Login:React.FC = () =>{
-  const {setHeaderText} = useDefaultSets()
+  const {setHeaderText, setIsNavigation} = useDefaultSets()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -37,6 +37,7 @@ const Login:React.FC = () =>{
       }
     }
     setHeaderText('로그인')
+    setIsNavigation(false)
   },[])
 
   const loginAttempt = async (e:any): Promise<void> => {
@@ -115,7 +116,7 @@ const Login:React.FC = () =>{
               <input type="email" className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
             </div>
             <div className='checkbox-area'>
-              <input type="checkbox" className='save-id-check-box' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
+              <input type="checkbox" className='check-btn' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
               <label htmlFor="rememberId" className='save-id-label'>이메일 주소 기억하기</label>
             </div>
             <div>

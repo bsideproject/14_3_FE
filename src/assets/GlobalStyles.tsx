@@ -56,6 +56,7 @@ table {
 	flex-direction: column;
 	justify-content: space-between;
   // filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.08));
+	color: #3D3938;
 }
 
 // 모바일기준
@@ -154,7 +155,7 @@ table {
 	letter-spacing: -0.025em;
 }
 .caption2-bold {
-	font-size: 12px;
+	font-size: 10px;
 	font-weight: 700;
 	line-height: 12px;
 	letter-spacing: -0.025em;
@@ -242,7 +243,7 @@ table {
 .btn-s-l {
 	padding: 10px 16px;
 	border-radius: 8px;
-	height: 48px;
+	height: 44px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -250,7 +251,7 @@ table {
 .btn-s-m {
 	padding: 6px 16px;
 	border-radius: 8px;
-	height: 48px;
+	height: 36px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -258,7 +259,7 @@ table {
 .btn-s-s {
 	padding: 4px 8px;
 	border-radius: 8px;
-	height: 48px;
+	height: 32px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -266,7 +267,7 @@ table {
 .btn-s-xs {
 	padding: 6px 8px;
 	border-radius: 8px;
-	height: 48px;
+	height: 28px;
 	background: var(--wgray01);
 	color: var(--wgray12);
 	border: 1px solid var(--wgray12);
@@ -383,25 +384,6 @@ input[type="radio"]:disabled {
 	border-color: var(--wgray06);
 }
 
-//checkbox-style
-// input[type="checkbox"]+label {
-// 	display: block;
-// 	padding-left: 24px;
-// 	width: 24px;
-// 	height: 24px;
-// 	background: url(./images/unselected-checkbox.png) no-repeat 0 0px / contain;
-// 	cursor: pointer;
-// }
-// input[type="checkbox"]:checked+label {
-// 	display: inline-block;
-// 	border: none;
-// 	background-color: var(--wgray12);
-// 	background: url('./images/checked-img.png') no-repeat 0 0px / contain;
-// }
-// input[type="checkbox"] {
-// 	display: none;
-// }
-
 //custom input
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -424,8 +406,6 @@ input:autofill:active {
 	transition: background-color 5000s ease-in-out 0s;
 	border: 1px solid var(--wgray04);
 }
-
-
 `;
 
 export default GlobalStyle;

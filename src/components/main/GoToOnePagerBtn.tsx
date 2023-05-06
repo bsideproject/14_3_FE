@@ -18,7 +18,7 @@ const GoToOnePagerBtn = () => {
       style={{
         background: '#3d3938', color: 'white', width: '100%', borderRadius: '8px', marginBottom: '32px', marginTop: '32px', display: 'flex', gap: '11px',justifyContent:'center', alignItems: 'center'
       }}
-      className="btn-p-xl" 
+      className="btn-p-l" 
       onClick={() => goToOnepager()}
       > 
         <span className='body3-bold' style={{display:'flex', justifyContent:'center'}}>
