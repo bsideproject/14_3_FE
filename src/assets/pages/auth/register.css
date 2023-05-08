@@ -226,7 +226,7 @@
   background: var(--wgray12);
   border-radius: 8px;
   padding: 12px 14px;
-  width: 88px;
+  width: 92px;
   height: 48px;
   color: #ffffff;
 }
@@ -292,8 +292,11 @@
   width: 18px;
   height: 18px;
   border-radius: 10px;
+  /* vertical-align: bottom; */
   /* transition: 0.5s; */
   margin-right: 4px;
+  vertical-align: middle;
+  margin-bottom: 3px;
 }
 
 .register-gender-box:disabled {
@@ -309,7 +312,7 @@
 .register-gender-label {
   /* display: inline-block; */
   /* padding-bottom: 10px; */
-  vertical-align: 5px;
+  vertical-align: middle;
   font-weight: 400;
 }
 .register-selectBox {

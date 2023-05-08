@@ -18,6 +18,7 @@ const InputBox = React.memo(
     inputType = "text",
     isClose = false,
     closeClick,
+    buttonClass,
   }: {
     title?: string;
     buttonTitle?: string;
@@ -35,6 +36,7 @@ const InputBox = React.memo(
     inputType?: string;
     isClose?: boolean | null;
     closeClick?: any;
+    buttonClass?: any;
   }) => {
     return (
       <>
@@ -93,8 +95,10 @@ const InputBox = React.memo(
               type="button"
               className={
                 title
-                  ? "register-button btn-p-xl body3-bold margintop-28 marginleft-8"
-                  : "register-button btn-p-xl body3-bold margintop-8 marginleft-8"
+                  ? "register-button btn-p-xl body3-bold margintop-28 marginleft-8 " +
+                    buttonClass
+                  : "register-button btn-p-xl body3-bold margintop-8 marginleft-8 " +
+                    buttonClass
               }
               onClick={buttonClick}
             >

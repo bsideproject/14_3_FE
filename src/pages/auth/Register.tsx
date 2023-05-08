@@ -644,7 +644,7 @@ const Register: React.FC = () => {
               >
                 (필수) 개인정보 수집 및 이용 동의
               </label>
-              <div style={{ width: "27px" }}>보기</div>
+              <div style={{ width: "30px" }}>보기</div>
             </div>
             <div className="register-flex-row-gap4 margintop-8">
               <input
@@ -661,7 +661,7 @@ const Register: React.FC = () => {
               >
                 (필수) 서비스 이용약관 동의
               </label>
-              <div style={{ width: "27px" }}>보기</div>
+              <div style={{ width: "30px" }}>보기</div>
             </div>
           </div>
 
