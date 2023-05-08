@@ -163,7 +163,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
             <button 
               disabled={!itemChecked}
               type="button" 
-              className={'withdrawal-button withdrawal-no'} 
+              className={'withdrawal-button body3-bold btn-p-xl'} 
               onClick={updateStep}
               >다음</button>
           </div>

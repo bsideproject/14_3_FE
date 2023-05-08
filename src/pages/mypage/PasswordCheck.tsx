@@ -103,7 +103,7 @@ const PasswordCheck: React.FC = () => {
             }
             
         </div>
-        <button className="pw-check-btn" type="button" onClick={verifyCheck}>확인</button>
+        <button className="pw-check-btn btn-p-xl body3-bold" type="button" onClick={verifyCheck}>확인</button>
       </div>
       <Footer></Footer>
 

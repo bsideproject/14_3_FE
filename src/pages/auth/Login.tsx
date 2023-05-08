@@ -134,7 +134,7 @@ const Login:React.FC = () =>{
                   ? <p className='blank-height-12'></p> 
                   : <p style={{color: '#EA4343', fontSize: '12px'}}>*이메일 혹은 비밀번호가 일치하지 않습니다.</p>
               }
-              <button type="submit" className='login-btn'>로그인</button><br/>
+              <button type="submit" className='btn-p-xl body3-bold'>로그인</button><br/>
               {/* <button disabled type="button" className='login-btn' onClick={kakaoLogin}>Kakao Login Btn</button><br /> */}
             </div>
             <div className='link-btn-area'>

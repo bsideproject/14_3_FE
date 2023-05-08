@@ -45,24 +45,12 @@
 }
 .withdrawal-button {
   flex: 1;
-  border-radius: 8px;
-  padding: 14px 16px 14px 16px;
-  cursor: pointer;
 }
 .withdrawal-button:disabled{
   border: none;
+  border-radius: 8px;
   background-color: #C9C6C0
 ;
-}
-/* 예 버튼 */
-.withdrawal-yes { 
-  background: #FFFFFF;
-  color: #3D3938;
-}
-/* 아니오버튼 */
-.withdrawal-no { 
-  background: #3D3938;
-  color: #FFFFFF;
 }
 .withdrawal-checkbox-wrap{
   margin-top: 24px;

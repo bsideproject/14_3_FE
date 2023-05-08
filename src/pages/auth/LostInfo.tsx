@@ -84,8 +84,8 @@ const LostInfo = () => {
             
           </div>
           <div className='lostinfo-btn-area'>
-            <button type="submit" className='btn reset-password-btn btn-p-xl'>비밀번호 초기화</button>
-            <button type="button" className='btn goto-login-btn btn-s-xl' onClick={()=>goToLogin()}>로그인하러 가기</button>
+            <button type="submit" className='btn btn-p-xl body3-bold'>비밀번호 초기화</button>
+            <button type="button" className='btn btn-s-xl body3-bold' onClick={()=>goToLogin()}>로그인하러 가기</button>
           </div>
           <div>
             <p className="find-id-caption-text caption1-regular">

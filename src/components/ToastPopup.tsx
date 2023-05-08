@@ -10,8 +10,8 @@
 const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
   const styleAlertCoverDiv = {
     position: 'fixed',
+    width: '100%',
     bottom: '48px',
-    width: 'calc(100% - 32px)',
     maxWidth: '448px',
     height: '64px',
     zIndex: '100',
@@ -28,7 +28,7 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
     fontWeight: 700,
     lineHeight: '20px',
     letter: '-2.5%',
-    width: '100%',
+    width: 'calc(100% - 32px)',
     margin: '0 auto',
   } as React.CSSProperties;
 

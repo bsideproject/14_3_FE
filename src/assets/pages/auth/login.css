@@ -46,16 +46,10 @@
   margin-top: 36px;
   margin-bottom: 24px;
 }
-.login-btn{
+.login-btn-area button {
   width: 100%;
-  padding: 14px 0;
-  margin-top: 3px;
-  background-color: var(--wgray12);
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
 }
+
 .blank-height-12{
   height:12px;
 }
