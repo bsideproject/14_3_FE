@@ -8,25 +8,30 @@ import Footer from "components/Footer";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LostInfo = () => {
-  const {setHeaderText,setIsNavigation} = useDefaultSets()
+  const {setHeaderText, setIsNavigation} = useDefaultSets()
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('')
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
-  const [emailVerify, setEmailVerify] = useState<boolean>(false)
+  const [emailVerify, setEmailVerify] = useState<boolean>(true)
   const [toastAlert, setToastAlert] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string>('존재하지 않는 이메일입니다. 다시 확인해주세요')            //에러메시지
 
   // 이메일로 비밀번호 초기화 보내기 
   const submitEmail = (e:any):void => {
     e.preventDefault()
     if (emailVerify === true && emailFormChk === true) {
-      // fetch  axios~~~
-      const rst = true
-      if (rst === true) { //결과
+      // fetch('/api/resetUserPassword', email)
+      const rst = 1
+      if (rst === 1) { //결과
         setToastAlert(true)
         updateToastPopup()
       } else { //이메일이 존재하지 않을 때
-        alert('존재하지 않는 이메일입니다. 다시 확인해주세요')
+        setEmailVerify(false)
+        setErrorMsg('존재하지 않는 이메일입니다. 다시 확인해주세요.')
       }
+    } else {
+      setEmailVerify(false)
+      setErrorMsg('올바른 이메일을 작성해주세요')
     }
   }
  const handleEmailBlur = () => { //focusout 
@@ -34,10 +39,11 @@ const LostInfo = () => {
   }
   const handleEmailValue = ({target}:any) => { //keyup
     setEmail(target.value)
-    if(target.value < 4) {
-      setEmailVerify(false)
-    } else {
+    if (emailRegex.test(target.value)) {
       setEmailVerify(true)
+    } else {
+      setEmailVerify(false)
+      setErrorMsg('이메일 형식이 올바르지 않습니다. 다시 확인해주세요.')
     }
   }
 
@@ -66,8 +72,16 @@ const LostInfo = () => {
       <div className="find-pw-wrap">
         <form onSubmit={submitEmail}>
           <div className='inputArea'>
-            <label htmlFor="email" className='login-label-text text-color'>이메일</label>
-            <input type="email" autoComplete="true"  className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+            <label htmlFor="email" className='login-label-text text-color body3-bold'>이메일</label>
+            <input type="email" autoComplete="true" id="email" 
+              maxLength={30} placeholder='이메일 주소를 입력해주세요' 
+              onBlur={handleEmailBlur} 
+              onChange={handleEmailValue}  
+              value={email} 
+              className={"input-style input-text body3-regular " + (!emailVerify && "input-error")}  
+            />
+            { !emailVerify && (<p style={{marginTop:'4px'}} className="caption1-regular color-error">{errorMsg}</p>) }
+            
           </div>
           <div className='lostinfo-btn-area'>
             <button type="submit" className='btn reset-password-btn btn-p-xl'>비밀번호 초기화</button>

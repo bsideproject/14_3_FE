@@ -8,6 +8,17 @@
  * @param textColor(기본 검정) 알럿창 글자색
  */
 const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
+  const styleAlertCoverDiv = {
+    position: 'fixed',
+    bottom: '48px',
+    width: 'calc(100% - 32px)',
+    maxWidth: '448px',
+    height: '64px',
+    zIndex: '100',
+    alignItems: 'center',
+    padding: '0 auto',
+  } as React.CSSProperties;
+
   const styleAlertText = {
     backgroundColor: `${bgColor}`,
     borderRadius: '8px',
@@ -17,19 +28,10 @@ const AlertText = ( {text, bgColor='white', textColor='black'}:ALERT ) => {
     fontWeight: 700,
     lineHeight: '20px',
     letter: '-2.5%',
-    maxWidth: '100%',
+    width: '100%',
     margin: '0 auto',
   } as React.CSSProperties;
 
-  const styleAlertCoverDiv = {
-    position: 'fixed',
-    bottom: '48px',
-    width: 'calc(100% - 32px)',
-    maxWidth: '448px',
-    height: '64px',
-    zIndex: '2',
-    alignItems: 'center',
-  } as React.CSSProperties;
 
   return (
     <>
