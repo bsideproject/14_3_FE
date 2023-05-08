@@ -1,6 +1,9 @@
 .marginleft-7 {
   margin-left: 7px;
 }
+.marginleft-8 {
+  margin-left: 8px;
+}
 .margintop-48 {
   margin-top: 32px;
 }
@@ -100,15 +103,22 @@
 }
 
 .register-input {
-  border: 1px solid #e9e7e2;
+  border: 1px solid var(--wgray04);
+  color: var(--wgary12);
   border-radius: 8px;
   height: 48px;
   padding-left: 12px;
   align-items: flex-end;
   width: 100%;
 }
+.register-input:read-only {
+  background-color: var(--wgary03);
+  border: 1px solid var(--wgary04);
+  color: var(--wgary09);
+}
 .register-input-error {
   border: 1px solid #ea4343;
+  color: var(--wgary12);
   border-radius: 8px;
   height: 48px;
   padding-left: 12px;
@@ -123,7 +133,7 @@
   position: absolute;
   /* display: block; */
   margin-top: 40px;
-  left: -80px;
+  left: -60px;
   z-index: 10;
   width: 24px;
   height: 24px;
@@ -138,7 +148,7 @@
   position: absolute;
   /* display: block; */
   margin-top: 40px;
-  left: -80px;
+  left: -61px;
   z-index: 10;
   width: 24px;
   height: 24px;
@@ -187,6 +197,7 @@
 
 .register-input-success {
   border: 1px solid #59b757;
+  color: var(--wgary12);
   border-radius: 8px;
   height: 48px;
   padding-left: 12px;
@@ -214,8 +225,8 @@
   /* justify-content: center; */
   background: var(--wgray12);
   border-radius: 8px;
-  /* padding: 16px 14px; */
-  width: 88px;
+  padding: 12px 14px;
+  width: 92px;
   height: 48px;
   color: #ffffff;
 }
@@ -281,8 +292,11 @@
   width: 18px;
   height: 18px;
   border-radius: 10px;
+  /* vertical-align: bottom; */
   /* transition: 0.5s; */
   margin-right: 4px;
+  vertical-align: middle;
+  margin-bottom: 3px;
 }
 
 .register-gender-box:disabled {
@@ -298,7 +312,7 @@
 .register-gender-label {
   /* display: inline-block; */
   /* padding-bottom: 10px; */
-  vertical-align: 5px;
+  vertical-align: middle;
   font-weight: 400;
 }
 .register-selectBox {

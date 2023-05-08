@@ -13,19 +13,19 @@ const NotFound: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ padding: "32px 16px 0 16px" }}>
       <div className="categorylist-wrap">
         <Header></Header>
         <div className="notfound-image"></div>
         <div className="">
           <div
-            className="headline3 margintop-32"
+            className="headline3 notfound-title margintop-32"
             style={{ textAlign: "center" }}
           >
             해당 페이지를 찾을 수 없습니다.
           </div>
           <div
-            className="body2-regular margintop-12"
+            className="body2-regular notfound-subtitle margintop-12"
             style={{ textAlign: "center" }}
           >
             주소가 잘못 입력되었거나,
@@ -37,7 +37,11 @@ const NotFound: React.FC = () => {
         <button
           type="button"
           className="register-button margintop-48 body3-bold"
-          style={{ width: "100%", marginBottom: "166px" }}
+          style={{
+            width: "100%",
+            marginBottom: "166px",
+            color: "#FFFFFF",
+          }}
           onClick={() => {
             navigate("/");
           }}
@@ -46,7 +50,7 @@ const NotFound: React.FC = () => {
         </button>
       </div>
       <Footer></Footer>
-    </>
+    </div>
   );
 };
 
