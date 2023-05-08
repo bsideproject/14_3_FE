@@ -71,7 +71,7 @@ const InputBox = React.memo(
               disabled={isDisable}
             />
           </div>
-          {isClose === true ? (
+          {/* {isClose === true ? (
             <div style={{ position: "relative" }}>
               <label
                 htmlFor="passwordReconfirm"
@@ -87,14 +87,14 @@ const InputBox = React.memo(
             </div>
           ) : (
             <></>
-          )}
+          )} */}
           {isButton ? (
             <button
               type="button"
               className={
                 title
-                  ? "register-button btn-p-xl body3-bold margintop-28"
-                  : "register-button btn-p-xl body3-bold margintop-8"
+                  ? "register-button btn-p-xl body3-bold margintop-28 marginleft-8"
+                  : "register-button btn-p-xl body3-bold margintop-8 marginleft-8"
               }
               onClick={buttonClick}
             >
