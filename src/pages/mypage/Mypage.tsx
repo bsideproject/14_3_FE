@@ -103,7 +103,7 @@ const Mypage: React.FC = () => {
   const handleNewPasswordDiff = (e: any) => {
     if (newPassword === newRePassword && newRePassword.length > 1) {
       setPasswordReconfirmSuccessChk(false); // false 면 조건 충족
-    } else if (newRePassword.length === 0) {
+    } else if (newPassword.length === 0) {
       setPasswordReconfirmSuccessChk(null); //기본값
     } else {
       setPasswordReconfirmSuccessChk(true); //true면 조건 실패
@@ -204,7 +204,7 @@ const Mypage: React.FC = () => {
                   inputPlaceholader={"기존 비밀번호를 입력해주세요."}
                   id={"passwordChange"}
                   inputType={"password"}
-                  inputClassName={"register-flex-row-gap8 margintop-32"}
+                  inputClassName={"register-flex-row-gap0 margintop-32"}
                   buttonClick={handlePasswordChagneUpdate}
                   inputChange={handleRePasswordUpdate}
                   inputValue={
@@ -239,7 +239,7 @@ const Mypage: React.FC = () => {
                   }
                   id={"newPassword"}
                   inputType={"password"}
-                  inputClassName={"register-flex-row-gap8 margintop-32"}
+                  inputClassName={"register-flex-row-gap0 margintop-32"}
                   inputChange={handleNewPasswordUpdate}
                   inputValue={newPassword}
                   isButton={false}
@@ -267,7 +267,7 @@ const Mypage: React.FC = () => {
                   inputPlaceholader={"새 비밀번호를 다시 입력해주세요."}
                   id={"newPasswordConfirm"}
                   inputType={"password"}
-                  inputClassName={"register-flex-row-gap8 margintop-32"}
+                  inputClassName={"register-flex-row-gap0 margintop-32"}
                   buttonClick={handlePasswordChagneUpdate}
                   inputChange={handleNewRePasswordUpdate}
                   inputValue={newRePassword}

@@ -452,93 +452,71 @@ const Register: React.FC = () => {
             </div>
           </div>
           <div className="register-flex-column-gap0 margintop-32">
-            <div>비밀번호</div>
-            <div style={{ position: "relative" }}>
-              <input
-                type="password"
-                placeholder="8~20자의 영문, 숫자, 특수문자로 구성해주세요."
-                id="password"
-                className={
-                  passwordErrorChk === false
-                    ? "register-input margintop-8"
-                    : "register-input-error margintop-8"
-                }
-                // style={{ background: passwordErrorChk ? "" : "red" }}
-                onChange={handlePasswordUpdate}
-                onBlur={handlePasswordBlur}
-                value={password}
-                maxLength={30}
-              />
-              {passwordErrorChk === true ? (
-                <>
-                  <label
-                    htmlFor="passwordReconfirm"
-                    className="register-input-close"
-                    onClick={() => {
-                      setPassword("");
-                      setTimeout(
-                        () => document.getElementById("password")?.focus(),
-                        1
-                      );
-                    }}
-                  ></label>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-            {passwordErrorChk ? (
-              <div className="register-input-error-msg">
-                비밀번호는 8~20자의 영문, 숫자, 특수문자로 구성해주세요.
-              </div>
-            ) : (
-              <></>
-            )}
-            <div style={{ position: "relative" }}>
-              <input
-                ref={ReconfirmRef}
-                id="passwordReconfirm"
-                type="password"
-                placeholder="비밀번호를 다시 입력해주세요."
-                className={
-                  passwordReconfirmSuccessChk === null
-                    ? "register-input margintop-8"
-                    : passwordReconfirmSuccessChk === false
-                    ? "register-input-success margintop-8"
-                    : "register-input-error margintop-8"
-                }
-                onChange={handlePasswordReconfirmUpdate}
-                onBlur={handlePasswordReconfirmBlur}
-                value={passwordReconfirm}
-                maxLength={30}
-              />
-              {passwordReconfirmSuccessChk === true ? (
-                <>
-                  <label
-                    htmlFor="passwordReconfirm"
-                    className="register-input-close"
-                    onClick={() => {
-                      setPasswordReconfirm("");
-                    }}
-                  ></label>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-            {passwordReconfirmSuccessChk === true ? (
-              <>
-                <div className="register-input-error-msg">
-                  비밀번호가 일치하지 않습니다. 다시 입력해주세요.
-                </div>
-              </>
-            ) : passwordReconfirmSuccessChk === false ? (
-              <div className="register-input-success-msg">
-                비밀번호가 일치합니다.
-              </div>
-            ) : (
-              <></>
-            )}
+            <InputBox
+              title={"비밀번호"}
+              inputPlaceholader={
+                "8~20자의 영문, 숫자, 특수문자로 구성해주세요."
+              }
+              id={"newPassword"}
+              inputType={"password"}
+              inputClassName={"register-flex-row-gap8 margintop-32"}
+              inputChange={handlePasswordUpdate}
+              inputValue={password}
+              isButton={false}
+              inputBlur={handlePasswordBlur}
+              // isDisable={isInfoChange && !passwordChangeChk}
+              // buttonTitle={passwordChangeChk === false ? "변경" : "취소"}
+              isClose={passwordErrorChk}
+              closeClick={() => {
+                setPassword("");
+                setTimeout(
+                  () => document.getElementById("password")?.focus(),
+                  1
+                );
+              }}
+              errObject={
+                passwordErrorChk === true ? (
+                  <div className="register-input-error-msg">
+                    비밀번호는 8~20자의 영문, 숫자, 특수문자로 구성해주세요.
+                  </div>
+                ) : (
+                  <></>
+                )
+              }
+            />
+
+            <InputBox
+              inputPlaceholader={"비밀번호를 다시 입력해주세요."}
+              id={"newPasswordConfirm"}
+              inputType={"password"}
+              inputClassName={"register-flex-row-gap0 "}
+              inputChange={handlePasswordReconfirmUpdate}
+              inputValue={passwordReconfirm}
+              isButton={false}
+              inputBlur={handlePasswordReconfirmBlur}
+              isClose={
+                passwordReconfirmSuccessChk === null
+                  ? false
+                  : passwordReconfirmSuccessChk === false
+                  ? null
+                  : true
+              }
+              errObject={
+                passwordReconfirmSuccessChk === true ? (
+                  <div className="register-input-error-msg margintop-8">
+                    비밀번호가 일치하지 않습니다. 다시 입력해주세요.
+                  </div>
+                ) : passwordReconfirmSuccessChk === false ? (
+                  <>
+                    <div className="register-input-success-msg margintop-8">
+                      비밀번호가 일치합니다.
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )
+              }
+            />
           </div>
           <div className="register-flex-column-gap10 margintop-32">
             <div>성별(선택)</div>
@@ -666,7 +644,7 @@ const Register: React.FC = () => {
               >
                 (필수) 개인정보 수집 및 이용 동의
               </label>
-              <div style={{ width: "27px" }}>보기</div>
+              <div style={{ width: "30px" }}>보기</div>
             </div>
             <div className="register-flex-row-gap4 margintop-8">
               <input
@@ -683,7 +661,7 @@ const Register: React.FC = () => {
               >
                 (필수) 서비스 이용약관 동의
               </label>
-              <div style={{ width: "27px" }}>보기</div>
+              <div style={{ width: "30px" }}>보기</div>
             </div>
           </div>
 
