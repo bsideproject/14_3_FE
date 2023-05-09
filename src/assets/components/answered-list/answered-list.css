@@ -5,13 +5,13 @@
 /* divider */
 .answered-list-divider{
   background-color: var(--wgray04) ;
-  margin-top: 32px;
   margin-bottom: 32px;
   width: 100%;
   max-width: 480px;
   height: 8px;
 }
 .answered-list-item-count-wrap {
+  color: var(--wgray13);
   margin-bottom: 12px;
 }
 .answered-list-count-text{
@@ -24,7 +24,7 @@
   box-sizing: border-box;
   background-color: var(--wgray01);
   border: 1px solid var(--wgray04);
-  max-height: 270px;
+  max-height: 296px;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 16px;
@@ -49,14 +49,14 @@
   border-radius: 4px;
 }
 .answered-list-item-q {
-  min-height: 26px;
-  max-height: 104px;
-  margin: 8px 16px;
+  min-height: 28px;
+  max-height: 112px;
+  margin: 8px 16px 16px 16px;
+  color: var(--wgray13);
 }
 .answered-list-item-a {
-  width: 340px;
   min-height: 24px;
-  max-height: 96px;
+  max-height: 122px; 
   margin: 8px 16px 24px 16px;
   display: -webkit-box;
   white-space: nowrap;
@@ -66,6 +66,8 @@
   white-space: normal;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+  color: var(--wgray12);
+  
 }
 
 /* answer-list-labels-wrap */
