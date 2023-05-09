@@ -10,7 +10,7 @@ import 'assets/components/answered-list/left-answer-period.css'
 const LeftAnswerPeriod = () => {
   const thisMonth = new Date().getMonth()+1                                     //이번달
   const totalDays = new Date(new Date().getFullYear(), thisMonth, 0).getDate(); //이번달 총일수
-  const leftDays = (totalDays - new Date().getDate()).toString()                //남은일수
+  const leftDays = (totalDays - new Date().getDate() + 1).toString()                //남은일수
   const leftDaysAry = Array.from(leftDays)                                      //배열로변경
 
   //만약 배열길이가 1개면, 0으로 1번째 요소 입력. (map 돌리기전에)

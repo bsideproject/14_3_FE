@@ -93,15 +93,18 @@
   padding: 16px;
   border: 1px solid #E9E7E2;
   border-radius: 8px;
-  outline-color: var(--wgray06);
 	color: var(--wgray12);
 }
 .withdrawal-textarea:focus {
   color: var(--wgray12);
+  border: 1px solid var(--wgray06);
 }
 
 .withdrawal-textarea:read-only {
+  color: var(--wgray09);
   background: #F2F1ED;
+  border: 1px solid var(--wgray04);
+  background-color: var(--wgray03);
 }
 /* textarea 에러 */
 .withdrawal-error-area{
@@ -110,9 +113,13 @@
   font-size: 10px;
   justify-content: space-between;
   line-height: 12px;
+  color: var(--wgray06);
 }
 .withdrawal-textarea-error {
   border: 1px solid #EA4343;
+}
+.withdrawal-textarea-error::placeholder {
+  color: var(--wgray12);
 }
 .withdrawal-text-error {
   font-size: 10px;
