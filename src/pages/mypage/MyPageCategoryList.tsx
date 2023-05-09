@@ -76,7 +76,7 @@ const MyPageCategoryList = () => {
 
             {/* logout btn */}
             <div className="logout-area">
-              <button className="logout-btn caption1-bold" type="button" onClick={()=> setLogoutCheck(true)}>로그아웃</button>
+              <button className="caption1-bold btn-p-xs logout-btn" type="button" onClick={()=> setLogoutCheck(true)}>로그아웃</button>
             </div>
           </div>
         </div>

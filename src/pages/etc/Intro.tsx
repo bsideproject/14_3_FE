@@ -58,8 +58,8 @@ const Intro = () => {
           <div style={{display:'flex', flexDirection: 'column', width: '100%', textAlign:'center', gap: '8px'}}
             className={isServicecActive ? 'info-mb-160':''}
             >
-            <button type='button' className='btn-p-xl' onClick={goToLogin}>로그인하기</button>
-            <button type='button' className='btn-s-xl' onClick={goToMain}>일단 둘러보기</button>
+            <button type='button' className='btn-p-xl body3-bold' onClick={goToLogin}>로그인하기</button>
+            <button type='button' className='btn-s-xl body3-bold' onClick={goToMain}>일단 둘러보기</button>
           </div>
 
           {/* 서비스소개 */}

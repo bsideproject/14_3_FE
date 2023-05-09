@@ -26,7 +26,7 @@ const AlertTextPopup = ({strongText, text, text2, confirmText='확인', callback
               {text2 ? (<><p className='body2-regular'>{text2}</p></>) : ''}
             </div>
             <div className="modal-btn-area">
-              <button type="button" onClick={()=>callbackFunction()}>{confirmText}</button>
+              <button type="button" className='btn-p-xl body3-bold' onClick={()=>callbackFunction()}>{confirmText}</button>
             </div>
           </div>
         </div>
