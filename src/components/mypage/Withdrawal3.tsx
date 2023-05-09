@@ -34,7 +34,7 @@ const Withdrawal3 = ({step, setStep}: WITHDRAWAL) => {
           </div>
 
           <div className='withdrawal-button-area'>
-            <button className='withdrawal-button withdrawal-no' type="button" onClick={() => setStep(++step)}>탈퇴하기</button>
+            <button className='withdrawal-button btn-p-xl body3-bold' type="button" onClick={() => setStep(++step)}>탈퇴하기</button>
           </div>
           
         </div>

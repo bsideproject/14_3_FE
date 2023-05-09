@@ -17,6 +17,7 @@ import { AxiosResponse } from 'axios';
 import fetch from 'utils/fetch';
 import GomingLogo from 'assets/images/main/onepager-goming-logo.png'
 import 'assets/pages/onepager/onepagermain.css'
+import OnepagerExampleView from 'assets/images/main/onepager-example.png'
 
 /**
  * @desc 원페이저 다운로드 로직
@@ -84,35 +85,22 @@ const OnePagerMain = () => {
             <p className='body1-bold'>미리보기</p>
           </div>
           <div className='onepager-wrap'>
-            <Masonry
-              breakpointCols={4}                          //컬럼수
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column">
-              {
-                qnaList.map(item => (
-                  <div key={item.index}>
-                    {/* <p className='word-wrap-break-word'>{item.index}</p>
-                    <p className='word-wrap-break-word'>{item.a}</p> */}
-                  </div>
-                ))
-              }
-            </Masonry>
-
+            <img src={OnepagerExampleView} alt="원페이저 미리보기 화면" width={'100%'} />
           </div>
           {/* 버튼영역 */}
           <div className='onepager-btn-wrap'>
             <button className='btn-p-xl' onClick={downloadOnepager}>
               <DownloadIcon></DownloadIcon>
-              &nbsp;다운로드
+              &nbsp;<span>다운로드</span>
             </button>
             <button className='btn-p-xl' onClick={() => setConfirmEmailPopup(true)}>
               <EmailIcon></EmailIcon>
-              &nbsp;이메일로 보내기
+              &nbsp;<span>이메일로 보내기</span>
             </button>
           </div>
         </div>
 
-      {/********************************************************************************************
+        {/********************************************************************************************
          * 다운로드 영역
          * ***************************************************************************************/}
         {/* Canvas */}
@@ -165,37 +153,33 @@ const OnePagerMain = () => {
           </div>
           
         </div>
-
-        {/********************************************************************************************
-         * 팝업 관련 영역
-         * ***************************************************************************************/}
-        { //confirm popup
-          confirmEmailPopup && (
-            <ConfirmInputPopup
-              text="원페이저를 받을 이메일 주소가 맞나요?/n다른이메일로 받고 싶다면/n주소를 변경해주세요."
-              confirmText="이메일 보내기"
-              cancelText="취소하기"
-              confirmCallbackFunction={sendEmail}
-              cancelCallbackFunction={()=>setConfirmEmailPopup(false)}
-            />
-          )
-        }
-
-
-        { //toast popup
-          toastPopup && (
-            <ToastPopup 
-              text={"이메일로 원페이저가 전송되었습니다!"} 
-              bgColor={"#4D99DE"} textColor={"#FFFFFF"} 
-            />
-          )
-        }
-
-
-
       </div>
       <Footer></Footer>
      
+      {/********************************************************************************************
+       * 팝업 관련 영역
+       * ***************************************************************************************/}
+      { //confirm popup
+        confirmEmailPopup && (
+          <ConfirmInputPopup
+            text="원페이저를 받을 이메일 주소가 맞나요?/n다른이메일로 받고 싶다면/n주소를 변경해주세요."
+            confirmText="이메일 보내기"
+            cancelText="취소하기"
+            confirmCallbackFunction={sendEmail}
+            cancelCallbackFunction={()=>setConfirmEmailPopup(false)}
+          />
+        )
+      }
+
+
+      { //toast popup
+        toastPopup && (
+          <ToastPopup 
+            text={"이메일로 원페이저가 전송되었습니다!"} 
+            bgColor={"#4D99DE"} textColor={"#FFFFFF"} 
+          />
+        )
+      }
     </>
   )
 }

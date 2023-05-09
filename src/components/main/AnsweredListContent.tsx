@@ -18,7 +18,7 @@ const AnsweredListContent = () => {
 
   useEffect(() => {
     setAnsweredList(qnaList)
-  }, qnaList) //qnaList 가 업데이트 될 때마다 리렌더링
+  }, [qnaList]) //qnaList 가 업데이트 될 때마다 리렌더링
 
   //상세페이지로 이동
   const viewAnswer = (a_num:number):void => {

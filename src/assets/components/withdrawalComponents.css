@@ -45,24 +45,12 @@
 }
 .withdrawal-button {
   flex: 1;
-  border-radius: 8px;
-  padding: 14px 16px 14px 16px;
-  cursor: pointer;
 }
 .withdrawal-button:disabled{
   border: none;
+  border-radius: 8px;
   background-color: #C9C6C0
 ;
-}
-/* 예 버튼 */
-.withdrawal-yes { 
-  background: #FFFFFF;
-  color: #3D3938;
-}
-/* 아니오버튼 */
-.withdrawal-no { 
-  background: #3D3938;
-  color: #FFFFFF;
 }
 .withdrawal-checkbox-wrap{
   margin-top: 24px;
@@ -105,15 +93,18 @@
   padding: 16px;
   border: 1px solid #E9E7E2;
   border-radius: 8px;
-  outline-color: var(--wgray06);
 	color: var(--wgray12);
 }
 .withdrawal-textarea:focus {
   color: var(--wgray12);
+  border: 1px solid var(--wgray06);
 }
 
 .withdrawal-textarea:read-only {
+  color: var(--wgray09);
   background: #F2F1ED;
+  border: 1px solid var(--wgray04);
+  background-color: var(--wgray03);
 }
 /* textarea 에러 */
 .withdrawal-error-area{
@@ -122,9 +113,13 @@
   font-size: 10px;
   justify-content: space-between;
   line-height: 12px;
+  color: var(--wgray06);
 }
 .withdrawal-textarea-error {
   border: 1px solid #EA4343;
+}
+.withdrawal-textarea-error::placeholder {
+  color: var(--wgray12);
 }
 .withdrawal-text-error {
   font-size: 10px;

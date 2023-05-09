@@ -67,7 +67,7 @@ const AnsweredView = () => {
             <div className="body1-bold answered-list-item-q">
               {answer?.q}
             </div>
-            <div className="body2-regular answered-view-item-a">
+            <div className="body2-regular answered-view-item-a" style={{minHeight:'520px'}}>
               {answer?.a}
             </div>
           </div>

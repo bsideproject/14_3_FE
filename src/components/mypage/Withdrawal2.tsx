@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import WithdrawalInformation from "./WithdrawalInformation"
 /**
  * @설명 회원탈퇴 첫번째 페이지의 내용 컴포넌트
@@ -49,8 +49,26 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
       document.getElementById('withdrawalTextarea')?.setAttribute('readOnly', "readOnly")
       setWithdrawalTextError(false)
       setWithdrawalText("")
+      document.getElementById('withdrawalTextareaInfo')?.style.setProperty('color', '#C9C6C0')
     }
   }
+
+  /******************************************************************************** */
+  /* 스타일 변경                                                                     */
+  /******************************************************************************** */   
+  // withdrawalTextError 가 true 일 경우 textarea 하단의 p 태그 color 변경 이벤트
+  useEffect(() => {
+    if (withdrawalTextError === true) {
+      document.getElementById('withdrawalTextareaInfo')?.style.setProperty('color', '#EA4343')  //error
+    } else {
+      if (withdrawalText.length > 0) {
+        document.getElementById('withdrawalTextareaInfo')?.style.setProperty('color', '#3D3938')  //wgray12
+      } else {
+        document.getElementById('withdrawalTextareaInfo')?.style.setProperty('color', '#C9C6C0')  //wgray06
+      }
+    }
+  },[withdrawalTextError])
+
 
   /******************************************************************************** */
   /* 다음 버튼 클릭 이벤트                                                            */
@@ -80,6 +98,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
       setStep(++step)
     }
   }
+
   return (
     <>
       <div className='withdrawal-content'>
@@ -144,18 +163,17 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
             ></textarea>
 
             {/* 작성오류영역 */}
-            <div className="withdrawal-error-area" >
+            <div 
+              id="withdrawalTextareaInfo"
+              className={'withdrawal-error-area caption2-bold ' + (withdrawalTextError ? 'withdrawal-text-error' : '')}
+              >
               <div style={{flex: 1}}>
-                <p 
+                <p
                 style={{ display: (withdrawalTextError ? 'inline-block' : 'none' ) }}
-                className={'caption2-bold ' + 
-                  (withdrawalTextError ? 'withdrawal-text-error' : 'color-wgray06')}
+                
                 >{textCountOverErrorText}</p>
               </div>
-              <p
-                className={'caption2-bold ' + 
-                  (withdrawalTextError ? 'withdrawal-text-error' : 'color-wgray06')}
-              >{withdrawalText.length}/300</p>
+              <p>{withdrawalText.length}/300</p>
             </div>
           </div>
           {/* 버튼영역 */}
@@ -163,7 +181,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
             <button 
               disabled={!itemChecked}
               type="button" 
-              className={'withdrawal-button withdrawal-no'} 
+              className={'withdrawal-button body3-bold btn-p-xl'} 
               onClick={updateStep}
               >다음</button>
           </div>
