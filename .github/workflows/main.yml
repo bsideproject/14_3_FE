@@ -5,9 +5,6 @@ on:
   push:
     branches:
       - master
-  commit_comment:
-    branches:
-      - master
 jobs:
   build:
 
