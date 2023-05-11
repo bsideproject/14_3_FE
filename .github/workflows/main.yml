@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - master
-
 jobs:
   build:
 
@@ -32,23 +31,6 @@ jobs:
       run: CI=false npm run build
       
     #Deploy to server 
-#     - name: Deploy to server
-#       env:
-#           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#           HOST: ${{ secrets.SERVER_HOST }}
-#           USERNAME: ${{ secrets.SERVER_USERNAME }}
-#           PORT: ${{ secrets.SERVER_PORT }}
-#           password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
-#       run: |
-#           echo "$PRIVATE_KEY" > private_key.pem
-#           chmod 400 private_key.pem
-#           scp -i private_key.pem -P $PORT -o StrictHostKeyChecking=no -r build/ $USERNAME@$HOST:/var/www/html/test/
-#           ssh -i private_key.pem -p $PORT -o StrictHostKeyChecking=no $USERNAME@$HOST 'bash -s' <<- EOF
-#             nohup java -jar /var/www/html/test > /dev/null 2>&1 & disown
-#             exit
-#           EOF
-#           rm -f private_key.pem
-          
     - name: Deploy to Server
 #       uses: easingthemes/ssh-deploy@v2.1.5
       env:
