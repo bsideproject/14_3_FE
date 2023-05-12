@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react"
 import WithdrawalInformation from "./WithdrawalInformation"
+import useWithdrawalStates from "store/modules/Withdrawals";
 /**
  * @설명 회원탈퇴 첫번째 페이지의 내용 컴포넌트
  * @작성자 김상훈
@@ -14,6 +15,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
   const [withdrawalText, setWithdrawalText] = useState<string>('') //textarea 값
   const [withdrawalTextError, setWithdrawalTextError] = useState<boolean>(false) //textarea 에러 확인 -> error 문구 출력용
   const [textCountOverErrorText, setTextCountOverErrorText] = useState<string>('')  //textarea 글자수 관련 에러 문구 '텍스트'
+  const {setWithdrawalState} = useWithdrawalStates() //회원탈퇴 관련 states
 
   // textarea onchange event
   const withdrawalTextKeyupHandler = (e:any) => {
@@ -94,8 +96,18 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
     if (checkedList.length < 1) {
       return;
     } else {
-      //TODO: withdrawalText -> 탈퇴사유에 추가 
-      setStep(++step)
+      // input checkbox 체크된 항목의 값들을 모두 가져와 배열로 저장하기
+      const checkedboxElements = document.getElementsByName("checkbox")
+      const checkedboxArray: Array<any> = Array.from(checkedboxElements)
+      const checkedboxes: Array<any> = checkedboxArray.filter(item => item.checked)
+      const checkedboxValues: Array<string> = checkedboxes.map(item => item.value)
+      // 기타 선택 시, textarea 값도 저장
+      if (otherCheck.checked === true) {
+        checkedboxValues.pop()                //기타 선택 시, 마지막 요소 제거
+        checkedboxValues.push(withdrawalText) //기타 선택 시, textarea 값 추가
+      }
+      setWithdrawalState(checkedboxValues)  //store 저장
+      setStep(++step) //다음 단계로 이동
     }
   }
 
@@ -158,7 +170,7 @@ const Withdrawal2 = ({step, setStep}: WITHDRAWAL) => {
               maxLength={300} 
               className={"withdrawal-textarea body3-regular"}
               style={{outline:
-                '1px solid' + (withdrawalTextError ? '#EA4343' : '#E9E7E2' )
+                (withdrawalTextError ? '1px solid #EA4343' : '' )
               }}
             ></textarea>
 

@@ -1,5 +1,5 @@
 import 'assets/components/header.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MainLogo from 'assets/images/main-goming-logo.png'
 import LeftArrow from 'assets/images/left-vector.png'
 import useDefaultSets from 'store/modules/Defaults';
@@ -38,7 +38,9 @@ const Header = () => {
 
             //그렇지 않은경우, Goming 이미지 출력
             <div className='header-logo-area'>
-              <img src={MainLogo} alt="Goming logo" width={90} height={24}/>
+              <Link to="/main">
+                <img src={MainLogo} alt="Goming logo" width={90} height={24}/>
+              </Link>
             </div>
 
           )

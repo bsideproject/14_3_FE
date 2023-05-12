@@ -6,6 +6,7 @@ import RectangleDived from 'assets/images/rectangleDived.png'
 import useDefaultSets from 'store/modules/Defaults';
 import Header from 'components/auth/Header';
 import Footer from 'components/Footer';
+import axios from 'axios';
 
 /**
  * @설명 로그인 페이지
@@ -14,13 +15,13 @@ import Footer from 'components/Footer';
  * @내용 비밀번호 확인 후 이동
  * @TODO backend-connection
  */
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //이메일 형식 체크
+const Regexp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/; //영문, 숫자 포함 8~25자리
 const Login:React.FC = () =>{
   const {setHeaderText, setIsNavigation} = useDefaultSets()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [emailVerify, setEmailVerify] = useState<boolean>(false)
   const [passwordVerify, setPasswordVerify] = useState<boolean>(false)
   const [rememberEmail, setRememberEmail] = useState<boolean>(false) //id저장여부 확인
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false) //* 이메일 형식체크
@@ -31,7 +32,6 @@ const Login:React.FC = () =>{
       const LSrememberEmail:string = String(localStorage.getItem('bside-remember-login'))
       if (LSrememberEmail.length > 0) {
         setEmail(LSrememberEmail)
-        setEmailVerify(true)
         setEmailFormChk(true)
         document.getElementById('password')?.focus()
       }
@@ -40,34 +40,45 @@ const Login:React.FC = () =>{
     setIsNavigation(false)
   },[])
 
+  //로그인시도
   const loginAttempt = async (e:any): Promise<void> => {
     e.preventDefault()
-    if (email.length < 1) { //email 유효성 검사
-      setEmailVerify(false)
-      alert('이메일을 입력해주세요')
+    const emailCheckResult = emailRegex.test(email) //이메일 형식 체크
+    if (emailCheckResult === false) {
+      setEmailFormChk(false) //이메일형식체크
+      alert('이메일 형식을 확인해주세요')
       document.getElementById('email')?.focus()
       return ;
-    } 
-
-    if (password.length < 4) { //비밀번호 유효성 검사
-      setPasswordVerify(false)
-      alert('비밀번호는 4자리수 이상입니다')
-      document.getElementById('password')?.focus()
-      return ;
+    } else {
+      setEmailFormChk(true) //이메일형식체크
     }
 
-    if (emailVerify === true && passwordVerify === true && emailFormChk === true) { //유효성 검사 통과 시 로그인 로직
+    //비밀번호 유효성 검사
+    if (Regexp.test(password) === false) {
+      setPasswordVerify(false)
+      alert('비밀번호는 영문, 숫자 포함 8~25자리입니다')
+      document.getElementById('password')?.focus()
+      return ;
+    } else {
+      setPasswordVerify(true)
+    }
+
+    console.log(passwordVerify);
+    console.log(emailFormChk);
+    
+    
+    if (emailCheckResult && passwordVerify === true && emailFormChk === true) { //유효성 검사 통과 시 로그인 로직
       checkRememberEmail()
-      // const result = await axios.post('/api/login', {email,password,loginAt: new Date()})
-      const result = {
-        status: false,
-        userInfo: {}
+      const param = {
+        "eml": email
       }
-      if (result?.status === true) { //이후 형식 지정
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        // useAuthStore(state => state.updateLoginStatus(result.status, result.userInfo))  //1. state 상태 변경 
-        navigate('/main')//2. main page로 이동 : Main으로 이동 : 추후 경로 변경 필요
-      }
+      // const result = await axios.post('/api/inquiry-member', param)
+
+      // if (result?.status === true) { //이후 형식 지정
+      //   // eslint-disable-next-line react-hooks/rules-of-hooks
+      //   // useAuthStore(state => state.updateLoginStatus(result.status, result.userInfo))  //1. state 상태 변경 
+      //   navigate('/main')//2. main page로 이동 : Main으로 이동 : 추후 경로 변경 필요
+      // }
     } else {
       alert('아이디 혹은 비밀번호를 확인해주세요')
     }
@@ -81,11 +92,6 @@ const Login:React.FC = () =>{
 
   const handleEmailValue = ({target}:any) => { //keyup
     setEmail(target.value)
-    if(email.length < 4) {
-      setEmailVerify(false)
-    } else {
-      setEmailVerify(true)
-    }
   }
   const handleEmailBlur = () => { //focusout 
     setEmailFormChk(emailRegex.test(email)) //이메일형식체크
@@ -113,7 +119,13 @@ const Login:React.FC = () =>{
           <form onSubmit={loginAttempt}>
             <div className='inputArea'>
               <label htmlFor="email" className='login-label-text text-color'>이메일</label>
-              <input type="email" className='input-style'  placeholder='이메일 주소를 입력해주세요' id="email" value={email} onBlur={handleEmailBlur} onChange={handleEmailValue} maxLength={30} /><br />
+              <input type="email" className='input-style'  
+                placeholder='이메일 주소를 입력해주세요' 
+                id="email" maxLength={30} 
+                value={email}
+                onChange={handleEmailValue} 
+                onKeyUp={handleEmailValue} 
+              /><br />
             </div>
             <div className='checkbox-area'>
               <input type="checkbox" className='check-btn' name="rememberme" id="rememberId" checked={rememberEmail} onChange={handleRememberEmail} />
