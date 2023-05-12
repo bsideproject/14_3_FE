@@ -91,19 +91,20 @@
   max-width: 480px;
   resize: none;
   padding: 16px;
-  border: 1px solid #E9E7E2;
+  border: none;
+  outline: 1px solid #E9E7E2;
   border-radius: 8px;
 	color: var(--wgray12);
 }
 .withdrawal-textarea:focus {
   color: var(--wgray12);
-  border: 1px solid var(--wgray06);
+  outline: 1px solid var(--wgray06);
 }
 
 .withdrawal-textarea:read-only {
   color: var(--wgray09);
   background: #F2F1ED;
-  border: 1px solid var(--wgray04);
+  outline: 1px solid var(--wgray04);
   background-color: var(--wgray03);
 }
 /* textarea 에러 */

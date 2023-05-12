@@ -165,7 +165,7 @@ const MyCalendar = () => {
           className="custom-calendar"
           onChange={updateDate} 
           value={selectedDate} 
-          navigationLabel={({ date, label, locale, view }) => transformDate({date, locale}) }
+          navigationLabel={({ date, label, locale, view }) => transformDate({date, locale}).replace(' ','') }
           formatDay={(locale, date) => date.getDate().toString()}
           prevLabel = {<img src={LeftArrow} alt={"<"} width={24} height={24} /> }
           prev2Label={null}           //첫달선택  << 없애기

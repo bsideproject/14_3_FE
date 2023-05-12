@@ -22,7 +22,7 @@
 
 .logout-btn {
   margin-top: 34px;
-  width: 64px;
+  max-width: 66px;
 }
 .logout-btn:hover{
   cursor: pointer;
