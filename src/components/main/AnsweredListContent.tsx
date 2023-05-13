@@ -44,7 +44,7 @@ const AnsweredListContent = () => {
                     <DateFormatUI date={item.date} />
                     <AnsweredCategoryUI category={item.qc} />
                   </div>
-                  <div className="answered-list-item-q body2-bold">{item.q}</div>
+                  <div className="answered-list-item-q answered-list-item-q-1 body2-bold">{item.q}</div>
                   <div className="body3-regular answered-list-item-a ">{item.a}</div>
                 </div>
               ))

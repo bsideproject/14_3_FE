@@ -17,6 +17,12 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
     const selectedItem = document.getElementById(id) as HTMLElement
     selectedItem.style.backgroundColor = '#2D4577'
 
+    //카드 선택 시 모든 카드 클릭이벤트 제거
+    const cards = document.getElementsByClassName('card') as HTMLCollectionOf<HTMLElement>
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].style.pointerEvents = 'none'
+    }
+
     if (selected === false) {
       setShowFront(false); 
       clickedEventHandler()
@@ -50,10 +56,10 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
             <div className='card-in' id={item.index}>
               {
                 showFront ? (
-                  <img src={item.img} alt={item.desc} width={'100%'}  height={'100%'} className="card-scale"/>
+                  <img src={item.img} alt={item.desc} width={'100%'} className="card-scale"/>
                 ) : (
                   <div className='selected-card-area card-fade'>
-                    <img src={item.aftrImg} alt={item.desc} width={'100%'} height={'100%'} className='card-fade' />
+                    <img src={item.aftrImg} alt={item.desc} width={'100%'} className='card-fade' />
                   </div>
                 )
               }

@@ -4,6 +4,7 @@
   
 }
 .answered-view-inner-wrap{
+  min-height: 520px;
   margin: 32px 16px 0 16px;
   background-color: var(--wgray03);
   border: 1px solid var(--wgray04);

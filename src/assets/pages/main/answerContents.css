@@ -30,6 +30,23 @@
 .answer-content textarea {
   width: 100%;
 }
+.answer-textarea {
+	height: 240px;
+	padding: 16px;
+	resize: none;
+	background-color: var(--wgray03);
+	margin-bottom: 8px;	
+  border:none;
+  outline: 1px solid var(--wgray04);
+  border-radius: 8px;
+	color: var(--wgray12);
+}
+.answer-textarea::placeholder {
+	color: var(--wgray09);
+}
+.answer-textarea:focus, .answer-textarea:active {
+	color: var(--wgray12);
+}
 /* 에러 및 글자수 문구 */
 .answer-comment-area{
   display: flex;

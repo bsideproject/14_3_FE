@@ -105,7 +105,7 @@ const MyPageCategoryList = () => {
             callbackFunction={handleLogout} 
             confirmText={'로그아웃'}
             closeCallbackFuntion={() => setLogoutCheck(false)}  
-            cancelText={'아니오'}
+            cancelText={'취소'}
           />
         )
       }

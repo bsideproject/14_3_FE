@@ -23,9 +23,10 @@ const Item = ( text: string ) => {
  * @param {Function} callbackFunction 확인 콜백 함수
  * @param {Function} closeCallbackFuntion 아니오 콜백 함수
  * @param {boolean} isFlex flex style 지정 여부
+ * @param {boolean} isReverse 버튼순서여부
  */
 const ConfirmPopup = (
-  {strongText, text, confirmText='네', cancelText='아니오', callbackFunction, closeCallbackFuntion, isFlex=true}
+  {strongText, text, confirmText='네', cancelText='아니오', callbackFunction, closeCallbackFuntion, isFlex=true, isReverse=false}
   : CONFIRM_POPUP
   ) => {
   // '네'를 눌렀을 경우
@@ -53,10 +54,22 @@ const ConfirmPopup = (
             </div>
             {/* isFlex 전달여부에 따라 flex-direction 처리 */}
             <div className={'confirm-btn-area ' + (isFlex && ('btns-isflex'))}>
-              {/* 취소 */}
-              <button className='modal-btn-confirm-cancel body3-bold btn-s-l' type="button" onClick={closeConfirmPopup}>{cancelText}</button>
-              {/* 확인 */}
-              <button className='modal-btn-confirm body3-bold btn-p-l' type="button" onClick={confirmCheck}>{confirmText}</button>
+              {
+                isReverse ?
+                <>
+                  {/* 확인 */}
+                  <button className='modal-btn-confirm body3-bold btn-p-l' type="button" onClick={confirmCheck}>{confirmText}</button>
+                  {/* 취소 */}
+                  <button className='modal-btn-confirm-cancel body3-bold btn-s-l' type="button" onClick={closeConfirmPopup}>{cancelText}</button>
+                </>
+                :
+                <>
+                  {/* 취소 */}
+                  <button className='modal-btn-confirm-cancel body3-bold btn-s-l' type="button" onClick={closeConfirmPopup}>{cancelText}</button>
+                  {/* 확인 */}
+                  <button className='modal-btn-confirm body3-bold btn-p-l' type="button" onClick={confirmCheck}>{confirmText}</button>
+                </>
+              }
             </div>
           </div>
         </div>
@@ -72,6 +85,7 @@ type CONFIRM_POPUP = {
   callbackFunction: Function
   closeCallbackFuntion: Function
   isFlex?: boolean
+  isReverse?: boolean //버튼순서
 }
 
 export default ConfirmPopup

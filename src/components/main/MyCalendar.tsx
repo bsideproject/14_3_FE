@@ -28,7 +28,9 @@ const getYearAndMonth = (date:any) => {
  * @returns {boolean} true: 같은일, false: 다른일
  */
 const isSameDay = (date1:Date, date2:Date) => {
-  return new Date(date1).toLocaleDateString() === new Date(date2).toLocaleDateString() 
+  const Newdate1:string = date1.toString().slice(0,15)
+  const Newdate2:string = date2.toString().slice(0,15)
+  return new Date(Newdate1).toLocaleDateString() === new Date(Newdate2).toLocaleDateString() 
 }
 
 const KoreaLocale = {
@@ -153,7 +155,7 @@ const MyCalendar = () => {
   const transformDate = ({date, locale}:any) => {
     const day:string = (new Date(date).getMonth() + 1).toString()                    //월-문자화
     const newDay:string = day.length === 1 ? '0' + day : day
-    const newDate:string = new Date(date).getFullYear().toString() + '. ' + newDay + '.'    
+    const newDate:string = new Date(date).getFullYear().toString() + '. ' + newDay   
     return newDate
   }
 
