@@ -32,7 +32,7 @@ const Footer = ({type = true}: TYPE_FOOTER) => {
             <p>이용약관</p>
           </div>
           <p className='caption1-regular mb-12'>문의사항 : goming.team@gmail.com</p>
-          <p className='caption1-regular mb-40'>©Goming All rights reserved.</p>
+          <p className='caption1-regular mb-40'>© 2023. Goming. All rights reserved.</p>
         </div>
       </div>
     </>

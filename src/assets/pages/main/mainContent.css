@@ -26,12 +26,15 @@
   border: 1px solid var(--wgray04);
   background-color: #ffffff;
 } 
+.card img {
+}
 
 .card-front {
   padding: 8px;
 }
 
 .card-in {
+  max-height: 192.8px;
   display: flex;
   justify-content: center;
   background-color: #F8F3ED;
@@ -42,7 +45,6 @@
   background-color: #F8F3ED;
 }
 .card-scale:hover {
-  scale: 1.1;
   transition: all 0.3s ease-in-out;
 }
 
@@ -75,5 +77,5 @@
   text-align: left;
   color: var(--wgray09);
   text-align: center;
-  padding: 13px 0 13px 0;
+  padding: 13px 0 5px 0;
 }

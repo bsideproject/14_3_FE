@@ -32,14 +32,14 @@ const Intro = () => {
 
   return (
     <>
-      <div style={{display:'flex', flexDirection:'column', marginBottom:'-160px'}}>
+      <div style={{display:'flex', flexDirection:'column', marginBottom:'-160px', color:'#121212'}}>
         <div style={{padding: '0 32px'}}>
-          <div style={{marginTop:'104px', marginBottom: '16.89px'}}>
+          <div style={{marginTop:'104px', marginBottom: '16px'}}>
             <img src={IntroGomingIMG} alt="" width={127}/>
           </div>
           <div>
             <p className='body2-bold' style={{color:'#7A7670'}}>
-              매일 하나씩 써내려 간<br/>
+              매일 하나씩 써 내려간<br/>
               작은 조각들이 모여,<br/>
               오늘의 나를 만듭니다.
             </p>
@@ -93,7 +93,7 @@ const HideView = () => {
         display:'flex', flexDirection:'column', justifyContent:' center', alignContent:' center', textAlign:'center'}}>
         {/* service 1 */}
         <div>
-          <hr color='#E4E2DD' />
+          <hr color='#E4E2DD' style={{border: 0, height: '1px'}}/>
           <p className='intro-text-number'>01</p>
           <p className='body1-regular' style={{marginBottom: '16px'}}><span className='intro-text-bold'>어떤</span> 서비스인가요?</p>
           <p className='body3-regular' style={{marginBottom: '40px'}}>
@@ -104,8 +104,8 @@ const HideView = () => {
 
         {/* service 2 */}
         <div>
-          <hr color='#E4E2DD' />
-          <p className='intro-text-number'>01</p>
+          <hr color='#E4E2DD' style={{border: 0, height: '1px'}} />
+          <p className='intro-text-number'>02</p>
           <p className='body1-regular' style={{marginBottom: '16px'}}><span className='intro-text-bold'>누구를</span> 위한 서비스인가요?</p>
           <p className='body3-regular' style={{marginBottom: '40px'}}>
             일주일, 한 달, 일 년을 보내면서, 문득 내가 어떻게<br/>
@@ -117,14 +117,14 @@ const HideView = () => {
         
         {/* service 3 */}
         <div>
-          <hr color='#E4E2DD' />
-          <p className='intro-text-number'>01</p>
+          <hr color='#E4E2DD' style={{border: 0, height: '1px'}} />
+          <p className='intro-text-number'>03</p>
           <p className='body1-regular' style={{marginBottom: '16px'}}><span className='intro-text-bold'>어떻게</span> 사용하나요?</p>
           <p className='body3-regular' style={{marginBottom: '40px'}}>
             하루 세 번의 기회를 통해<br/>
             랜덤 질문을 골라보고 내 생각을 남겨보세요.<br/>
             작성한 회고들은 고밍 기록에 소중히 보관되고,<br/>
-            한 달이 지나면 원페이저 형태로 확인할 수 있답니다.<br/>
+            한 달이 지나면 월간고밍 형태로 확인할 수 있답니다.<br/>
             회고록을 보며 지난 한 달 동안의<br/>
             나를 돌아보는 시간을 가져보세요.
           </p>

@@ -16,7 +16,7 @@ const GoToOnePagerBtn = () => {
     <>
       <button type="button" 
       style={{
-        background: '#3d3938', color: 'white', width: '100%', borderRadius: '8px', marginBottom: '32px', marginTop: '32px', display: 'flex', gap: '11px',justifyContent:'center', alignItems: 'center'
+        background: '#3d3938', color: 'white', width: '100%', borderRadius: '8px', marginBottom: '32px', marginTop: '32px', display: 'flex', gap: '8px',justifyContent:'center', alignItems: 'center'
       }}
       className="btn-p-l" 
       onClick={() => goToOnepager()}
@@ -24,9 +24,8 @@ const GoToOnePagerBtn = () => {
         <span className='body3-bold' style={{display:'flex', justifyContent:'center'}}>
           <img src={FileImg} alt="" width={20} height={20} />
         </span>
-        <span>
-          원페이저 보기 & 다운로드
-
+        <span className='body3-bold'>
+          월간고밍 다운로드
         </span>
       </button>
     </>
