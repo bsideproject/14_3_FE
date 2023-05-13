@@ -58,3 +58,10 @@
 .ConfirmInputPopup-input {
   border: 1px solid var(--wgray04);
 }
+.confirmpopup-input {
+  border: 1px solid var(--wgray04);
+  outline: none;
+}
+.confirmpopup-input:focus, .confirmpopup-input:active {
+  border: 1px solid var(--wgray04);
+}

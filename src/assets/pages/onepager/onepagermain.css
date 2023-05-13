@@ -12,20 +12,19 @@
   margin-top: 49px;
   display: flex;
   justify-content: space-between;
-  gap: 15px;
+  gap: 8px;
 }
 .onepager-btn-wrap button {
   flex: 1;
 }
 .onepager-btn-wrap button span{
+  display: inline-block;
   color: #FFFFFF;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -2.5%;
 }
 .onepager-btn-wrap svg {
+  display: inline-block;
   vertical-align: middle;
+  margin-right: 8px;
 }
 
 .my-masonry-grid {

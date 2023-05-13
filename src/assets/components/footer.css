@@ -18,6 +18,9 @@
   display: flex;
   gap: 12px;
 }
+.footer-service-area img{
+  padding-top: 2px;
+}
 .footer-title {
   margin-bottom: 16px;
 }

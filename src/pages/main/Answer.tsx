@@ -26,8 +26,17 @@ const Answer = () => {
   const [isSaved, setIsSaved] = useState<boolean>(false)         //DB연동 성공여부 (저장성공)
   const [needToLogin, setNeedToLogin] = useState<boolean>(false) //로그인안했을 경우 출력 confirm 팝업 처리
   const {todayCardSelectStep, updateCardSelectStep} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
-
+  const [confirmText, setConfirmText] = useState<string>('')      //confirm 팝업 텍스트
+  const [confrimButtonText, setConfirmButtonText] = useState<string>('') //confirm 팝업 버튼 텍스트
+  
   useEffect(() => { 
+    if (todayCardSelectStep === 3) {
+      setConfirmText("그래도 고밍 페이지로 가시겠어요?")
+      setConfirmButtonText("고밍 페이지로 이동하기")
+    } else {
+      setConfirmText("또한, 오늘의 질문 선택 기회도 그대로 1회 차감됩니다./n그래도 다음 질문 선택 페이지로 가시겠어요?")
+      setConfirmButtonText("질문 선택하러 가기")
+    }
     setHeaderText('답변 작성하기')
   },[])
 
@@ -143,14 +152,14 @@ const Answer = () => {
               value={answer} 
               onChange={handleAnswer}  
               placeholder="클릭해서 나의 답변을 작성해보세요!"
-              className="common-textarea body2-regular"
-              maxLength={271}
+              className="answer-textarea body2-regular"
+              maxLength={300}
               >
-              {answer}
             </textarea>
             <div className='answer-comment-area' >
               {
-                isError ? (<p className="answer-error-text caption2-bold answer-error" >270자 이하로 적어주세요.</p>) : (<p className="answer-error-text caption2-bold">&nbsp;</p>)
+                isError ? (<p className="answer-error-text caption2-bold answer-error" >270자 이하로 적어주세요.</p>) 
+                : (<p className="answer-error-text caption2-bold">&nbsp;</p>)
               }
               <p 
                 className={'answer-text-count caption2-bold ' + (isError ? 'answer-error' : '')}
@@ -192,7 +201,7 @@ const Answer = () => {
               <AlertTextPopup 
                 strongText="작성하신 오늘의 회고가 저장되었습니다."    //강조문구
                 text="오늘 하루도 수고 많았어요 :)"                   //일반문구1
-                confirmText="고밍페이지로 돌아가기"                   //confirm 문구
+                confirmText="고밍 페이지로 돌아가기"                   //confirm 문구
                 callbackFunction={goToNextQuestion}                 //메인페이지로 이동
           />
           ) : (
@@ -225,12 +234,13 @@ const Answer = () => {
         skipPopup && (
           <ConfirmPopup 
             strongText="지금 이 페이지를 나가면/n다시 돌아올 수 없어요!"
-            text="또한, 오늘의 질문 선택 기회도 그대로 1회 차감됩니다. 그래도 다음 질문 선택 페이지로 가시겠어요?"   //일반 텍스트 문구
-            confirmText="질문 선택하러 가기"                    //confirm 문구
+            text = {confirmText}
+            confirmText={confrimButtonText}                   //confirm 문구
             cancelText="돌아가기"                              //cancel 문구
             callbackFunction={skipThisQuestion}               //confirm 확인
             closeCallbackFuntion={()=>setSkipPopup(false)}    //cancel 팝업 닫기
             isFlex={false}
+            isReverse={true}
           />
         )
       }

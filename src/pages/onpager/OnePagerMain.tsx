@@ -47,8 +47,21 @@ const OnePagerMain = () => {
 
   //원페이저 다운로드 클릭 이벤트
   const downloadOnepager = async () => {
-    const dataURL = await toOnepagerImage()                 //url 주소 가져오기
-    downloadjs(dataURL, 'goming', 'image/png')              //다운로드
+    // data URL에서 base64 인코딩된 데이터를 추출합니다.
+    const base64Data = await toOnepagerImage()
+
+    // base64 데이터를 ArrayBuffer로 변환합니다.
+    const data = window.atob(base64Data.split(',')[1]);
+    const arrayBuffer = new ArrayBuffer(data.length);
+    const view = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < data.length; i++) {
+      view[i] = data.charCodeAt(i);
+    }
+
+    // ArrayBuffer를 Blob으로 변환합니다.
+    const blob = new Blob([arrayBuffer], {type: 'image/png'});
+
+    downloadjs(blob, 'goming', 'image/png')
   }
 
   //이메일 보내기 클릭 이벤트
@@ -89,13 +102,13 @@ const OnePagerMain = () => {
           </div>
           {/* 버튼영역 */}
           <div className='onepager-btn-wrap'>
-            <button className='btn-p-xl' onClick={downloadOnepager}>
+            <button className='btn-p-l' onClick={downloadOnepager}>
               <DownloadIcon></DownloadIcon>
-              &nbsp;<span>다운로드</span>
+              &nbsp;<span className='body3-bold' style={{display: 'inline-block'}}>다운로드</span>
             </button>
-            <button className='btn-p-xl' onClick={() => setConfirmEmailPopup(true)}>
+            <button className='btn-p-l' onClick={() => setConfirmEmailPopup(true)}>
               <EmailIcon></EmailIcon>
-              &nbsp;<span>이메일로 보내기</span>
+              &nbsp;<span className='body3-bold'>이메일로 보내기</span>
             </button>
           </div>
         </div>
