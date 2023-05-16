@@ -79,7 +79,6 @@ const ConfirmInputPopup = ({text, confirmText, cancelText, confirmCallbackFuncti
                 onChange={handleEmail}
                 onKeyUp={() => setEmailChk(true)}
                 className={'confirmpopup-input body3-regular' + (!emailChk ? ' input-error' : ' ConfirmInputPopup-input')}
-              /> */}
               {/* { !emailChk ? 
                   <p className="caption2-bold">이메일 주소를 다시 한번 입력해주세요</p>
                 : <></>

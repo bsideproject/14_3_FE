@@ -38,6 +38,9 @@ button:hover {
   background-color: #FFFFFF;
   color: var(--wgray12);
 }
+.modal h1, .confirm-modal>div {
+  color: var(--wgray13);
+}
 .modal-text-area > p{
   text-align: center;
 }

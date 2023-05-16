@@ -46,6 +46,7 @@
 }
 
 .header-text{
+  color: var(--wgary13);
   flex: 1;
 }
 .header-text > p {
