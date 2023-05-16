@@ -46,7 +46,6 @@
 }
 
 .header-text{
-  color: var(--wgary13);
   flex: 1;
 }
 .header-text > p {
@@ -54,6 +53,7 @@
   margin: 0 auto;
   padding-left: 8px;
   padding-right: 48px;
+  color: var(--wgray13);
 }
 
 

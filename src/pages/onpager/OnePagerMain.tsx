@@ -17,7 +17,7 @@ import { AxiosResponse } from 'axios';
 import fetch from 'utils/fetch';
 import GomingLogo from 'assets/images/main/onepager-goming-logo.png'
 import 'assets/pages/onepager/onepagermain.css'
-import OnepagerExampleView from 'assets/images/main/onepager-example.png'
+import OnepagerExampleView from 'components/onepager/OnepagerExampleView';  
 
 /**
  * @desc 원페이저 다운로드 로직
@@ -98,7 +98,8 @@ const OnePagerMain = () => {
             <p className='body1-bold'>미리보기</p>
           </div>
           <div className='onepager-wrap'>
-            <img src={OnepagerExampleView} alt="원페이저 미리보기 화면" width={'100%'} />
+            <p className='body3-bold'>{selectedMonth}월의 고밍</p>
+            <OnepagerExampleView />
           </div>
           {/* 버튼영역 */}
           <div className='onepager-btn-wrap'>
@@ -117,8 +118,8 @@ const OnePagerMain = () => {
          * 다운로드 영역
          * ***************************************************************************************/}
         {/* Canvas */}
-        <div className='onepager-download' style={{display:'none'}}>
-        {/* <div className='onepager-download'> */}
+        {/* <div className='onepager-download' style={{display:'none'}}> */}
+        <div className='onepager-download'>
           <div className='onepager-download-header'>
             <h1>{selectedMonth}월의 고밍</h1>
             <p className='body1-regular'>DATE~DATE</p>
@@ -136,7 +137,7 @@ const OnePagerMain = () => {
                     <DateFormatUI date={item.date} />
                     <AnsweredCategoryUI category={item.qc} />
                   </div>
-                  <div className="onepager-list-item-q body2-bold">{item.q}</div>
+                  <div className="onepager-list-item-q color-wgray13 body2-bold">{item.q}</div>
                   <div className="onepager-list-item-a body3-regular">{item.a}</div>
                 </div>
               ))
@@ -144,8 +145,8 @@ const OnePagerMain = () => {
           </Masonry>
 
           {/* 일러스트레이터 영역 */}
-          <div>
-            <SVG />
+          <div style={{height: '1080px'}}>
+            <SVG/>
           </div>
 
           {/* 일러스트 하단 로고 */}
@@ -162,7 +163,7 @@ const OnePagerMain = () => {
 
           {/* copyright */}
           <div className='onepager-download-copyright body2-regular'>
-            @Goming All right reserved.
+            © 2023. Goming. All rights reserved.
           </div>
           
         </div>

@@ -47,7 +47,7 @@ const KoreaLocale = {
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
-  const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList, setSelectedMonth} = useAnsweredList()
+  const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList, selectedMonth, setSelectedMonth} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
   const {setHeaderText, setIsNavigation} = useDefaultSets()
   
@@ -158,6 +158,10 @@ const MyCalendar = () => {
     const newDate:string = new Date(date).getFullYear().toString() + '. ' + newDay   
     return newDate
   }
+
+  //임시내용추가
+  // 선택 된 날짜가 이번 달 이상일 경우 모든 내용 없음
+  // todayMonth >= parseInt(selectedMonth) ? '' :
 
   return (
     <>
