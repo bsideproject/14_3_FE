@@ -45,7 +45,7 @@ const ConfirmPopup = (
         <div className='relative'>
           <div className='confirm-modal'>
             {/* 강조 텍스트 */}
-            <div className='headline3' style={{textAlign:'center', marginBottom:'12px'}}>
+            <div className='headline3 color-wgray13' style={{textAlign:'center', marginBottom:'12px'}}>
               {strongText && Item(strongText.toString())}
             </div>
             {/* 일반 텍스트 */}
