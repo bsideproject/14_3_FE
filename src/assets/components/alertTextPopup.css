@@ -18,6 +18,12 @@
   justify-content: center;
   align-items: center;
 }
+.color-wgray12 {
+  color: var(--wgray12);
+}
+.color-wgray13 {
+  color: var(--wgray13);
+}
 button{
   outline: none;
 }
@@ -31,9 +37,6 @@ button:hover {
   padding: 40px 24px;
   background-color: #FFFFFF;
   color: var(--wgray12);
-}
-.modal h1, .confirm-modal>div {
-  color: var(--wgray13);
 }
 .modal-text-area > p{
   text-align: center;

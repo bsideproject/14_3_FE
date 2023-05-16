@@ -128,7 +128,7 @@ const HideView = () => {
             회고록을 보며 지난 한 달 동안의<br/>
             나를 돌아보는 시간을 가져보세요.
           </p>
-        <hr color='#E4E2DD' style={{marginBottom: '80px'}}/>
+        <hr color='#E4E2DD' style={{border: 0, height: '1px', marginBottom: '80px'}}/>
         </div>
 
       </div>

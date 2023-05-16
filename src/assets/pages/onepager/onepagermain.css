@@ -1,15 +1,27 @@
 .onepager-wrap {
   position: relative;
+  display: flex;
 }
-.onepager-wrap img{
+.onepager-wrap p {
+  width: 100%;
+  position: absolute;
+  top: 36px;
+  color: var(--wgray01);
+  text-align: center;
+}
+.onepager-wrap svg{
+  display: block;
+  margin: 0 auto;
   margin-top: 12px;
   border-radius: 8px;
+  width:100%;
+  border: 1px solid var(--wgray04);
 }
 
 /* onepager-btn-wrap 원페이저 버튼 영역 */
 .onepager-btn-wrap{
   width: 100%;
-  margin-top: 49px;
+  margin-top: 48px;
   display: flex;
   justify-content: space-between;
   gap: 8px;
@@ -61,21 +73,27 @@
   display: flex;
   width: 1440px; /* gutter 사이즈 */
   margin: 0 auto;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 }
 
 .my-masonry-grid_column-download{
-  padding-left: 20px; /* gutter size */
   background-clip: padding-box;
   width: 340px;
 }
 .my-masonry-grid_column-download > div { 
   width: 340px;
   background: var(--wgray03);
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-size: 12px;
   border-radius: 8px;
   padding: 2px;
+}
+.my-masonry-grid_column-download:nth-of-type(1) { 
+  padding-left: 0px;
+}
+/* 마지막 gutter padding-right: 0 */
+.my-masonry-grid_column-download:nth-last-of-type(1) { 
+  margin-right: 0px;
 }
 /* title */
 .onepager-download-header {
@@ -118,7 +136,7 @@
   justify-content: center;
   vertical-align: middle;
 }
-.onepager-download-footer > div > svg {
+.onepager-download-footer > div > img {
   display: inline-block;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -130,6 +148,10 @@
   color: var(--wgray01);
   text-align: center;
   background-color: #2D4577;
+  font-size: 3px;
+  font-weight: 400;
+  line-height: 5px;
+  letter-spacing: -0.025em;
 }
 
 .onepager-list-item-q {
