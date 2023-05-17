@@ -439,14 +439,14 @@ const Register: React.FC = () => {
               이메일 수신 동의(선택)
             </label>
           </div>
-          <div className="register-email-explain">
-            *이메일을 통해 매월 말 월간 회고를 위한 원페이저를 보내드립니다.
+          <div className="register-email-explain wgray09">
+            *이메일을 통해 매월 말 월간 회고를 위한 월간고밍을 보내드립니다.
             <br />
             마이페이지에서 이메일 알람 수신 동의 여부를 변경할 수 있습니다.
           </div>
           <div className="register-flex-column-gap4 register-auth-content  margintop-16">
             <div className="body3-Bold">인증코드가 오지 않는다면?</div>
-            <div className="caption1-regular">
+            <div className="caption1-regular wgray12">
               스팸메일함 혹은 프로모션함을 확인해보시고, 다시 한 번 '인증하기'
               버튼을 눌러보세요.
             </div>
@@ -592,7 +592,7 @@ const Register: React.FC = () => {
           </div>
           <div className="register-flex-column-gap8 margintop-32">
             <div>이용 약관 동의 </div>
-            <div className="register-flex-row-gap8">
+            <div className="register-flex-row-gap4">
               <input
                 type="checkbox"
                 className="check-btn"
@@ -603,15 +603,19 @@ const Register: React.FC = () => {
               />
               <label
                 htmlFor="allcheck"
-                className="register-all-agree middleFont margintop-2"
+                className="register-all-agree middleFont  wgray12"
               >
                 전체 동의
               </label>
             </div>
             <hr
               className="margintop-8"
-              style={{ width: "100%" }}
-              color="#E9E7E2"
+              style={{
+                width: "100%",
+                border: 0,
+                height: "1px",
+                background: "#E9E7E2",
+              }}
             />
             <div className="register-flex-row-gap4 margintop-8">
               <input
@@ -624,7 +628,7 @@ const Register: React.FC = () => {
               />
               <label
                 htmlFor="ageCheck"
-                className="register-all-agree body3-regular"
+                className="register-all-agree body3-regular wgray12"
               >
                 (필수) 만 14세 이상입니다.
               </label>
@@ -640,11 +644,16 @@ const Register: React.FC = () => {
               />
               <label
                 htmlFor="infoCheck"
-                className="register-all-agree body3-regular"
+                className="register-all-agree body3-regular wgray12"
               >
                 (필수) 개인정보 수집 및 이용 동의
               </label>
-              <div style={{ width: "30px" }}>보기</div>
+              <div
+                className="wgray12"
+                style={{ width: "30px", fontWeight: "400" }}
+              >
+                보기
+              </div>
             </div>
             <div className="register-flex-row-gap4 margintop-8">
               <input
@@ -657,11 +666,16 @@ const Register: React.FC = () => {
               />
               <label
                 htmlFor="serviceCheck"
-                className="register-all-agree body3-regular"
+                className="register-all-agree body3-regular wgray12"
               >
                 (필수) 서비스 이용약관 동의
               </label>
-              <div style={{ width: "30px" }}>보기</div>
+              <div
+                className="wgray12"
+                style={{ width: "30px", fontWeight: "400" }}
+              >
+                보기
+              </div>
             </div>
           </div>
 
@@ -675,8 +689,8 @@ const Register: React.FC = () => {
             )}
             <button
               type="submit"
-              className="register-button body3-bold"
-              style={{ width: "100%" }}
+              className="register-button btn-p-xl body3-bold "
+              style={{ width: "100%", marginBottom: "160px" }}
             >
               회원 가입하기
             </button>
@@ -689,7 +703,6 @@ const Register: React.FC = () => {
         text2={""}
         callbackFunction={() => {}}
       /> */}
-      <Footer></Footer>
     </>
   );
 };

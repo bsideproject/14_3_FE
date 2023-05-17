@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const InputBox = React.memo(
   ({
@@ -38,6 +38,7 @@ const InputBox = React.memo(
     closeClick?: any;
     buttonClass?: any;
   }) => {
+    const [completeInputChk, setCompleteInputChk] = useState<boolean>(false);
     return (
       <>
         <div
@@ -57,7 +58,15 @@ const InputBox = React.memo(
               placeholder={inputPlaceholader}
               id={id}
               className={
-                isClose === true
+                completeInputChk === true
+                  ? isClose === true
+                    ? "register-input-error body3-regular margintop-8"
+                    : isClose === false
+                    ? "register-input-complete body3-regular margintop-8"
+                    : isClose === null
+                    ? "register-input-success body3-regular margintop-8"
+                    : ""
+                  : isClose === true
                   ? "register-input-error body3-regular margintop-8"
                   : isClose === false
                   ? "register-input body3-regular margintop-8"
@@ -67,7 +76,14 @@ const InputBox = React.memo(
               }
               // style={{ background: nickNameChk ? "" : "red" }}
               onChange={inputChange}
-              onBlur={inputBlur}
+              onBlur={() => {
+                if (inputValue.length > 0) {
+                  setCompleteInputChk(true);
+                } else {
+                  setCompleteInputChk(false);
+                }
+                inputBlur();
+              }}
               value={inputValue}
               maxLength={inputMaxLength}
               disabled={isDisable}
@@ -95,9 +111,9 @@ const InputBox = React.memo(
               type="button"
               className={
                 title
-                  ? "register-button btn-p-xl body3-bold margintop-28 marginleft-8 " +
+                  ? "register-button btn-p-xl body3-bold margintop-28 " +
                     buttonClass
-                  : "register-button btn-p-xl body3-bold margintop-8 marginleft-8 " +
+                  : "register-button btn-p-xl body3-bold margintop-8 " +
                     buttonClass
               }
               onClick={buttonClick}
