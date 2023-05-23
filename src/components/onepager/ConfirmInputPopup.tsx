@@ -18,9 +18,8 @@ import useAuthStore from "store/modules/Auth"
 const ConfirmInputPopup = ({text, confirmText, cancelText, confirmCallbackFunction, cancelCallbackFunction}:CONFIRM_INPUT_POPUP) => {
   const {userInfo} = useAuthStore(state => state)
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
   const [email, setEmail] = useState<string>(userInfo.eml)
-  const [emailChk, setEmailChk] = useState<boolean>(true) //이메일형식체크결과
+  const [emailChk, setEmailChk] = useState<boolean>(false) //이메일형식체크결과
 
   //email-onchange
   const handleEmail = ({target}:any) => {
@@ -48,7 +47,31 @@ const ConfirmInputPopup = ({text, confirmText, cancelText, confirmCallbackFuncti
               {LineBreak(text)} {/* 개행처리추가 */}
             </div>
             <div className="ConfirmInputPopup-inputwrap">
-              <label htmlFor="email" className="body3-bold">이메일 주소</label>
+              <InputBox
+                title="이메일"
+                inputPlaceholader={"이메일을 입력해주세요."}
+                inputMaxLength={30}
+                id={"email"}
+                inputClassName={"body3-bold"}
+                inputChange={handleEmail}
+                inputValue={email}
+                isButton={false}
+                // buttonClick={handleEmailExistCheck}
+                errObject={
+                  emailChk === true ? (
+                    <div className="register-input-error-msg">
+                      이메일을 입력해주세요.
+                    </div>
+                  ) : emailRegex.test(email) === false ? ( //이메일 형식이 바르지 않다면
+                    <div className="register-input-error-msg">
+                      이메일을 형식을 확인해주세요.
+                    </div>
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+              {/* <label htmlFor="email" className="body3-bold">이메일 주소</label>
               <input 
                 id="email" type="email" 
                 placeholder="이메일을 입력해주세요" 
@@ -56,11 +79,10 @@ const ConfirmInputPopup = ({text, confirmText, cancelText, confirmCallbackFuncti
                 onChange={handleEmail}
                 onKeyUp={() => setEmailChk(true)}
                 className={'confirmpopup-input body3-regular' + (!emailChk ? ' input-error' : ' ConfirmInputPopup-input')}
-              />
-              { !emailChk ? 
+              {/* { !emailChk ? 
                   <p className="caption2-bold">이메일 주소를 다시 한번 입력해주세요</p>
                 : <></>
-              }
+              } */}
             </div>
             <div className="ConfirmInputPopup-btnwrap">
               <button 

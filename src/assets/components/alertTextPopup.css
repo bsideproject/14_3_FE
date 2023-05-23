@@ -18,6 +18,12 @@
   justify-content: center;
   align-items: center;
 }
+.color-wgray12 {
+  color: var(--wgray12);
+}
+.color-wgray13 {
+  color: var(--wgray13);
+}
 button{
   outline: none;
 }

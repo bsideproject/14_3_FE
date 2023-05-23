@@ -13,11 +13,12 @@ const NotFound: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ padding: "32px 16px 0 16px" }}>
+    <>
       <div className="categorylist-wrap">
         <Header></Header>
-        <div className="notfound-image"></div>
-        <div className="">
+        <div style={{ padding: "32px 16px 0 16px" }}>
+          <div className="notfound-image"></div>
+
           <div
             className="headline3 notfound-title margintop-32"
             style={{ textAlign: "center" }}
@@ -33,24 +34,25 @@ const NotFound: React.FC = () => {
             원하시는 페이지가 삭제 또는 변경되었을 수 있어요.
             <br /> 메인 페이지로 돌아갈 수 있도록 도와드릴게요!
           </div>
+
+          <button
+            type="button"
+            className="register-button margintop-48 body3-bold"
+            style={{
+              width: "100%",
+              marginBottom: "160px",
+              color: "#FFFFFF",
+            }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            메인 페이지로 돌아가기
+          </button>
         </div>
-        <button
-          type="button"
-          className="register-button margintop-48 body3-bold"
-          style={{
-            width: "100%",
-            marginBottom: "166px",
-            color: "#FFFFFF",
-          }}
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          메인 페이지로 돌아가기
-        </button>
       </div>
       <Footer></Footer>
-    </div>
+    </>
   );
 };
 
