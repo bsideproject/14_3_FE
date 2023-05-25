@@ -18,7 +18,7 @@ import useAuthStore from "store/modules/Auth"
 const ConfirmInputPopup = ({text, confirmText, cancelText, confirmCallbackFunction, cancelCallbackFunction}:CONFIRM_INPUT_POPUP) => {
   const {userInfo} = useAuthStore(state => state)
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const [email, setEmail] = useState<string>(userInfo.eml)
+  const [email, setEmail] = useState<string>(userInfo.email)
   const [emailChk, setEmailChk] = useState<boolean>(false) //이메일형식체크결과
 
   //email-onchange

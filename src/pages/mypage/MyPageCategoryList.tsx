@@ -44,7 +44,7 @@ const MyPageCategoryList = () => {
   const handleLogout = () => { 
     const resetUserInfo = {
       usr_no: "",
-      eml: "",
+      email: "",
       usr_nm: "",
       sns_cls_cd: undefined,
       sns_token: undefined,
