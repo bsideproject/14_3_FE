@@ -37,7 +37,7 @@ const WithdrawalMain = () => {
   //탈퇴버튼을 최종적으로 눌렀을 경우
   const withdrawalAction = () => { 
     setStep(5)                     //popup안보이게 처리
-    withdrawalUser(userInfo.eml)   //회원탈퇴로직
+    withdrawalUser(userInfo.email)   //회원탈퇴로직
     setWithdrawalCompleted(true)   //메인으로이동 팝업출력
   }
 

@@ -14,7 +14,7 @@ interface AUTH_STATE {
 const useAuthStore = create<AUTH_STATE>((set) => ({
   userInfo: {
     usr_no: "",
-    eml: "goming@goming.co.kr",
+    email: "",
     usr_nm: "",
     sns_cls_cd: undefined,
     sns_token: undefined,
@@ -54,7 +54,7 @@ const useAuthStore = create<AUTH_STATE>((set) => ({
 
 const initialUserState = {
   usr_no: "",
-  eml: "",
+  email: "",
   usr_nm: "",
   sns_cls_cd: undefined,
   sns_token: undefined,

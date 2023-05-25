@@ -6,7 +6,7 @@ import RectangleDived from 'assets/images/rectangleDived.png'
 import useDefaultSets from 'store/modules/Defaults';
 import Header from 'components/auth/Header';
 import Footer from 'components/Footer';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 /**
  * @설명 로그인 페이지
@@ -19,6 +19,7 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //이메�
 const Regexp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/; //영문, 숫자 포함 8~25자리
 const Login:React.FC = () =>{
   const {setHeaderText, setIsNavigation} = useDefaultSets()
+  const {updateLoginStatus} = useAuthStore()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -28,6 +29,7 @@ const Login:React.FC = () =>{
   const [invalid, setInvalid] = useState<boolean>(true) //아이디비밀번호 일치x
 
   useEffect(()=>{
+    console.log(window.location.origin);
     if (localStorage.getItem('bside-remember-login')) { //로컬스토리지에서 email 가져오기
       const LSrememberEmail:string = String(localStorage.getItem('bside-remember-login'))
       if (LSrememberEmail.length > 0) {
@@ -54,7 +56,8 @@ const Login:React.FC = () =>{
     }
 
     //비밀번호 유효성 검사
-    if (Regexp.test(password) === false) {
+    const passwordCheckResult = Regexp.test(password) //이메일 형식 체크
+    if (passwordCheckResult === false) {
       setPasswordVerify(false)
       alert('비밀번호는 영문, 숫자 포함 8~25자리입니다')
       document.getElementById('password')?.focus()
@@ -67,18 +70,21 @@ const Login:React.FC = () =>{
     console.log(emailFormChk);
     
     
-    if (emailCheckResult && passwordVerify === true && emailFormChk === true) { //유효성 검사 통과 시 로그인 로직
+    if (emailCheckResult && passwordCheckResult) { //유효성 검사 통과 시 로그인 로직
       checkRememberEmail()
       const param = {
-        "eml": email
+        "email": email,
+        "password": password
       }
-      // const result = await axios.post('/api/inquiry-member', param)
+      const result:AxiosResponse = await axios.post(`http://localhost:8080/api/users/login`, {...param} , {withCredentials: false})
+      if (result?.data === "아이디 혹은 비밀번호가 일치하지 않습니다.") {
+        alert(result.data) // 알림컴포넌트창 출력
 
-      // if (result?.status === true) { //이후 형식 지정
-      //   // eslint-disable-next-line react-hooks/rules-of-hooks
-      //   // useAuthStore(state => state.updateLoginStatus(result.status, result.userInfo))  //1. state 상태 변경 
-      //   navigate('/main')//2. main page로 이동 : Main으로 이동 : 추후 경로 변경 필요
-      // }
+      } else {
+        const responseEmail = result?.data?.email
+        updateLoginStatus(true, responseEmail)    // 1.auth store 에 저장
+        navigate('/main')                         // 2. main 으로 이동
+      }
     } else {
       alert('아이디 혹은 비밀번호를 확인해주세요')
     }

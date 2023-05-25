@@ -1,7 +1,7 @@
 //사용자 정보 타입 
 export interface TYPE_USER_INFO {
   usr_no: string;
-  eml: string;
+  email: string;
   usr_nm: string;
   sns_cls_cd: number | undefined;
   sns_token: string | undefined;
