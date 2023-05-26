@@ -12,7 +12,9 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
 
   //카드 선택 이벤트
   const clickHandler = (item: any) => {
-    //style 배경 설정
+    /*********************************************
+     * style 설정
+     *********************************************/
     const id = item.index.toString()
     const selectedItem = document.getElementById(id) as HTMLElement
     selectedItem.style.backgroundColor = '#2D4577'
@@ -25,14 +27,14 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
 
     if (selected === false) {
       setShowFront(false); 
-      clickedEventHandler()
-      //카드 선택했다는 이벤트 호출 (db저장)
+      //카드 선택 api 호출 (db저장)
       //하루 선택 횟수 -1          (db저장)
       const selectedInfo = {
         email: 'guest',           //이메일정보
         itemIndex: item.index,    //선택한 카드의 index
       }
-            
+      
+      clickedEventHandler()
       setTimeout(() => {
         navigate('/answer', 
           {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import 'assets/components/card-select-main/nowSelectionStep.css'
 import useCardState from "store/modules/CardState";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "store/modules/Auth";
 const stepList = [{index: 1}, {index: 2}, {index: 3}];
 /**
  * @설명 잔여 질문뽑기 횟수 안내
@@ -12,22 +13,20 @@ const stepList = [{index: 1}, {index: 2}, {index: 3}];
 const NowSelectionStep = () => {
   const navigate = useNavigate()
   const [nowSelectionStep, setSelectionStep] = useState<number>(1);
-  const {todayCardSelectStep, getCardSelectStep, getFourSelectCards} = useCardState()  //card State - zustand 사용하기
+  const {todayCardSelectStep, getCardSelectStep, getFourSelectCards} = useCardState()  //cardState
+  const {userInfo} = useAuthStore();
   
   useEffect(()=>{   
-    // 금일 남은 답변 횟수 가져오기 [1-3]
-    const email = ''
-    getCardSelectStep(email)  //질문회차 조회
+    getCardSelectStep(userInfo.email)     //금일 남은 답변 횟수 가져오기 [1-3]
+    setSelectionStep(todayCardSelectStep) //현재 질문회차 값 설정
 
-    let todayAnswerStep = todayCardSelectStep ? todayCardSelectStep : 1 //로그인하지 않았을 경우도 들어올 수 있음 
-    setSelectionStep(todayAnswerStep)
-    
-    //TODO: db에서 값이 주어지지 않을 경우, 전체 카드 검색 조회로 분기처리 
-    console.log(todayCardSelectStep)
     //3번 모두 답변했을 경우
-    //3번 미만 답변 혹은 처음 방문일 경우
-    getFourSelectCards()
-
+    if (todayCardSelectStep > 3) {
+      navigate('/answer/complete', {replace: true})         //history 삭제 후 이동
+    } else {
+      getFourSelectCards(userInfo.email)  //4개의 카드 정보 가져오기
+    }
+    
     
   },[])
   return (
