@@ -1,16 +1,19 @@
+import axios, { AxiosResponse } from "axios";
 import fetch from "utils/fetch";
 import { create } from "zustand";
 
 type CARD = {
   todayCardSelectStep: number
   updateCardSelectStep: Function    //사용자의 카드 선택 상태 업데이트
-  getCardSelectStep: Function       //카드단계 조회 - dbconnection
+  getCardSelectStep: Function       //카드단계 조회 
   getFourSelectCards: Function      //카드 4개 조회
+  fourCards: Array<any>  //조회된카드목록
   todayCardSelectStatus: boolean
 }
 
 const useCardState = create<CARD>((set) => ({
-  todayCardSelectStep: 2,         //카드 선택 단계
+  fourCards: [],
+  todayCardSelectStep: 1,         //카드 선택 단계
   todayCardSelectStatus: true,   //카드 선택 가능여부 (3번의 답변이 완료되었을 경우)
 
   /*******************************************************
@@ -27,7 +30,6 @@ const useCardState = create<CARD>((set) => ({
     if (nextStepNum > 3) {  //마지막 단계가 업데이트되었을 경우
       param.todayCardSelectStatus = false     
     }
-    param.todayCardSelectStep = nextStepNum
 
     /*****************************************************
      * @desc 사용자 카드선택상태 수정 서비스 호출
@@ -44,26 +46,24 @@ const useCardState = create<CARD>((set) => ({
    * @desc 해당 함수를 호출하여 단계, 상태값 세팅 처리
    * @content [todayCardSelectStep, todayCardSelectStatus]: 단계, 상태
    ******************************************************/
-  getCardSelectStep: (email: string): void => {
-    const param = {email}
-    // const result = fetch('/api/getCardSelectStatus', param)
-    // set({todayCardSelectStep: result.data.cardStep})
-    // set({todayCardSelectStatus: result.data.selectionAvaiable}) //결과값세팅
+  getCardSelectStep: async (email: string): Promise<void> => {
+    const param = {email: ''}
+    param.email = email ? email : ''  //로그인했을 경우 이메일, 아닐경우 빈값 전달
+    const response: AxiosResponse = await axios.get(`http://localhost:8080/api/question/answered/day?email=${param.email}`, {withCredentials: false})
 
+    // 단계 상태값 세팅
+    set({todayCardSelectStep: response.data ++ })
   },
 
   /*******************************************************
    * @desc 카드 4개 조회
    * @param {string} email
    ******************************************************/ 
-  getFourSelectCards: (email?: string): void => {
-    const param = {
-      email: ''
-    }
-    if (email) {  //로그인했을경우
-      param.email = email
-    }
-    //const result = fetch('/api/getFourSelectCards', param)
+  getFourSelectCards: async (email?: string): Promise<void> => {
+    const param = {email: ''}
+    param.email = email ? email : ''  //로그인했을 경우 이메일, 아닐경우 빈값 전달
+    const response: AxiosResponse = await axios.get(`/api/question/selectByCategory?email=${param.email}`, {withCredentials: false})
+    set({fourCards: response.data}) //조회된 카드목록 세팅
   },
 
 }));
