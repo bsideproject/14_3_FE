@@ -91,10 +91,19 @@ const MyCalendar = () => {
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
-    setValue(null)                                            //선택한[일] 초기화
-    setActiveCalendarBtn(true)                                //리스트만보기 버튼 active
-    setTextLabel(activeStartDate)                             //라벨영역제어
-    getMonthData(activeStartDate)                             //월간데이터 조회
+    // 이동한 월이 당월일 경우, 오늘 날짜가 선택되도록 처리
+    if (getYearAndMonth(activeStartDate) === todayYearMonth) {
+      setValue(today)                                         //선택일자 오늘로 변경
+      setTextLabel(today)                                     //라벨영역제어
+      updateIsThisMonth(true)                                 //원페이저 다운로드 표시
+      setActiveCalendarBtn(false)                             //리스트만보기 버튼 비활성화
+    } else {
+      setValue(null)                                          //선택한[일] 초기화
+      setTextLabel(activeStartDate)                           //라벨영역제어
+      updateIsThisMonth(false)                                //남은기간표시
+      getMonthData(activeStartDate)                           //월간데이터 조회
+      setActiveCalendarBtn(true)                              //리스트만보기 버튼 active
+    }
     setSelectedMonth(activeStartDate.getMonth()+1)            //선택된 월 store 세팅
     if (getYearAndMonth(activeStartDate) >= todayYearMonth) { //활성화된날짜 >= 오늘연월 ?
       updateIsThisMonth(true)                                 //원페이저 다운로드 표시
