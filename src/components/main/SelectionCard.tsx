@@ -34,8 +34,8 @@ const SelectionCard = () => {
   //fourCards : 4개의 카드 정보
   const {fourCards} = useCardState()  //cardState
   const clickedEventHandler = (card:any) => {
-    console.log(card);
-    
+    //console.log(card);
+    //console.log(fourCards);
     setSelected(true)
   }
 
