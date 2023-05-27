@@ -24,7 +24,7 @@ const categoryList = [ //카테고리목록
 const MyPageCategoryList = () => {
   //헤더설정
   const {setHeaderText, setHeaderBgColor,setIsNavigation} = useDefaultSets()
-  const {updateLoginStatus} = useAuthStore((state)=>state)
+  const {updateLoginStatus, logout} = useAuthStore((state)=>state)
   const [logoutCheck, setLogoutCheck] = useState<boolean>(false)
   useEffect(()=> {
     setHeaderText()
@@ -42,21 +42,7 @@ const MyPageCategoryList = () => {
 
   //로그아웃 프로세스
   const handleLogout = () => { 
-    const resetUserInfo = {
-      usr_no: "",
-      email: "",
-      usr_nm: "",
-      sns_cls_cd: undefined,
-      sns_token: undefined,
-      gndr_cls_cd: null,
-      brdt: null,
-      join_dtm: null,
-      last_lgn_dtm: undefined,
-      update_dtm: undefined,
-      whdwl_dtm: undefined,
-    }
-    //로그아웃, store 초기화
-    updateLoginStatus(false, resetUserInfo) //초기화
+    logout()  //로그아웃
 
     //로그인으로 이동
     navigate('/login', {replace: true})
