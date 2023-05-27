@@ -33,10 +33,9 @@ const SelectionCard = () => {
   const [selected, setSelected] = useState<boolean>(false)  //카드 선택 확인용
   //fourCards : 4개의 카드 정보
   const {fourCards} = useCardState()  //cardState
-  console.log(fourCards);
-  
-
-  const clickedEventHandler = () => {
+  const clickedEventHandler = (card:any) => {
+    console.log(card);
+    
     setSelected(true)
   }
 

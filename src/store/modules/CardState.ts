@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import fetch from "utils/fetch";
 import { create } from "zustand";
 
 type CARD = {
@@ -9,12 +8,24 @@ type CARD = {
   getFourSelectCards: Function      //카드 4개 조회
   fourCards: Array<any>  //조회된카드목록
   todayCardSelectStatus: boolean
+  getOneCategory: Function         //카테고리별 1개 조회
 }
 
 const useCardState = create<CARD>((set) => ({
   fourCards: [],
   todayCardSelectStep: 1,         //카드 선택 단계
   todayCardSelectStatus: true,   //카드 선택 가능여부 (3번의 답변이 완료되었을 경우)
+
+  getOneCategory: async (usrNo: string): Promise<void> => {
+    console.log('getOneCategory start');
+    
+    const param = {usrNo: Number(usrNo)}
+    //axios 호출
+    const response: AxiosResponse = await axios.get(`http://localhost:8080/api/category/select?usrNo=${param.usrNo}`, {withCredentials: false})
+    console.log('getOneCategory end');
+    
+    console.log(response)
+  },
 
   /*******************************************************
    * @desc 사용자의 카드 선택 상태 업데이트
@@ -62,7 +73,7 @@ const useCardState = create<CARD>((set) => ({
   getFourSelectCards: async (email?: string): Promise<void> => {
     const param = {email: ''}
     param.email = email ? email : ''  //로그인했을 경우 이메일, 아닐경우 빈값 전달
-    const response: AxiosResponse = await axios.get(`/api/question/selectByCategory?email=${param.email}`, {withCredentials: false})
+    const response: AxiosResponse = await axios.get(`/api/category/select?email=${param.email}`, {withCredentials: false})
     set({fourCards: response.data}) //조회된 카드목록 세팅
   },
 

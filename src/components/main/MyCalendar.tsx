@@ -115,13 +115,13 @@ const MyCalendar = () => {
   //& 해당 [월]의 데이터 목록 조회
   const getMonthData = (date:Date) => {
     const activeViewMonth = getYearAndMonth(date)    //view 로 보고 있는 해당 [연-월]
-    const param = {email: userInfo.email, month: activeViewMonth}
+    const param = {email: userInfo.eml, month: activeViewMonth}
     getQnaDateList(param)    //date, count 포맷 데이터 조회
   }
 
   // 해당 월의 [일] 데이터 목록 조회
   const getDayData = (date:Date) => {
-    const param = {email: userInfo.email, month: date}
+    const param = {email: userInfo.eml, month: date}
     getOneDayQnaDateList(param)
   }
 

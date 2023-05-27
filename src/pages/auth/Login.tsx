@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { TYPE_USER_INFO } from "types/authTypes";
 import useAuthStore from 'store/modules/Auth';
 import { Link, useNavigate } from 'react-router-dom';
 import 'assets/pages/auth/login.css'
@@ -35,6 +36,7 @@ const Login:React.FC = () =>{
       if (LSrememberEmail.length > 0) {
         setEmail(LSrememberEmail)
         setEmailFormChk(true)
+        handleRememberEmail({target: {value: true}})
         document.getElementById('password')?.focus()
       }
     }
@@ -71,7 +73,7 @@ const Login:React.FC = () =>{
     
     
     if (emailCheckResult && passwordCheckResult) { //유효성 검사 통과 시 로그인 로직
-      checkRememberEmail()
+      checkRememberEmail()  //이메일 저장 로컬스토리지에 설정
       const param = {
         "email": email,
         "password": password
@@ -81,8 +83,10 @@ const Login:React.FC = () =>{
         alert(result.data) // 알림컴포넌트창 출력
 
       } else {
-        const responseEmail = result?.data?.email
-        updateLoginStatus(true, responseEmail)    // 1.auth store 에 저장
+        console.log(result);
+        
+        const userInfoData: TYPE_USER_INFO = result?.data && result?.data
+        updateLoginStatus(true, userInfoData)    // 1.auth store 에 저장
         navigate('/main')                         // 2. main 으로 이동
       }
     } else {
