@@ -4,7 +4,7 @@ import NowSelectionStep from "components/main/NowSelectionStep"
 import TodayDate from "components/main/TodayDate"
 import useCardState from "store/modules/CardState"
 import TodayAnswerCompleted from "components/main/TodayAnswerCompleted"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import useDefaultSets from "store/modules/Defaults"
 import Header from "components/auth/Header"
 import Footer from "components/Footer"
@@ -23,12 +23,13 @@ const MainContent = () => {
   const {
     todayCardSelectStep,   //금일 남은 답변 횟수
     getCardSelectStep,     //금일 남은 답변 횟수 가져오기 [1-3]
-    getFourSelectCards,    //4개의 카드 정보 가져오기
     todayCardSelectStatus, //금일 카드 뽑기 가능 여부
-    getOneCategory,        //카테고리 1개 조회
+    getCards,              //4개의 카드 정보 가져오기
   } = useCardState()       //카드 상태 관리 store
 
   useEffect(() => {
+    console.log('MainContent useEffect start');
+    
     setHeaderText('')
     setIsNavigation(true)
 
@@ -40,9 +41,9 @@ const MainContent = () => {
     if (todayCardSelectStep > 3) {      //3번 모두 답변했을 경우
       navigate('/answer/complete', {replace: true})  
     } else {
-      getOneCategory(userInfo.usrNo)    //카테고리 1개 조회
-      getFourSelectCards(userInfo.eml)  //4개의 카드 정보 가져오기
+      getCards(userInfo.eml)            //4개의 카드 정보 가져오기
     }
+    console.log('MainContent useEffect end');
 
     return () => setIsNavigation(false)
   },[])

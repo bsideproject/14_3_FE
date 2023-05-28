@@ -7,13 +7,12 @@ import Header from "components/auth/Header"
 import Footer from "components/Footer"
 import NavigationBar from "components/NavigationBar"
 import useAuthStore from "store/modules/Auth"
-import { TYPE_USER_INFO } from "types/authTypes";
 import ConfirmPopup from "components/ConfirmPopup"
 
 const categoryList = [ //카테고리목록
   { text: '개인정보관리', location: '/mypage' },
   { text: '공지사항', location: '/notice' },
-  { text: '문의사항', location: '/qna' },
+  // { text: '문의사항', location: '/qna' },
 ]
 
 /**
@@ -43,9 +42,7 @@ const MyPageCategoryList = () => {
   //로그아웃 프로세스
   const handleLogout = () => { 
     logout()  //로그아웃
-
-    //로그인으로 이동
-    navigate('/login', {replace: true})
+    navigate('/login', {replace: true}) //로그인으로 이동
   }
   return (
     <>

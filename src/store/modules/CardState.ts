@@ -9,6 +9,7 @@ type CARD = {
   fourCards: Array<any>  //조회된카드목록
   todayCardSelectStatus: boolean
   getOneCategory: Function         //카테고리별 1개 조회
+  getCards: Function              //카드 4개 조회 (카테고리 조회 -> 카테고리 저장 -> 유저별 카드 조회)
 }
 
 const useCardState = create<CARD>((set) => ({
@@ -60,10 +61,13 @@ const useCardState = create<CARD>((set) => ({
   getCardSelectStep: async (email: string): Promise<void> => {
     const param = {email: ''}
     param.email = email ? email : ''  //로그인했을 경우 이메일, 아닐경우 빈값 전달
-    const response: AxiosResponse = await axios.get(`http://localhost:8080/api/question/answered/day?email=${param.email}`, {withCredentials: false})
-
+    console.log('getCardSelectStep start')
+    const response: AxiosResponse = await axios.get(`http://localhost:8080/api/question/answered/day?writer=${param.email}`, {withCredentials: false})
+    console.log('getCardSelectStep start')
+    console.log(response)
+    console.log('getCardSelectStep end')
     // 단계 상태값 세팅
-    set({todayCardSelectStep: response.data ++ })
+    set({todayCardSelectStep: ++response.data})
   },
 
   /*******************************************************
@@ -77,6 +81,30 @@ const useCardState = create<CARD>((set) => ({
     set({fourCards: response.data}) //조회된 카드목록 세팅
   },
 
+  /*******************************************************
+   * @desc 카드 4개 조회 (카테고리 조회 -> 카테고리 저장 -> 유저별 카드 조회)
+   * @param {string} email
+   * @return {Array} fourCards
+   *******************************************************/
+  getCards: async (email?: string): Promise<void> => {
+    console.log('getCards start');
+
+    const param = {email: ''}
+    param.email = email ? email : ''   //로그인했을 경우 이메일, 아닐경우 빈값 전달
+    let url: string = 'http://localhost:8080'               //axios url 초기화
+
+    if (email) {
+      url += `/api/category/select?email=${param.email}`
+    } else {
+      url += `/api/category/select`
+    }
+    const response: AxiosResponse = await axios.get(url, {withCredentials: false})
+    console.log(response.data);
+    console.log('getCards end');
+    
+    
+    set({fourCards: response.data}) //조회된 카드목록 세팅
+  }
 }));
 
 export default useCardState;
