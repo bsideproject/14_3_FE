@@ -28,8 +28,6 @@ const MainContent = () => {
   } = useCardState()       //카드 상태 관리 store
 
   useEffect(() => {
-    console.log('MainContent useEffect start');
-    
     setHeaderText('')
     setIsNavigation(true)
 
@@ -41,9 +39,8 @@ const MainContent = () => {
     if (todayCardSelectStep > 3) {      //3번 모두 답변했을 경우
       navigate('/answer/complete', {replace: true})  
     } else {
-      getCards(userInfo.eml)            //4개의 카드 정보 가져오기
+      getCards(userInfo.eml)  //4개의 카드 정보 가져오기 or 단일 카드 정보 조회
     }
-    console.log('MainContent useEffect end');
 
     return () => setIsNavigation(false)
   },[])
@@ -69,7 +66,7 @@ const MainContent = () => {
             <div style={{margin: '0 16px'}}>
               <TodayDate />      {/* 금일자, 사용자정보 */}
               <NowSelectionStep nowStep={todayCardSelectStep} /> {/* 잔여 선택회수 */}
-              <SelectionCard />  {/* 카드 4개 출력 */}
+              <SelectionCard/>  {/* 카드 4개 출력 */}
             </div>
           </div>
           <Footer></Footer>

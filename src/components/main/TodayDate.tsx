@@ -19,12 +19,12 @@ const TodayDate = () => {
 
   useEffect(() => {
     //임시코드
-    // if(userInfo.usr_nm === "" || userInfo.usr_nm === undefined || userInfo.usr_nm === null) {
-    //   setNickName('커피중독자')
-    // } else {
-    //   setNickName(userInfo.usr_nm)  //값 세팅
-    // }
-  })
+    if(userInfo.usrNm === "" || userInfo.usrNm === undefined || userInfo.usrNm === null) {
+      setNickName('커피중독자')
+    } else {
+      setNickName(userInfo.usrNm)  //값 세팅
+    }
+  },[userInfo.usrNm])
   
   return (
     <>
