@@ -1,30 +1,10 @@
 import 'assets/pages/main/mainContent.css'
 import Cards from './Cards';
-import { useEffect, useState } from 'react';
-import fetch from 'utils/fetch';
-import { useNavigate } from 'react-router';
-import {DinnerImg,
-  FlowerImg,
-  LampImg,
-  BookImg,
-  ExcerciseImg,
-  ShowerImg,
-  SelectedBook,
-  SelectedDinner,
-  SelectedExcercise,
-  SelectedFlower,
-  SelectedLamp,
-  SelectedShower
-} from './CardsImages'
+import { useState, useEffect } from 'react';
+import useCardState from 'store/modules/CardState';
+import useAuthStore from 'store/modules/Auth';
+import { useNavigate } from 'react-router-dom';
 
-const testData = [
-  {index: 251521, q: 'Question 1 ?', img: DinnerImg, desc: 'dinner', aftrImg: SelectedDinner},
-  {index: 124452, q: 'Question 1 ?', img: FlowerImg, desc: 'flower', aftrImg: SelectedFlower},
-  {index: 125622, q: 'Question 1 ?', img: LampImg, desc: 'lamp', aftrImg: SelectedLamp},
-  {index: 746432, q: 'Question 1 ?', img: BookImg, desc: 'book', aftrImg: SelectedBook},
-  // {index: 746432, q: 'Question 1 ?', img: BookImg, desc: 'exercise', aftrImg: SelectedExcercise},
-  // {index: 746432, q: 'Question 1 ?', img: BookImg, desc: 'shower', aftrImg: SelectedShower},
-]
 /**
  * @설명 카드 뽑기 컴포넌트 - 목록 조회
  * @작성자 김상훈
@@ -33,30 +13,37 @@ const testData = [
 const SelectionCard = () => {
   const navigate = useNavigate()
   const [selected, setSelected] = useState<boolean>(false)  //카드 선택 확인용
-  
+  const [cards, setCards] = useState<Array<any>>([])        //카드 목록
+  const { userInfo } = useAuthStore()
+  const { oneCard, fourCards, saveSelection, saveOneCard } = useCardState()      //카드 상태 관리 store
 
-  const clickedEventHandler = () => {
+  const clickedEventHandler = (card:any) => {
     setSelected(true)
+    saveOneCard(card)
+    const param = {
+      qNo: card.qno.toString(),
+      email: userInfo.eml
+    }
+    saveSelection(param.email, param.qNo) //선택한 카드 저장
   }
   useEffect(() => {
-    //1.카드선택상태조회
-    // const cardSelectStatus = fetch('/api/getCardSeletion', email)
-    // cardSelectStatus.data.map((item) => { //카드선택내용 (최대 3회 반복) 확인
-    //   if (item.status === 1) {  //카드답변을 안했을 경우
-    //     return navigate(`/answer/${item.cardIndex}`, {replace: true})   //history 삭제 후 이동
-    //   }
-    // })
+    setCards(fourCards)
+    if (oneCard.length > 0) {
+      //선택한 카드가 있을 경우
+      navigate('/answer', {
+        state: {qno: oneCard[0].qno}, 
+        replace: true
+      })
+    }
+  }, [fourCards, oneCard])
+  
 
-    //2.카드목록조회
-    // const newCards = fetch('/api/getCards', email)
-    // setCards(newCards.data) //card 세팅
-  },[])
   return (
     <>
       <div className='main-card-area'>
-        { 
-        testData.map(item => (
-          <Cards key={item.index} item={item} selected={selected} clickedEventHandler={clickedEventHandler} />
+        {
+        cards.map(item => (
+          <Cards key={item.qno} item={item} selected={selected} clickedEventHandler={clickedEventHandler} />
         ))
         }
       </div>

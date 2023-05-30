@@ -1,9 +1,10 @@
 
 import {CSSTransition} from 'react-transition-group';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import useCardState from 'store/modules/CardState';
 import GomingTextImg from 'assets/images/main/goming-text.png'
+import useCardState from 'store/modules/CardState';
+import useAuthStore from 'store/modules/Auth';
 
 const Cards = ({item, selected, clickedEventHandler}: any) => {
   const navigate = useNavigate()
@@ -12,8 +13,12 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
 
   //카드 선택 이벤트
   const clickHandler = (item: any) => {
-    //style 배경 설정
-    const id = item.index.toString()
+    console.log(item);
+    
+    /*********************************************
+     * style 설정
+     *********************************************/
+    const id = item.qno.toString()
     const selectedItem = document.getElementById(id) as HTMLElement
     selectedItem.style.backgroundColor = '#2D4577'
 
@@ -23,20 +28,16 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
       cards[i].style.pointerEvents = 'none'
     }
 
+    /*********************************************
+     * api 호출
+     *********************************************/
     if (selected === false) {
-      setShowFront(false); 
-      clickedEventHandler()
-      //카드 선택했다는 이벤트 호출 (db저장)
-      //하루 선택 횟수 -1          (db저장)
-      const selectedInfo = {
-        email: 'guest',           //이메일정보
-        itemIndex: item.index,    //선택한 카드의 index
-      }
-            
+      setShowFront(false)  //카드 뒷면 보이기      
+      clickedEventHandler(item)
       setTimeout(() => {
         navigate('/answer', 
           {
-            state: {itemIndex: item.index}, 
+            state: {qno: item.qno}, 
             replace: true
           })
       }, 1500);
@@ -53,7 +54,7 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
         <div ref={nodeRef} className='card' onClick={() => clickHandler(item)}>
           {/* 카드 앞면 내용: 컨텐츠 */}
           <div className='card-front'>
-            <div className='card-in' id={item.index}>
+            <div className='card-in' id={item.qno}>
               {
                 showFront ? (
                   <img src={item.img} alt={item.desc} width={'100%'} className="card-scale"/>

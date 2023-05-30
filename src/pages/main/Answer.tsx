@@ -22,13 +22,14 @@ const Answer = () => {
   const [isError, setIsError] = useState<boolean>(false)         //에러
   const [btnActive, setBtnActive] = useState<boolean>(true)      //버튼제어
   const [saveClicked, setSaveClicked] = useState<boolean>(false) //저장버튼 클릭여부
-  // const {isLogin} = useAuthStore((state) => state);           //사용자계정정보 조회 -> isLogin
   const [isSaved, setIsSaved] = useState<boolean>(false)         //DB연동 성공여부 (저장성공)
   const [needToLogin, setNeedToLogin] = useState<boolean>(false) //로그인안했을 경우 출력 confirm 팝업 처리
-  const {todayCardSelectStep, updateCardSelectStep} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
   const [confirmText, setConfirmText] = useState<string>('')      //confirm 팝업 텍스트
   const [confrimButtonText, setConfirmButtonText] = useState<string>('') //confirm 팝업 버튼 텍스트
   
+  const {oneCard, todayCardSelectStep, updateCardSelectStep, answerQuestion} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
+  const {userInfo, isLogin} = useAuthStore() //사용자 정보
+
   useEffect(() => { 
     if (todayCardSelectStep === 3) {
       setConfirmText("그래도 고밍 페이지로 가시겠어요?")
@@ -38,19 +39,9 @@ const Answer = () => {
       setConfirmButtonText("질문 선택하러 가기")
     }
     setHeaderText('답변 작성하기')
+    console.log('useEffect', oneCard[0]);
+    
   },[])
-
-  /******************************************************************/
-  /* @desc 질문                                                     */
-  /******************************************************************/
-
-  //index, q
-  //const result = fetch('/api/getCardInfo', itemIndex)  //카드 정보 조회
-  // const cardInfo = result.data
-  const cardInfo = {
-    index: itemIndex,
-    q: '질문입니다?'
-  }
 
   /******************************************************************/
   /* @desc 답변                                                     */
@@ -81,38 +72,25 @@ const Answer = () => {
   //2.로그인 체크
   const loginCheck = () => {
     setSaveClicked(false) //팝업 닫기
-    const isLogin = true
     //로그인 여부에 따라 [저장, 로그인유도]
     isLogin ? insertAnswer() : setNeedToLogin(false)
   }
 
   // 로그인 되었을 경우
-  //2.답변 저장 - api 호출 - callbackfunction
-  const insertAnswer = () => {
+  // 2.답변 저장 - api 호출 - callbackfunction
+  const insertAnswer = async () => {
     const param:ANSWER_CONTENT = {
-      itemIndex,      //질문 index
-      answer          //답변 내용
+      qNo: oneCard[0].qno,         //질문 index
+      aWriter: userInfo.eml,       //작성자
+      aAnswerContent: answer,       //답변 내용
     }
-    console.log(param)    //전달내용출력
-    /******************************************************************/
-    /* @desc 답변 저장 서비스 호출                                      */
-    /******************************************************************/
-    // const result: any = fetch('/api/insertAnswer', param)  
-    // const resultInfo = result.data
-    // if(resultInfo === 1) {  //성공 시
-    setIsSaved(true)    //저장 성공 세팅 
-    // }
+    await answerQuestion(param) //답변 저장
+    setIsSaved(true)                  //저장 성공 세팅 
+    navigate('/main', {replace:true}) //메인화면으로 이동
   }
 
   //로그인 안했을 경우
-  //로그인 어쩌구 저쩌구 출력
   const goToLogin = () => {
-    const param:ANSWER_CONTENT = {
-      itemIndex,      //질문 index
-      answer          //답변 내용
-    }
-    localStorage.removeItem('goming-setAnswer')                 //localStorage에 저장되어있던 답변 항목이 있다면 제거
-    localStorage.setItem('goming-setAnswer', param.toString()); //localStorage에 저장
     navigate('/login')  //로그인페이지로 이동
   }
 
@@ -142,8 +120,7 @@ const Answer = () => {
             {/* 질문 컴포넌트 */}
             <AnswerNowStep />
             {/* 질문 내용 */}
-            <p className="question-content body1-bold">내가 인생에서 놓쳐서 아쉬운 게 있다면 어떤 건가요?, 나는 삶에서 어떤 것을 자주 놓치나요?(예: 가족과 보내는 시간, 건강
-              최대 4줄을 작성할 수 있으며, ui 화면길이에 따라 바뀝니다.</p>
+            <p className="question-content body1-bold">{oneCard[0].qquestion}</p>
           </div>
 
           {/* 답변영역 */}
@@ -252,8 +229,9 @@ const Answer = () => {
 }
 
 type ANSWER_CONTENT = {
-  itemIndex: number
-  answer: string
+  qNo: number
+  aWriter: string
+  aAnswerContent: string
 }
 
 export default Answer;

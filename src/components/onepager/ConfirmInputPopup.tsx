@@ -28,10 +28,14 @@ const ConfirmInputPopup = ({text, confirmText, cancelText, confirmCallbackFuncti
 
   //이메일 형식에 맞는지 확인, 콜백 호출
   const beforeConfirmCallbackFunction = () => {
-    if ( emailRegex.test(email) === true ) {
-      confirmCallbackFunction(email)
+    if (email !== null && email !== '') {
+      if ( emailRegex.test(email) === true ) {
+        confirmCallbackFunction(email)
+      } else {
+        setEmailChk(false)
+        return false
+      }
     } else {
-      setEmailChk(false)
       return false
     }
   }
