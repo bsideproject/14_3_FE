@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const InputBox = React.memo(
   ({
     title, //  제목
+    inputHeight = "48px",
     buttonTitle, // 버튼 제목
     inputPlaceholader,
     inputMaxLength = 30,
@@ -21,6 +22,7 @@ const InputBox = React.memo(
     buttonClass,
   }: {
     title?: string;
+    inputHeight?: string;
     buttonTitle?: string;
     inputPlaceholader?: string;
     inputMaxLength?: number;
@@ -43,7 +45,9 @@ const InputBox = React.memo(
       <>
         <div
           className={inputClassName}
-          style={{ height: title ? "100%" : "48px" }}
+          style={{
+            height: title ? "100%" : inputHeight,
+          }}
         >
           <div className="register-box">
             {title ? <div className="body3-bold">{title}</div> : <></>}

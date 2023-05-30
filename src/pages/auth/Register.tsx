@@ -426,7 +426,7 @@ const Register: React.FC = () => {
               확인
             </button>
           </div> */}
-          <div className="register-flex-row-gap4 margintop-11">
+          <div className="register-flex-row-gap4 margintop-8">
             <input
               type="checkbox"
               className="check-btn"
@@ -439,7 +439,7 @@ const Register: React.FC = () => {
               이메일 수신 동의(선택)
             </label>
           </div>
-          <div className="register-email-explain wgray09">
+          <div className="register-email-explain wgray09 margintop-8">
             *이메일을 통해 매월 말 월간 회고를 위한 월간고밍을 보내드립니다.
             <br />
             마이페이지에서 이메일 알람 수신 동의 여부를 변경할 수 있습니다.
@@ -489,11 +489,12 @@ const Register: React.FC = () => {
               inputPlaceholader={"비밀번호를 다시 입력해주세요."}
               id={"newPasswordConfirm"}
               inputType={"password"}
-              inputClassName={"register-flex-row-gap0 "}
+              inputClassName={"register-flex-row-gap0"}
               inputChange={handlePasswordReconfirmUpdate}
               inputValue={passwordReconfirm}
               isButton={false}
               inputBlur={handlePasswordReconfirmBlur}
+              inputHeight={"56px"}
               isClose={
                 passwordReconfirmSuccessChk === null
                   ? false
@@ -518,8 +519,10 @@ const Register: React.FC = () => {
               }
             />
           </div>
-          <div className="register-flex-column-gap10 margintop-32">
-            <div>성별(선택)</div>
+          <div className="register-flex-column-gap8 margintop-32">
+            <div>
+              성별<span className="wgray10">(선택)</span>
+            </div>
             <div>
               <input
                 className="register-gender-box"

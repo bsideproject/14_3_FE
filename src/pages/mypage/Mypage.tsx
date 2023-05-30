@@ -306,7 +306,7 @@ const Mypage: React.FC = () => {
               </>
             )}
 
-            <div className="register-flex-column-gap10 margintop-32">
+            <div className="register-flex-column-gap8 margintop-32">
               <div>성별</div>
               <div>
                 <input
