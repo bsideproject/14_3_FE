@@ -46,13 +46,7 @@ const InputBox = React.memo(
           style={{ height: title ? "100%" : "48px" }}
         >
           <div className="register-box">
-            {title ? (
-              <div className="body3-bold" style={{ lineHeight: "20px" }}>
-                {title}
-              </div>
-            ) : (
-              <></>
-            )}
+            {title ? <div className="body3-bold">{title}</div> : <></>}
             <input
               type={inputType}
               placeholder={inputPlaceholader}
@@ -60,18 +54,18 @@ const InputBox = React.memo(
               className={
                 completeInputChk === true
                   ? isClose === true
-                    ? "register-input-error body3-regular margintop-8"
+                    ? "register-input-error body3-bold margintop-8"
                     : isClose === false
-                    ? "register-input-complete body3-regular margintop-8"
+                    ? "register-input-complete body3-bold margintop-8"
                     : isClose === null
-                    ? "register-input-success body3-regular margintop-8"
+                    ? "register-input-success body3-bold margintop-8"
                     : ""
                   : isClose === true
-                  ? "register-input-error body3-regular margintop-8"
+                  ? "register-input-error body3-bold margintop-8"
                   : isClose === false
-                  ? "register-input body3-regular margintop-8"
+                  ? "register-input body3-bold margintop-8"
                   : isClose === null
-                  ? "register-input-success body3-regular margintop-8"
+                  ? "register-input-success body3-bold margintop-8"
                   : ""
               }
               // style={{ background: nickNameChk ? "" : "red" }}
@@ -83,6 +77,9 @@ const InputBox = React.memo(
                   setCompleteInputChk(false);
                 }
                 inputBlur();
+              }}
+              onFocus={() => {
+                setCompleteInputChk(false);
               }}
               value={inputValue}
               maxLength={inputMaxLength}
