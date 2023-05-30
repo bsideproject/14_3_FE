@@ -310,19 +310,22 @@ const Mypage: React.FC = () => {
               <div>성별</div>
               <div>
                 <input
-                  className="radio-btn"
+                  className="register-gender-box"
                   value="M"
                   id="male"
                   type="radio"
                   checked={gender === true}
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
-                />
-                <label htmlFor="male" className="register-gender-label">
+                />{" "}
+                <label
+                  htmlFor="male"
+                  className="register-gender-label body3-regular"
+                >
                   여성
                 </label>
                 <input
-                  className="radio-btn marginleft-35"
+                  className="register-gender-box marginleft-35"
                   value="F"
                   id="feMale"
                   type="radio"
@@ -334,7 +337,7 @@ const Mypage: React.FC = () => {
                   남성
                 </label>
                 <input
-                  className="radio-btn marginleft-35"
+                  className="register-gender-box marginleft-35"
                   value="N"
                   id="not"
                   type="radio"
