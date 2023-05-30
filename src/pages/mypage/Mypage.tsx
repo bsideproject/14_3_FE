@@ -15,6 +15,7 @@ const Mypage: React.FC = () => {
   //헤더설정
   const { setHeaderText, setIsNavigation } = useDefaultSets();
   useEffect(() => {
+    setTimeout(() => setTest(false), 5000);
     setHeaderText("개인 정보 수정");
     setIsNavigation(false);
     return () => setIsNavigation(true);
@@ -23,6 +24,7 @@ const Mypage: React.FC = () => {
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>(registerInfo[0].email);
+
   const [nickName, setNickName] = useState<string>(registerInfo[0].nickName);
   const [password, setPassword] = useState<string>(registerInfo[0].password);
   const [rePassword, setRePassword] = useState<string>("");
@@ -35,6 +37,7 @@ const Mypage: React.FC = () => {
     useState<boolean | null>(null);
 
   const [rePasswordChk, setRePasswordChk] = useState<boolean>(false);
+  const [test, setTest] = useState<boolean>(true);
 
   const [rePasswordExistChk, setRePasswordExistChk] = useState<boolean>(false);
 
@@ -159,7 +162,7 @@ const Mypage: React.FC = () => {
   };
   return (
     <>
-      <Loading />
+      {test === true ? <Loading /> : test}
       <div>
         <Header />
         <div className="register-main">
