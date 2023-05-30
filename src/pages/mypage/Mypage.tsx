@@ -9,6 +9,7 @@ import useDefaultSets from "store/modules/Defaults";
 import InputBox from "components/common/InputBox";
 import Header from "components/auth/Header";
 import AlertTextPopup from "components/AlertTextPopup";
+import Loading from "components/common/Loading";
 
 const Mypage: React.FC = () => {
   //헤더설정
@@ -158,6 +159,7 @@ const Mypage: React.FC = () => {
   };
   return (
     <>
+      <Loading />
       <div>
         <Header />
         <div className="register-main">
