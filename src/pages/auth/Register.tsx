@@ -395,6 +395,7 @@ const Register: React.FC = () => {
             inputChange={handleAuthNumberUpdate}
             inputValue={authNumber}
             buttonClick={handleEmailExistCheck}
+            inputHeight="56px"
             errObject={
               authNumberChk === false ? (
                 <div className="register-input-error-msg">
@@ -534,7 +535,7 @@ const Register: React.FC = () => {
               />
               <label
                 htmlFor="male"
-                className="register-gender-label body3-regular"
+                className="register-gender-label body3-regular wgray12"
               >
                 여성
               </label>
@@ -547,7 +548,7 @@ const Register: React.FC = () => {
                 onChange={handleGenderCheck}
               />
               <label
-                className="register-gender-label body3-regular"
+                className="register-gender-label body3-regular wgray12"
                 htmlFor="feMale"
               >
                 남성
