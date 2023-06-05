@@ -6,10 +6,11 @@ import useDefaultSets from "store/modules/Defaults";
 import "assets/pages/main/notFound.css";
 import { useNavigate } from "react-router-dom";
 const NotFound: React.FC = () => {
-  const { setHeaderText } = useDefaultSets();
+  const { setHeaderText, setIsNavigation } = useDefaultSets();
   const navigate = useNavigate();
   useEffect(() => {
     setHeaderText("");
+    setIsNavigation(false);
   }, []);
 
   return (
@@ -40,7 +41,6 @@ const NotFound: React.FC = () => {
             className="register-button margintop-48 body3-bold"
             style={{
               width: "100%",
-              marginBottom: "160px",
               color: "#FFFFFF",
             }}
             onClick={() => {
