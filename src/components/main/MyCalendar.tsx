@@ -22,6 +22,19 @@ const getYearAndMonth = (date:any) => {
 }
 
 /**
+ * @desc 날짜를 입력 시, 연월일을 출력합니다.
+ */
+const getYearAndMonthAndDay = (date:any) => {
+  const year = new Date(date).getFullYear()
+  const month = (new Date(date).getMonth() + 1).toString()
+  const newMonth:string = month.length === 1 ? '0' + month : month
+  const day = (new Date(date).getDate()).toString()
+  const newDay:string = day.length === 1 ? '0' + day : day
+
+  return year.toString() + '-' + newMonth + '-' + newDay
+}
+
+/**
  * @desc 같은 일자인지 비교
  * @param {Date} date1
  * @param {Date} date2
