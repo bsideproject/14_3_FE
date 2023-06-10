@@ -35,7 +35,7 @@ type QNA_DATE_ITEM = { //qna 객체 1개
  * @desc Main - QNA List 상태관리
  */
 const useAnsweredList = create<ANSWER_LIST>((set) => ({
-  answeredList: [...testData],
+  answeredList: [],
   answeredCount: 0,
   isThisMonth: true,
   selectedDate: '',              //선택한 날짜
@@ -46,7 +46,10 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @return answeredList update
    */
   getAnsweredList: async (param: any) => {
-    const result = await axios.get('/api/getansweredList', {...param})
+    console.log('getAnsweredList', param);
+    const result = await axios.get(`http://localhost:8080/api/question/answered/${param.email}/${param.date}`)
+    console.log('getAnsweredList', result);
+    
     const newList = result?.data?.list ? result?.data?.list : []    //값이 없을 경우 빈 배열로 초기화
     set({answeredList: newList})  
   },
@@ -56,7 +59,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @param 
    */
   getAnsweredCount: async (param: any) => {
-    const result = await axios.get('/api/getansweredList', param)
+    const result = await axios.get(`http://localhost:8080/api/question/answeredCount/${param.date[0]}/${param.date[1]}/${param.email}`)
     const count = result?.data.count
     set({answeredCount: count})
   },

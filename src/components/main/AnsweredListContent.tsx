@@ -12,7 +12,7 @@ import DateFormatUI from "./DateFormatUI";
  * @내용 사용자가 답변한 내용 출력 리스트 5개 단위
  */
 const AnsweredListContent = () => {
-  const {answeredList} = useAnsweredList()
+  const {answeredList, answeredCount} = useAnsweredList()
   const navigate = useNavigate()
 
   //상세페이지로 이동
@@ -27,7 +27,7 @@ const AnsweredListContent = () => {
 
         {/* 목록 개수 출력 */}
         <div className="answered-list-item-count-wrap body2-bold">
-          총 <span className="answered-list-count-text">{answeredList.length}개</span>의 답변이 있습니다.
+          총 <span className="answered-list-count-text">{answeredCount.toString()}개</span>의 답변이 있습니다.
         </div>
 
         {/* 목록 내용 출력 */}
