@@ -25,6 +25,7 @@ type CARD_STORE = {
   saveSelection: Function         //카드 1개 선택 저장
   saveOneCard: Function           //선택한 카드 정보 저장
   answerQuestion: Function        //답변 저장
+
 }
 
 const useCardState = create<CARD_STORE>((set) => ({
@@ -85,8 +86,16 @@ const useCardState = create<CARD_STORE>((set) => ({
       url += `/api/category/select`
     }
     const response: AxiosResponse = await axios.get(url, {withCredentials: false})
+    console.log(response)
     let cards:Array<any> = []  //조회된 카드목록
     let card:Array<any> = []  //조회된 카드목록
+
+    //카드 조회 결과가 "오늘의 카테고리 선택을 모두 진행하였습니다." 일 경우 
+    if (response.data === "일일개수초과") {
+      set({todayCardSelectStatus: false})  //더이상 선택 못함
+      return
+    }
+    
     if (typeof response.data === 'object') {
       if (response.data.length > 2) {
         cards = response.data   //조회된 카드목록(4개)
@@ -97,7 +106,7 @@ const useCardState = create<CARD_STORE>((set) => ({
       }
     }
 
-    if (cards.length > 0) {
+    if (cards.length > 3) {
       //카드 순서에 따라 랜덤으로 이미지값 추가 세팅
       cards[0].img = BookImg
       cards[0].aftrImg = SelectedBook
@@ -107,14 +116,10 @@ const useCardState = create<CARD_STORE>((set) => ({
       cards[2].aftrImg = SelectedLamp
       cards[3].img = FlowerImg
       cards[3].aftrImg = SelectedFlower
-      set({fourCards: cards})   //조회된 카드목록 세팅
-    } else if (card.length > 0){
-      console.log(card)
-      set({oneCard: card})      //조회된 카드 세팅
-    } else {
-      console.log('none');
-    }
+    } 
 
+    set({oneCard: card})      //조회된 카드 세팅
+    set({fourCards: cards})   //조회된 카드목록 세팅
   },
 
   /**
@@ -152,7 +157,9 @@ const useCardState = create<CARD_STORE>((set) => ({
     param["aAnswerContent"] = answer.aAnswerContent
     const result = await axios.put('http://localhost:8080/api/answers/saveAnswer', param, {withCredentials: false})
     set({oneCard: []})
-  }
+  },
+
+
 }));
 type ANSWER_CONTENT = {
   qNo: number

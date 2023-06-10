@@ -25,7 +25,7 @@ import OnepagerExampleView from 'components/onepager/OnepagerExampleView';
  */
 const OnePagerMain = () => {
   const {setHeaderText, setIsNavigation} = useDefaultSets()
-  const {selectedMonth, qnaList} = useAnsweredList()
+  const {selectedMonth, answeredList} = useAnsweredList()
   const [confirmEmailPopup, setConfirmEmailPopup] = useState<boolean>(false)  //confirm팝업제어
   const [toastPopup, setToastPopup] = useState<boolean>(false)  //toast팝업제어
 
@@ -131,7 +131,7 @@ const OnePagerMain = () => {
             className="my-masonry-grid-download"
             columnClassName="my-masonry-grid_column-download">
             {
-              qnaList.map(item => (
+              answeredList.map(item => (
                 <div key={item.index}>
                   <div className="answered-list-item-header-wrap caption1-regular">
                     <DateFormatUI date={item.date} />
