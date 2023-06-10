@@ -8,6 +8,7 @@ import Header from "components/auth/Header"
 import Footer from "components/Footer"
 import NavigationBar from "components/NavigationBar"
 import useDefaultSets from "store/modules/Defaults"
+import useAuthStore from "store/modules/Auth"
 
 /**
  * @설명 답변목록 조회
