@@ -87,7 +87,6 @@ const MyCalendar = () => {
       // 답변한 목록 조회, 답변한 개수 조회
       if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() <= today.getMonth()) {
         getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
-        getAnsweredCount({date: getYearAndMonth(nextValue), email: userInfo.eml})       //해당일자 데이터 조회
       }
 
       if( selectedDate.getDate() === nextValue.getDate() ) {
@@ -138,6 +137,9 @@ const MyCalendar = () => {
     const convertedDate = type === 'month' ? getYearAndMonth(date) : getYearAndMonthAndDay(date)
     const param = {email: userInfo.eml, date: convertedDate}
     getAnsweredList(param)    //date, count 포맷 데이터 조회
+    const covertedCountDate = getYearAndMonth(date)                        //년-월 까지만 보냄
+
+    getAnsweredCount({date: covertedCountDate.split('-'), email: userInfo.eml})       //해당일자 데이터 조회
   }
   
   //& 해당 [월]의 데이터 목록 조회
