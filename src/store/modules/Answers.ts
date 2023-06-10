@@ -49,7 +49,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     console.log('getAnsweredList', param);
     const result = await axios.get(`http://localhost:8080/api/question/answered/${param.email}/${param.date}`)
     console.log('getAnsweredList', result);
-    
     const newList = result?.data?.list ? result?.data?.list : []    //값이 없을 경우 빈 배열로 초기화
     set({answeredList: newList})  
   },

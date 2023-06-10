@@ -137,7 +137,6 @@ const MyCalendar = () => {
     const convertedDate = type === 'month' ? getYearAndMonth(date) : getYearAndMonthAndDay(date)
     const param = {email: userInfo.eml, date: convertedDate}
     getAnsweredList(param)    //date, count 포맷 데이터 조회
-
     const covertedCountDate = getYearAndMonth(date)                        //년-월 까지만 보냄
 
     getAnsweredCount({date: covertedCountDate.split('-'), email: userInfo.eml})       //해당일자 데이터 조회
