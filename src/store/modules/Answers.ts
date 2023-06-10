@@ -1,17 +1,21 @@
-import fetch from "utils/fetch";
 import { create } from "zustand";
 import {testData, testData2} from './testData'
+import axios from "axios";
 
 type ANSWER_LIST = {
-  qnaList: Array<QNA_ITEM>
-  getNewList: Function
-  qnaDateList: Array<QNA_DATE_ITEM>
-  getQnaDateList: Function
+  answeredList: Array<any>    //답변목록
+  getAnsweredList: Function   //답변목록 조회
+
+  answeredCount: Number       //답변한 개수
+  getAnsweredCount: Function  //답변한 개수 조회
+  
   isThisMonth: boolean                //MyCalendar 기준, 페이지의 당월 상태 유무
   updateIsThisMonth: Function         //페이지의 당월 상태변경함수
-  getOneDayQnaDateList: Function      //선택일 date,count조회
+  
   selectedMonth: string               //현재선택되어진 월
   setSelectedMonth: Function          //현재선택되어진 월 set
+  selectedDate: string                //선택한 날짜
+  setSelectDate: Function             //선택한 날짜 저장
 }
 
 type QNA_ITEM = { //qna 리스트 목록 객체
@@ -31,61 +35,34 @@ type QNA_DATE_ITEM = { //qna 객체 1개
  * @desc Main - QNA List 상태관리
  */
 const useAnsweredList = create<ANSWER_LIST>((set) => ({
-  qnaList: [...testData],
-  qnaDateList: [...testData2],
+  answeredList: [...testData],
+  answeredCount: 0,
   isThisMonth: true,
+  selectedDate: '',              //선택한 날짜
   selectedMonth: (new Date().getMonth() + 1).toString(),
 
   /**
    * @desc 해당 월의 qna 리스트 조회
-   * @return qnaList update
+   * @return answeredList update
    */
-  getNewList: ({email, month}: GET_LIST) => {
-    const param = {
-      email: email,
-      month: month
-    }
-    // const result = fetch('/api/getQnaList', param)
-    // const newList = result?.data.list
-    const newList:Array<QNA_ITEM> = testData
-    set({qnaList: newList})                             //새로운 목록 입력
+  getAnsweredList: async (param: any) => {
+    const result = await axios.get('/api/getansweredList', {...param})
+    const newList = result?.data?.list ? result?.data?.list : []    //값이 없을 경우 빈 배열로 초기화
+    set({answeredList: newList})  
   },
 
   /**
-   * @desc 해당 [월]의 qna 리스트 조회
-   * @return update
+   * @desc 해당 월에 답변한 개수 조회
+   * @param 
    */
-  getQnaDateList: ({email, month}: GET_LIST):void => {
-    const param = {
-      email: email,
-      month: month
-    }
-    // const result = fetch('/api/getQnaDateList', param)
-    const newList1:Array<QNA_ITEM> = testData
-    const newList2:Array<QNA_DATE_ITEM> = testData2
-    set({qnaList: newList1})                        //리스트출력
-    set({qnaDateList: newList2})                    //date내용출력
-  },
-
-  /**
-   * @desc 해당 [일]의 qna 리스트 조회
-   * @return update
-   */
-  getOneDayQnaDateList: ({email, date}: GET_LIST):void => {
-    const param = {
-      email: email,
-      date: date
-    }
-    // const result = fetch('/api/getOneDayQnaDateList', param)
-    const newList1:Array<QNA_ITEM> = testData
-    const newList2:Array<QNA_DATE_ITEM> = testData2
-    set({qnaList: newList1})                        //리스트출력
-    set({qnaDateList: newList2})                    //date내용출력
+  getAnsweredCount: async (param: any) => {
+    const result = await axios.get('/api/getansweredList', param)
+    const count = result?.data.count
+    set({answeredCount: count})
   },
 
   /**
    * @desc 당월 view update 
-   * @param {boolean} newState
    */
   updateIsThisMonth: (newState: boolean):void => {
     set({isThisMonth: newState})
@@ -96,6 +73,14 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   setSelectedMonth: (newState:number):void => {
     set({selectedMonth: newState.toString()})
+  },
+
+  
+  /**
+   * @desc selectedDate 상태값 세팅
+  */
+  setSelectDate: (date: string): void => {
+    set({selectedDate: date})
   }
 }))
 

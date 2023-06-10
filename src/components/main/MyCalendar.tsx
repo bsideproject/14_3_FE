@@ -22,6 +22,19 @@ const getYearAndMonth = (date:any) => {
 }
 
 /**
+ * @desc 날짜를 입력 시, 연월일을 출력합니다.
+ */
+const getYearAndMonthAndDay = (date:any) => {
+  const year = new Date(date).getFullYear()
+  const month = (new Date(date).getMonth() + 1).toString()
+  const newMonth:string = month.length === 1 ? '0' + month : month
+  const day = (new Date(date).getDate()).toString()
+  const newDay:string = day.length === 1 ? '0' + day : day
+
+  return year.toString() + '-' + newMonth + '-' + newDay
+}
+
+/**
  * @desc 같은 일자인지 비교
  * @param {Date} date1
  * @param {Date} date2
@@ -47,9 +60,10 @@ const KoreaLocale = {
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
-  const {qnaDateList, getQnaDateList, updateIsThisMonth, getOneDayQnaDateList, selectedMonth, setSelectedMonth} = useAnsweredList()
+  const {answeredList, answeredCount, updateIsThisMonth, selectedMonth, setSelectedMonth, setSelectDate} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
   const {setHeaderText, setIsNavigation} = useDefaultSets()
+  const {getAnsweredList, getAnsweredCount} = useAnsweredList() 
   
   const [selectedDate, setValue] = useState<any>(new Date())            //calendar - 선택일자
   const today = new Date()
@@ -69,12 +83,18 @@ const MyCalendar = () => {
   const updateDate = (nextValue:any) => {
     //선택한 일자가 같은 경우
     if (selectedDate) {
+      // 선택한 날짜가 이번 달 이전인 경우
+      // 답변한 목록 조회, 답변한 개수 조회
+      if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() <= today.getMonth()) {
+        getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
+        getAnsweredCount({date: getYearAndMonth(nextValue), email: userInfo.eml})       //해당일자 데이터 조회
+      }
+
       if( selectedDate.getDate() === nextValue.getDate() ) {
-        //당월 목록 조회 + 해당일자 선택 해제
-        getMonthData(nextValue)
         setSelectedMonth(nextValue.getMonth()+1)   //선택된 월 store 세팅
         setValue(null)
         setActiveCalendarBtn(true)                //리스트만보기 버튼
+
       } else {
         setTextLabel(nextValue)                  //[선택-오늘]변경제어
         setValue(nextValue)                      //현재선택된날짜설정
@@ -112,23 +132,27 @@ const MyCalendar = () => {
     }
   }
 
+  // 해당 일자의 데이터 목록 [월/일]별 조회
+  const getQnAList = (date:Date, type:String) => {
+    // type 에 따른 date 포맷 변경
+    const convertedDate = type === 'month' ? getYearAndMonth(date) : getYearAndMonthAndDay(date)
+    const param = {email: userInfo.eml, date: convertedDate}
+    getAnsweredList(param)    //date, count 포맷 데이터 조회
+  }
+  
   //& 해당 [월]의 데이터 목록 조회
   const getMonthData = (date:Date) => {
-    const activeViewMonth = getYearAndMonth(date)    //view 로 보고 있는 해당 [연-월]
-    const param = {email: userInfo.eml, month: activeViewMonth}
-    getQnaDateList(param)    //date, count 포맷 데이터 조회
+    getQnAList(date, 'month')
   }
 
   // 해당 월의 [일] 데이터 목록 조회
   const getDayData = (date:Date) => {
-    const param = {email: userInfo.eml, month: date}
-    getOneDayQnaDateList(param)
+    getQnAList(date, 'day')
   }
 
   /****************************************************************************
    * 데이터 설정
    ****************************************************************************/
-
   /**
    * @desc 데이터가 있는 날짜의 nodeList를 체크 -> 값과 비교 -> 클래스 추가
    */
@@ -156,6 +180,7 @@ const MyCalendar = () => {
   }
 
   useEffect(()=>{
+    setSelectDate(selectedDate)  //cardstore 에 selectedDate 기본 설정
     updateCalendarWithDesign()
     setHeaderText('')
   }, [textlabelControl])
@@ -167,10 +192,6 @@ const MyCalendar = () => {
     const newDate:string = new Date(date).getFullYear().toString() + '. ' + newDay   
     return newDate
   }
-
-  //임시내용추가
-  // 선택 된 날짜가 이번 달 이상일 경우 모든 내용 없음
-  // todayMonth >= parseInt(selectedMonth) ? '' :
 
   return (
     <>
@@ -195,9 +216,9 @@ const MyCalendar = () => {
           //tile 스타일지정
           tileClassName={
             ({ date, view }) => {
-              const index = qnaDateList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
+              const index = answeredList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
               if (index > -1) {
-                return 'cal-item-' + qnaDateList[index].count
+                return 'cal-item-' + answeredList[index].count
               }
             }
           }
@@ -226,11 +247,11 @@ const MyCalendar = () => {
               <img src={SELECT_ICON} alt="" width={12} height={12}/>
               {
                 isSameDay(textlabelControl, today)
-                 ? (
-                  <span>오늘</span> /* 1. 당월 */
-                ) : (
-                  <span>선택</span> /* 2. 전월 */
-                ) 
+                  ? (
+                    <span>오늘</span> /* 1. 당월 */
+                  ) : (
+                    <span>선택</span> /* 2. 전월 */
+                  ) 
               }
             </div>
           )

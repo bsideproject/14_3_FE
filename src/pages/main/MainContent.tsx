@@ -25,10 +25,12 @@ const MainContent = () => {
     getCardSelectStep,     //금일 남은 답변 횟수 가져오기 [1-3]
     todayCardSelectStatus, //금일 카드 뽑기 가능 여부
     getCards,              //4개의 카드 정보 가져오기
-    fourCards              //4개의 카드 정보
+    fourCards,              //4개의 카드 정보
+    oneCard                 //단일 카드 정보
   } = useCardState()       //카드 상태 관리 store
 
   useEffect(() => {
+    console.log(fourCards, oneCard)
     setHeaderText('')
     setIsNavigation(true)
 
@@ -40,11 +42,11 @@ const MainContent = () => {
     if (todayCardSelectStep > 3) {      //3번 모두 답변했을 경우
       navigate('/answer/complete', {replace: true})  
     } else {
-      if(fourCards.length === 0) {    // 4개의 카드 정보가 없을 경우
+      if(fourCards.length === 0 && oneCard.length === 0) {    // 4개의 카드 정보가 없을 경우
         getCards(userInfo.eml)        // 4개의 카드 정보 가져오기 or 단일 카드 정보 조회
-      }
+      } 
     }
-
+    
     return () => setIsNavigation(false)
   },[])
 

@@ -12,13 +12,8 @@ import DateFormatUI from "./DateFormatUI";
  * @내용 사용자가 답변한 내용 출력 리스트 5개 단위
  */
 const AnsweredListContent = () => {
-  const [answeredList, setAnsweredList] = useState<any>([{}])       //Q&A 목록
-  const {qnaList} = useAnsweredList()
+  const {answeredList} = useAnsweredList()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    setAnsweredList(qnaList)
-  }, [qnaList]) //qnaList 가 업데이트 될 때마다 리렌더링
 
   //상세페이지로 이동
   const viewAnswer = (a_num:number):void => {
