@@ -26,10 +26,10 @@ const SelectionCard = () => {
     }
     saveSelection(param.email, param.qNo) //선택한 카드 저장
   }
+
   useEffect(() => {
     setCards(fourCards)
-    if (oneCard.length > 0) {
-      //선택한 카드가 있을 경우
+    if (oneCard.length > 0) {       //선택한 카드가 있을 경우
       navigate('/answer', {
         state: {qno: oneCard[0].qno}, 
         replace: true
