@@ -91,7 +91,7 @@ const useCardState = create<CARD_STORE>((set) => ({
     let card:Array<any> = []  //조회된 카드목록
 
     //카드 조회 결과가 "오늘의 카테고리 선택을 모두 진행하였습니다." 일 경우 
-    if (response.data === "3개의 카테고리를 모두 뽑았습니다.") {
+    if (response.data === "오늘의 카테고리 선택을 모두 진행하였습니다. ") {
       set({todayCardSelectStatus: false})  //더이상 선택 못함
       return
     }

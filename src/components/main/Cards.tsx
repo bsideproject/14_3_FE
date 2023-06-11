@@ -12,7 +12,7 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
   const [showFront, setShowFront] = useState(true)
 
   //카드 선택 이벤트
-  const clickHandler = (item: any) => {
+  const clickHandler = async (item: any) => {
     console.log(item);
     
     /*********************************************
@@ -34,15 +34,23 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
     if (selected === false) {
       setShowFront(false)  //카드 뒷면 보이기      
       clickedEventHandler(item)
+      moveToAnswerPage(item)
+    }
+  }
+
+  const moveToAnswerPage = (item:any) => { 
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         navigate('/answer', 
           {
             state: {qno: item.qno}, 
             replace: true
           })
+        resolve('success')
       }, 1500);
-    }
+    })
   }
+
   return (
     <>
       <CSSTransition 
