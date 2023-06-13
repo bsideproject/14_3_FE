@@ -104,6 +104,11 @@ const useCardState = create<CARD_STORE>((set) => ({
         cards = []
         card = response.data   //조회된 카드(1개) 
       }
+    } else {
+      console.log('asdsad')
+      card = []
+      cards = []
+      set({todayCardSelectStatus: false})  //더이상 선택 못함
     }
 
     if (cards.length > 3) {
@@ -156,7 +161,8 @@ const useCardState = create<CARD_STORE>((set) => ({
     param["qNo"] = answer.qNo
     param["aAnswerContent"] = answer.aAnswerContent
     const result = await axios.put('http://localhost:8080/api/answers/saveAnswer', param, {withCredentials: false})
-    set({oneCard: []})
+    set({fourCards: []})  //카드목록 초기화
+    set({oneCard: []})    //선택한 카드 초기화
   },
 
 

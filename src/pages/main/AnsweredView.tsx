@@ -8,14 +8,8 @@ import AnsweredCategoryUI from "components/main/AnsweredCategoryUI"
 import Header from "components/auth/Header"
 import Footer from "components/Footer"
 import NavigationBar from "components/NavigationBar"
+import useAnsweredList from "store/modules/Answers"
 
-const testData = {
-    index: 124156,
-    date: "2023-04-11",
-    qc: 'exploration',   //나의탐구
-    q: '질문입니다?질문입니다?질문입니다?질문입니다?질문입니다?',
-    a: '답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?답변입니다?'
-  }
 /**
  * @desc 답변 상세 화면
  * @desc 만약 데이터 조회가 안될 시 이전페이지로 이동 하도록 처리
@@ -25,30 +19,16 @@ const AnsweredView = () => {
   const location = useLocation()                    //parameter
   const state = location.state as { a_num: number; };
   const a_num = state.a_num                         //getParameter
-  const [answer, setAnswer] = useState<ANSWER>({
-    index: 0,
-    date: '',
-    qc: '',
-    q: '',
-    a: ''
-  })  //answer
+  const {answeredView} = useAnsweredList()
 
   useEffect(() => {
     setHeaderText('답변 상세 보기')
     setIsNavigation(false)
+
     // 전달받은 값이 존재하지 않을경우
-    if (!a_num) {
+    if (!answeredView) {
       window.history.back()
-    } else {
-      //전달 받은 값을 상세조회
-      const param = {
-        a_num: a_num
-      }
-      //const result = fetch('/api/getAnswerInfo', param)
-      // setAnswer(result?.data?.answerInfo)  //state 에 저장
-      //임시
-      setAnswer(testData)
-    }
+    } 
 
     return () => setHeaderText()
   },[])
@@ -61,14 +41,14 @@ const AnsweredView = () => {
           <Header></Header>
           <div className="answered-view-inner-wrap">
             <div className="answered-list-item-header-wrap caption1-regular">
-              <DateFormatUI date={answer?.date} />
-              <AnsweredCategoryUI category={answer?.qc} />
+              <DateFormatUI date={answeredView.date} />
+              <AnsweredCategoryUI category={answeredView.category} />
             </div>
             <div className="body1-bold answered-list-item-q answered-list-item-q-2">
-              {answer?.q}
+              {answeredView.question}
             </div>
             <div className="body2-regular answered-view-item-a">
-              {answer?.a}
+              {answeredView.answer}
             </div>
           </div>
       </div>
@@ -79,11 +59,10 @@ const AnsweredView = () => {
 
 // answer 타입 선언
 type ANSWER = {
-  index: number
   date: string
-  qc: string
-  q: string
-  a: string
+  category: string
+  question: string
+  answer: string
 }
 
 export default AnsweredView

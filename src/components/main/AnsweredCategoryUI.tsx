@@ -11,13 +11,12 @@ const AnsweredCategoryUI = ({category}: any) => {
   let categoryText = ''
 
   switch (category) {
-    case 'exploration':  bgColor = '#C4DCF0'; categoryText = '나의 탐구'; break;
-    case 'daily':        bgColor = '#DFF0C4'; categoryText = '나의 기억'; break;
-    case 'preferences':  bgColor = '#FAD39C'; categoryText = '나의 취향'; break;
+    case '탐구':  bgColor = '#C4DCF0'; categoryText = '나의 탐구'; break;
+    case '기억':        bgColor = '#DFF0C4'; categoryText = '나의 기억'; break;
+    case '일상':         bgColor = '#FAD39C'; categoryText = '나의 취향';  break;
     case 'memory':       bgColor = '#DDC4F0'; categoryText = '나의 일상'; break;
-    case 'wish':         bgColor = '#FAC8D4'; categoryText = '나의 꿈'; break;
-    // case:             bgColor = '#E9E7E2'; break;
-    default:             bgColor = '#E9E7E2'; categoryText = '선택안됨'; break;
+    case '꿈':           bgColor = '#FAC8D4'; categoryText = '나의 꿈';   break;
+    default:             bgColor = '#E9E7E2'; categoryText = '선택안됨';  break;
   }
 
   const wrap = {

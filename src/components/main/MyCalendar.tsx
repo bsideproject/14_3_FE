@@ -60,7 +60,7 @@ const KoreaLocale = {
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
-  const {answeredList, answeredCount, updateIsThisMonth, selectedMonth, setSelectedMonth, setSelectDate} = useAnsweredList()
+  const {answeredList, answeredCount, initAnsweredList, updateIsThisMonth, initAnsweredCount, selectedMonth, setSelectedMonth, setSelectDate} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
   const {setHeaderText, setIsNavigation} = useDefaultSets()
   const {getAnsweredList, getAnsweredCount} = useAnsweredList() 
@@ -81,6 +81,8 @@ const MyCalendar = () => {
    ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = (nextValue:any) => {
+    initAnsweredList()
+    initAnsweredCount()
     //선택한 일자가 같은 경우
     if (selectedDate) {
       // 선택한 날짜가 이번 달 이전인 경우
@@ -110,6 +112,12 @@ const MyCalendar = () => {
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
+    console.log('CheckIsThisMonth');
+    
+    if (answeredList.length > 0)  {
+      initAnsweredList()
+      initAnsweredCount()
+    }                                       //답변한 목록 초기화
     // 이동한 월이 당월일 경우, 오늘 날짜가 선택되도록 처리
     if (getYearAndMonth(activeStartDate) === todayYearMonth) {
       setValue(today)                                         //선택일자 오늘로 변경
@@ -218,6 +226,8 @@ const MyCalendar = () => {
           //tile 스타일지정
           tileClassName={
             ({ date, view }) => {
+              console.log(answeredList);
+              
               const index = answeredList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
               if (index > -1) {
                 return 'cal-item-' + answeredList[index].count
