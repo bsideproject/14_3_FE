@@ -83,6 +83,7 @@ const Answer = () => {
       qNo: oneCard[0].qno,         //질문 index
       aWriter: userInfo.eml,       //작성자
       aAnswerContent: answer,       //답변 내용
+      category: oneCard[0].category //카테고리
     }
     await answerQuestion(param) //답변 저장
     setIsSaved(true)                  //저장 성공 세팅 
@@ -232,6 +233,7 @@ type ANSWER_CONTENT = {
   qNo: number
   aWriter: string
   aAnswerContent: string
+  category: string
 }
 
 export default Answer;

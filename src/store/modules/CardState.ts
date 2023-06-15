@@ -19,8 +19,9 @@ type CARD_STORE = {
   todayCardSelectStep: number
   updateCardSelectStep: Function    //사용자의 카드 선택 상태 업데이트
   getCardSelectStep: Function       //카드단계 조회 
-  fourCards: Array<any>  //조회된카드목록
-  todayCardSelectStatus: boolean
+  fourCards: Array<any>  //조회된카드목록]
+  resetFourCards: Function          //카드목록 초기화
+  todayCardSelectStatus: boolean 
   getCards: Function              //카드 4개 조회 (카테고리 조회 -> 카테고리 저장 -> 유저별 카드 조회)
   saveSelection: Function         //카드 1개 선택 저장
   saveOneCard: Function           //선택한 카드 정보 저장
@@ -128,6 +129,13 @@ const useCardState = create<CARD_STORE>((set) => ({
   },
 
   /**
+   * @desc 카드 4개 초기화
+   */
+  resetFourCards: (): void => {
+    set({fourCards: []})
+  },
+
+  /**
    * @desc 카드 1개 선택 저장
    */
   saveSelection: async (aWriter: string, qNo: string): Promise<void> => {
@@ -138,7 +146,6 @@ const useCardState = create<CARD_STORE>((set) => ({
     param["aWriter"] = aWriter
     param["qNo"] = parseInt(qNo)
     await axios.post('http://localhost:8080/api/answers/selectedQuestion', param, {withCredentials: false})
-    set({fourCards: []})
   },
 
   /**
@@ -155,12 +162,16 @@ const useCardState = create<CARD_STORE>((set) => ({
     const param = {
       aWriter: '',
       qNo: 0,
-      aAnswerContent: ''
+      aAnswerContent: '',
+      category: ''
     }
     param["aWriter"] = answer.aWriter
     param["qNo"] = answer.qNo
     param["aAnswerContent"] = answer.aAnswerContent
-    const result = await axios.put('http://localhost:8080/api/answers/saveAnswer', param, {withCredentials: false})
+    param["category"] = answer.category
+    
+    await axios.post('http://localhost:8080/api/answers/saveAnswer', param, {withCredentials: false})
+
     set({fourCards: []})  //카드목록 초기화
     set({oneCard: []})    //선택한 카드 초기화
   },
@@ -171,5 +182,6 @@ type ANSWER_CONTENT = {
   qNo: number
   aWriter: string
   aAnswerContent: string
+  category: string
 }
 export default useCardState;
