@@ -4,12 +4,12 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import GomingTextImg from 'assets/images/main/goming-text.png'
 import useCardState from 'store/modules/CardState';
-import useAuthStore from 'store/modules/Auth';
 
 const Cards = ({item, selected, clickedEventHandler}: any) => {
   const navigate = useNavigate()
   const nodeRef = useRef(null)
   const [showFront, setShowFront] = useState(true)
+  const {resetFourCards} = useCardState()
 
   //카드 선택 이벤트
   const clickHandler = async (item: any) => {
@@ -46,6 +46,7 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
             state: {qno: item.qno}, 
             replace: true
           })
+        resetFourCards()
         resolve('success')
       }, 1500);
     })
