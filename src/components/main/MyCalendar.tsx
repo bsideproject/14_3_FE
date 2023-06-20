@@ -60,7 +60,7 @@ const KoreaLocale = {
  * @todo 구현 항목 한참 남음
  */
 const MyCalendar = () => {
-  const {answeredList, answeredCount, updateIsThisMonth, selectedMonth, setSelectedMonth, setSelectDate} = useAnsweredList()
+  const {answeredList, answeredCount, initAnsweredList, updateIsThisMonth, initAnsweredCount, selectedMonth, setSelectedMonth, setSelectDate} = useAnsweredList()
   const {userInfo} = useAuthStore((state) => state);
   const {setHeaderText, setIsNavigation} = useDefaultSets()
   const {getAnsweredList, getAnsweredCount} = useAnsweredList() 
@@ -81,13 +81,14 @@ const MyCalendar = () => {
    ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = (nextValue:any) => {
+    initAnsweredList()
+    initAnsweredCount()
     //선택한 일자가 같은 경우
     if (selectedDate) {
       // 선택한 날짜가 이번 달 이전인 경우
       // 답변한 목록 조회, 답변한 개수 조회
       if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() <= today.getMonth()) {
         getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
-        getAnsweredCount({date: getYearAndMonth(nextValue), email: userInfo.eml})       //해당일자 데이터 조회
       }
 
       if( selectedDate.getDate() === nextValue.getDate() ) {
@@ -111,6 +112,12 @@ const MyCalendar = () => {
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = ({action, activeStartDate, value, view} : any) => {
+    console.log('CheckIsThisMonth');
+    
+    if (answeredList.length > 0)  {
+      initAnsweredList()
+      initAnsweredCount()
+    }                                       //답변한 목록 초기화
     // 이동한 월이 당월일 경우, 오늘 날짜가 선택되도록 처리
     if (getYearAndMonth(activeStartDate) === todayYearMonth) {
       setValue(today)                                         //선택일자 오늘로 변경
@@ -138,6 +145,9 @@ const MyCalendar = () => {
     const convertedDate = type === 'month' ? getYearAndMonth(date) : getYearAndMonthAndDay(date)
     const param = {email: userInfo.eml, date: convertedDate}
     getAnsweredList(param)    //date, count 포맷 데이터 조회
+    const covertedCountDate = getYearAndMonth(date)                        //년-월 까지만 보냄
+
+    getAnsweredCount({date: covertedCountDate.split('-'), email: userInfo.eml})       //해당일자 데이터 조회
   }
   
   //& 해당 [월]의 데이터 목록 조회

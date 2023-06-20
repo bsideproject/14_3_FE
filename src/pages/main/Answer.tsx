@@ -27,7 +27,7 @@ const Answer = () => {
   const [confirmText, setConfirmText] = useState<string>('')      //confirm 팝업 텍스트
   const [confrimButtonText, setConfirmButtonText] = useState<string>('') //confirm 팝업 버튼 텍스트
   
-  const {oneCard, todayCardSelectStep, updateCardSelectStep, answerQuestion} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
+  const {oneCard, todayCardSelectStep, updateCardSelectStep, answerQuestion, resetAllCards} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
   const {userInfo, isLogin} = useAuthStore() //사용자 정보
 
   useEffect(() => { 
@@ -83,6 +83,7 @@ const Answer = () => {
       qNo: oneCard[0].qno,         //질문 index
       aWriter: userInfo.eml,       //작성자
       aAnswerContent: answer,       //답변 내용
+      category: oneCard[0].category //카테고리
     }
     await answerQuestion(param) //답변 저장
     setIsSaved(true)                  //저장 성공 세팅 
@@ -108,7 +109,8 @@ const Answer = () => {
   //질문건너뛰기
   const skipThisQuestion = () => {
     updateCardSelectStep(todayCardSelectStep + 1) //단계 추가(답변없음)
-    navigate('/main', {replace:true})
+    navigate('/main', {replace:true})             //메인화면으로 이동(카드선택 화면)
+    resetAllCards()                               //카드 초기화
   }
 
   return (
@@ -232,6 +234,7 @@ type ANSWER_CONTENT = {
   qNo: number
   aWriter: string
   aAnswerContent: string
+  category: string
 }
 
 export default Answer;

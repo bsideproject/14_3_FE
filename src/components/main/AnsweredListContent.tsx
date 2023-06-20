@@ -12,13 +12,13 @@ import DateFormatUI from "./DateFormatUI";
  * @내용 사용자가 답변한 내용 출력 리스트 5개 단위
  */
 const AnsweredListContent = () => {
-  const {answeredList} = useAnsweredList()
+  const {answeredList, answeredCount, updateAnsweredView} = useAnsweredList()
   const navigate = useNavigate()
 
   //상세페이지로 이동
-  const viewAnswer = (a_num:number):void => {
-    console.log(a_num)
-    navigate('/answered-view', { state: {a_num: a_num} })
+  const viewAnswer = (item:any):void => {
+    updateAnsweredView(item)
+    navigate('/answered-view', { state: {qno: item.qno} })
   }
 
   return (
@@ -27,20 +27,20 @@ const AnsweredListContent = () => {
 
         {/* 목록 개수 출력 */}
         <div className="answered-list-item-count-wrap body2-bold">
-          총 <span className="answered-list-count-text">{answeredList.length}개</span>의 답변이 있습니다.
+          총 <span className="answered-list-count-text">{answeredCount.toString()}개</span>의 답변이 있습니다.
         </div>
 
         {/* 목록 내용 출력 */}
         <div>
           { answeredList.length > 0 && (  //목록이 있을 경우에만 노출
               answeredList.map((item:any) => (
-                <div key={item.index} className="answered-list-item" onClick={()=>viewAnswer(item.index)}>
+                <div key={item.index} className="answered-list-item" onClick={()=>viewAnswer(item)}>
                   <div className="answered-list-item-header-wrap caption1-regular">
                     <DateFormatUI date={item.date} />
-                    <AnsweredCategoryUI category={item.qc} />
+                    <AnsweredCategoryUI category={item.category} />
                   </div>
-                  <div className="answered-list-item-q answered-list-item-q-1 body2-bold">{item.q}</div>
-                  <div className="body3-regular answered-list-item-a ">{item.a}</div>
+                  <div className="answered-list-item-q answered-list-item-q-1 body2-bold">{item.question}</div>
+                  <div className="body3-regular answered-list-item-a ">{item.answer}</div>
                 </div>
               ))
             )
