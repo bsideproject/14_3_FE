@@ -226,8 +226,6 @@ const MyCalendar = () => {
           //tile 스타일지정
           tileClassName={
             ({ date, view }) => {
-              console.log(answeredList);
-              
               const index = answeredList.findIndex(item => item.date.substring(8).replace(/(^0+)/, "") === date.getDate().toString())
               if (index > -1) {
                 return 'cal-item-' + answeredList[index].count

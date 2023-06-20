@@ -191,7 +191,6 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
       set({fourCards: []})  //카드목록 초기화
       set({oneCard: []})    //선택한 카드 초기화
     }
-
   }),{name: "card-state"}
 ));
 type ANSWER_CONTENT = {

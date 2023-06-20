@@ -46,7 +46,6 @@ const MainContent = () => {
         getCards(userInfo.eml)        // 4개의 카드 정보 가져오기 or 단일 카드 정보 조회
       } 
     }
-    console.log(todayCardSelectStatus)
     
     return () => setIsNavigation(false)
   },[])
