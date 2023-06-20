@@ -27,7 +27,7 @@ const Answer = () => {
   const [confirmText, setConfirmText] = useState<string>('')      //confirm 팝업 텍스트
   const [confrimButtonText, setConfirmButtonText] = useState<string>('') //confirm 팝업 버튼 텍스트
   
-  const {oneCard, todayCardSelectStep, updateCardSelectStep, answerQuestion} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
+  const {oneCard, todayCardSelectStep, updateCardSelectStep, answerQuestion, resetAllCards} = useCardState()   //카드답변횟수(총답변개수(2개일때 마지막))
   const {userInfo, isLogin} = useAuthStore() //사용자 정보
 
   useEffect(() => { 
@@ -109,7 +109,8 @@ const Answer = () => {
   //질문건너뛰기
   const skipThisQuestion = () => {
     updateCardSelectStep(todayCardSelectStep + 1) //단계 추가(답변없음)
-    navigate('/main', {replace:true})
+    navigate('/main', {replace:true})             //메인화면으로 이동(카드선택 화면)
+    resetAllCards()                               //카드 초기화
   }
 
   return (
