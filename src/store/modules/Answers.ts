@@ -6,6 +6,10 @@ type ANSWER_LIST = {
   answeredList: Array<any>    //답변목록
   getAnsweredList: Function   //답변목록 조회
   initAnsweredList: Function  //답변목록 초기화
+  
+  answeredDateCount: Array<any>   //월 혹은 일별 답변 개수
+  getAnsweredDateCount: Function  //해당 date의 qna count 조회
+  initAnsweredDateCount: Function //해당 날짜의 답변목록개수 목록 초기화
 
   answeredCount: Number       //답변한 개수
   getAnsweredCount: Function  //답변한 개수 조회
@@ -41,6 +45,7 @@ type QNA_DATE_ITEM = { //qna 객체 1개
 const useAnsweredList = create<ANSWER_LIST>((set) => ({
   answeredList: [],
   answeredCount: 0,
+  answeredDateCount: [],
   answeredView: {date: '',question: '',category: '',answer: ''},
   isThisMonth: true,
   selectedDate: '',              //선택한 날짜
@@ -56,6 +61,22 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     console.log('getAnsweredList', newList);
     
     set({answeredList: newList})
+  },
+
+  /**
+   * @desc 해당 date의 qna count 조회
+   */
+  getAnsweredDateCount: async (param: any) => {
+    const result = await axios.get(`http://localhost:8080/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`)
+    set({answeredDateCount: result?.data})
+  },
+
+  
+  /**
+   * @desc 해당 날짜의 답변목록개수 목록 초기화
+   */
+  initAnsweredDateCount: ():void => {
+    set({answeredDateCount: []})
   },
 
   /**
@@ -76,7 +97,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   },
 
   /**
-   * @desc 초기화
+   * @desc 해당 date의 답변 개수 초기화
    */
   initAnsweredCount: ():void => {
     set({answeredCount: 0})
