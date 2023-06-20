@@ -7,7 +7,7 @@ const Loading: React.FC = () => {
         <div className="loading-bg" id="alertModal">
           <div
             className="body2-bold"
-            style={{ width: "150px", height: "52px", textAlign: "center" }}
+            style={{ width: "170px", height: "52px", textAlign: "center" }}
           >
             <img src={loading} alt="로딩"></img>
             <div style={{ marginTop: "16px" }}>로딩중이에요.</div>

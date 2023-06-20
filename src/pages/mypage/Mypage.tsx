@@ -325,7 +325,10 @@ const Mypage: React.FC = () => {
                 />{" "}
                 <label
                   htmlFor="male"
-                  className="register-gender-label body3-regular"
+                  className="register-gender-label body3-regular wgray12"
+                  style={{
+                    color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+                  }}
                 >
                   여성
                 </label>
@@ -338,7 +341,13 @@ const Mypage: React.FC = () => {
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
                 />
-                <label className="register-gender-label" htmlFor="feMale">
+                <label
+                  className="register-gender-label body3-regular wgray12"
+                  htmlFor="feMale"
+                  style={{
+                    color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+                  }}
+                >
                   남성
                 </label>
                 <input
@@ -350,7 +359,13 @@ const Mypage: React.FC = () => {
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
                 />
-                <label className="register-gender-label" htmlFor="feMale">
+                <label
+                  className="register-gender-label  body3-regular wgray12"
+                  htmlFor="feMale"
+                  style={{
+                    color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+                  }}
+                >
                   선택 안 함
                 </label>
               </div>
