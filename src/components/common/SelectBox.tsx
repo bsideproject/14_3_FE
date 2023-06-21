@@ -20,7 +20,6 @@ const SelectBox = React.memo(
     userMonth?: string | null;
     userDay?: string | null;
   }) => {
-    console.log(userYear);
     const date = new Date();
     const nowYear = date.getFullYear();
     const nowMonth = ("0" + (1 + date.getMonth())).slice(-2);
@@ -45,11 +44,16 @@ const SelectBox = React.memo(
         var input = i > 9 ? String(i) : "0" + i;
         dayList.push({ value: input, label: input });
       }
+      console.log(yearList);
       setCalendar({ year: yearList, month: monthList, day: dayList });
       handleYaerUpdate(nowYear - 14);
       handleMonthUpdate("01");
       handleDayUpdate("01");
     };
+
+    const [year, setYear] = useState<string>(String(nowYear));
+    const [month, setMonth] = useState<string>(nowMonth);
+    const [day, setDay] = useState<string>(nowDay);
 
     const [calendar, setCalendar] = useState<{
       year: { value: string; label: string }[];
@@ -68,7 +72,6 @@ const SelectBox = React.memo(
     useLayoutEffect(() => {
       setTodayDate();
     }, []);
-
     return (
       <>
         <Select

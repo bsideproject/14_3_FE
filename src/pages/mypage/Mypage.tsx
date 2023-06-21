@@ -10,32 +10,34 @@ import InputBox from "components/common/InputBox";
 import Header from "components/auth/Header";
 import AlertTextPopup from "components/AlertTextPopup";
 import Loading from "components/common/Loading";
-import useAuthStore from "store/modules/Auth";
-import fetch from "utils/fetch";
 
 const Mypage: React.FC = () => {
   //헤더설정
   const { setHeaderText, setIsNavigation } = useDefaultSets();
-
-  const { userInfo, isLogin } = useAuthStore();
-
+  useEffect(() => {
+    setTimeout(() => setTest(false), 5000);
+    setHeaderText("개인 정보 수정");
+    setIsNavigation(false);
+    return () => setIsNavigation(true);
+  }, []);
   const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
-  const [nickName, setNickName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>(registerInfo[0].email);
+
+  const [nickName, setNickName] = useState<string>(registerInfo[0].nickName);
+  const [password, setPassword] = useState<string>(registerInfo[0].password);
   const [rePassword, setRePassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [newRePassword, setNewRePassword] = useState<string>("");
-  const [gender, setGender] = useState<boolean | null>();
+  const [gender, setGender] = useState<boolean | null>(registerInfo[0].gender);
   const [passwordErrorChk, setPasswordErrorChk] = useState<boolean>(false); //비밀번호 에러 체크(조건 불일치,미입력)
   const [passwordChangeChk, setPasswordChangeChk] = useState<boolean>(false); // 비밀번호 변경 버튼 클릭 여부
   const [passwordReconfirmSuccessChk, setPasswordReconfirmSuccessChk] = // 비밀번호 재입력칸 에러 체크(비밀번호와 같은지 여부)
     useState<boolean | null>(null);
 
   const [rePasswordChk, setRePasswordChk] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [test, setTest] = useState<boolean>(true);
 
   const [rePasswordExistChk, setRePasswordExistChk] = useState<boolean>(false);
 
@@ -44,9 +46,9 @@ const Mypage: React.FC = () => {
 
   const [newRePasswordExistChk, setNewRePasswordExistChk] =
     useState<boolean>(false);
-  const [year, setYear] = useState<string>(userInfo.brdt.split("-")[0]);
-  const [month, setMonth] = useState<string>(userInfo.brdt.split("-")[1]);
-  const [day, setDay] = useState<string>(userInfo.brdt.split("-")[2]);
+  const [year, setYear] = useState<string>();
+  const [month, setMonth] = useState<string>();
+  const [day, setDay] = useState<string>();
   const [emailAgree, setEmailAgree] = useState<boolean>(false);
 
   const handleGenderCheck = (e: any) => {
@@ -158,58 +160,9 @@ const Mypage: React.FC = () => {
       }
     } catch (e) {}
   };
-
-  useEffect(() => {
-    // setTimeout(() => setTest(false), 5000);
-
-    const fetchData = async () => {
-      if (!isLogin) {
-        navigate("/");
-      } else {
-        try {
-          setLoading(true);
-          const Info = await fetch
-            .get(`http://localhost:8080/api/users/select/${userInfo.eml}`)
-            .then((res) => {
-              try {
-                if (res.status === 200) {
-                  const result = res.data;
-                  setEmail(result.eml);
-                  setNickName(result.usrNm);
-                  setPassword(result.password);
-                  setGender(
-                    result.gndrClsCd === "M"
-                      ? true
-                      : result.gndrClsCd === "F"
-                      ? false
-                      : null
-                  );
-                } else {
-                  alert("로그인 정보 불러오기 실패");
-                }
-
-                setLoading(false);
-              } catch (e) {
-                alert("로그인 정보 불러오기 실패");
-                setLoading(false);
-              }
-            });
-
-          setHeaderText("개인 정보 수정");
-          setIsNavigation(false);
-
-          return () => setIsNavigation(true);
-        } catch (e) {
-          console.log(e);
-          setLoading(false);
-        }
-      }
-    };
-    fetchData();
-  }, []);
   return (
     <>
-      {loading === true ? <Loading /> : ""}
+      {test === true ? <Loading /> : test}
       <div>
         <Header />
         <div className="register-main">
@@ -363,13 +316,13 @@ const Mypage: React.FC = () => {
               <div>
                 <input
                   className="register-gender-box"
-                  value="F"
+                  value="M"
                   id="male"
                   type="radio"
-                  checked={gender === false}
+                  checked={gender === true}
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
-                />
+                />{" "}
                 <label
                   htmlFor="male"
                   className="register-gender-label body3-regular wgray12"
@@ -381,10 +334,10 @@ const Mypage: React.FC = () => {
                 </label>
                 <input
                   className="register-gender-box marginleft-35"
-                  value="M"
+                  value="F"
                   id="feMale"
                   type="radio"
-                  checked={gender === true}
+                  checked={gender === false}
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
                 />
@@ -425,9 +378,6 @@ const Mypage: React.FC = () => {
                   handleMonthUpdate={handleMonthUpdate}
                   handleDayUpdate={handleDayUpdate}
                   disabled={true}
-                  userYear={year}
-                  userMonth={month}
-                  userDay={day}
                 />
               </div>
             </div>
@@ -492,5 +442,4 @@ const Mypage: React.FC = () => {
     </>
   );
 };
-
 export default Mypage;
