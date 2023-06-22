@@ -64,9 +64,11 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   },
 
   /**
-   * @desc 해당 date의 qna count 조회
+   * @desc 해당 date의 qna count 를 리스트로 조회
    */
   getAnsweredDateCount: async (param: any) => {
+    console.log('getAnsweredDateCount', param);
+    
     const result = await axios.get(`http://localhost:8080/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`)
     set({answeredDateCount: result?.data})
   },
@@ -88,11 +90,24 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
 
   /**
    * @desc 해당 월에 답변한 개수 조회
-   * @param 
+   * @param date
+   * @param email
+   * @param type
    */
   getAnsweredCount: async (param: any) => {
-    const result = await axios.get(`http://localhost:8080/api/question/answeredCount/${param.email}/${param.date[0]}/${param.date[1]}`)
-    const count = result?.data.count
+    console.log('api/answeredCount/  ---  ', param);
+    
+    let result: any = null
+    if (param.type === 'month') {  //월
+      console.log('getAnsweredCount ---- month');
+      
+      result = await axios.get(`http://localhost:8080/api/question/answeredCount/${param.email}/${param.date[0]}/${param.date[1]}`)
+    } else {  //일
+      console.log('getAnsweredCount ---- date', param);
+
+      result = await axios.get(`http://localhost:8080/api/question/answeredCount/${param.email}/${param.date}}`)
+    }
+    const count = result?.data.count ? result?.data.count : 0
     set({answeredCount: count})
   },
 
