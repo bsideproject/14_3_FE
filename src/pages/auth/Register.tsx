@@ -34,7 +34,7 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordReconfirm, setPasswordReconfirm] = useState<string>("");
   const [birthDt, setBirthDt] = useState<string>("");
-  const [gender, setGender] = useState<boolean | null>(true);
+  const [gender, setGender] = useState<boolean | null>(null);
 
   const [emailDisable, setEmailDisable] = useState<boolean>(false);
   const [emailChk, setEmailChk] = useState<boolean>(false);
@@ -277,7 +277,7 @@ const Register: React.FC = () => {
             password,
             usrNm: registerInfo.usrNm,
             brdt: year + "-" + month + "-" + day,
-            gndrClsCd: gender ? "M" : "F",
+            gndrClsCd: gender ? "M" : gender === false ? "F" : "N",
           })
           .then((e: any) => {
             if (e.status === 200) {
