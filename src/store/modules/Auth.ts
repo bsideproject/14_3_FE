@@ -29,7 +29,7 @@ const useAuthStore = create<AUTH_STATE>(
         whdwlDtm: null,
       },
       isLogin: false,
-      isInfoChange: false,
+      isInfoChange: true,
       updateLoginStatus: (
         newLoginState: boolean,
         userInfo: TYPE_USER_INFO

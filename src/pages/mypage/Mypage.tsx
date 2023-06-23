@@ -19,8 +19,8 @@ const Mypage: React.FC = () => {
 
   const { userInfo, isLogin } = useAuthStore();
 
-  const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
+  console.log(isInfoChange);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -131,7 +131,6 @@ const Mypage: React.FC = () => {
     try {
       if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
       } else if (rePassword.length === 0) {
-        console.log("test");
         setRePasswordExistChk(true);
       } else if (newPassword.length === 0) {
         setNewPasswordExistChk(true);
@@ -139,7 +138,7 @@ const Mypage: React.FC = () => {
         setNewRePasswordExistChk(true);
       } else {
         // await fetch
-        //   .post("/user/signUp", {
+        //   .put("http://localhost:8080/api/users/update/", {
         //     eml: email,
         //     password,
         //     usrNm: nickName,
@@ -169,7 +168,7 @@ const Mypage: React.FC = () => {
         try {
           setLoading(true);
           const Info = await fetch
-            .get(`http://localhost:8080/api/users/select/${userInfo.eml}`)
+            .get(`/api/users/select/${userInfo.eml}`)
             .then((res) => {
               try {
                 if (res.status === 200) {
@@ -200,12 +199,12 @@ const Mypage: React.FC = () => {
 
           return () => setIsNavigation(true);
         } catch (e) {
-          console.log(e);
           setLoading(false);
         }
       }
     };
     fetchData();
+    updateInfoChangeStatus(true);
   }, []);
   return (
     <>
