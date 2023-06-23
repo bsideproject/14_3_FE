@@ -20,7 +20,6 @@ const SelectBox = React.memo(
     userMonth?: string | null;
     userDay?: string | null;
   }) => {
-    console.log(userYear);
     const date = new Date();
     const nowYear = date.getFullYear();
     const nowMonth = ("0" + (1 + date.getMonth())).slice(-2);
@@ -46,9 +45,9 @@ const SelectBox = React.memo(
         dayList.push({ value: input, label: input });
       }
       setCalendar({ year: yearList, month: monthList, day: dayList });
-      handleYaerUpdate(nowYear - 14);
-      handleMonthUpdate("01");
-      handleDayUpdate("01");
+      handleYaerUpdate({ value: nowYear - 14 });
+      handleMonthUpdate({ value: "01" });
+      handleDayUpdate({ value: "01" });
     };
 
     const [calendar, setCalendar] = useState<{
