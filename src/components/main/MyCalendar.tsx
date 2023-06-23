@@ -79,12 +79,13 @@ const MyCalendar = () => {
    ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = async (nextValue:any) => {
-    console.log('CheckIsThis date');
+    console.log('day move');
     //초기화
     initAnsweredCount()
-
+    
     //선택한 일자가 같은 경우
     if (selectedDate) {
+      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:'date'})       //해당일자 데이터 조회
       // 선택한 날짜가 이번 달 이전인 경우
       // 답변한 목록 조회, 답변한 개수 조회
       if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() <= today.getMonth()) {
@@ -103,6 +104,9 @@ const MyCalendar = () => {
         setActiveCalendarBtn(false)               //리스트만보기 버튼
       }
     } else {
+      initAnsweredCount()                       //답변개수 초기화 -> 월간 답변 개수로 변경
+      await getAnsweredDateCount({date: getYearAndMonth(nextValue).split('-'), email: userInfo.eml, type:"month"})       //해당월 데이터 조회
+
       setTextLabel(nextValue)                  //[선택-오늘]변경제어
       setValue(nextValue)                      //현재선택된날짜설정
       getDayData(nextValue)                    //전체목록 초기화 및 재조회
@@ -112,12 +116,12 @@ const MyCalendar = () => {
 
   // [월] 이동 이벤트 - RightArrow control
   const CheckIsThisMonth = async ({action, activeStartDate, value, view} : any) => {
-    console.log(activeStartDate);
-    
-    initAnsweredList()
-    initAnsweredCount()
-    initAnsweredDateCount()
+    console.log('month move', activeStartDate);
+    initAnsweredList()  //답변목록 초기화
+    initAnsweredCount() //답변개수 초기화
 
+    initAnsweredDateCount() //날짜별 답변개수 초기화
+    //선택한 월의 답변한 개수 조회
     await getAnsweredDateCount({date: getYearAndMonth(activeStartDate), email: userInfo.eml})
 
     // 이동한 월이 당월일 경우, 오늘 날짜가 선택되도록 처리
@@ -146,20 +150,23 @@ const MyCalendar = () => {
     // type 에 따른 date 포맷 변경
     const convertedDate = type === 'month' ? getYearAndMonth(date) : getYearAndMonthAndDay(date)
     const param = {email: userInfo.eml, date: convertedDate}
-    getAnsweredList(param)    //date, count 포맷 데이터 조회
-    const covertedCountDate = getYearAndMonth(date)                        //년-월 까지만 보냄
+    getAnsweredList(param) //date, count 포맷 데이터 조회
 
-    getAnsweredCount({date: covertedCountDate.split('-'), email: userInfo.eml})       //해당일자 데이터 조회
+    if (type === 'month') { //월
+      getAnsweredCount({date: getYearAndMonth(date), email: userInfo.eml, type: type}) 
+    } else { //일
+      getAnsweredCount({date: getYearAndMonthAndDay(date), email: userInfo.eml, type: type}) 
+    }
   }
   
   //& 해당 [월]의 데이터 목록 조회
-  const getMonthData = (date:Date) => {
+  const getMonthData = (date:any) => {
     getQnAList(date, 'month')
   }
 
   // 해당 월의 [일] 데이터 목록 조회
-  const getDayData = (date:Date) => {
-    getQnAList(date, 'day')
+  const getDayData = (date:any) => {
+    getQnAList(date, 'date')
   }
 
   /****************************************************************************
@@ -192,16 +199,20 @@ const MyCalendar = () => {
   }
 
   useEffect(()=>{
-    if (isSameDay(today, new Date(selectedDate))) {
-      getAnsweredDateCount({date: getYearAndMonth(today), email: userInfo.eml})
-      getAnsweredCount({date: getYearAndMonth(today).split('-'), email: userInfo.eml})       //해당일자 데이터 조회
-
-    }
-
-    setSelectDate(selectedDate)  //cardstore 에 selectedDate 기본 설정
+    console.log('useEffect');
     updateCalendarWithDesign()
-    setHeaderText('')
   }, [textlabelControl])
+
+  useEffect(() => {
+    console.log('useEffect2');
+    const newMonth:any = getYearAndMonth(today)
+    getQnAList(newMonth, 'month')
+    setSelectDate(selectedDate)  //cardstore 에 selectedDate 기본 설정
+    getAnsweredDateCount({date: getYearAndMonth(today), email: userInfo.eml})
+    getAnsweredCount({date: getYearAndMonth(today).split('-'), email: userInfo.eml, type: 'month'})       //해당일자 데이터 조회
+    setHeaderText('')
+  }, [])
+
 
   //date format 변경
   const transformDate = ({date, locale}:any) => {
