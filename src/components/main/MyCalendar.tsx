@@ -106,7 +106,6 @@ const MyCalendar = () => {
     } else {
       initAnsweredCount()                       //답변개수 초기화 -> 월간 답변 개수로 변경
       await getAnsweredDateCount({date: getYearAndMonth(nextValue), email: userInfo.eml, type:"month"})       //해당월 데이터 조회
-
       setTextLabel(nextValue)                  //[선택-오늘]변경제어
       setValue(nextValue)                      //현재선택된날짜설정
       getDayData(nextValue)                    //전체목록 초기화 및 재조회

@@ -1,4 +1,3 @@
-import testRegisterStore from "store/modules/TestRegister";
 import Auth from "store/modules/Auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +18,8 @@ const Mypage: React.FC = () => {
 
   const { userInfo, isLogin } = useAuthStore();
 
-  const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
+  console.log(isInfoChange);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -131,30 +130,28 @@ const Mypage: React.FC = () => {
     try {
       if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
       } else if (rePassword.length === 0) {
-        console.log("test");
         setRePasswordExistChk(true);
       } else if (newPassword.length === 0) {
         setNewPasswordExistChk(true);
       } else if (newRePassword.length === 0) {
         setNewRePasswordExistChk(true);
       } else {
-        // await fetch
-        //   .post("/user/signUp", {
-        //     eml: email,
-        //     password,
-        //     usrNm: nickName,
-        //     brdt: birthDt,
-        //     gndrClsCd: gender ? "M" : "F",
-        //   })
-        //   .then((e: any) => {
-        //     if (e.status === 200) {
-        //       alert("회원가입이 완료 되었습니다.");
-        //       navigate("/login");
-        //     }
-        //   })
-        //   .catch((e: any) => {
-        //     console.log(e);
-        //   });
+        console.log(email);
+        await fetch
+          .put("http://localhost:8080/api/users/update/email=" + email, {
+            eml: email,
+            password,
+            gndrClsCd: gender ? "M" : gender === false ? "F" : "N",
+          })
+          .then((e: any) => {
+            if (e.status === 200) {
+              alert("회원가입이 완료 되었습니다.");
+              // navigate("/login");
+            }
+          })
+          .catch((e: any) => {
+            console.log(e);
+          });
       }
     } catch (e) {}
   };
@@ -168,44 +165,42 @@ const Mypage: React.FC = () => {
       } else {
         try {
           setLoading(true);
-          const Info = await fetch
-            .get(`http://localhost:8080/api/users/select/${userInfo.eml}`)
-            .then((res) => {
-              try {
-                if (res.status === 200) {
-                  const result = res.data;
-                  setEmail(result.eml);
-                  setNickName(result.usrNm);
-                  setPassword(result.password);
-                  setGender(
-                    result.gndrClsCd === "M"
-                      ? true
-                      : result.gndrClsCd === "F"
-                      ? false
-                      : null
-                  );
-                } else {
-                  alert("로그인 정보 불러오기 실패");
-                }
-
-                setLoading(false);
-              } catch (e) {
+          await fetch.get(`/api/users/select/${userInfo.eml}`).then((res) => {
+            try {
+              if (res.status === 200) {
+                const result = res.data;
+                setEmail(result.eml);
+                setNickName(result.usrNm);
+                setPassword(result.password);
+                setGender(
+                  result.gndrClsCd === "M"
+                    ? true
+                    : result.gndrClsCd === "F"
+                    ? false
+                    : null
+                );
+              } else {
                 alert("로그인 정보 불러오기 실패");
-                setLoading(false);
               }
-            });
+
+              setLoading(false);
+            } catch (e) {
+              alert("로그인 정보 불러오기 실패");
+              setLoading(false);
+            }
+          });
 
           setHeaderText("개인 정보 수정");
           setIsNavigation(false);
 
           return () => setIsNavigation(true);
         } catch (e) {
-          console.log(e);
           setLoading(false);
         }
       }
     };
     fetchData();
+    updateInfoChangeStatus(true);
   }, []);
   return (
     <>
@@ -256,7 +251,7 @@ const Mypage: React.FC = () => {
                   inputPlaceholader={"기존 비밀번호를 입력해주세요."}
                   id={"passwordChange"}
                   inputType={"password"}
-                  inputClassName={"register-flex-row-gap0 margintop-32"}
+                  inputClassName={"register-flex-row-gap8 margintop-32"}
                   buttonClick={handlePasswordChagneUpdate}
                   inputChange={handleRePasswordUpdate}
                   inputValue={
