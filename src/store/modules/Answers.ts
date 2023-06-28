@@ -5,7 +5,7 @@ type ANSWER_LIST = {
   answeredList: Array<any>    //답변목록
   getAnsweredList: Function   //답변목록 조회
   initAnsweredList: Function  //답변목록 초기화
-  
+
   answeredDateCount: Array<any>   //월 혹은 일별 답변 개수
   getAnsweredDateCount: Function  //해당 date의 qna count 조회
   initAnsweredDateCount: Function //해당 날짜의 답변목록개수 목록 초기화
@@ -58,7 +58,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   getAnsweredList: async (param: any) => {
     console.log(new Date(param.date).getMonth()+1);
-    
+
     const result = await axios.get(`http://localhost:8080/api/question/answered/${param.email}/${param.date}`)
     const newList = result?.data ? result?.data : []    //값이 없을 경우 빈 배열로 초기화
     console.log('getAnsweredList', newList);
@@ -156,8 +156,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   passAnswer: async (param: any): Promise<void> => {
     await axios.put(`http://localhost:8080/api/answers/passAnswer?email=${param.email}&qNo=${param.qNo}`)
   }
-
-
 }))
 
 type GET_LIST = {

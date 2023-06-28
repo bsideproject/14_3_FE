@@ -82,7 +82,6 @@ const MyCalendar = () => {
     console.log('day move');
     //초기화
     initAnsweredCount()
-    
     //선택한 일자가 같은 경우
     if (selectedDate) {
       await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:'date'})       //해당일자 데이터 조회
@@ -122,7 +121,7 @@ const MyCalendar = () => {
     initAnsweredDateCount() //날짜별 답변개수 초기화
     //선택한 월의 답변한 개수 조회
     await getAnsweredDateCount({date: getYearAndMonth(activeStartDate), email: userInfo.eml})
-
+    
     // 이동한 월이 당월일 경우, 오늘 날짜가 선택되도록 처리
     if (getYearAndMonth(activeStartDate) === todayYearMonth) {
       setValue(today)                                         //선택일자 오늘로 변경
