@@ -1,4 +1,3 @@
-import testRegisterStore from "store/modules/TestRegister";
 import Auth from "store/modules/Auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,34 +9,32 @@ import InputBox from "components/common/InputBox";
 import Header from "components/auth/Header";
 import AlertTextPopup from "components/AlertTextPopup";
 import Loading from "components/common/Loading";
+import useAuthStore from "store/modules/Auth";
+import fetch from "utils/fetch";
 
 const Mypage: React.FC = () => {
   //헤더설정
   const { setHeaderText, setIsNavigation } = useDefaultSets();
-  useEffect(() => {
-    setTimeout(() => setTest(false), 5000);
-    setHeaderText("개인 정보 수정");
-    setIsNavigation(false);
-    return () => setIsNavigation(true);
-  }, []);
-  const { registerInfo, updateId } = testRegisterStore((state) => state); // zustand로 가져온 임시데이터
-  const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
-  const navigate = useNavigate();
-  const [email, setEmail] = useState<string>(registerInfo[0].email);
 
-  const [nickName, setNickName] = useState<string>(registerInfo[0].nickName);
-  const [password, setPassword] = useState<string>(registerInfo[0].password);
+  const { userInfo, isLogin } = useAuthStore();
+
+  const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
+  console.log(isInfoChange);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState<string>("");
+  const [nickName, setNickName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [rePassword, setRePassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [newRePassword, setNewRePassword] = useState<string>("");
-  const [gender, setGender] = useState<boolean | null>(registerInfo[0].gender);
+  const [gender, setGender] = useState<boolean | null>();
   const [passwordErrorChk, setPasswordErrorChk] = useState<boolean>(false); //비밀번호 에러 체크(조건 불일치,미입력)
   const [passwordChangeChk, setPasswordChangeChk] = useState<boolean>(false); // 비밀번호 변경 버튼 클릭 여부
   const [passwordReconfirmSuccessChk, setPasswordReconfirmSuccessChk] = // 비밀번호 재입력칸 에러 체크(비밀번호와 같은지 여부)
     useState<boolean | null>(null);
 
   const [rePasswordChk, setRePasswordChk] = useState<boolean>(false);
-  const [test, setTest] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [rePasswordExistChk, setRePasswordExistChk] = useState<boolean>(false);
 
@@ -46,9 +43,9 @@ const Mypage: React.FC = () => {
 
   const [newRePasswordExistChk, setNewRePasswordExistChk] =
     useState<boolean>(false);
-  const [year, setYear] = useState<string>();
-  const [month, setMonth] = useState<string>();
-  const [day, setDay] = useState<string>();
+  const [year, setYear] = useState<string>(userInfo.brdt.split("-")[0]);
+  const [month, setMonth] = useState<string>(userInfo.brdt.split("-")[1]);
+  const [day, setDay] = useState<string>(userInfo.brdt.split("-")[2]);
   const [emailAgree, setEmailAgree] = useState<boolean>(false);
 
   const handleGenderCheck = (e: any) => {
@@ -133,36 +130,81 @@ const Mypage: React.FC = () => {
     try {
       if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
       } else if (rePassword.length === 0) {
-        console.log("test");
         setRePasswordExistChk(true);
       } else if (newPassword.length === 0) {
         setNewPasswordExistChk(true);
       } else if (newRePassword.length === 0) {
         setNewRePasswordExistChk(true);
       } else {
-        // await fetch
-        //   .post("/user/signUp", {
-        //     eml: email,
-        //     password,
-        //     usrNm: nickName,
-        //     brdt: birthDt,
-        //     gndrClsCd: gender ? "M" : "F",
-        //   })
-        //   .then((e: any) => {
-        //     if (e.status === 200) {
-        //       alert("회원가입이 완료 되었습니다.");
-        //       navigate("/login");
-        //     }
-        //   })
-        //   .catch((e: any) => {
-        //     console.log(e);
-        //   });
+        console.log(email);
+        await fetch
+          .put("http://localhost:8080/api/users/update/email=" + email, {
+            eml: email,
+            password,
+            gndrClsCd: gender ? "M" : gender === false ? "F" : "N",
+          })
+          .then((e: any) => {
+            if (e.status === 200) {
+              alert("회원가입이 완료 되었습니다.");
+              // navigate("/login");
+            }
+          })
+          .catch((e: any) => {
+            console.log(e);
+          });
       }
     } catch (e) {}
   };
+
+  useEffect(() => {
+    // setTimeout(() => setTest(false), 5000);
+
+    const fetchData = async () => {
+      if (!isLogin) {
+        navigate("/");
+      } else {
+        try {
+          setLoading(true);
+          await fetch.get(`/api/users/select/${userInfo.eml}`).then((res) => {
+            try {
+              if (res.status === 200) {
+                const result = res.data;
+                setEmail(result.eml);
+                setNickName(result.usrNm);
+                setPassword(result.password);
+                setGender(
+                  result.gndrClsCd === "M"
+                    ? true
+                    : result.gndrClsCd === "F"
+                    ? false
+                    : null
+                );
+              } else {
+                alert("로그인 정보 불러오기 실패");
+              }
+
+              setLoading(false);
+            } catch (e) {
+              alert("로그인 정보 불러오기 실패");
+              setLoading(false);
+            }
+          });
+
+          setHeaderText("개인 정보 수정");
+          setIsNavigation(false);
+
+          return () => setIsNavigation(true);
+        } catch (e) {
+          setLoading(false);
+        }
+      }
+    };
+    fetchData();
+    updateInfoChangeStatus(true);
+  }, []);
   return (
     <>
-      {test === true ? <Loading /> : test}
+      {loading === true ? <Loading /> : ""}
       <div>
         <Header />
         <div className="register-main">
@@ -209,7 +251,7 @@ const Mypage: React.FC = () => {
                   inputPlaceholader={"기존 비밀번호를 입력해주세요."}
                   id={"passwordChange"}
                   inputType={"password"}
-                  inputClassName={"register-flex-row-gap0 margintop-32"}
+                  inputClassName={"register-flex-row-gap8 margintop-32"}
                   buttonClick={handlePasswordChagneUpdate}
                   inputChange={handleRePasswordUpdate}
                   inputValue={
@@ -316,29 +358,38 @@ const Mypage: React.FC = () => {
               <div>
                 <input
                   className="register-gender-box"
-                  value="M"
-                  id="male"
-                  type="radio"
-                  checked={gender === true}
-                  onChange={handleGenderCheck}
-                  disabled={!isInfoChange}
-                />{" "}
-                <label
-                  htmlFor="male"
-                  className="register-gender-label body3-regular"
-                >
-                  여성
-                </label>
-                <input
-                  className="register-gender-box marginleft-35"
                   value="F"
-                  id="feMale"
+                  id="male"
                   type="radio"
                   checked={gender === false}
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
                 />
-                <label className="register-gender-label" htmlFor="feMale">
+                <label
+                  htmlFor="male"
+                  className="register-gender-label body3-regular wgray12"
+                  style={{
+                    color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+                  }}
+                >
+                  여성
+                </label>
+                <input
+                  className="register-gender-box marginleft-35"
+                  value="M"
+                  id="feMale"
+                  type="radio"
+                  checked={gender === true}
+                  onChange={handleGenderCheck}
+                  disabled={!isInfoChange}
+                />
+                <label
+                  className="register-gender-label body3-regular wgray12"
+                  htmlFor="feMale"
+                  style={{
+                    color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+                  }}
+                >
                   남성
                 </label>
                 <input
@@ -350,7 +401,13 @@ const Mypage: React.FC = () => {
                   onChange={handleGenderCheck}
                   disabled={!isInfoChange}
                 />
-                <label className="register-gender-label" htmlFor="feMale">
+                <label
+                  className="register-gender-label  body3-regular wgray12"
+                  htmlFor="feMale"
+                  style={{
+                    color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+                  }}
+                >
                   선택 안 함
                 </label>
               </div>
@@ -363,6 +420,9 @@ const Mypage: React.FC = () => {
                   handleMonthUpdate={handleMonthUpdate}
                   handleDayUpdate={handleDayUpdate}
                   disabled={true}
+                  userYear={year}
+                  userMonth={month}
+                  userDay={day}
                 />
               </div>
             </div>
@@ -427,4 +487,5 @@ const Mypage: React.FC = () => {
     </>
   );
 };
+
 export default Mypage;

@@ -23,6 +23,7 @@ type CARD_STORE = {
   fourCards: Array<any>  //조회된카드목록]
   resetFourCards: Function          //카드목록 초기화
   todayCardSelectStatus: boolean 
+  updateTodayCardSelectStatus: Function //카드 선택 가능여부 업데이트
   getCards: Function              //카드 4개 조회 (카테고리 조회 -> 카테고리 저장 -> 유저별 카드 조회)
   saveSelection: Function         //카드 1개 선택 저장
   saveOneCard: Function           //선택한 카드 정보 저장
@@ -56,8 +57,6 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
        * @desc 사용자 카드선택상태 수정 서비스 호출
        * @method updateUserCardStatus 
        ******************************************************/
-      // fetch('/api/updateUserCardStatus', param)
-
       set({todayCardSelectStep: nextStepNum})   //다음단계 1,2,3,4.. 세팅
       set({todayCardSelectStatus: param.todayCardSelectStatus})       //더이상 선택 못함
     },
@@ -171,7 +170,7 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
     /**
      * @desc 답변 저장
      */
-    answerQuestion: async (answer: ANSWER_CONTENT): Promise<void> => {
+    answerQuestion: async (answer: ANSWER_CONTENT): Promise<boolean> => {
       const param = {
         aWriter: '',
         qNo: 0,
@@ -183,13 +182,22 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
       param["aAnswerContent"] = answer.aAnswerContent
       param["category"] = answer.category
       
-      await axios
+      const response:AxiosResponse<any> = await axios
         .post('http://localhost:8080/api/answers/saveAnswer', 
         {...param}, 
         {withCredentials: false})
 
       set({fourCards: []})  //카드목록 초기화
       set({oneCard: []})    //선택한 카드 초기화
+
+      return response.data
+    },
+
+    /**
+     * @desc 금일선택가능 여부 상태 변경
+     */
+    updateTodayCardSelectStatus: (status: boolean) => {
+      set({todayCardSelectStatus: status})
     }
   }),{name: "card-state"}
 ));

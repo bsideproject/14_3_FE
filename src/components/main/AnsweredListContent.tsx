@@ -27,7 +27,7 @@ const AnsweredListContent = () => {
 
         {/* 목록 개수 출력 */}
         <div className="answered-list-item-count-wrap body2-bold">
-          총 <span className="answered-list-count-text">{answeredCount.toString()}개</span>의 답변이 있습니다.
+          총 <span className="answered-list-count-text">{answeredCount?.toString()}개</span>의 답변이 있습니다.
         </div>
 
         {/* 목록 내용 출력 */}

@@ -44,16 +44,11 @@ const SelectBox = React.memo(
         var input = i > 9 ? String(i) : "0" + i;
         dayList.push({ value: input, label: input });
       }
-      console.log(yearList);
       setCalendar({ year: yearList, month: monthList, day: dayList });
-      handleYaerUpdate(nowYear - 14);
-      handleMonthUpdate("01");
-      handleDayUpdate("01");
+      handleYaerUpdate({ value: nowYear - 14 });
+      handleMonthUpdate({ value: "01" });
+      handleDayUpdate({ value: "01" });
     };
-
-    const [year, setYear] = useState<string>(String(nowYear));
-    const [month, setMonth] = useState<string>(nowMonth);
-    const [day, setDay] = useState<string>(nowDay);
 
     const [calendar, setCalendar] = useState<{
       year: { value: string; label: string }[];
@@ -72,6 +67,7 @@ const SelectBox = React.memo(
     useLayoutEffect(() => {
       setTodayDate();
     }, []);
+
     return (
       <>
         <Select
@@ -89,6 +85,8 @@ const SelectBox = React.memo(
               height: "48px",
               fontWeight: 400,
               fontSize: "14px",
+              color: disabled ? "#7A7670" : "",
+              background: disabled ? "#F2F1ED" : "",
               border: "1px solid #e9e7e2",
               borderRadius: "8px",
             }),
@@ -111,6 +109,8 @@ const SelectBox = React.memo(
               height: "48px",
               fontWeight: 400,
               fontSize: "14px",
+              color: disabled ? "#7A7670" : "",
+              background: disabled ? "#F2F1ED" : "",
               border: "1px solid #e9e7e2",
               borderRadius: "8px",
             }),
@@ -133,6 +133,8 @@ const SelectBox = React.memo(
               height: "48px",
               fontWeight: 400,
               fontSize: "14px",
+              color: disabled ? "#7A7670" : "",
+              background: disabled ? "#F2F1ED" : "",
               border: "1px solid #e9e7e2",
               borderRadius: "8px",
             }),

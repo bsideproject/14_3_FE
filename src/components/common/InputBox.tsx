@@ -11,7 +11,7 @@ const InputBox = React.memo(
     inputClassName,
     inputChange,
     inputValue,
-    inputBlur,
+    inputBlur = () => {},
     buttonClick,
     errObject,
     isButton = true,
