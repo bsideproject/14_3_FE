@@ -86,13 +86,12 @@ const Login: React.FC = () => {
         { ...param },
         { withCredentials: false }
       );
-      if (result?.data === "아이디 혹;은 비밀번호가 일치하지 않습니다.") {
+      if (result?.data === "아이디 혹은 비밀번호가 일치하지 않습니다.") {
         alert(result.data); // 알림컴포넌트창 출력
+        return;
       } else {
         console.log(result);
-
         const userInfoData: TYPE_USER_INFO = result?.data && result?.data;
-
         updateLoginStatus(true, userInfoData); // 1.auth store 에 저장
         navigate("/main"); // 2. main 으로 이동
       }

@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import {testData, testData2} from './testData'
 import axios from "axios";
 
 type ANSWER_LIST = {
@@ -11,20 +10,22 @@ type ANSWER_LIST = {
   getAnsweredDateCount: Function  //해당 date의 qna count 조회
   initAnsweredDateCount: Function //해당 날짜의 답변목록개수 목록 초기화
 
-  answeredCount: Number       //답변한 개수
-  getAnsweredCount: Function  //답변한 개수 조회
-  initAnsweredCount: Function  //답변 개수 초기화
+  answeredCount: Number         //답변한 개수
+  getAnsweredCount: Function    //답변한 개수 조회
+  initAnsweredCount: Function   //답변 개수 초기화
 
   answeredView: ANSWER          //답변상세 내용 1개
   updateAnsweredView: Function  //답변상세 내용 저장 혹은 삭제
   
-  isThisMonth: boolean                //MyCalendar 기준, 페이지의 당월 상태 유무
-  updateIsThisMonth: Function         //페이지의 당월 상태변경함수
+  isThisMonth: boolean          //MyCalendar 기준, 페이지의 당월 상태 유무
+  updateIsThisMonth: Function   //페이지의 당월 상태변경함수
   
-  selectedMonth: string               //현재선택되어진 월
-  setSelectedMonth: Function          //현재선택되어진 월 set
-  selectedDate: string                //선택한 날짜
-  setSelectDate: Function             //선택한 날짜 저장
+  selectedMonth: string         //현재선택되어진 월
+  setSelectedMonth: Function    //현재선택되어진 월 set
+  selectedDate: string          //선택한 날짜
+  setSelectDate: Function       //선택한 날짜 저장
+
+  passAnswer: Function          //이번 질문은 넘어갈래요
 }
 
 type ANSWER = { //qna 리스트 목록 객체
@@ -56,6 +57,8 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @return answeredList update
    */
   getAnsweredList: async (param: any) => {
+    console.log(new Date(param.date).getMonth()+1);
+    
     const result = await axios.get(`http://localhost:8080/api/question/answered/${param.email}/${param.date}`)
     const newList = result?.data ? result?.data : []    //값이 없을 경우 빈 배열로 초기화
     console.log('getAnsweredList', newList);
@@ -145,7 +148,15 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   updateAnsweredView: (newState: any): void => {
     newState === null ? set({answeredView: {date: '',question: '',category: '',answer: ''}}) : set({answeredView: newState})
+  },
+
+  /**
+   * @desc 이번 질문은 넘어갈래요
+   */
+  passAnswer: async (param: any): Promise<void> => {
+    await axios.put(`http://localhost:8080/api/answers/passAnswer?email=${param.email}&qNo=${param.qNo}`)
   }
+
 
 }))
 
