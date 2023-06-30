@@ -82,7 +82,7 @@ const Login: React.FC = () => {
         password: password,
       };
       const result: AxiosResponse = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users/login`,
+        `http://49.50.161.32/api/users/login`,
         //`http://localhost:8080/api/users/login`,
         { ...param },
         { withCredentials: false }
