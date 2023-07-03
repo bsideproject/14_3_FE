@@ -68,7 +68,7 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
     getCardSelectStep: async (email: string): Promise<void> => {
       const param = {email: ''}
       param.email = email ? email : ''  //로그인했을 경우 이메일, 아닐경우 빈값 전달
-      const response: AxiosResponse = await axios.get(`http://localhost:8080/api/question/answered/day?writer=${param.email}`, {withCredentials: false})
+      const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answered/day?writer=${param.email}`, {withCredentials: false})
       set({todayCardSelectStep: ++response.data}) // 단계 상태값 세팅
     },
 
@@ -80,7 +80,7 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
     getCards: async (email?: string): Promise<void> => {
       const param = {email: ''}
       param.email = email ? email : ''   //로그인했을 경우 이메일, 아닐경우 빈값 전달
-      let url: string = 'http://localhost:8080'               //axios url 초기화
+      let url: string = `${process.env.REACT_APP_API_URL}`               //axios url 초기화
 
       if (email) {
         url += `/api/category/select?email=${param.email}`
@@ -155,7 +155,7 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
       param["aWriter"] = aWriter
       param["qNo"] = parseInt(qNo)
       await axios
-        .post('http://localhost:8080/api/answers/selectedQuestion', 
+        .post(`${process.env.REACT_APP_API_URL}/api/answers/selectedQuestion`, 
         {...param}, 
         {withCredentials: false});
     },
@@ -183,7 +183,7 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
       param["category"] = answer.category
       
       const response:AxiosResponse<any> = await axios
-        .post('http://localhost:8080/api/answers/saveAnswer', 
+        .post(`${process.env.REACT_APP_API_URL}/api/answers/saveAnswer`, 
         {...param}, 
         {withCredentials: false})
 

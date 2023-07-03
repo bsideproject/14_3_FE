@@ -59,7 +59,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   getAnsweredList: async (param: any) => {
     console.log(new Date(param.date).getMonth()+1);
 
-    const result = await axios.get(`http://localhost:8080/api/question/answered/${param.email}/${param.date}`)
+    const result = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answered/${param.email}/${param.date}`)
     const newList = result?.data ? result?.data : []    //값이 없을 경우 빈 배열로 초기화
     console.log('getAnsweredList', newList);
     
@@ -72,7 +72,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   getAnsweredDateCount: async (param: any) => {
     console.log('getAnsweredDateCount', param);
     
-    const result = await axios.get(`http://localhost:8080/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`)
+    const result = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`)
     set({answeredDateCount: result?.data})
   },
 
@@ -104,11 +104,11 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     if (param.type === 'month') {  //월
       console.log('getAnsweredCount ---- month');
       
-      result = await axios.get(`http://localhost:8080/api/question/answeredCount/${param.email}/${param.date[0]}/${param.date[1]}`)
+      result = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/${param.date[0]}/${param.date[1]}`)
     } else {  //일
       console.log('getAnsweredCount ---- date', param);
 
-      result = await axios.get(`http://localhost:8080/api/question/answeredCount/${param.email}/${param.date}}`)
+      result = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/${param.date}}`)
     }
     const count = result?.data.count ? result?.data.count : 0
     set({answeredCount: count})
@@ -154,7 +154,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @desc 이번 질문은 넘어갈래요
    */
   passAnswer: async (param: any): Promise<void> => {
-    await axios.put(`http://localhost:8080/api/answers/passAnswer?email=${param.email}&qNo=${param.qNo}`)
+    await axios.put(`${process.env.REACT_APP_API_URL}/api/answers/passAnswer?email=${param.email}&qNo=${param.qNo}`)
   }
 }))
 
