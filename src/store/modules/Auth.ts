@@ -53,7 +53,7 @@ const useAuthStore = create<AUTH_STATE>(
        */
       withdrawalUser: (email: string | null): boolean => {
         const param = { eml: email };
-        //const result = fetch('/api/widthdrawalUser', param)   //db
+        //const result = fetch(`${process.env.REACT_APP_API_URL}/api/widthdrawalUser`, param)   //db
         set({ isLogin: false }); //islogin
         set({ userInfo: initialUserState }); //reset
         return true;
