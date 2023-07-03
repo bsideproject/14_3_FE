@@ -30,7 +30,7 @@ const useWithdrawalStates = create<TYPE_WITHDRAWAL>((set) => ({
       email,
       withdrawalInfo
     }
-    const result: AxiosResponse<any> = await axios.post('/api/withdrawal', param) 
+    const result: AxiosResponse<any> = await axios.post(`${process.env.REACT_APP_API_URL}/api/withdrawal`, param) 
     return result.data
   }
 }));
