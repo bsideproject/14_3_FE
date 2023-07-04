@@ -19,7 +19,7 @@ const Mypage: React.FC = () => {
   const { userInfo, isLogin } = useAuthStore();
 
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
-  console.log(userInfo);
+  console.log(isInfoChange);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -140,15 +140,17 @@ const Mypage: React.FC = () => {
         }
       } else {
         await fetch
-          .put("/api/users/update/email=" + email, {
+          .put("/api/users/update/" + email, {
             eml: email,
             password,
             gndrClsCd: gender ? "M" : gender === false ? "F" : "N",
+            agreement: emailAgree ? "Y" : "N",
           })
           .then((e: any) => {
             if (e.status === 200) {
               alert("회원가입이 완료 되었습니다.");
               // navigate("/login");
+              updateInfoChangeStatus(false);
             }
           })
           .catch((e: any) => {
@@ -171,6 +173,7 @@ const Mypage: React.FC = () => {
             try {
               if (res.status === 200) {
                 const result = res.data;
+                console.log(result);
                 setEmail(result.eml);
                 setNickName(result.usrNm);
                 setPassword(result.password);
@@ -181,6 +184,7 @@ const Mypage: React.FC = () => {
                     ? false
                     : null
                 );
+                setEmailAgree(result.agreement === "Y" ? true : false);
               } else {
                 alert("로그인 정보 불러오기 실패");
               }
@@ -435,7 +439,7 @@ const Mypage: React.FC = () => {
                 id="emailAgree"
                 checked={emailAgree}
                 onChange={handleEmailAgree}
-                // disabled={true}
+                disabled={!isInfoChange}
               />
               <label
                 htmlFor="emailAgree"
