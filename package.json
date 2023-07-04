@@ -57,5 +57,11 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080/api"
+  "options": {
+    "allowedHosts": [
+      "localhost:3000",
+      "http://www.goming.site/"
+    ],
+    "proxy": "https://localhost:8080/api"
+  }
 }

@@ -19,7 +19,7 @@ const Mypage: React.FC = () => {
   const { userInfo, isLogin } = useAuthStore();
 
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
-  console.log(isInfoChange);
+  console.log(userInfo);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -128,17 +128,19 @@ const Mypage: React.FC = () => {
   const handleSubmit = async (e: any): Promise<void> => {
     e.preventDefault();
     try {
-      if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
-      } else if (rePassword.length === 0) {
-        setRePasswordExistChk(true);
-      } else if (newPassword.length === 0) {
-        setNewPasswordExistChk(true);
-      } else if (newRePassword.length === 0) {
-        setNewRePasswordExistChk(true);
+      console.log(passwordChangeChk);
+      if (passwordChangeChk) {
+        if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
+        } else if (rePassword.length === 0) {
+          setRePasswordExistChk(true);
+        } else if (newPassword.length === 0) {
+          setNewPasswordExistChk(true);
+        } else if (newRePassword.length === 0) {
+          setNewRePasswordExistChk(true);
+        }
       } else {
-        console.log(email);
         await fetch
-          .put("http://localhost:8080/api/users/update/email=" + email, {
+          .put("/api/users/update/email=" + email, {
             eml: email,
             password,
             gndrClsCd: gender ? "M" : gender === false ? "F" : "N",
@@ -200,7 +202,6 @@ const Mypage: React.FC = () => {
       }
     };
     fetchData();
-    updateInfoChangeStatus(true);
   }, []);
   return (
     <>
