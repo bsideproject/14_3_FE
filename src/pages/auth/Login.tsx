@@ -6,7 +6,6 @@ import "assets/pages/auth/login.css";
 import RectangleDived from "assets/images/rectangleDived.png";
 import useDefaultSets from "store/modules/Defaults";
 import Header from "components/auth/Header";
-import Footer from "components/Footer";
 import axios, { AxiosResponse } from "axios";
 
 /**
