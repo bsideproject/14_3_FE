@@ -118,7 +118,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
       console.log("getAnsweredCount ---- date", param);
 
       result = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/${param.date}}`
+        `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/${param.date}`
       );
     }
     const count = result?.data.count ? result?.data.count : 0;
@@ -169,7 +169,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   passAnswer: async (param: any): Promise<void> => {
     await axios.put(
-      `${process.env.REACT_APP_API_URL}/api/answers/passAnswer?email=${param.email}&qNo=${param.qNo}`
+      `${process.env.REACT_APP_API_URL}/api/answers/passAnswer`, param, {withCredentials: false}
     );
   },
 }));

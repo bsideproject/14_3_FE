@@ -24,7 +24,7 @@ const TodayDate = () => {
     } else {
       setNickName(userInfo.usrNm)  //값 세팅
     }
-  },[userInfo.usrNm])
+  },[])
   
   return (
     <>

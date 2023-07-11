@@ -14,9 +14,7 @@ import useAnsweredList from 'store/modules/Answers';
 
 const Answer = () => {
   const {setHeaderText} = useDefaultSets()
-  const location = useLocation();
   const navigate = useNavigate();
-  const itemIndex:number = location.state.itemIndex;
   const [answer, setAnswer] = useState<string>('')               //답변
   const [isError, setIsError] = useState<boolean>(false)         //에러
   const [btnActive, setBtnActive] = useState<boolean>(true)      //버튼제어
@@ -40,6 +38,10 @@ const Answer = () => {
     }
     setHeaderText('답변 작성하기')
     console.log('useEffect', oneCard[0]);
+
+    if (oneCard.length === 0) {
+      navigate('/main', {replace:true})
+    }
     
   },[])
 
@@ -100,7 +102,7 @@ const Answer = () => {
   }
 
   //다음 질문 카드 뽑으러 가기
-  const goToNextQuestion = () => {
+  const goToNextQuestion = () => {   
     updateCardSelectStep(todayCardSelectStep + 1)
     navigate('/main', {replace:true})   //새로운 카드 출력 or 캘린더 화면으로 이동처리
   }
@@ -111,11 +113,12 @@ const Answer = () => {
   /******************************************************************/
   const [skipPopup, setSkipPopup] = useState<boolean>(false);
   //질문건너뛰기
-  const skipThisQuestion = async () => {
+  const fncPassAnswer = async () => {
     const param = {
-      qNo: oneCard[0].qno,           //질문 index
-      email: userInfo.eml,         //답변작성자
+      qNo: oneCard[0].qno, //질문 index
+      email: userInfo.eml, //답변작성자
     }
+
     await passAnswer(param) //답변 건너뛰기
     updateCardSelectStep(todayCardSelectStep + 1) //단계 추가(답변없음)
     resetAllCards()                               //카드 초기화
@@ -225,7 +228,7 @@ const Answer = () => {
             text = {confirmText}
             confirmText={confrimButtonText}                   //confirm 문구
             cancelText="돌아가기"                              //cancel 문구
-            callbackFunction={skipThisQuestion}               //confirm 확인
+            callbackFunction={fncPassAnswer}               //confirm 확인
             closeCallbackFuntion={()=>setSkipPopup(false)}    //cancel 팝업 닫기
             isFlex={false}
             isReverse={true}
