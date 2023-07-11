@@ -17,7 +17,8 @@ import AnsweredList from "pages/main/AnsweredList";
 import AnsweredView from "pages/main/AnsweredView";
 import Intro from "pages/etc/Intro";
 import NotFound from "pages/main/NotFound";
-import 'assets/components/global.css'
+import "assets/components/global.css";
+import Loading from "components/common/Loading";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -41,6 +42,7 @@ root.render(
         <Route path="/answered-list" element={<AnsweredList />} />
         <Route path="/answered-view" element={<AnsweredView />} />
         <Route path="/intro" element={<Intro />} />
+        <Route path="/loading" element={<Loading />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
