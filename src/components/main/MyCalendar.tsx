@@ -106,6 +106,13 @@ const MyCalendar = () => {
       if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() < today.getMonth()) {
         await getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
       }
+
+      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:'date'})  //해당일자 데이터 조회
+      // 선택한 날짜가 이번 달 이전인 경우
+      // 답변한 목록 조회, 답변한 개수 조회
+      if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() < today.getMonth()) {
+        await getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
+      }
     } else {
       await getAnsweredDateCount({date: getYearAndMonth(nextValue), email: userInfo.eml, type:"month"})       //해당월 데이터 조회
       setTextLabel(nextValue)                  //[선택-오늘]변경제어
