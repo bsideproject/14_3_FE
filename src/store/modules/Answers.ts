@@ -64,6 +64,15 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     const result = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/question/answered/${param.email}/${param.date}`
     );
+    if (result?.data.length > 0) {
+      // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
+      for (let i = 0; i < result?.data.length; i++) {
+        if (result?.data[i].answer.trim().length === 0) {
+          result?.data.splice(i, 1);
+          i--;
+        }
+      }
+    }
     const newList = result?.data ? result?.data : []; //값이 없을 경우 빈 배열로 초기화
     console.log("getAnsweredList", newList);
 

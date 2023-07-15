@@ -81,32 +81,32 @@ const MyCalendar = () => {
    ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = async (nextValue:any) => {
-    debugger
-    console.log('day move');
+    console.log('day move :: nextValue: ==  ', nextValue.toLocaleDateString());
     //초기화
     initAnsweredCount()
     //선택한 일자가 같은 경우
     if (selectedDate) {
+      let type = ""
       if( selectedDate.getDate() === nextValue.getDate() ) {
         setSelectedMonth(nextValue.getMonth()+1)   //선택된 월 store 세팅
         setValue(null)
         setActiveCalendarBtn(true)                //리스트만보기 버튼
-
+        type = "month"
       } else {
         setTextLabel(nextValue)                  //[선택-오늘]변경제어
         setValue(nextValue)                      //현재선택된날짜설정
         getDayData(nextValue)                    //전체목록 초기화 및 재조회
         setActiveCalendarBtn(false)               //리스트만보기 버튼
+        type = "date"
       }
+      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:type})  //해당일자 데이터 조회
 
-      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:'date'})  //해당일자 데이터 조회
       // 선택한 날짜가 이번 달 이전인 경우
       // 답변한 목록 조회, 답변한 개수 조회
       if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() < today.getMonth()) {
         await getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
       }
     } else {
-      initAnsweredCount()                       //답변개수 초기화 -> 월간 답변 개수로 변경
       await getAnsweredDateCount({date: getYearAndMonth(nextValue), email: userInfo.eml, type:"month"})       //해당월 데이터 조회
       setTextLabel(nextValue)                  //[선택-오늘]변경제어
       setValue(nextValue)                      //현재선택된날짜설정
