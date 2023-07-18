@@ -731,6 +731,12 @@ const Register: React.FC = () => {
               <div
                 className="wgray12"
                 style={{ width: "30px", fontWeight: "400" }}
+                onClick={() => {
+                  window.open(
+                    `https://ready3-goming.notion.site/9306a7833dc748c0950a1816cd0bcfd8?pvs=4`,
+                    "_blank"
+                  );
+                }}
               >
                 보기
               </div>
@@ -753,6 +759,12 @@ const Register: React.FC = () => {
               <div
                 className="wgray12"
                 style={{ width: "30px", fontWeight: "400" }}
+                onClick={() => {
+                  window.open(
+                    `  https://ready3-goming.notion.site/1d4e5969288f4c529d740fad580dfdc4?pvs=4`,
+                    "_blank"
+                  );
+                }}
               >
                 보기
               </div>
