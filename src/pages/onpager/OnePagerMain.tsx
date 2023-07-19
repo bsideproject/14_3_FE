@@ -18,6 +18,7 @@ import fetch from "utils/fetch";
 import GomingLogo from "assets/images/main/onepager-goming-logo.png";
 import "assets/pages/onepager/onepagermain.css";
 import OnepagerExampleView from "components/onepager/OnepagerExampleView";
+import useAuthStore from "store/modules/Auth";
 
 /**
  * @desc 원페이저 다운로드 로직
@@ -28,8 +29,24 @@ const OnePagerMain = () => {
   const { selectedMonth, answeredList } = useAnsweredList();
   const [confirmEmailPopup, setConfirmEmailPopup] = useState<boolean>(false); //confirm팝업제어
   const [toastPopup, setToastPopup] = useState<boolean>(false); //toast팝업제어
-
+  const [lastDate, setLastDate] = useState<String>();
+  const [firstDate, setFirstDate] = useState<String>();
+  const { userInfo } = useAuthStore((state) => state);
   useEffect(() => {
+    if (answeredList.length > 0) {
+      const [year, month, day] = answeredList[0].date.split("-");
+
+      setLastDate(
+        year + "-" + month + "-" + new Date(year, month, 0).getDate()
+      );
+      setFirstDate(
+        year +
+          "-" +
+          month +
+          "-" +
+          ("00" + new Date(year, month, 1).getDate()).slice(-2)
+      );
+    }
     setHeaderText("월간고밍 다운로드");
     setIsNavigation(false);
     return () => setHeaderText("");
@@ -67,16 +84,23 @@ const OnePagerMain = () => {
   //이메일 보내기 클릭 이벤트
   const sendEmail = async (email: string) => {
     setConfirmEmailPopup(false); //팝업닫기
-    const imageURL = await toOnepagerImage();
+    // const imageURL = await toOnepagerImage();
+
     const param: any = {
-      eml: email,
-      image: imageURL,
+      email: userInfo.eml,
+      sendEmail: email,
+      date: firstDate?.slice(0, 7),
+      // image: imageURL,
     };
 
     //db connection
-    // const result:AxiosResponse<any> = await fetch('/api/onepager/sendEmail', param)
-    const result = true;
-    if (result === true) {
+    console.log(param);
+    const result: AxiosResponse<any> = await fetch.post(
+      "/api/email/sendByMonth",
+      param
+    );
+    console.log("result", result);
+    if (result.status === 200) {
       setToastPopup(true); //토스트 팝업 출력
       setTimeout(() => {
         setToastPopup(false); //토스트 팝업 종료
@@ -115,7 +139,7 @@ const OnePagerMain = () => {
               onClick={() => setConfirmEmailPopup(true)}
             >
               <EmailIcon></EmailIcon>
-              &nbsp;<span className="body3-bold">이메일로 보내기</span>
+              <span className="body3-bold">이메일로 보내기</span>
             </button>
           </div>
         </div>
@@ -128,7 +152,9 @@ const OnePagerMain = () => {
         <div className="onepager-download">
           <div className="onepager-download-header">
             <h1>{selectedMonth}월의 고밍</h1>
-            <p className="body1-regular">DATE~DATE</p>
+            <p className="body1-regular">
+              {firstDate}~{lastDate}
+            </p>
             <p className="headline2">
               {selectedMonth}월의 NICKNAME님은 어떤 하루하루를 보냈는지
               돌아볼까요?
@@ -144,13 +170,13 @@ const OnePagerMain = () => {
               <div key={item.index}>
                 <div className="answered-list-item-header-wrap caption1-regular">
                   <DateFormatUI date={item.date} />
-                  <AnsweredCategoryUI category={item.qc} />
+                  <AnsweredCategoryUI category={item.category} />
                 </div>
                 <div className="onepager-list-item-q color-wgray13 body2-bold">
-                  {item.q}
+                  {item.question}
                 </div>
                 <div className="onepager-list-item-a body3-regular">
-                  {item.a}
+                  {item.answer}
                 </div>
               </div>
             ))}
@@ -193,7 +219,9 @@ const OnePagerMain = () => {
             text="원페이저를 받을 이메일 주소가 맞나요?/n다른이메일로 받고 싶다면/n주소를 변경해주세요."
             confirmText="이메일 보내기"
             cancelText="취소하기"
-            confirmCallbackFunction={sendEmail}
+            confirmCallbackFunction={(email: any) => {
+              sendEmail(email);
+            }}
             cancelCallbackFunction={() => setConfirmEmailPopup(false)}
           />
         )
