@@ -41,6 +41,8 @@ const getYearAndMonthAndDay = (date:any) => {
  * @returns {boolean} true: 같은일, false: 다른일
  */
 const isSameDay = (date1:Date, date2:Date) => {
+  console.log('isSameDay', date1, date2);
+  
   const Newdate1:string = date1.toString().slice(0,15)
   const Newdate2:string = date2.toString().slice(0,15)
   return new Date(Newdate1).toLocaleDateString() === new Date(Newdate2).toLocaleDateString() 
@@ -79,31 +81,39 @@ const MyCalendar = () => {
    ****************************************************************************/
   //day 클릭 이벤트
   const updateDate = async (nextValue:any) => {
-    console.log('day move');
+    console.log('day move :: nextValue: ==  ', nextValue.toLocaleDateString());
     //초기화
     initAnsweredCount()
     //선택한 일자가 같은 경우
     if (selectedDate) {
-      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:'date'})       //해당일자 데이터 조회
-      // 선택한 날짜가 이번 달 이전인 경우
-      // 답변한 목록 조회, 답변한 개수 조회
-      if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() <= today.getMonth()) {
-        await getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
-      }
-
+      let type = ""
       if( selectedDate.getDate() === nextValue.getDate() ) {
         setSelectedMonth(nextValue.getMonth()+1)   //선택된 월 store 세팅
         setValue(null)
         setActiveCalendarBtn(true)                //리스트만보기 버튼
-
+        type = "month"
       } else {
         setTextLabel(nextValue)                  //[선택-오늘]변경제어
         setValue(nextValue)                      //현재선택된날짜설정
         getDayData(nextValue)                    //전체목록 초기화 및 재조회
         setActiveCalendarBtn(false)               //리스트만보기 버튼
+        type = "date"
+      }
+      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:type})  //해당일자 데이터 조회
+
+      // 선택한 날짜가 이번 달 이전인 경우
+      // 답변한 목록 조회, 답변한 개수 조회
+      if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() < today.getMonth()) {
+        await getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
+      }
+
+      await getAnsweredCount({date: getYearAndMonth(today), email: userInfo.eml, type:'date'})  //해당일자 데이터 조회
+      // 선택한 날짜가 이번 달 이전인 경우
+      // 답변한 목록 조회, 답변한 개수 조회
+      if (nextValue.getDate() <= today.getDate() && nextValue.getMonth() < today.getMonth()) {
+        await getAnsweredList({date: getYearAndMonthAndDay(nextValue), email: userInfo.eml})  //해당일자 데이터 조회
       }
     } else {
-      initAnsweredCount()                       //답변개수 초기화 -> 월간 답변 개수로 변경
       await getAnsweredDateCount({date: getYearAndMonth(nextValue), email: userInfo.eml, type:"month"})       //해당월 데이터 조회
       setTextLabel(nextValue)                  //[선택-오늘]변경제어
       setValue(nextValue)                      //현재선택된날짜설정
@@ -113,7 +123,14 @@ const MyCalendar = () => {
   }
 
   // [월] 이동 이벤트 - RightArrow control
+  /**
+   * @desc [월] 이동 이벤트 
+   * @param {Date} nextValue
+   * @param
+   * @returns {void}
+   */
   const CheckIsThisMonth = async ({action, activeStartDate, value, view} : any) => {
+    console.log('******************************');
     console.log('month move', activeStartDate);
     initAnsweredList()  //답변목록 초기화
     initAnsweredCount() //답변개수 초기화
@@ -135,6 +152,7 @@ const MyCalendar = () => {
       getMonthData(activeStartDate)                           //월간데이터 조회
       setActiveCalendarBtn(true)                              //리스트만보기 버튼 active
     }
+    
     setSelectedMonth(activeStartDate.getMonth()+1)            //선택된 월 store 세팅
     if (getYearAndMonth(activeStartDate) >= todayYearMonth) { //활성화된날짜 >= 오늘연월 ?
       updateIsThisMonth(true)                                 //원페이저 다운로드 표시
@@ -196,11 +214,16 @@ const MyCalendar = () => {
     setShowCalendar(!showCalendar)                                    //state 변경
   }
 
+  /****************************************************************************
+   * 컴포넌트 렌더링 시 호출 함수
+   ****************************************************************************/
+  // textlabelControl 변경 시, 실행
   useEffect(()=>{
     console.log('useEffect');
-    updateCalendarWithDesign()
+    updateCalendarWithDesign()  //달력 디자인 변경
   }, [textlabelControl])
 
+  //1회만 실행
   useEffect(() => {
     console.log('useEffect2');
     const newMonth:any = getYearAndMonth(today)
@@ -210,7 +233,7 @@ const MyCalendar = () => {
     getAnsweredCount({date: getYearAndMonth(today).split('-'), email: userInfo.eml, type: 'month'})       //해당일자 데이터 조회
     setHeaderText('')
   }, [])
-
+  /****************************************************************************/
 
   //date format 변경
   const transformDate = ({date, locale}:any) => {
