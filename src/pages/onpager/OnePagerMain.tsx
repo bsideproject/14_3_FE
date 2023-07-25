@@ -78,7 +78,7 @@ const OnePagerMain = () => {
     // ArrayBuffer를 Blob으로 변환합니다.
     const blob = new Blob([arrayBuffer], { type: "image/png" });
 
-    alert(blob);
+    alert(arrayBuffer.byteLength);
     downloadjs(blob, "goming", "image/png");
   };
 
