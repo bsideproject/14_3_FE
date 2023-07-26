@@ -62,7 +62,7 @@ const OnePagerMain = () => {
       useCORS: true,
       scale: 2,
     }); //scale 2 옵션으로 출력   => 1920px
-    alert(canvas);
+    alert(canvas.getContext);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
     return dataURL;
