@@ -56,7 +56,7 @@ const OnePagerMain = () => {
   const toOnepagerImage = async () => {
     const wrapper = document.querySelector(".onepager-download") as HTMLElement;
     // alert(wrapper.textContent);
-    wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
+    // wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
@@ -65,6 +65,7 @@ const OnePagerMain = () => {
     alert(canvas.getContext);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
+    console.log(dataURL);
     return dataURL;
   };
 
