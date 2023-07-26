@@ -65,7 +65,7 @@ const OnePagerMain = () => {
     // alert(canvas.getContext);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
-    alert(dataURL);
+    alert(dataURL.length);
     return dataURL;
   };
 
