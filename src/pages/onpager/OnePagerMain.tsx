@@ -55,13 +55,14 @@ const OnePagerMain = () => {
   //원페이저 이미지변환, img url return
   const toOnepagerImage = async () => {
     const wrapper = document.querySelector(".onepager-download") as HTMLElement;
-    alert(wrapper.textContent);
+    // alert(wrapper.textContent);
     wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
       scale: 2,
     }); //scale 2 옵션으로 출력   => 1920px
+    alert(canvas);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
     return dataURL;
