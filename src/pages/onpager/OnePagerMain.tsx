@@ -175,20 +175,24 @@ const OnePagerMain = () => {
             className="my-masonry-grid-download"
             columnClassName="my-masonry-grid_column-download"
           >
-            {answeredList.map((item) => (
-              <div key={item.index}>
-                <div className="answered-list-item-header-wrap caption1-regular">
-                  <DateFormatUI date={item.date} />
-                  <AnsweredCategoryUI category={item.category} />
+            {answeredList.length > 0 ? (
+              answeredList.map((item) => (
+                <div key={item.index}>
+                  <div className="answered-list-item-header-wrap caption1-regular">
+                    <DateFormatUI date={item.date} />
+                    <AnsweredCategoryUI category={item.category} />
+                  </div>
+                  <div className="onepager-list-item-q color-wgray13 body2-bold">
+                    {item.question}
+                  </div>
+                  <div className="onepager-list-item-a body3-regular">
+                    {item.answer}
+                  </div>
                 </div>
-                <div className="onepager-list-item-q color-wgray13 body2-bold">
-                  {item.question}
-                </div>
-                <div className="onepager-list-item-a body3-regular">
-                  {item.answer}
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <></>
+            )}
           </Masonry>
 
           {/* 일러스트레이터 영역 */}
