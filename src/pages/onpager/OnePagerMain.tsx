@@ -76,7 +76,7 @@ const OnePagerMain = () => {
 
     // base64 데이터를 ArrayBuffer로 변환합니다.
     const data = window.atob(base64Data.split(",")[1]);
-    alert(data);
+
     const arrayBuffer = new ArrayBuffer(data.length);
     const view = new Uint8Array(arrayBuffer);
     for (let i = 0; i < data.length; i++) {
