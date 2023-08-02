@@ -194,13 +194,9 @@ const Register: React.FC = () => {
       try {
         // setLoading(true);
         setEmailDisable(true);
-        const result = await fetch.post(
-          `/api/email/emailConfirm`,
-          { email: email },
-          {
-            withCredentials: false,
-          }
-        );
+        const result = await fetch.post(`/api/email/emailConfirm`, {
+          email: email,
+        });
 
         // console.log(result.headers.get("set-cookie"));
         // setLoading(false);
