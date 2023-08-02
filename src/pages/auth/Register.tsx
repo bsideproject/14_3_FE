@@ -198,7 +198,7 @@ const Register: React.FC = () => {
           `/api/email/emailConfirm`,
           { email: email },
           {
-            withCredentials: true,
+            withCredentials: false,
           }
         );
 
@@ -221,7 +221,7 @@ const Register: React.FC = () => {
       `/api/verifyCode/verify?code=${authNumber}`,
       {},
       {
-        withCredentials: true,
+        withCredentials: false,
       }
     );
     if (result.data === "인증번호가 일치합니다.") {
