@@ -194,9 +194,15 @@ const Register: React.FC = () => {
       try {
         // setLoading(true);
         setEmailDisable(true);
-        const result = await fetch.post(`/api/email/emailConfirm`, {
-          email: email,
-        });
+        const result = await fetch.post(
+          `/api/email/emailConfirm`,
+          {
+            email: email,
+          },
+          {
+            withCredentials: true,
+          }
+        );
 
         // console.log(result.headers.get("set-cookie"));
         // setLoading(false);
@@ -217,13 +223,15 @@ const Register: React.FC = () => {
       `/api/verifyCode/verify?code=${authNumber}`,
       {},
       {
-        withCredentials: false,
+        withCredentials: true,
       }
     );
+    console.log(result);
     if (result.data === "인증번호가 일치합니다.") {
       setEmailDisable(true);
       setEmailCodeChk(true);
       setEmailCodeConfirmChk(true);
+
       setRegisterInfo((prev) => {
         return { ...prev, eml: email };
       });
