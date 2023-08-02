@@ -55,10 +55,17 @@ const OnePagerMain = () => {
   //원페이저 이미지변환, img url return
   const toOnepagerImage = async () => {
     const wrapper = document.querySelector(".onepager-download") as HTMLElement;
-    wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
-    const canvas = await html2canvas(wrapper, { scale: 2 }); //scale 2 옵션으로 출력   => 1920px
+    // alert(wrapper.textContent);
+    // wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
+    const canvas = await html2canvas(wrapper, {
+      allowTaint: true,
+      useCORS: true,
+      scale: 1.4,
+    }); //scale 2 옵션으로 출력   => 1920px
+    // alert(canvas.getContext);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
+    alert(dataURL.length);
     return dataURL;
   };
 
@@ -69,6 +76,7 @@ const OnePagerMain = () => {
 
     // base64 데이터를 ArrayBuffer로 변환합니다.
     const data = window.atob(base64Data.split(",")[1]);
+
     const arrayBuffer = new ArrayBuffer(data.length);
     const view = new Uint8Array(arrayBuffer);
     for (let i = 0; i < data.length; i++) {
@@ -78,6 +86,7 @@ const OnePagerMain = () => {
     // ArrayBuffer를 Blob으로 변환합니다.
     const blob = new Blob([arrayBuffer], { type: "image/png" });
 
+    alert(arrayBuffer.byteLength);
     downloadjs(blob, "goming", "image/png");
   };
 
@@ -166,20 +175,24 @@ const OnePagerMain = () => {
             className="my-masonry-grid-download"
             columnClassName="my-masonry-grid_column-download"
           >
-            {answeredList.map((item) => (
-              <div key={item.index}>
-                <div className="answered-list-item-header-wrap caption1-regular">
-                  <DateFormatUI date={item.date} />
-                  <AnsweredCategoryUI category={item.category} />
+            {answeredList.length > 0 ? (
+              answeredList.map((item) => (
+                <div key={item.index}>
+                  <div className="answered-list-item-header-wrap caption1-regular">
+                    <DateFormatUI date={item.date} />
+                    <AnsweredCategoryUI category={item.category} />
+                  </div>
+                  <div className="onepager-list-item-q color-wgray13 body2-bold">
+                    {item.question}
+                  </div>
+                  <div className="onepager-list-item-a body3-regular">
+                    {item.answer}
+                  </div>
                 </div>
-                <div className="onepager-list-item-q color-wgray13 body2-bold">
-                  {item.question}
-                </div>
-                <div className="onepager-list-item-a body3-regular">
-                  {item.answer}
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <></>
+            )}
           </Masonry>
 
           {/* 일러스트레이터 영역 */}
