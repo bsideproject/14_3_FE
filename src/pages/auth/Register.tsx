@@ -195,8 +195,8 @@ const Register: React.FC = () => {
         // setLoading(true);
         setEmailDisable(true);
         const result = await fetch.post(
-          `/api/email/emailconfirm?email=${email}`,
-          {},
+          `/api/email/emailConfirm`,
+          { email: email },
           {
             withCredentials: true,
           }
