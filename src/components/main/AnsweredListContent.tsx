@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import useAnsweredList from "store/modules/Answers"
 import 'assets/components/answered-list/answered-list.css'
 import AnsweredCategoryUI from "./AnsweredCategoryUI";
@@ -15,6 +15,8 @@ const AnsweredListContent = () => {
   const {answeredList, answeredCount, updateAnsweredView} = useAnsweredList()
   const navigate = useNavigate()
 
+  const computedAnsweredCount = useMemo(()=> answeredCount.toString(), [answeredCount])
+
   //상세페이지로 이동
   const viewAnswer = (item:any):void => {
     updateAnsweredView(item)
@@ -27,7 +29,7 @@ const AnsweredListContent = () => {
 
         {/* 목록 개수 출력 */}
         <div className="answered-list-item-count-wrap body2-bold">
-          총 <span className="answered-list-count-text">{answeredCount?.toString()}개</span>의 답변이 있습니다.
+          총 <span className="answered-list-count-text">{computedAnsweredCount}개</span>의 답변이 있습니다.
         </div>
 
         {/* 목록 내용 출력 */}
