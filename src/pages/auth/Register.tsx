@@ -185,14 +185,7 @@ const Register: React.FC = () => {
         await fetch.post(`/api/user/check-email?email=${email}`, {
           withCredentials: false,
         });
-      } catch (e: any) {
-        if (e.response.status === 409) {
-          setEmailExistChk(true);
-        }
-      }
-      // *
-      try {
-        // setLoading(true);
+
         setEmailDisable(true);
         const result = await fetch.post(
           `/api/email/emailConfirm`,
@@ -211,8 +204,12 @@ const Register: React.FC = () => {
         }
         setEmailDisable(false);
       } catch (e: any) {
-        // setLoading(false);
+        if (e.response.status === 409) {
+          setEmailExistChk(true);
+        }
       }
+      // *
+
       // *
     }
   };
@@ -223,6 +220,9 @@ const Register: React.FC = () => {
       `/api/verifyCode/verify?code=${authNumber}`,
       {},
       {
+        headers: {
+          Cookie: "yourCookieName=yourCookieValue; SameSite=None", // SameSite 속성 설정
+        },
         withCredentials: true,
       }
     );
