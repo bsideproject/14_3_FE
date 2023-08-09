@@ -19,6 +19,7 @@ import Intro from "pages/etc/Intro";
 import NotFound from "pages/main/NotFound";
 import "assets/components/global.css";
 import Loading from "components/common/Loading";
+import AddNewQuiestion from "pages/etc/AddNewQuiestion";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -43,6 +44,7 @@ root.render(
         <Route path="/answered-view" element={<AnsweredView />} />
         <Route path="/intro" element={<Intro />} />
         <Route path="/loading" element={<Loading />} />
+        <Route path="/new-question" element={<AddNewQuiestion />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
