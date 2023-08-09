@@ -62,25 +62,34 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   getAnsweredList: async (param: any) => {
     console.log(new Date(param.date).getMonth() + 1);
 
+    param.size = param.size === undefined || null || '' ? 15 : param.size;
+    param.page = param.page === undefined || null || '' ? 1 : param.page;
+
     const result = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/question/answered/${
         param.email
       }/${param.date.toString()}?size=${param?.size}&page=${param?.page}`
     );
     console.log("getAnsweredList", result?.data);
-    if (result?.data) {
-      if (result?.data.length > 0) {
+    console.log(typeof result?.data);
+    
+    if (typeof result?.data === 'object') {
+      if (result?.data?.content.length > 0) {
         // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
-        for (let i = 0; i < result?.data.length; i++) {
-          if (result?.data[i].answer.trim().length === 0) {
-            result?.data.splice(i, 1);
-            i--;
+        for (let i = 0; i < result?.data.content.length; i++) {
+          if (result?.data.content[i]) {
+            if (result.data.content[i]?.answer.trim().length === 0) {
+              result?.data.content.splice(i, 1);
+              i--;
+            }
           }
         }
         const newList = result?.data ? result?.data : []; //값이 없을 경우 빈 배열로 초기화
         console.log("getAnsweredList 조회 종료:  ", newList);
         set({ answeredList: newList });
       }
+    } else {
+      set({ answeredList: [] });
     }
   },
 
