@@ -32,8 +32,6 @@ export const dateFormat = {
    * @returns {boolean} true: 같은일, false: 다른일
    */
   isSameDay: (date1:Date, date2:Date) => {
-    console.log('isSameDay', date1, date2);
-    
     const Newdate1:string = date1.toString().slice(0,15)
     const Newdate2:string = date2.toString().slice(0,15)
     return new Date(Newdate1).toLocaleDateString() === new Date(Newdate2).toLocaleDateString() 
