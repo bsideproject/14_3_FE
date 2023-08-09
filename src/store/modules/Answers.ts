@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import CL from 'composables/COMMON/common'
+import CL from "composables/COMMON/common";
 
 type ANSWER_LIST = {
   answeredList: Array<any>; //답변목록
@@ -63,10 +63,12 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     console.log(new Date(param.date).getMonth() + 1);
 
     const result = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/question/answered/${param.email}/${param.date.toString()}`
+      `${process.env.REACT_APP_API_URL}/api/question/answered/${
+        param.email
+      }/${param.date.toString()}?size=${param?.size}&page=${param?.page}`
     );
     console.log("getAnsweredList", result?.data);
-    if (result?.data){
+    if (result?.data) {
       if (result?.data.length > 0) {
         // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
         for (let i = 0; i < result?.data.length; i++) {
@@ -80,7 +82,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
         set({ answeredList: newList });
       }
     }
-
   },
 
   /**
@@ -116,27 +117,31 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @param type
    */
   getAnsweredCount: async (param: any) => {
-    CL.DS(`getAnsweredCount`)
+    CL.DS(`getAnsweredCount`);
     console.log(param);
-    
-    let url:string = `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/`;
 
-    if (param.type === "month") { //월
-      url += `${param.date[0]}/${param.date[1]}`
-      const result = await axios.get(url)
+    let url: string = `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/`;
+
+    if (param.type === "month") {
+      //월
+      url += `${param.date[0]}/${param.date[1]}`;
+      const result = await axios.get(url);
       const count = result?.data.count ? result?.data.count : 0;
-      CL.RED(count)
+      CL.RED(count);
       set({ answeredCount: count });
-
-    } else if (param.type === 'day') { //일
-      url += `${param.date}`
-      const result = await axios.get(url)
+    } else if (param.type === "day") {
+      //일
+      url += `${param.date}`;
+      const result = await axios.get(url);
       const count = result?.data ? result?.data : 0;
-      CL.RED(count)
+      CL.RED(count);
       set({ answeredCount: count });
-    } 
-    
-    console.log('%c----- getAnsweredCount end ---','background:grey;color:white;');
+    }
+
+    console.log(
+      "%c----- getAnsweredCount end ---",
+      "background:grey;color:white;"
+    );
   },
 
   /**
@@ -183,7 +188,9 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   passAnswer: async (param: any): Promise<void> => {
     await axios.put(
-      `${process.env.REACT_APP_API_URL}/api/answers/passAnswer`, param, {withCredentials: false}
+      `${process.env.REACT_APP_API_URL}/api/answers/passAnswer`,
+      param,
+      { withCredentials: false }
     );
   },
 }));

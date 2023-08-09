@@ -19,6 +19,7 @@ import GomingLogo from "assets/images/main/onepager-goming-logo.png";
 import "assets/pages/onepager/onepagermain.css";
 import OnepagerExampleView from "components/onepager/OnepagerExampleView";
 import useAuthStore from "store/modules/Auth";
+import dateFormat from "composables/MAIN/MyCalenderDateFormat";
 
 /**
  * @desc 원페이저 다운로드 로직
@@ -26,12 +27,26 @@ import useAuthStore from "store/modules/Auth";
  */
 const OnePagerMain = () => {
   const { setHeaderText, setIsNavigation } = useDefaultSets();
-  const { selectedMonth, answeredList } = useAnsweredList();
+  const { selectedMonth, answeredList, selectedDate, getAnsweredList } =
+    useAnsweredList();
   const [confirmEmailPopup, setConfirmEmailPopup] = useState<boolean>(false); //confirm팝업제어
   const [toastPopup, setToastPopup] = useState<boolean>(false); //toast팝업제어
   const [lastDate, setLastDate] = useState<String>();
   const [firstDate, setFirstDate] = useState<String>();
   const { userInfo } = useAuthStore((state) => state);
+  useEffect(() => {
+    const param = {
+      email: userInfo.eml,
+      date: dateFormat.getYearAndMonth(selectedDate),
+      size: 100,
+      page: 0,
+    };
+    getAnsweredList(param);
+
+    setHeaderText("월간고밍 다운로드");
+    setIsNavigation(false);
+    return () => setHeaderText("");
+  }, []);
   useEffect(() => {
     if (answeredList.length > 0) {
       const [year, month, day] = answeredList[0].date.split("-");
@@ -47,11 +62,7 @@ const OnePagerMain = () => {
           ("00" + new Date(year, month, 1).getDate()).slice(-2)
       );
     }
-    setHeaderText("월간고밍 다운로드");
-    setIsNavigation(false);
-    return () => setHeaderText("");
-  }, []);
-
+  }, [answeredList]);
   //원페이저 이미지변환, img url return
   const toOnepagerImage = async () => {
     const wrapper = document.querySelector(".onepager-download") as HTMLElement;
@@ -65,7 +76,6 @@ const OnePagerMain = () => {
     // alert(canvas.getContext);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
-    alert(dataURL.length);
     return dataURL;
   };
 
@@ -94,7 +104,7 @@ const OnePagerMain = () => {
   const sendEmail = async (email: string) => {
     setConfirmEmailPopup(false); //팝업닫기
     // const imageURL = await toOnepagerImage();
-
+    console.log(firstDate);
     const param: any = {
       email: userInfo.eml,
       sendEmail: email,
