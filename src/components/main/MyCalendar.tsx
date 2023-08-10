@@ -79,7 +79,7 @@ const MyCalendar = () => {
         getDayData(nextValue); //전체목록 초기화 및 재조회
         setActiveCalendarBtn(false); //리스트만보기 버튼
         type = "date";
-        date = today.toString();
+        date = dateFormat.getYearAndMonthAndDay(nextValue)
       }
       await getAnsweredCount({ date, email: userInfo.eml, type }); //해당일자 데이터 조회
 
