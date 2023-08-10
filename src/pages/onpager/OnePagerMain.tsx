@@ -79,6 +79,22 @@ const OnePagerMain = () => {
     return dataURL;
   };
 
+  const imageToBlob = async () => {
+    const base64Data = await toOnepagerImage();
+
+    // base64 데이터를 ArrayBuffer로 변환합니다.
+    const data = window.atob(base64Data.split(",")[1]);
+
+    const arrayBuffer = new ArrayBuffer(data.length);
+    const view = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < data.length; i++) {
+      view[i] = data.charCodeAt(i);
+    }
+
+    // ArrayBuffer를 Blob으로 변환합니다.
+    const blob = new Blob([arrayBuffer], { type: "image/png" });
+    return blob;
+  };
   //원페이저 다운로드 클릭 이벤트
   const downloadOnepager = async () => {
     // data URL에서 base64 인코딩된 데이터를 추출합니다.
@@ -96,7 +112,6 @@ const OnePagerMain = () => {
     // ArrayBuffer를 Blob으로 변환합니다.
     const blob = new Blob([arrayBuffer], { type: "image/png" });
 
-    alert(arrayBuffer.byteLength);
     downloadjs(blob, "goming", "image/png");
   };
 
@@ -104,29 +119,46 @@ const OnePagerMain = () => {
   const sendEmail = async (email: string) => {
     setConfirmEmailPopup(false); //팝업닫기
     // const imageURL = await toOnepagerImage();
-    console.log(firstDate);
-    const param: any = {
-      email: userInfo.eml,
-      sendEmail: email,
-      date: firstDate?.slice(0, 7),
-      // image: imageURL,
-    };
 
-    //db connection
-    console.log(param);
+    const blob = await imageToBlob();
+    console.log(blob);
+    const formData = new FormData();
+    formData.append("imageData", blob, "image.png");
+    formData.append("email", userInfo.eml);
+    formData.append("sendEmail", email);
+
+    console.log(formData.get("imageData"));
     const result: AxiosResponse<any> = await fetch.post(
-      "/api/email/sendByMonth",
-      param
+      "/api/email/sendByMonthBlob",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    console.log("result", result);
-    if (result.status === 200) {
-      setToastPopup(true); //토스트 팝업 출력
-      setTimeout(() => {
-        setToastPopup(false); //토스트 팝업 종료
-      }, 3000);
-    } else {
-      return false;
-    }
+    // const param: any = {
+    //   email: userInfo.eml,
+    //   sendEmail: email,
+    //   date: firstDate?.slice(0, 7),
+    //   // image: imageURL,
+    // };
+
+    // //db connection
+    // console.log(param);
+    // const result: AxiosResponse<any> = await fetch.post(
+    //   "/api/email/sendByMonth",
+    //   param
+    // );
+    // console.log("result", result);
+    // if (result.status === 200) {
+    //   setToastPopup(true); //토스트 팝업 출력
+    //   setTimeout(() => {
+    //     setToastPopup(false); //토스트 팝업 종료
+    //   }, 3000);
+    // } else {
+    //   return false;
+    // }
   };
 
   return (
