@@ -76,7 +76,7 @@ const OnePagerMain = () => {
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
-      scale: 0.853,
+      scale: 0.854,
     }); //scale 2 옵션으로 출력   => 1920px
     // alert(canvas.getContext);
     alert(canvas.height);
