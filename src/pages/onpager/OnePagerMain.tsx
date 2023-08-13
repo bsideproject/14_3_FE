@@ -76,11 +76,13 @@ const OnePagerMain = () => {
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
-      scale: 1.0,
+      scale: 0.5,
     }); //scale 2 옵션으로 출력   => 1920px
     // alert(canvas.getContext);
+    alert(canvas.height);
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
+
     return dataURL;
   };
 
@@ -223,10 +225,6 @@ const OnePagerMain = () => {
           >
             {answeredList.content.length > 0 ? (
               answeredList.content.map((item, index) => {
-                if (index === 0) {
-                  console.log(answeredList);
-                }
-                console.log("index  :", index);
                 return (
                   <div key={item.index}>
                     <div className="answered-list-item-header-wrap caption1-regular">
