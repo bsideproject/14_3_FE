@@ -35,21 +35,26 @@ const OnePagerMain = () => {
   const [firstDate, setFirstDate] = useState<String>();
   const { userInfo } = useAuthStore((state) => state);
   useEffect(() => {
+    const initData = async (param: any) => {
+      await getAnsweredList(param);
+    };
     const param = {
       email: userInfo.eml,
       date: dateFormat.getYearAndMonth(selectedDate),
       size: 100,
       page: 0,
     };
-    getAnsweredList(param);
+    initData(param);
 
     setHeaderText("월간고밍 다운로드");
     setIsNavigation(false);
     return () => setHeaderText("");
   }, []);
   useEffect(() => {
-    if (answeredList.length > 0) {
-      const [year, month, day] = answeredList[0].date.split("-");
+    console.log("@#@!#@#!테스트");
+    console.log(answeredList["content"]);
+    if (answeredList.content.length > 0) {
+      const [year, month, day] = answeredList.content[0].date.split("-");
 
       setLastDate(
         year + "-" + month + "-" + new Date(year, month, 0).getDate()
@@ -121,13 +126,12 @@ const OnePagerMain = () => {
     // const imageURL = await toOnepagerImage();
 
     const blob = await imageToBlob();
-    console.log(blob);
     const formData = new FormData();
     formData.append("imageData", blob, "image.png");
     formData.append("email", userInfo.eml);
     formData.append("sendEmail", email);
+    formData.append("date", selectedDate);
 
-    console.log(formData.get("imageData"));
     const result: AxiosResponse<any> = await fetch.post(
       "/api/email/sendByMonthBlob",
       formData,
@@ -217,8 +221,8 @@ const OnePagerMain = () => {
             className="my-masonry-grid-download"
             columnClassName="my-masonry-grid_column-download"
           >
-            {answeredList.length > 0 ? (
-              answeredList.map((item) => (
+            {answeredList.content.length > 0 ? (
+              answeredList.content.map((item) => (
                 <div key={item.index}>
                   <div className="answered-list-item-header-wrap caption1-regular">
                     <DateFormatUI date={item.date} />

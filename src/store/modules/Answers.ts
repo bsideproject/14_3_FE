@@ -3,7 +3,7 @@ import axios from "axios";
 import CL from "composables/COMMON/common";
 
 type ANSWER_LIST = {
-  answeredList: Array<any>; //답변목록
+  answeredList: ANSWER_TYPE; //답변목록
   getAnsweredList: Function; //답변목록 조회
   initAnsweredList: Function; //답변목록 초기화
 
@@ -42,12 +42,17 @@ type QNA_DATE_ITEM = {
   date: string;
   count: number;
 };
-
+type ANSWER_TYPE = {
+  content: Array<any>;
+  page: number;
+  size: number;
+  totalElements: number;
+};
 /**
  * @desc Main - QNA List 상태관리
  */
 const useAnsweredList = create<ANSWER_LIST>((set) => ({
-  answeredList: [],
+  answeredList: { content: [], page: 0, size: 0, totalElements: 0 },
   answeredCount: 0,
   answeredDateCount: [],
   answeredView: { date: "", question: "", category: "", answer: "" },
@@ -62,8 +67,8 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
   getAnsweredList: async (param: any) => {
     console.log(new Date(param.date).getMonth() + 1);
 
-    param.size = param.size === undefined || null || '' ? 15 : param.size;
-    param.page = param.page === undefined || null || '' ? 1 : param.page;
+    param.size = param.size === undefined || null || "" ? 15 : param.size;
+    param.page = param.page === undefined || null || "" ? 1 : param.page;
 
     const result = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/question/answered/${
@@ -72,9 +77,9 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
     );
     console.log("getAnsweredList", result?.data);
     console.log(typeof result?.data);
-    
-    if (typeof result?.data === 'object') {
-      if (result?.data?.content.length > 0) {
+
+    if (typeof result?.data === "object") {
+      if (result?.data?.content?.length > 0) {
         // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
         for (let i = 0; i < result?.data.content.length; i++) {
           if (result?.data.content[i]) {
@@ -89,7 +94,9 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
         set({ answeredList: newList });
       }
     } else {
-      set({ answeredList: [] });
+      set({
+        answeredList: { content: [], page: 0, size: 0, totalElements: 0 },
+      });
     }
   },
 
@@ -116,7 +123,7 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @desc 해당 월의 qna 리스트 초기화
    */
   initAnsweredList: (): void => {
-    set({ answeredList: [] });
+    set({ answeredList: { content: [], page: 0, size: 0, totalElements: 0 } });
   },
 
   /**
