@@ -92,6 +92,15 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
         const newList = result?.data ? result?.data : []; //값이 없을 경우 빈 배열로 초기화
         console.log("getAnsweredList 조회 종료:  ", newList);
         set({ answeredList: newList });
+      } else {
+        set({
+          answeredList: {
+            content: result?.data,
+            page: 0,
+            size: 100,
+            totalElements: result?.data.length,
+          },
+        });
       }
     } else {
       set({

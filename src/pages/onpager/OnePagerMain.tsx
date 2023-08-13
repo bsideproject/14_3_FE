@@ -130,7 +130,7 @@ const OnePagerMain = () => {
     formData.append("imageData", blob, "image.png");
     formData.append("email", userInfo.eml);
     formData.append("sendEmail", email);
-    formData.append("date", selectedDate);
+    formData.append("date", dateFormat.getYearAndMonth(selectedDate));
 
     const result: AxiosResponse<any> = await fetch.post(
       "/api/email/sendByMonthBlob",
@@ -222,20 +222,26 @@ const OnePagerMain = () => {
             columnClassName="my-masonry-grid_column-download"
           >
             {answeredList.content.length > 0 ? (
-              answeredList.content.map((item) => (
-                <div key={item.index}>
-                  <div className="answered-list-item-header-wrap caption1-regular">
-                    <DateFormatUI date={item.date} />
-                    <AnsweredCategoryUI category={item.category} />
+              answeredList.content.map((item, index) => {
+                if (index === 0) {
+                  console.log(answeredList);
+                }
+                console.log("index  :", index);
+                return (
+                  <div key={item.index}>
+                    <div className="answered-list-item-header-wrap caption1-regular">
+                      <DateFormatUI date={item.date} />
+                      <AnsweredCategoryUI category={item.category} />
+                    </div>
+                    <div className="onepager-list-item-q color-wgray13 body2-bold">
+                      {item.question}
+                    </div>
+                    <div className="onepager-list-item-a body3-regular">
+                      {item.answer}
+                    </div>
                   </div>
-                  <div className="onepager-list-item-q color-wgray13 body2-bold">
-                    {item.question}
-                  </div>
-                  <div className="onepager-list-item-a body3-regular">
-                    {item.answer}
-                  </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <></>
             )}
