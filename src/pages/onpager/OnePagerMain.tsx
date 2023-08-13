@@ -76,10 +76,11 @@ const OnePagerMain = () => {
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
-      scale: 0.84,
+      scale: 0.85,
     }); //scale 2 옵션으로 출력   => 1920px
     // alert(canvas.getContext);
     alert(canvas.height);
+
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
 
