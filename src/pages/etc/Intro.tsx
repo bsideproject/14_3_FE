@@ -5,6 +5,7 @@ import 'assets/pages/etc/intro.css'
 import Footer from "components/Footer";
 import useDefaultSets from "store/modules/Defaults";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "store/modules/Auth";
 
 /**
  * @desc 인트로 페이지
@@ -14,10 +15,12 @@ const Intro = () => {
   //서비스 내용 관련
   const [isServicecActive, setIsServiceActive] = useState<boolean>(false)
   const {setIsNavigation} = useDefaultSets((state)=>state)
+  const {isLogin} = useAuthStore()
   const navigate = useNavigate()
 
   useEffect(()=>{
     setIsNavigation(false)
+    isLogin && navigate('/main')
     return () => setIsNavigation(true)
   },[])
 
