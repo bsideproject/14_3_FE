@@ -58,70 +58,27 @@ const MyCalendar = () => {
   const updateDate = async (nextValue: any) => {
     //초기화
     if (selectedDate) {
-      let type = "";
-      let date: any = null;
-
       //선택한 일자가 같은 경우
       if (selectedDate.getDate() === nextValue.getDate()) {
-        CL.DS("updateDate 같은 일자 선택");
         setSelectedMonth(nextValue.getMonth()); //선택된 월 store 세팅
         setValue(null);
         setActiveCalendarBtn(true); //리스트만보기 버튼
-        type = "month";
-        date = dateFormat.getYearAndMonth(nextValue).toString().split("-");
-      }
-      //선택한 일자가 다른 경우
-      else {
-        CL.DS("updateDate 다른 일자 선택");
+        getMonthData(nextValue); //전체목록 초기화 및 [월] 데이터 조회
 
+      } else {//선택한 일자가 다른 경우 
         setTextLabel(nextValue); //[선택-오늘]변경제어
         setValue(nextValue); //현재선택된날짜설정
+        setActiveCalendarBtn(false); //리스트만보기 버튼        
         getDayData(nextValue); //전체목록 초기화 및 재조회
-        setActiveCalendarBtn(false); //리스트만보기 버튼
-        type = "date";
-        date = dateFormat.getYearAndMonthAndDay(nextValue)
-      }
-      await getAnsweredCount({ date, email: userInfo.eml, type }); //해당일자 데이터 조회
-
-      // 선택한 날짜가 이번 달 이전인 경우
-      // 답변한 목록 조회, 답변한 개수 조회
-      if (
-        nextValue.getDate() <= today.getDate() &&
-        nextValue.getMonth() < today.getMonth()
-      ) {
-        await getAnsweredList({
-          date: dateFormat.getYearAndMonthAndDay(nextValue),
-          email: userInfo.eml,
-        }); //해당일자 데이터 조회
-      }
-
-      // 선택한 날짜가 이번 달 이전인 경우
-      // 답변한 목록 조회, 답변한 개수 조회
-      if (
-        nextValue.getDate() <= today.getDate() &&
-        nextValue.getMonth() < today.getMonth()
-      ) {
-        await getAnsweredList({
-          date: dateFormat.getYearAndMonthAndDay(nextValue),
-          email: userInfo.eml,
-        }); //해당일자 데이터 조회
       }
     }
-    //일자를 선택했을 경우
+    //일자를 선택했을 경우 ----------------------------------------------------------------------------------------
     else {
-      CL.DS("updateDate: nextValue가 있을 경우");
-      await getAnsweredCount({
-        date: dateFormat.getYearAndMonthAndDay(nextValue),
-        email: userInfo.eml,
-        type: "day",
-      }); //해당일자 데이터 조회
-      // await getAnsweredDateCount({date: dateFormat.getYearAndMonthAndDay(nextValue), email: userInfo.eml, type:"day"})       //해당월 데이터 조회
       setTextLabel(nextValue); //[선택-오늘]변경제어
-      setValue(nextValue); //현재선택된날짜설정`
+      setValue(nextValue); //현재선택된날짜설정
       getDayData(nextValue); //전체목록 초기화 및 재조회
       setActiveCalendarBtn(false); //리스트만보기 버튼
     }
-    //일자를 선택했을 경우
   };
 
   // [월] 이동 이벤트 - RightArrow control
@@ -186,14 +143,14 @@ const MyCalendar = () => {
     if (type === "month") {
       //월
       getAnsweredCount({
-        date: dateFormat.getYearAndMonth(date).split("-"),
+        date: convertedDate.split("-"),
         email: userInfo.eml,
         type: type,
       });
     } else {
       //일
       getAnsweredCount({
-        date: dateFormat.getYearAndMonthAndDay(date),
+        date: convertedDate,
         email: userInfo.eml,
         type: type,
       });
@@ -207,7 +164,7 @@ const MyCalendar = () => {
 
   // 해당 월의 [일] 데이터 목록 조회
   const getDayData = (date: any) => {
-    getQnAList(date, "date");
+    getQnAList(date, "day");
   };
 
   /****************************************************************************

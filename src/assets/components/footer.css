@@ -18,6 +18,9 @@
   display: flex;
   gap: 12px;
 }
+.footer-service-area p:hover {
+  cursor: pointer;
+}
 .footer-service-area img{
   padding-top: 2px;
 }
