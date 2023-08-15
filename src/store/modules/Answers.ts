@@ -76,10 +76,9 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
       }/${param.date.toString()}?size=${param?.size}&page=${param?.page}`
     );
     console.log("getAnsweredList", result?.data);
-    console.log(typeof result?.data);
 
     if (typeof result?.data === "object") {
-      if (result?.data?.content?.length > 0) {
+      if (result.data?.content?.length > 0) {
         // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
         for (let i = 0; i < result?.data.content.length; i++) {
           if (result?.data.content[i]) {
@@ -113,8 +112,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @desc 해당 date의 qna count 를 리스트로 조회
    */
   getAnsweredDateCount: async (param: any) => {
-    console.log("getAnsweredDateCount", param);
-
     const result = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`
     );
@@ -142,9 +139,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @param type
    */
   getAnsweredCount: async (param: any) => {
-    CL.DS(`getAnsweredCount`);
-    console.log(param);
-
     let url: string = `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/`;
 
     if (param.type === "month") {
@@ -152,21 +146,15 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
       url += `${param.date[0]}/${param.date[1]}`;
       const result = await axios.get(url);
       const count = result?.data.count ? result?.data.count : 0;
-      CL.RED(count);
       set({ answeredCount: count });
     } else if (param.type === "day") {
       //일
       url += `${param.date}`;
       const result = await axios.get(url);
       const count = result?.data ? result?.data : 0;
-      CL.RED(count);
       set({ answeredCount: count });
     }
 
-    console.log(
-      "%c----- getAnsweredCount end ---",
-      "background:grey;color:white;"
-    );
   },
 
   /**
