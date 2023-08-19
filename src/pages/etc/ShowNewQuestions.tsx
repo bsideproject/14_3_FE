@@ -1,9 +1,10 @@
 import 'assets/components/etc/showNewQuestions.css'
 import export_svg from 'assets/images/etc/export_svg.svg'
 import reload_svg from 'assets/images/etc/reload.svg'
-import { useEffect, useMemo, useState } from 'react'
-import useETCQuestionStore, {SEARCH} from 'store/modules/ETC_QuestionList'
+import { useEffect, useMemo, useState, useCallback } from 'react'
+import useETCQuestionStore, { SEARCH } from 'store/modules/ETC_QuestionList'
 import {exportToExcel} from 'composables/ETC'
+import { useInView } from 'react-intersection-observer';
 
 /**
  * @desc 추가한 질문 목록 조회 [운영자-확인용]
@@ -19,30 +20,43 @@ import {exportToExcel} from 'composables/ETC'
 const ShowNewQuestions = () => {
   const {getETCQuestionList, sortedQuestionList, getSortedQuestionList} = useETCQuestionStore()
   const [search, setSearch] = useState("")  //검색어
+  const [isSearched, setIsSearched] = useState(false)  //검색여부
   const [itemCount, setItemCount] = useState(30)  //출력개수
-
+  const [page, setPage] = useState(1)  //페이지네이션
+  const [size, setSize] = useState(30)  //페이지네이션
+  const [ref, inView] = useInView();  //페이지네이션-imported
   //useMemo를 사용하여 검색어 입력 시 필터링
   const questionList = useMemo(
     () => sortedQuestionList,
     [sortedQuestionList]
-  );
+    );
+  const [hasNextPage, setHasNextPage] = useState<Boolean>(useMemo(()=> questionList.length % size === 0, [questionList]))  //페이지네이션
 
   //검색단어 입력 시 목록 필터링
   const filterSortList = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value)
+    if (e.target.value !== "") {
+      setIsSearched(true)
+    } else {
+      setIsSearched(false)
+    }
     getSortedQuestionList(e.target.value)
   }
 
   //출력개수 변경 시
   const handleItemCount = (e:React.ChangeEvent<HTMLSelectElement>) => {
     setItemCount(Number(e.target.value))
+    setSearch("")
     getETCQuestionList({page:1, size:Number(e.target.value)})
   }
 
   //reset 버튼 클릭 이벤트
   const resetFilters = () => {
-    window.location.reload()
+    setSearch("")
+    setIsSearched(false)
+    setItemCount(30)
+    getETCQuestionList({page:1, size:30})
   }
 
   //엑셀 출력
@@ -50,26 +64,39 @@ const ShowNewQuestions = () => {
     exportToExcel(search, questionList)
   }
 
-  useEffect(()=> {
-    const param:SEARCH = {
-      page: 1,
-      size: 30,
+  //페이지네이션 기능 + 호출
+  const fetch = useCallback(async (param: SEARCH) => {
+      try {
+        await getETCQuestionList(param)
+      } catch (error) {
+        console.log(error);
+      }
+    }, [])
+  
+
+  //infinity scroll
+  useEffect(() => {
+    if (inView && hasNextPage && !isSearched) {
+      console.log("다음페이지를 호출.");
+      const param = {page:page+1, size}
+      setPage(page+1)
+      fetch(param);
     }
-    getETCQuestionList(param)
-  }, [])
+  }, [hasNextPage, inView]);
 
   return (
     <div className='s-n-q-container'>
       <div className='s-n-q-inner-container'>
         <h1>추가한 질문 목록 조회</h1>
         {/* 검색영억 */}
-        <p className='s-n-q-search-info'>검색할 내용 및 필터링을 설정해주세요. 새로고침을 통해 전체 리스트를 새로 받아올 수 있습니다.</p>
+        <p className='s-n-q-search-info' style={{marginBottom: '10px'}}>검색할 내용 및 필터링을 설정해주세요. 새로고침을 통해 전체 리스트를 새로 받아올 수 있습니다.</p>
+        <p className='s-n-q-search-info'>목록 추가 조회 시 검색했던 필터링은 사라집니다.</p>
         <div className='s-n-q-search-area'>
           <input type="text" name="search" value={search} onChange={filterSortList} placeholder='질문 혹은 작성자명을 입력해주세요.' autoFocus={true} /> {/* 검색 */}
 
-          <select name="itemCount" id="itemCount" defaultValue={30} onChange={handleItemCount}> {/* 출력개수 */}
+          <select name="itemCount" id="itemCount" onChange={handleItemCount} value={itemCount}> {/* 출력개수 */}
             <option value="20">20개씩 보기</option>
-            <option value="30">30개씩 보기</option>
+            <option value="30" selected={true}>30개씩 보기</option>
             <option value="50">50개씩 보기</option>
             <option value="100">100개씩 보기</option>
           </select>
@@ -107,7 +134,7 @@ const ShowNewQuestions = () => {
                 questionList.length > 0 ?
                 questionList.map((item, index) => {
                   return (
-                    <tr className='s-n-q-list-item' key={item.qno}>
+                    <tr className='s-n-q-list-item' key={index}>
                       <td style={{width:'40px'}}>{item.qno}</td>
                       <td style={{flex:1, textAlign:'left', paddingLeft:'10px'}}>{item.qquestion}</td>
                       <td style={{minWidth:'160px'}}>{item.qwriter}</td>
@@ -122,6 +149,9 @@ const ShowNewQuestions = () => {
               }
             </tbody>
           </table>
+          <div ref={ref} style={{height:'10px'}}>
+            
+          </div>
         </div>
       </div>
     </div>
