@@ -20,6 +20,7 @@ import NotFound from "pages/main/NotFound";
 import "assets/components/global.css";
 import Loading from "components/common/Loading";
 import AddNewQuiestion from "pages/etc/AddNewQuiestion";
+import ShowNewQuestions from "pages/etc/ShowNewQuestions";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -46,6 +47,7 @@ root.render(
         <Route path="/loading" element={<Loading />} />
         <Route path="/new-question" element={<AddNewQuiestion />} />
         <Route path="/*" element={<NotFound />} />
+        <Route path="/new-question-list" element={<ShowNewQuestions />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
