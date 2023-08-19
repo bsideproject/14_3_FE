@@ -3,7 +3,7 @@
   top:0;
   left: 0;
   width:100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 20px;
   background-color: #FAF9F6;
 }
@@ -27,6 +27,12 @@
 
 
 /* 검색영역 */
+.s-n-q-search-info {
+  width: 100%;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
 .s-n-q-search-area {
   width: 100%;
   display: flex;
@@ -62,6 +68,11 @@
 }
 
 /* 목록영역 */
+.s-n-q-count {
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
 .s-n-q-list {
   width: 100%;
   display: flex;
@@ -71,6 +82,30 @@
 
 .s-n-q-list-header {
   width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.s-n-q-list-header tr {
+  width: 100%;
+  display: flex;
+  gap: 2px;
+}
+
+.s-n-q-list-item-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.s-n-q-list-item {
+  font-size: 0.7rem;
+  width: 100%;
   height: 40px;
   display: flex;
   flex-direction: row;
@@ -78,4 +113,19 @@
   gap: 2px;
   padding: 4px;
   text-align: center;
+  border: 1px solid #E0E0E0;
+  border-radius: 5px;
+}
+
+.s-n-q-list-item:hover {
+  font-weight: bold;
+}
+.snq-item-edit-btn {
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+}
+.snq-item-edit-btn:hover {
+  cursor: pointer;
+  text-decoration: underline; 
 }

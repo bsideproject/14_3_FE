@@ -4,38 +4,52 @@ import axios, { AxiosResponse } from "axios";
 import CL from "composables/COMMON/common";
 
 
-const useETCQuestionStore = create<ETC_QS>(() => ({
-  etcQuestionList: [],
+const useETCQuestionStore = create<ETC_QS>((set) => ({
+  etcQuestionList: Array<ETC_QS_TYPE>() || [], //원본데이터
+  sortedQuestionList: Array<ETC_QS_TYPE>() || [], //sort 등이 적용된 데이터
 
   getETCQuestionList: async (param: SEARCH) => {
-    CL.DS("getETCQuestionList")
-    const res: AxiosResponse = await axios.post(`${process.env.REACT_APP_API_URL}/api/question/getETCQuestionList`, param)
+    const res: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/questions?page=${param.page}&size=${param.size}`)
+    const setList = res ? res.data ? res.data.content : [] : []
+    set({etcQuestionList: setList, sortedQuestionList: setList})
+  },
+
+  getSortedQuestionList: (param: string) => {
+    const sortedList = [...useETCQuestionStore.getState().etcQuestionList]
     
-
-    CL.DE("getETCQuestionList")
+    if(param !== "") { //검색어 입력 이벤트
+      const newSortedList = sortedList.filter((item) => {
+        if (item.qquestion.toLowerCase().includes(param.toLowerCase()) || item.qwriter.toLowerCase().includes(param.toLowerCase())) {
+          return item
+        }
+      })
+      set({sortedQuestionList: newSortedList})
+    } else {
+      set({sortedQuestionList: sortedList})
+    }
   }
-
-  
 }));
 
 
 
 type ETC_QS = {
   etcQuestionList: Array<ETC_QS_TYPE>;
+  sortedQuestionList: Array<ETC_QS_TYPE>;
   getETCQuestionList: (param: SEARCH) => Promise<void>;
+  getSortedQuestionList: (param: string) => void;
 }
 
 type ETC_QS_TYPE = {
-  q_no: number;
-  q_question: string;
-  q_category: string;
-  q_writer: string;
-  q_created_at: string;
+  qno: number;
+  qquestion: string;
+  qcategory: string;
+  qwriter: string;
+  qcreatedAt: string;
 }
 
 export type SEARCH = {
-  pageNo: number;
-  pageSize: number;
+  page: number;
+  size: number;
 }
 
 export default useETCQuestionStore;
