@@ -2,9 +2,10 @@ import 'assets/components/etc/showNewQuestions.css'
 import export_svg from 'assets/images/etc/export_svg.svg'
 import reload_svg from 'assets/images/etc/reload.svg'
 import { useEffect, useMemo, useState, useCallback } from 'react'
-import useETCQuestionStore, { SEARCH } from 'store/modules/ETC_QuestionList'
+import useETCQuestionStore, { ETC_QS_TYPE, SEARCH } from 'store/modules/ETC_QuestionList'
 import {exportToExcel} from 'composables/ETC'
 import { useInView } from 'react-intersection-observer';
+import ETCUpdatePopup from 'components/ETCUpdatePopup'
 
 /**
  * @desc 추가한 질문 목록 조회 [운영자-확인용]
@@ -18,19 +19,21 @@ import { useInView } from 'react-intersection-observer';
  *  3. sort
  */
 const ShowNewQuestions = () => {
-  const {getETCQuestionList, sortedQuestionList, getSortedQuestionList} = useETCQuestionStore()
+  const {getETCQuestionList, sortedQuestionList, getSortedQuestionList, deleteQuestion} = useETCQuestionStore()
   const [search, setSearch] = useState("")  //검색어
   const [isSearched, setIsSearched] = useState(false)  //검색여부
   const [itemCount, setItemCount] = useState(30)  //출력개수
   const [page, setPage] = useState(1)  //페이지네이션
   const [size, setSize] = useState(30)  //페이지네이션
   const [ref, inView] = useInView();  //페이지네이션-imported
+  const [updateActive, setUpdateActive] = useState({qno:0, qquestion:'', qcategory:'', qwriter: '', qcreatedAt:''})  //수정모드
+
   //useMemo를 사용하여 검색어 입력 시 필터링
   const questionList = useMemo(
     () => sortedQuestionList,
     [sortedQuestionList]
     );
-  const [hasNextPage, setHasNextPage] = useState<Boolean>(useMemo(()=> questionList.length % size === 0, [questionList]))  //페이지네이션
+  const hasNextPage = useMemo(()=> questionList.length % size === 0, [questionList])  //페이지네이션
 
   //검색단어 입력 시 목록 필터링
   const filterSortList = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +60,18 @@ const ShowNewQuestions = () => {
     setIsSearched(false)
     setItemCount(30)
     getETCQuestionList({page:1, size:30})
+  }
+
+  //목록 삭제
+  const deleteItem = async (item:ETC_QS_TYPE) => {
+    const result = window.confirm("정말로 삭제하시겠습니까? 삭제된 질문은 복구할 수 없습니다.")
+    result && await deleteQuestion(item.qno)
+  }
+
+  //목록 수정
+  const updateItem = (item:ETC_QS_TYPE) => {
+    setUpdateActive(item)
+    console.log(item);
   }
 
   //엑셀 출력
@@ -86,6 +101,14 @@ const ShowNewQuestions = () => {
 
   return (
     <div className='s-n-q-container'>
+      {
+        updateActive.qno !== 0 && (
+        <ETCUpdatePopup 
+          // qno={updateActive.qno} qquestion={updateActive.qquestion} qcategory={updateActive.qcategory} qwriter={updateActive.qwriter}
+          setUpdateActive={setUpdateActive} 
+          updateActive={updateActive}
+        />)
+      }
       <div className='s-n-q-inner-container'>
         <h1>추가한 질문 목록 조회</h1>
         {/* 검색영억 */}
@@ -96,7 +119,7 @@ const ShowNewQuestions = () => {
 
           <select name="itemCount" id="itemCount" onChange={handleItemCount} value={itemCount}> {/* 출력개수 */}
             <option value="20">20개씩 보기</option>
-            <option value="30" selected={true}>30개씩 보기</option>
+            <option value="30">30개씩 보기</option>
             <option value="50">50개씩 보기</option>
             <option value="100">100개씩 보기</option>
           </select>
@@ -140,8 +163,8 @@ const ShowNewQuestions = () => {
                       <td style={{minWidth:'160px'}}>{item.qwriter}</td>
                       <td style={{minWidth:'60px'}}>{item.qcategory}</td>
                       <td style={{minWidth:'165px'}}>{item.qcreatedAt}</td>
-                      <td className='snq-item-edit-btn' style={{width:'40px'}}>수정</td>
-                      <td className='snq-item-edit-btn' style={{width:'40px'}}>삭제</td>
+                      <td onClick={() => updateItem(item)} className='snq-item-edit-btn' style={{width:'40px'}}>수정</td>
+                      <td onClick={() => deleteItem(item)} className='snq-item-edit-btn' style={{width:'40px'}}>삭제</td>
                     </tr>
                   )
                 })
@@ -149,11 +172,9 @@ const ShowNewQuestions = () => {
               }
             </tbody>
           </table>
-          <div ref={ref} style={{height:'10px'}}>
-            
-          </div>
+          <div ref={ref} style={{height:'10px'}}></div>
         </div>
-      </div>
+      E</div>
     </div>
   )
 }

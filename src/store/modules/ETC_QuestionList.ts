@@ -37,6 +37,28 @@ const useETCQuestionStore = create<ETC_QS>((set) => ({
     } else {
       set({sortedQuestionList: sortedList})
     }
+  },
+
+  //삭제
+  deleteQuestion: async (param: number) => {
+    //get 방식으로 qno 전달
+    await axios.get(`${process.env.REACT_APP_API_URL}/api/question/delete?qno=${param}`)
+    //재조회 없이 filtering 처리 (성능상 이점)
+    const newQuestionList = useETCQuestionStore.getState().etcQuestionList.filter((item) => item.qno !== param)
+    set({etcQuestionList: newQuestionList, sortedQuestionList: newQuestionList})
+  },
+
+  //수정
+  updateQuestion: async (param: ETC_QS_TYPE) => {
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/question/update`, param)
+    const newQuestionList = useETCQuestionStore.getState().etcQuestionList.map((item) => {
+      if(item.qno === param.qno) {
+        return param
+      } else {
+        return item
+      }
+    })
+    set({etcQuestionList: newQuestionList, sortedQuestionList: newQuestionList})
   }
 }));
 
@@ -47,9 +69,11 @@ type ETC_QS = {
   sortedQuestionList: Array<ETC_QS_TYPE>;
   getETCQuestionList: (param: SEARCH) => Promise<void>;
   getSortedQuestionList: (param: string) => void;
+  deleteQuestion: (param: number) => Promise<void>;
+  updateQuestion: (param: ETC_QS_TYPE) => Promise<void>;
 }
 
-type ETC_QS_TYPE = {
+export type ETC_QS_TYPE = {
   qno: number;
   qquestion: string;
   qcategory: string;
