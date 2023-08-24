@@ -33,6 +33,9 @@ const OnePagerMain = () => {
   const [toastPopup, setToastPopup] = useState<boolean>(false); //toast팝업제어
   const [lastDate, setLastDate] = useState<String>();
   const [firstDate, setFirstDate] = useState<String>();
+  const [answeredSplitList, setAnsweredSplitList] = useState<Array<Array<any>>>(
+    []
+  );
   const { userInfo } = useAuthStore((state) => state);
   useEffect(() => {
     const initData = async (param: any) => {
@@ -51,8 +54,6 @@ const OnePagerMain = () => {
     return () => setHeaderText("");
   }, []);
   useEffect(() => {
-    console.log("@#@!#@#!테스트");
-    console.log(answeredList["content"]);
     if (answeredList.content.length > 0) {
       const [year, month, day] = answeredList.content[0].date.split("-");
 
@@ -66,26 +67,42 @@ const OnePagerMain = () => {
           "-" +
           ("00" + new Date(year, month, 1).getDate()).slice(-2)
       );
+      let tempArray = [];
+      let sliceNumber = 33;
+      for (let i = 0; i <= answeredList.totalElements / 33; i++) {
+        tempArray.push(
+          answeredList.content.slice(
+            sliceNumber * i,
+            sliceNumber * i + sliceNumber
+          )
+        );
+      }
+      setAnsweredSplitList(tempArray);
     }
   }, [answeredList]);
   //원페이저 이미지변환, img url return
-  const toOnepagerImage = async () => {
-    const wrapper = document.querySelector(".onepager-download") as HTMLElement;
+  const toOnepagerImage = async (downLoadNumber: number) => {
+    const wrapper = document.querySelector(
+      ".down" + downLoadNumber
+    ) as HTMLElement;
+
     // alert(wrapper.textContent);
     // wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
-      scale: 1.4,
+      scale: 2,
     }); //scale 2 옵션으로 출력   => 1920px
     // alert(canvas.getContext);
+
     const dataURL = canvas.toDataURL("image/png"); //이미지변환
     // wrapper.style.display = "none"; //canvas hidden 처리
+
     return dataURL;
   };
 
-  const imageToBlob = async () => {
-    const base64Data = await toOnepagerImage();
+  const imageToBlob = async (downLoadNumber: number) => {
+    const base64Data = await toOnepagerImage(downLoadNumber);
 
     // base64 데이터를 ArrayBuffer로 변환합니다.
     const data = window.atob(base64Data.split(",")[1]);
@@ -103,35 +120,48 @@ const OnePagerMain = () => {
   //원페이저 다운로드 클릭 이벤트
   const downloadOnepager = async () => {
     // data URL에서 base64 인코딩된 데이터를 추출합니다.
-    const base64Data = await toOnepagerImage();
+    for (
+      let downLoadNumber = 0;
+      downLoadNumber < answeredSplitList.length;
+      downLoadNumber++
+    ) {
+      const base64Data = await toOnepagerImage(downLoadNumber);
 
-    // base64 데이터를 ArrayBuffer로 변환합니다.
-    const data = window.atob(base64Data.split(",")[1]);
+      // base64 데이터를 ArrayBuffer로 변환합니다.
 
-    const arrayBuffer = new ArrayBuffer(data.length);
-    const view = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < data.length; i++) {
-      view[i] = data.charCodeAt(i);
+      const data = window.atob(base64Data.split(",")[1]);
+
+      const arrayBuffer = new ArrayBuffer(data.length);
+      const view = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < data.length; i++) {
+        view[i] = data.charCodeAt(i);
+      }
+
+      // ArrayBuffer를 Blob으로 변환합니다.
+
+      const blob = new Blob([arrayBuffer], { type: "image/png" });
+
+      downloadjs(blob, "goming" + downLoadNumber, "image/png");
     }
-
-    // ArrayBuffer를 Blob으로 변환합니다.
-    const blob = new Blob([arrayBuffer], { type: "image/png" });
-
-    downloadjs(blob, "goming", "image/png");
   };
 
   //이메일 보내기 클릭 이벤트
   const sendEmail = async (email: string) => {
     setConfirmEmailPopup(false); //팝업닫기
     // const imageURL = await toOnepagerImage();
-
-    const blob = await imageToBlob();
     const formData = new FormData();
-    formData.append("imageData", blob, "image.png");
     formData.append("email", userInfo.eml);
     formData.append("sendEmail", email);
     formData.append("date", dateFormat.getYearAndMonth(selectedDate));
-
+    for (
+      let downLoadNumber = 0;
+      downLoadNumber < answeredSplitList.length;
+      downLoadNumber++
+    ) {
+      const blob = await imageToBlob(downLoadNumber);
+      console.log(downLoadNumber);
+      formData.append("imageData" + downLoadNumber, blob, "image.png");
+    }
     const result: AxiosResponse<any> = await fetch.post(
       "/api/email/sendByMonthBlob",
       formData,
@@ -155,14 +185,14 @@ const OnePagerMain = () => {
     //   param
     // );
     // console.log("result", result);
-    // if (result.status === 200) {
-    //   setToastPopup(true); //토스트 팝업 출력
-    //   setTimeout(() => {
-    //     setToastPopup(false); //토스트 팝업 종료
-    //   }, 3000);
-    // } else {
-    //   return false;
-    // }
+    if (result.status === 200) {
+      setToastPopup(true); //토스트 팝업 출력
+      setTimeout(() => {
+        setToastPopup(false); //토스트 팝업 종료
+      }, 3000);
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -204,73 +234,72 @@ const OnePagerMain = () => {
          * ***************************************************************************************/}
         {/* Canvas */}
         {/* <div className='onepager-download' style={{display:'none'}}> */}
-        <div className="onepager-download">
-          <div className="onepager-download-header">
-            <h1>{selectedMonth}월의 고밍</h1>
-            <p className="body1-regular">
-              {firstDate}~{lastDate}
-            </p>
-            <p className="headline2">
-              {selectedMonth}월의 NICKNAME님은 어떤 하루하루를 보냈는지
-              돌아볼까요?
-            </p>
-          </div>
-          <Masonry
-            width={1920}
-            breakpointCols={4} //컬럼수
-            className="my-masonry-grid-download"
-            columnClassName="my-masonry-grid_column-download"
-          >
-            {answeredList.content.length > 0 ? (
-              answeredList.content.map((item, index) => {
-                if (index === 0) {
-                  console.log(answeredList);
-                }
-                console.log("index  :", index);
-                return (
-                  <div key={item.index}>
-                    <div className="answered-list-item-header-wrap caption1-regular">
-                      <DateFormatUI date={item.date} />
-                      <AnsweredCategoryUI category={item.category} />
-                    </div>
-                    <div className="onepager-list-item-q color-wgray13 body2-bold">
-                      {item.question}
-                    </div>
-                    <div className="onepager-list-item-a body3-regular">
-                      {item.answer}
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <></>
-            )}
-          </Masonry>
-
-          {/* 일러스트레이터 영역 */}
-          <div style={{ height: "1080px" }}>
-            <SVG />
-          </div>
-
-          {/* 일러스트 하단 로고 */}
-          <div className="onepager-download-footer">
-            <div style={{ maxWidth: "80px", maxHeight: "80px" }}>
-              <img src={GomingLogo} alt="고밍로고" width={80} height={80} />
+        {answeredSplitList.map((splitList, idx) => (
+          <div className={"onepager-download down" + idx}>
+            <div className="onepager-download-header">
+              <h1>{selectedMonth}월의 고밍</h1>
+              <p className="body1-regular">
+                {firstDate}~{lastDate}
+              </p>
+              <p className="headline2">
+                {selectedMonth}월의 NICKNAME님은 어떤 하루하루를 보냈는지
+                돌아볼까요?
+              </p>
             </div>
-            <p className="headline3">
-              매일 하나씩 써 내려간 작은 조각들이 모여,
-              <br />
-              오늘의 나를 만듭니다.
-              <br />
-              나를 돌아보는 회고 리추얼, 고밍.
-            </p>
-          </div>
 
-          {/* copyright */}
-          <div className="onepager-download-copyright body2-regular">
-            © 2023. Goming. All rights reserved.
+            <Masonry
+              width={1920}
+              breakpointCols={4} //컬럼수
+              className={"my-masonry-grid-download"}
+              columnClassName="my-masonry-grid_column-download"
+            >
+              {splitList.length > 0 ? (
+                splitList.map((item, index) => {
+                  return (
+                    <div key={item.index}>
+                      <div className="answered-list-item-header-wrap caption1-regular">
+                        <DateFormatUI date={item.date} />
+                        <AnsweredCategoryUI category={item.category} />
+                      </div>
+                      <div className="onepager-list-item-q color-wgray13 body2-bold">
+                        {item.question}
+                      </div>
+                      <div className="onepager-list-item-a body3-regular">
+                        {item.answer}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <></>
+              )}
+            </Masonry>
+
+            {/* 일러스트레이터 영역 */}
+            <div style={{ height: "1080px" }}>
+              <SVG />
+            </div>
+
+            {/* 일러스트 하단 로고 */}
+            <div className="onepager-download-footer">
+              <div style={{ maxWidth: "80px", maxHeight: "80px" }}>
+                <img src={GomingLogo} alt="고밍로고" width={80} height={80} />
+              </div>
+              <p className="headline3">
+                매일 하나씩 써 내려간 작은 조각들이 모여,
+                <br />
+                오늘의 나를 만듭니다.
+                <br />
+                나를 돌아보는 회고 리추얼, 고밍.
+              </p>
+            </div>
+
+            {/* copyright */}
+            <div className="onepager-download-copyright body2-regular">
+              © 2023. Goming. All rights reserved.
+            </div>
           </div>
-        </div>
+        ))}
       </div>
       <Footer></Footer>
 
