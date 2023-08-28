@@ -50,7 +50,14 @@ const useETCQuestionStore = create<ETC_QS>((set) => ({
 
   //수정
   updateQuestion: async (param: ETC_QS_TYPE) => {
-    await axios.post(`${process.env.REACT_APP_API_URL}/api/question/update`, param)
+    const p = {
+      qNo: param.qno,
+      qQuestion: param.qquestion,
+      qCategory: param.qcategory,
+      qWriter: param.qwriter,
+    }
+
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/question/update`, p)
     const newQuestionList = useETCQuestionStore.getState().etcQuestionList.map((item) => {
       if(item.qno === param.qno) {
         return param
