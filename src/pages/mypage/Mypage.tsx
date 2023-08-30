@@ -1,16 +1,15 @@
 import Auth from "store/modules/Auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputActionMeta } from "react-select";
 import SelectBox from "components/common/SelectBox";
 import Footer from "components/Footer";
 import useDefaultSets from "store/modules/Defaults";
 import InputBox from "components/common/InputBox";
 import Header from "components/auth/Header";
-import AlertTextPopup from "components/AlertTextPopup";
 import Loading from "components/common/Loading";
 import useAuthStore from "store/modules/Auth";
 import fetch from "utils/fetch";
+import AlertTextPopup from "components/AlertTextPopup";
 
 const Mypage: React.FC = () => {
   //헤더설정
@@ -19,7 +18,7 @@ const Mypage: React.FC = () => {
   const { userInfo, isLogin } = useAuthStore();
 
   const { isInfoChange, updateInfoChangeStatus } = Auth((state) => state); // zustand로 가져온 임시데이터
-  console.log(isInfoChange);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -29,7 +28,7 @@ const Mypage: React.FC = () => {
   const [newRePassword, setNewRePassword] = useState<string>("");
   const [gender, setGender] = useState<boolean | null>();
   const [passwordErrorChk, setPasswordErrorChk] = useState<boolean>(false); //비밀번호 에러 체크(조건 불일치,미입력)
-  const [passwordChangeChk, setPasswordChangeChk] = useState<boolean>(false); // 비밀번호 변경 버튼 클릭 여부
+  const [passwordChangeChk, setPasswordChangeChk] = useState<boolean>(true); // 비밀번호 변경 버튼 클릭 여부
   const [passwordReconfirmSuccessChk, setPasswordReconfirmSuccessChk] = // 비밀번호 재입력칸 에러 체크(비밀번호와 같은지 여부)
     useState<boolean | null>(null);
 
@@ -48,6 +47,7 @@ const Mypage: React.FC = () => {
   const [day, setDay] = useState<string>(userInfo.brdt.split("-")[2]);
   const [emailAgree, setEmailAgree] = useState<boolean>(false);
 
+  const [fixSuccess, setFixSuccess] = useState<boolean>(false);
   const handleGenderCheck = (e: any) => {
     setGender(
       e.target.value === "M" ? true : e.target.value === "F" ? false : null
@@ -128,8 +128,7 @@ const Mypage: React.FC = () => {
   const handleSubmit = async (e: any): Promise<void> => {
     e.preventDefault();
     try {
-      console.log(passwordChangeChk);
-      if (passwordChangeChk) {
+      if (passwordChangeChk && !isInfoChange) {
         if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
         } else if (rePassword.length === 0) {
           setRePasswordExistChk(true);
@@ -148,7 +147,6 @@ const Mypage: React.FC = () => {
           })
           .then((e: any) => {
             if (e.status === 200) {
-              alert("회원가입이 완료 되었습니다.");
               // navigate("/login");
               updateInfoChangeStatus(false);
             }
@@ -247,7 +245,7 @@ const Mypage: React.FC = () => {
                 isButton={false}
                 // inputBlur={}
                 isDisable={true}
-                buttonTitle={!passwordChangeChk ? "변경" : "취소"}
+                buttonTitle={passwordChangeChk ? "변경" : "취소"}
               />
             ) : (
               <>
@@ -260,12 +258,12 @@ const Mypage: React.FC = () => {
                   buttonClick={handlePasswordChagneUpdate}
                   inputChange={handleRePasswordUpdate}
                   inputValue={
-                    passwordChangeChk === false ? password : rePassword
+                    passwordChangeChk === true ? password : rePassword
                   }
                   isButton={true}
                   inputBlur={handleRePasswordDiff}
-                  isDisable={!passwordChangeChk}
-                  buttonTitle={passwordChangeChk === false ? "변경" : "취소"}
+                  isDisable={passwordChangeChk}
+                  buttonTitle={passwordChangeChk === true ? "변경" : "취소"}
                   isClose={
                     (passwordChangeChk && rePasswordChk) || rePasswordExistChk
                   }
@@ -296,8 +294,7 @@ const Mypage: React.FC = () => {
                   inputValue={newPassword}
                   isButton={false}
                   inputBlur={handlePasswordBlur}
-                  isDisable={isInfoChange && !passwordChangeChk}
-                  buttonTitle={passwordChangeChk === false ? "변경" : "취소"}
+                  isDisable={isInfoChange && passwordChangeChk}
                   isClose={passwordErrorChk || newPasswordExistChk}
                   closeClick={handleNewPasswordReset}
                   errObject={
@@ -325,7 +322,7 @@ const Mypage: React.FC = () => {
                   inputValue={newRePassword}
                   isButton={false}
                   inputBlur={handleNewPasswordDiff}
-                  isDisable={isInfoChange && !passwordChangeChk}
+                  isDisable={isInfoChange && passwordChangeChk}
                   buttonTitle={!passwordChangeChk ? "변경" : "취소"}
                   closeClick={handleNewRePasswordReset}
                   isClose={
@@ -488,6 +485,15 @@ const Mypage: React.FC = () => {
           </form>
         </div>
       </div>
+
+      {!fixSuccess ? (
+        <></>
+      ) : (
+        <AlertTextPopup
+          text="개인정보가 모두 수정되었습니다."
+          callbackFunction={() => setFixSuccess(false)}
+        />
+      )}
       <Footer></Footer>
     </>
   );

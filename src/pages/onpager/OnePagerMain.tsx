@@ -159,7 +159,7 @@ const OnePagerMain = () => {
       downLoadNumber++
     ) {
       const blob = await imageToBlob(downLoadNumber);
-      console.log(downLoadNumber);
+
       formData.append("imageData" + downLoadNumber, blob, "image.png");
     }
     const result: AxiosResponse<any> = await fetch.post(
@@ -185,7 +185,9 @@ const OnePagerMain = () => {
     //   param
     // );
     // console.log("result", result);
+    console.log(result);
     if (result.status === 200) {
+      console.log("test");
       setToastPopup(true); //토스트 팝업 출력
       setTimeout(() => {
         setToastPopup(false); //토스트 팝업 종료
@@ -233,9 +235,15 @@ const OnePagerMain = () => {
          * 다운로드 영역
          * ***************************************************************************************/}
         {/* Canvas */}
-        {/* <div className='onepager-download' style={{display:'none'}}> */}
+
         {answeredSplitList.map((splitList, idx) => (
-          <div className={"onepager-download down" + idx}>
+          <div
+            className={"onepager-download down" + idx}
+            style={{
+              position: "absolute",
+              left: "-9999px" /* Move off-screen */,
+            }}
+          >
             <div className="onepager-download-header">
               <h1>{selectedMonth}월의 고밍</h1>
               <p className="body1-regular">
