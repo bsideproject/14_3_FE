@@ -88,10 +88,11 @@ const OnePagerMain = () => {
 
     // alert(wrapper.textContent);
     // wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
+    alert("1.2로변경완료");
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
-      scale: 1.4,
+      scale: 1.2,
     }); //scale 2 옵션으로 출력   => 1920px
     // alert(canvas.getContext);
 
