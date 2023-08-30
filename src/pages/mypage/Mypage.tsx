@@ -138,10 +138,11 @@ const Mypage: React.FC = () => {
           setNewRePasswordExistChk(true);
         }
       } else {
+        console.log(password);
         await fetch
           .put("/api/users/update/" + email, {
             eml: email,
-            password,
+            password: passwordChangeChk ? password : newPassword,
             gndrClsCd: gender ? "M" : gender === false ? "F" : "N",
             agreement: emailAgree ? "Y" : "N",
           })
