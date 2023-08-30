@@ -147,7 +147,8 @@ const Mypage: React.FC = () => {
           })
           .then((e: any) => {
             if (e.status === 200) {
-              // navigate("/login");
+              // navigate("/login");\
+              setFixSuccess(true);
               updateInfoChangeStatus(false);
             }
           })
