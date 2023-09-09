@@ -48,6 +48,17 @@ type ANSWER_TYPE = {
   size: number;
   totalElements: number;
 };
+
+/**
+ * @desc 이번달이상의 날짜인지 체크
+ * @returns {boolean} true: 이번달 이상, false: 이번달 이하
+ */
+const checkIsMonthOver = (date: Date|string): boolean => {
+  console.log("checkIsMonthOver", date);
+  
+  return new Date(date).getMonth() >= new Date().getMonth()
+}
+
 /**
  * @desc Main - QNA List 상태관리
  */
@@ -65,57 +76,66 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @return answeredList update
    */
   getAnsweredList: async (param: any) => {
-    console.log(new Date(param.date).getMonth() + 1);
+    console.log(new Date(param.date).getMonth() + 1 + "월 답변 목록 조회");
+    
+    //param.date 가 이번 달 혹은 미래의 경우, api 를 조회하지 않고 빈 배열 반환
+    if (checkIsMonthOver(param.date)) {
+      set({answeredList: { content: [], page: 0, size: 0, totalElements: 0 }});
+    } else {
+      param.size = param.size === undefined || null || "" ? 15 : param.size;
+      param.page = param.page === undefined || null || "" ? 1 : param.page;
 
-    param.size = param.size === undefined || null || "" ? 15 : param.size;
-    param.page = param.page === undefined || null || "" ? 1 : param.page;
+      const result = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/question/answered/${
+          param.email
+        }/${param.date.toString()}?size=${param?.size}&page=${param?.page}`
+      );
+      console.log("getAnsweredList", result?.data);
 
-    const result = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/question/answered/${
-        param.email
-      }/${param.date.toString()}?size=${param?.size}&page=${param?.page}`
-    );
-    console.log("getAnsweredList", result?.data);
-
-    if (typeof result?.data === "object") {
-      if (result.data?.content?.length > 0) {
-        // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
-        for (let i = 0; i < result?.data.content.length; i++) {
-          if (result?.data.content[i]) {
-            if (result.data.content[i]?.answer.trim().length === 0) {
-              result?.data.content.splice(i, 1);
-              i--;
+      if (typeof result?.data === "object") {
+        if (result.data?.content?.length > 0) {
+          // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
+          for (let i = 0; i < result?.data.content.length; i++) {
+            if (result?.data.content[i]) {
+              if (result.data.content[i]?.answer.trim().length === 0) {
+                result?.data.content.splice(i, 1);
+                i--;
+              }
             }
           }
+          const newList = result?.data ? result?.data : []; //값이 없을 경우 빈 배열로 초기화
+          console.log("getAnsweredList 조회 종료:  ", newList);
+          set({ answeredList: newList });
+        } else {
+          set({
+            answeredList: {
+              content: result?.data,
+              page: 0,
+              size: 100,
+              totalElements: result?.data.length,
+            },
+          });
         }
-        const newList = result?.data ? result?.data : []; //값이 없을 경우 빈 배열로 초기화
-        console.log("getAnsweredList 조회 종료:  ", newList);
-        set({ answeredList: newList });
       } else {
-        set({
-          answeredList: {
-            content: result?.data,
-            page: 0,
-            size: 100,
-            totalElements: result?.data.length,
-          },
-        });
+        set({answeredList: { content: [], page: 0, size: 0, totalElements: 0 }});
       }
-    } else {
-      set({
-        answeredList: { content: [], page: 0, size: 0, totalElements: 0 },
-      });
-    }
+    }    
   },
 
   /**
    * @desc 해당 date의 qna count 를 리스트로 조회
    */
   getAnsweredDateCount: async (param: any) => {
-    const result = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`
-    );
-    set({ answeredDateCount: result?.data });
+    if (checkIsMonthOver(param.date)) {
+      console.log("getAnsweredDateCount -- 이번 혹은 미래를 조회하는 경우, api호출X");
+    set({ answeredCount: 0 });
+    set({ answeredDateCount: [] });
+    } else {
+      const result = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`
+      );
+      set({ answeredDateCount: result?.data });
+    }
   },
 
   /**
@@ -139,22 +159,28 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @param type
    */
   getAnsweredCount: async (param: any) => {
-    let url: string = `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/`;
+    if (checkIsMonthOver(param.date)) {
+      console.log("getAnsweredCount -- 이번 혹은 미래를 조회하는 경우, api호출X");
+      set({ answeredCount: 0 });
+    } else {
+      let url: string = `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/`;
 
-    if (param.type === "month") {
-      //월
-      url += `${param.date[0]}/${param.date[1]}`;
-      const result = await axios.get(url);
-      const count = result?.data.count ? result?.data.count : 0;
-      set({ answeredCount: count });
-    } else if (param.type === "day") {
-      //일
-      url += `${param.date}`;
-      const result = await axios.get(url);
-      const count = result?.data ? result?.data : 0;
-      set({ answeredCount: count });
+      if (param.type === "month") {
+        //월
+        url += `${param.date[0]}/${param.date[1]}`;
+        const result = await axios.get(url);
+        const count = result?.data.count ? result?.data.count : 0;
+        set({ answeredCount: count });
+      } else if (param.type === "day") {
+        //일
+        url += `${param.date}`;
+        const result = await axios.get(url);
+        const count = result?.data ? result?.data : 0;
+        set({ answeredCount: count });
+      }
+  
     }
-
+    
   },
 
   /**
