@@ -29,27 +29,26 @@ const MyCalendar = () => {
     getAnsweredCount,
     initAnsweredList,
     updateIsThisMonth,
-    initAnsweredCount,
-    selectedMonth,
     setSelectedMonth,
     setSelectDate,
     getAnsweredDateCount,
     initAnsweredDateCount,
     answeredDateCount,
   } = useAnsweredList();
+
   const { userInfo } = useAuthStore((state) => state);
-  const { setHeaderText, setIsNavigation } = useDefaultSets();
+  const { setHeaderText } = useDefaultSets();
 
   const [selectedDate, setValue] = useState<any>(new Date()); //calendar - 선택일자
   const today = new Date();
   const [textlabelControl, setTextLabel] = useState<Date>(today); // [선택,오늘] 라벨 제어
   const todayYearMonth = dateFormat.getYearAndMonth(today); //금일 연월
-  const todayMonth = today.getMonth() + 1; //이번달
-  const minDate = today.getDate(); //오늘이후날짜 비활성화 -> 내일날짜
+  // const todayMonth = today.getMonth() + 1; //이번달
+  // const minDate = today.getDate(); //오늘이후날짜 비활성화 -> 내일날짜
   const [showCalendar, setShowCalendar] = useState<boolean>(true); //calendar 보이기 숨기기 처리
   const [activeCalendarBtn, setActiveCalendarBtn] = useState<boolean>(false); //calendar 보이기숨기기 버튼 - active/disabled 처리
 
-  const [mark, setMark] = useState<Array<string>>([]);
+  // const [mark, setMark] = useState<Array<string>>([]);
 
   /****************************************************************************
    * 오늘 날짜 관련 요소 사용 - 캘린더관련
@@ -131,14 +130,24 @@ const MyCalendar = () => {
   };
 
   // 해당 일자의 데이터 목록 [월/일]별 조회
-  const getQnAList = (date: Date, type: String) => {
+  const getQnAList = async (date: Date, type: String) => {
     // type 에 따른 date 포맷 변경
     const convertedDate =
       type === "month"
         ? dateFormat.getYearAndMonth(date)
         : dateFormat.getYearAndMonthAndDay(date);
     const param = { email: userInfo.eml, date: convertedDate };
-    getAnsweredList(param); //date, count 포맷 데이터 조회
+
+    //해당 일자의 데이터가 없을 때, api 호출하지 않음
+    const hasData = answeredDateCount?.findIndex(
+      (item) => item.date.toString() === convertedDate
+    ); // 동일한 일자인지 체크
+    console.log('hasData', hasData);
+    if (type === "day" && hasData === -1) {
+      initAnsweredList()
+    } else {
+      await getAnsweredList(param); //date, count 포맷 데이터 조회
+    }
 
     if (type === "month") {
       //월

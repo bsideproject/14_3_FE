@@ -73,7 +73,6 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
         // const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answered/day?writer=${param.email}`, {withCredentials: false})
         const today = getDateFormat01(new Date())
         const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/${today}`, {withCredentials: false})
-        console.log('getCardSelectStep', response.data);
         
         set({todayCardSelectStep: ++response.data}) // 단계 상태값 세팅 
       } catch (error) {
@@ -84,18 +83,20 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
     /*******************************************************
      * @desc 카드 4개 조회 (카테고리 조회 -> 카테고리 저장 -> 유저별 카드 조회)
      * @param {string} email
-     * @return {Array} fourCards
+     * @return {Array} FourCards
      *******************************************************/
     getCards: async (email?: string): Promise<void> => {
       const param = {email: ''}
       param.email = email ? email : ''   //로그인했을 경우 이메일, 아닐경우 빈값 전달
-      let url: string = `${process.env.REACT_APP_API_URL}`               //axios url 초기화
-
-      if (email) {
-        url += `/api/category/select?email=${param.email}`
-      } else {
-        url += `/api/category/select`
-      }
+      // let url: string = `${process.env.REACT_APP_API_URL}`               //axios url 초기화
+      console.log('email', email);
+      
+      // if (email) {
+      //   url += `/api/category/select?email=${param.email}`
+      // } else {
+      //   url += `/api/category/select?email=""`
+      // }
+      const url = `${process.env.REACT_APP_API_URL}/api/category/select?email=${param.email}`
       const response: AxiosResponse = await axios.get(url, {withCredentials: false})
       console.log(response)
       let cards:Array<any> = []  //조회된 카드목록

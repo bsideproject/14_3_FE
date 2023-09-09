@@ -12,12 +12,16 @@ const AnswerNowStep = () => {
   const {todayCardSelectStep} = useCardState()   //카드 뽑기 단계 조회
 
   useEffect(()=>{
-    setSelectionStep(todayCardSelectStep)               //질문회차 값 세팅
-    switch (todayCardSelectStep) {
-    case 1: setStepText('첫'); break;
-    case 2: setStepText('두'); break;
-    case 3: setStepText('세'); break;
-    default: setStepText('첫'); break;
+    if (todayCardSelectStep > 3) {
+      console.log('오늘의 카드 뽑기 단계가 3을 초과했습니다.')
+    } else {
+      setSelectionStep(todayCardSelectStep)               //질문회차 값 세팅
+      switch (todayCardSelectStep) {
+      case 1: setStepText('첫'); break;
+      case 2: setStepText('두'); break;
+      case 3: setStepText('세'); break;
+      default: setStepText('첫'); break;
+    }
   }
   },[])
 
