@@ -14,6 +14,7 @@ import {DinnerImg,
   SelectedLamp,
   SelectedShower
 } from 'components/main/CardsImages'
+import { getDateFormat01 } from "utils/dateUtils";
 
 type CARD_STORE = {
   oneCard: Array<any>               //조회된카드
@@ -66,10 +67,18 @@ const useCardState = create<CARD_STORE>((persist as pillListPersist)
      * @content [todayCardSelectStep, todayCardSelectStatus]: 단계, 상태
      ******************************************************/
     getCardSelectStep: async (email: string): Promise<void> => {
-      const param = {email: ''}
-      param.email = email ? email : ''  //로그인했을 경우 이메일, 아닐경우 빈값 전달
-      const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answered/day?writer=${param.email}`, {withCredentials: false})
-      set({todayCardSelectStep: ++response.data}) // 단계 상태값 세팅
+      try {
+        const param = {email: ''}
+        param.email = email ? email : 'system'  //로그인했을 경우 이메일, 아닐경우 빈값 전달
+        // const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answered/day?writer=${param.email}`, {withCredentials: false})
+        const today = getDateFormat01(new Date())
+        const response: AxiosResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/${today}`, {withCredentials: false})
+        console.log('getCardSelectStep', response.data);
+        
+        set({todayCardSelectStep: ++response.data}) // 단계 상태값 세팅 
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     /*******************************************************

@@ -13,8 +13,6 @@ const Cards = ({item, selected, clickedEventHandler}: any) => {
 
   //카드 선택 이벤트
   const clickHandler = async (item: any) => {
-    console.log(item);
-    
     /*********************************************
      * style 설정
      *********************************************/
