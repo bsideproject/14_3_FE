@@ -1,0 +1,6 @@
+.withdrawal-box {
+  cursor: pointer;
+}
+.withdrawal-box:hover {
+  font-weight: 800;
+}

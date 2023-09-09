@@ -10,6 +10,7 @@ import Loading from "components/common/Loading";
 import useAuthStore from "store/modules/Auth";
 import fetch from "utils/fetch";
 import AlertTextPopup from "components/AlertTextPopup";
+import "assets/pages/auth/mypage.css";
 
 const Mypage: React.FC = () => {
   //헤더설정
@@ -452,6 +453,15 @@ const Mypage: React.FC = () => {
               보내드립니다.
             </div>
             {/* <button type="button">저장</button> */}
+            <div
+              className="body3-regular withdrawal-box"
+              style={{ marginTop: "32px" }}
+              onClick={() => {
+                navigate("/withdrawal");
+              }}
+            >
+              회원탈퇴
+            </div>
             {isInfoChange === false ? (
               <button
                 className="register-button margintop-48"
