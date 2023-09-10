@@ -129,9 +129,13 @@ const Mypage: React.FC = () => {
   const handleSubmit = async (e: any): Promise<void> => {
     e.preventDefault();
     try {
-      if (passwordChangeChk && !isInfoChange) {
-        if (rePasswordChk || passwordErrorChk || passwordReconfirmSuccessChk) {
-        } else if (rePassword.length === 0) {
+      if (
+        (passwordChangeChk && !isInfoChange) ||
+        rePasswordChk ||
+        passwordErrorChk ||
+        passwordReconfirmSuccessChk
+      ) {
+        if (rePassword.length === 0) {
           setRePasswordExistChk(true);
         } else if (newPassword.length === 0) {
           setNewPasswordExistChk(true);
@@ -139,7 +143,6 @@ const Mypage: React.FC = () => {
           setNewRePasswordExistChk(true);
         }
       } else {
-        console.log(password);
         await fetch
           .put("/api/users/update/" + email, {
             eml: email,
