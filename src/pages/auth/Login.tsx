@@ -27,9 +27,11 @@ const Login: React.FC = () => {
   const [rememberEmail, setRememberEmail] = useState<boolean>(false); //id저장여부 확인
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false); //* 이메일 형식체크
   const [invalid, setInvalid] = useState<boolean>(true); //아이디비밀번호 일치x
+  const {isLogin} = useAuthStore()
 
   useEffect(() => {
-    console.log(window.location.origin);
+    isLogin && navigate('/main') //로그인했을 경우 메인페이지로 이동
+    
     if (localStorage.getItem("bside-remember-login")) {
       //로컬스토리지에서 email 가져오기
       const LSrememberEmail: string = String(
@@ -82,7 +84,6 @@ const Login: React.FC = () => {
       };
       const result: AxiosResponse = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/users/login`,
-        //`http://localhost:8080/api/users/login`,
         { ...param },
         { withCredentials: false }
       );

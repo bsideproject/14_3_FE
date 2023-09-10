@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 import useAnsweredList from "store/modules/Answers";
 import "assets/components/answered-list/answered-list.css";
 import AnsweredCategoryUI from "./AnsweredCategoryUI";

@@ -28,7 +28,7 @@ const AnsweredList = () => {
       <Header></Header>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div style={{ margin: "0 16px 32px 16px" }}>
-          {false ? <LeftAnswerPeriod /> : <GoToOnePagerBtn />}
+          {isThisMonth ? <LeftAnswerPeriod /> : <GoToOnePagerBtn />}
           <MyCalendar />
         </div>
         {/* divider */}
