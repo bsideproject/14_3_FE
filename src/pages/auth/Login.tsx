@@ -27,11 +27,11 @@ const Login: React.FC = () => {
   const [rememberEmail, setRememberEmail] = useState<boolean>(false); //id저장여부 확인
   const [emailFormChk, setEmailFormChk] = useState<boolean>(false); //* 이메일 형식체크
   const [invalid, setInvalid] = useState<boolean>(true); //아이디비밀번호 일치x
-  const {isLogin} = useAuthStore()
+  const { isLogin } = useAuthStore();
 
   useEffect(() => {
-    isLogin && navigate('/main') //로그인했을 경우 메인페이지로 이동
-    
+    isLogin && navigate("/main"); //로그인했을 경우 메인페이지로 이동
+
     if (localStorage.getItem("bside-remember-login")) {
       //로컬스토리지에서 email 가져오기
       const LSrememberEmail: string = String(
@@ -129,7 +129,21 @@ const Login: React.FC = () => {
   const handleRememberEmail = ({ target }: any) => {
     setRememberEmail(!rememberEmail);
   };
-
+  const industries = {
+    industry: {
+      카페: 1,
+      음식점: 2,
+      학원: 10,
+      미용실: 12,
+      학교: 5,
+      병원: 22,
+      약국: 17,
+      편의점: 1,
+      안경점: 2,
+    },
+    total: 77,
+  };
+  console.log(industries);
   return (
     <>
       <div>

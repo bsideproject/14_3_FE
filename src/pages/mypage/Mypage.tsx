@@ -177,7 +177,7 @@ const Mypage: React.FC = () => {
             try {
               if (res.status === 200) {
                 const result = res.data;
-                console.log(result);
+
                 setEmail(result.eml);
                 setNickName(result.usrNm);
                 setPassword(result.password);

@@ -26,6 +26,7 @@ import dateFormat from "composables/MAIN/MyCalenderDateFormat";
  * @desc html -> canvas -> image -> download
  */
 const OnePagerMain = () => {
+  const [toastText, setToastText] = useState<string>("");
   const { setHeaderText, setIsNavigation } = useDefaultSets();
   const { selectedMonth, answeredList, selectedDate, getAnsweredList } =
     useAnsweredList();
@@ -88,7 +89,7 @@ const OnePagerMain = () => {
 
     // alert(wrapper.textContent);
     // wrapper.style.display = ""; //hidden 시 canvas가 안그려지는 현상있음
-    alert("1.2로변경완료");
+
     const canvas = await html2canvas(wrapper, {
       allowTaint: true,
       useCORS: true,
@@ -121,6 +122,13 @@ const OnePagerMain = () => {
   //원페이저 다운로드 클릭 이벤트
   const downloadOnepager = async () => {
     // data URL에서 base64 인코딩된 데이터를 추출합니다.
+
+    setToastText("웹페이저가 다운로드 중입니다");
+    setToastPopup(true); //토스트 팝업 출력
+
+    setTimeout(() => {
+      setToastPopup(false); //토스트 팝업 종료
+    }, 3000);
     for (
       let downLoadNumber = 0;
       downLoadNumber < answeredSplitList.length;
@@ -150,6 +158,12 @@ const OnePagerMain = () => {
   const sendEmail = async (email: string) => {
     setConfirmEmailPopup(false); //팝업닫기
     // const imageURL = await toOnepagerImage();
+
+    setToastText("이메일로 원페이저가 전송되었습니다!");
+    setToastPopup(true); //토스트 팝업 출력
+    setTimeout(() => {
+      setToastPopup(false); //토스트 팝업 종료
+    }, 3000);
     const formData = new FormData();
     formData.append("email", userInfo.eml);
     formData.append("sendEmail", email);
@@ -189,10 +203,6 @@ const OnePagerMain = () => {
     console.log(result);
     if (result.status === 200) {
       console.log("test");
-      setToastPopup(true); //토스트 팝업 출력
-      setTimeout(() => {
-        setToastPopup(false); //토스트 팝업 종료
-      }, 3000);
     } else {
       return false;
     }
@@ -334,7 +344,7 @@ const OnePagerMain = () => {
         //toast popup
         toastPopup && (
           <ToastPopup
-            text={"이메일로 원페이저가 전송되었습니다!"}
+            text={toastText}
             bgColor={"#4D99DE"}
             textColor={"#FFFFFF"}
           />

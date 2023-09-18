@@ -20,6 +20,7 @@ const InputBox = React.memo(
     isClose = false,
     closeClick,
     buttonClass,
+    isButtonDisable = false,
   }: {
     title?: string;
     inputHeight?: string;
@@ -39,6 +40,7 @@ const InputBox = React.memo(
     isClose?: boolean | null;
     closeClick?: any;
     buttonClass?: any;
+    isButtonDisable?: any;
   }) => {
     const [completeInputChk, setCompleteInputChk] = useState<boolean>(false);
     return (
@@ -117,6 +119,7 @@ const InputBox = React.memo(
                   : "register-button btn-p-xl body3-bold margintop-8 " +
                     buttonClass
               }
+              disabled={isButtonDisable}
               onClick={buttonClick}
             >
               {buttonTitle}

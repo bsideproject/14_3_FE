@@ -27,7 +27,6 @@ const Register: React.FC = () => {
     gndrClsCd: "",
     brdt: "",
   });
-  const ReconfirmRef = useRef(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
@@ -51,6 +50,7 @@ const Register: React.FC = () => {
 
   const [nickNameChk, setNickNameChk] = useState<boolean>(true); // 닉네임 여부 체크
   const [nickNameExistChk, setNickNameExistChk] = useState<boolean>(false); //* 닉네임 중복체크 미개발
+  const [isNickNameCheck, setIsNickNameCheck] = useState<boolean>(false);
   const [nickNameAlertExistChk, setNickNameAlertExistChk] =
     useState<boolean>(false);
 
@@ -71,6 +71,10 @@ const Register: React.FC = () => {
   const [checkServiceAgree, setCheckServiceAgree] = useState<boolean>(false);
   const [needCheck, setNeedCheck] = useState<boolean>(false);
   const [joinSucess, setJoinSucess] = useState<boolean>(false);
+  const [isValidEmailCode, setIsValidEmailCode] = useState<boolean>(false);
+  const [isValidEmailCodeChk, setIsValidEmailCodeChk] =
+    useState<boolean>(false);
+
   function isValidEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -84,7 +88,10 @@ const Register: React.FC = () => {
   }
 
   const handleEmailUpdate = (e: any) => {
+    setEmailChk(false);
     setEmail(e.target.value);
+    setEmailDisable(false);
+    setIsValidEmailCode(false);
   };
 
   const handlePasswordBlur = (e: any) => {
@@ -133,6 +140,9 @@ const Register: React.FC = () => {
 
   const handlenickNameUpdate = (e: any) => {
     setNickName(e.target.value);
+    setIsNickNameCheck(false);
+    setNickNameChk(true);
+    setNickNameExistChk(false);
   };
 
   const handleBirthDateUpdate = (e: any) => {
@@ -169,6 +179,7 @@ const Register: React.FC = () => {
         setNickNameExistChk(false);
       }
       setNickNameAlertExistChk(true);
+      setIsNickNameCheck(true);
     } else {
       setNickNameAlertLengthChk(true);
     }
@@ -182,11 +193,12 @@ const Register: React.FC = () => {
     } else {
       // * 이메일 중복 체크 API
       try {
+        setEmailDisable(true);
+        setEmailCodeAlertChk(true);
         await fetch.post(`/api/user/check-email?email=${email}`, {
           withCredentials: false,
         });
 
-        setEmailDisable(true);
         const result = await fetch.post(
           `/api/email/emailConfirm`,
           {
@@ -200,9 +212,8 @@ const Register: React.FC = () => {
         // console.log(result.headers.get("set-cookie"));
         // setLoading(false);
         if (result.status === 200) {
-          setEmailCodeAlertChk(true);
         }
-        setEmailDisable(false);
+        // setEmailDisable(false);
       } catch (e: any) {
         if (e.response.status === 409) {
           setEmailExistChk(true);
@@ -226,12 +237,12 @@ const Register: React.FC = () => {
         withCredentials: true,
       }
     );
-    console.log(result);
+
     if (result.data === "인증번호가 일치합니다.") {
-      setEmailDisable(true);
+      // setEmailDisable(true);
       setEmailCodeChk(true);
       setEmailCodeConfirmChk(true);
-
+      setIsValidEmailCode(true);
       setRegisterInfo((prev) => {
         return { ...prev, eml: email };
       });
@@ -246,8 +257,8 @@ const Register: React.FC = () => {
   const handleRegister = async (e: any): Promise<void> => {
     try {
       e.preventDefault();
-
-      if (handleNickNameCheck()) {
+      console.log(isValidEmailCode);
+      if (handleNickNameCheck() && isNickNameCheck) {
         // 닉네임 존재여부 체크
         document.getElementById("nickName")?.focus();
       } else if (email.length === 0) {
@@ -262,14 +273,18 @@ const Register: React.FC = () => {
         document.getElementById("password")?.focus();
       } else if (passwordReconfirmSuccessChk) {
         document.getElementById("passwordReconfirm")?.focus();
-      } else if (emailExistChk) {
+      } else if (emailExistChk && !emailDisable) {
+        // 이메일 중복이 안되고 , 인증하기버튼이 disable일때
         // 미완료
-
         document.getElementById("email")?.focus();
-      } else if (nickNameExistChk) {
+      } else if (!nickNameExistChk) {
         //미완료
+        console.log("nickname");
 
         document.getElementById("nickName")?.focus();
+      } else if (!isValidEmailCode) {
+        console.log("test");
+        setIsValidEmailCodeChk(true);
       } else if (!allCheck) {
         setNeedCheck(true);
       } else {
@@ -387,6 +402,7 @@ const Register: React.FC = () => {
             inputChange={handlenickNameUpdate}
             inputValue={nickName}
             buttonClick={handleNickNameExistCheck}
+            isButtonDisable={isNickNameCheck}
             inputBlur={() => {
               if (registerInfo.usrNm !== nickName) {
                 setRegisterInfo((prev) => {
@@ -440,7 +456,7 @@ const Register: React.FC = () => {
             inputPlaceholader={"이메일을 입력해주세요."}
             inputMaxLength={30}
             id={"email"}
-            isDisable={emailDisable}
+            isButtonDisable={emailDisable}
             inputClassName={"register-flex-row-gap8 margintop-32"}
             inputChange={handleEmailUpdate}
             inputValue={email}
@@ -470,10 +486,13 @@ const Register: React.FC = () => {
             inputValue={authNumber}
             buttonClick={handleEamilCodeCheck}
             inputHeight="56px"
-            isDisable={emailCodeChk}
+            // isDisable={emailCodeChk}
+            isButtonDisable={emailCodeChk}
             inputBlur={() => {
               if (authNumber.length > 0) {
                 setAuthNumberChk(true);
+              } else {
+                setAuthNumberChk(false);
               }
             }}
             errObject={
@@ -862,6 +881,16 @@ const Register: React.FC = () => {
           callbackFunction={() => {
             setJoinSucess(false);
             navigate("/login");
+          }}
+        />
+      ) : (
+        <></>
+      )}
+      {isValidEmailCodeChk === true ? (
+        <AlertTextPopup
+          text={`이메일 인증을 완료해주세요.`}
+          callbackFunction={() => {
+            setIsValidEmailCodeChk(false);
           }}
         />
       ) : (
