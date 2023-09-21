@@ -32,6 +32,9 @@ const MainContent = () => {
 
   useEffect(() => {
     console.log(fourCards, oneCard)
+    console.log(todayCardSelectStep);
+    updateTodayCardSelectStatus(true)
+    
     setHeaderText('')
     setIsNavigation(true)
 
