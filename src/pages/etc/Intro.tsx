@@ -17,10 +17,10 @@ const Intro = () => {
   const {setIsNavigation} = useDefaultSets((state)=>state)
   const {isLogin} = useAuthStore()
   const navigate = useNavigate()
-
-  useEffect(()=>{
+  const SESSION_LOGIN = sessionStorage.getItem('GomingIsLoginS')
+    useEffect(()=>{
     setIsNavigation(false)
-    isLogin && navigate('/main')
+    SESSION_LOGIN && navigate('/main')
     return () => setIsNavigation(true)
   },[])
 

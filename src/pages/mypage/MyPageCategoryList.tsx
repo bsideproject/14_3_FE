@@ -23,12 +23,16 @@ const categoryList = [ //카테고리목록
 const MyPageCategoryList = () => {
   //헤더설정
   const {setHeaderText, setHeaderBgColor,setIsNavigation} = useDefaultSets()
-  const {updateLoginStatus, logout} = useAuthStore((state)=>state)
+  const {userInfo, updateLoginStatus, logout} = useAuthStore((state)=>state)
   const [logoutCheck, setLogoutCheck] = useState<boolean>(false)
+
+  const SESSION_LOGIN = sessionStorage.getItem('GomingIsLoginS')
+
   useEffect(()=> {
     setHeaderText()
     setHeaderBgColor(true)
     setIsNavigation(true)
+    
     return (()=> setHeaderBgColor(false))
   },[])
 
@@ -41,6 +45,7 @@ const MyPageCategoryList = () => {
 
   //로그아웃 프로세스
   const handleLogout = () => { 
+    sessionStorage.removeItem("GomingIsLoginS") //세션스토리지 삭제
     logout()  //로그아웃
     navigate('/login', {replace: true}) //로그인으로 이동
   }
@@ -54,12 +59,24 @@ const MyPageCategoryList = () => {
             {/* welcome */}
             <div> 
               <h3 className="headline3">반가워요!</h3>
-              <h3 className="headline3" style={{color: '#6E8DBA'}}>카페인중독자님</h3>
+              <h3 className="headline3">
+                <span style={{color: '#6E8DBA'}}>
+                  {userInfo.usrNm ? userInfo.usrNm : '커피중독자'}
+                </span>
+                <span>
+                  님
+                </span>
+              </h3>
             </div>
 
             {/* logout btn */}
             <div className="logout-area">
-              <button className="caption1-bold btn-p-xs logout-btn" type="button" onClick={()=> setLogoutCheck(true)}>로그아웃</button>
+              {
+                SESSION_LOGIN 
+                ? (<button className="caption1-bold btn-p-xs logout-btn" type="button" onClick={()=> setLogoutCheck(true)}>로그아웃</button>) 
+                : (<button className="caption1-bold btn-p-xs logout-btn" type="button" onClick={()=> navigate('/login')}>로그인</button>)
+              }
+              
             </div>
           </div>
         </div>
