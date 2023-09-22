@@ -91,8 +91,14 @@ const Login: React.FC = () => {
         alert(result.data); // 알림컴포넌트창 출력
         return;
       } else {
-        console.log(result);
-        const userInfoData: TYPE_USER_INFO = result?.data && result?.data;
+        console.log('로그인완료');
+        
+        // const userInfoData: TYPE_USER_INFO = result?.data && result?.data;
+        const userInfoData: any = result?.data && result?.data;
+        if (userInfoData) {
+          sessionStorage.setItem('GomingIsLoginS', 'true') //GomingIsLoginS 라는 key 로 세션에 저장
+        }
+
         updateLoginStatus(true, userInfoData); // 1.auth store 에 저장
         navigate("/main"); // 2. main 으로 이동
       }
@@ -129,21 +135,6 @@ const Login: React.FC = () => {
   const handleRememberEmail = ({ target }: any) => {
     setRememberEmail(!rememberEmail);
   };
-  const industries = {
-    industry: {
-      카페: 1,
-      음식점: 2,
-      학원: 10,
-      미용실: 12,
-      학교: 5,
-      병원: 22,
-      약국: 17,
-      편의점: 1,
-      안경점: 2,
-    },
-    total: 77,
-  };
-  console.log(industries);
   return (
     <>
       <div>

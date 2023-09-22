@@ -46,7 +46,7 @@ root.render(
         <Route path="/intro" element={<Intro />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/new-question" element={<AddNewQuiestion />} />
-        <Route path="/*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/new-question-list" element={<ShowNewQuestions />}></Route>
       </Routes>
     </BrowserRouter>
