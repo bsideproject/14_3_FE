@@ -168,43 +168,52 @@ const OnePagerMain = () => {
     formData.append("email", userInfo.eml);
     formData.append("sendEmail", email);
     formData.append("date", dateFormat.getYearAndMonth(selectedDate));
-    for (
-      let downLoadNumber = 0;
-      downLoadNumber < answeredSplitList.length;
-      downLoadNumber++
-    ) {
-      const blob = await imageToBlob(downLoadNumber);
-
-      formData.append("imageData" + downLoadNumber, blob, "image.png");
-    }
-    const result: AxiosResponse<any> = await fetch.post(
-      "/api/email/sendByMonthBlob",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    // const param: any = {
-    //   email: userInfo.eml,
-    //   sendEmail: email,
-    //   date: firstDate?.slice(0, 7),
-    //   // image: imageURL,
-    // };
-
-    // //db connection
-    // console.log(param);
-    // const result: AxiosResponse<any> = await fetch.post(
-    //   "/api/email/sendByMonth",
-    //   param
-    // );
-    // console.log("result", result);
-    console.log(result);
-    if (result.status === 200) {
-      console.log("test");
+    console.log(formData.get("date"));
+    if (formData.get("date") === "NaN-NaN") {
+      setToastPopup(true); //토스트 팝업 출력
+      setToastText("선택된 파일이 없습니다.");
+      setTimeout(() => {
+        setToastPopup(false); //토스트 팝업 종료
+      }, 3000);
     } else {
-      return false;
+      for (
+        let downLoadNumber = 0;
+        downLoadNumber < answeredSplitList.length;
+        downLoadNumber++
+      ) {
+        const blob = await imageToBlob(downLoadNumber);
+
+        formData.append("imageData" + downLoadNumber, blob, "image.png");
+      }
+      const result: AxiosResponse<any> = await fetch.post(
+        "/api/email/sendByMonthBlob",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      // const param: any = {
+      //   email: userInfo.eml,
+      //   sendEmail: email,
+      //   date: firstDate?.slice(0, 7),
+      //   // image: imageURL,
+      // };
+
+      // //db connection
+      // console.log(param);
+      // const result: AxiosResponse<any> = await fetch.post(
+      //   "/api/email/sendByMonth",
+      //   param
+      // );
+      // console.log("result", result);
+      console.log(result);
+      if (result.status === 200) {
+        console.log("test");
+      } else {
+        return false;
+      }
     }
   };
 
@@ -322,7 +331,8 @@ const OnePagerMain = () => {
       </div>
       <Footer></Footer>
 
-      {/********************************************************************************************
+      {/***************************************
+       * ****************************************************
        * 팝업 관련 영역
        * ***************************************************************************************/}
       {
