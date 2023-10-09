@@ -41,7 +41,7 @@ jobs:
 #        password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
         PRIVATE_KEY: ${{ secrets.NCP_PRI_KEY }}
         HOST: ${{ secrets.NCP_HOST }}
-        USERNAME: ${{ secrets.NCP_NAME }}
+        USERNAME: ${{ secrets.NCP_USR_NM }}
         PORT: ${{ secrets.NCP_PORT }}
         password: ${{ secrets.NCP_PWD }}
       run: |
