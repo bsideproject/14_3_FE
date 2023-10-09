@@ -47,9 +47,9 @@ jobs:
 #        password: ${{ secrets.NCP_USR_PWD }}
 
          PRIVATE_KEY: ${{ secrets.NCP_PRI_KEY }}
-         HOST: 49.50.174.69
+         HOST: 10.36.68.139
          USERNAME: root
-         PORT: 22
+         PORT: 3334
          PASSWORD: Y3!ui9a=La
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
