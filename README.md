@@ -21,4 +21,3 @@ zustand
  * @TODO backend-connection
  */
 ```
-TODO: 제외 가능

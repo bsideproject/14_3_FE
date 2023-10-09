@@ -142,7 +142,6 @@ const Register: React.FC = () => {
     setNickName(e.target.value);
     setIsNickNameCheck(false);
     setNickNameChk(true);
-    setNickNameExistChk(false);
   };
 
   const handleBirthDateUpdate = (e: any) => {
@@ -170,13 +169,15 @@ const Register: React.FC = () => {
           withCredentials: false,
         }
       );
+      console.log(result);
       if (result.data !== "") {
-        setNickNameExistChk(true);
+        console.log("여기왓어?");
+        setNickNameExistChk(false);
       } else {
         setRegisterInfo((prev) => {
           return { ...prev, usrNm: nickName };
         });
-        setNickNameExistChk(false);
+        setNickNameExistChk(true);
       }
       setNickNameAlertExistChk(true);
       setIsNickNameCheck(true);
@@ -279,6 +280,7 @@ const Register: React.FC = () => {
         document.getElementById("email")?.focus();
       } else if (!nickNameExistChk) {
         //미완료
+        console.log(nickNameExistChk);
         console.log("nickname");
 
         document.getElementById("nickName")?.focus();
@@ -405,6 +407,7 @@ const Register: React.FC = () => {
             isButtonDisable={isNickNameCheck}
             inputBlur={() => {
               if (registerInfo.usrNm !== nickName) {
+                setNickNameExistChk(false);
                 setRegisterInfo((prev) => {
                   return { ...prev, usrNm: "" };
                 });

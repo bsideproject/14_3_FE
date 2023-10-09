@@ -34,11 +34,23 @@ jobs:
     - name: Deploy to Server
 #       uses: easingthemes/ssh-deploy@v2.1.5
       env:
-        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        HOST: ${{ secrets.SERVER_HOST }}
-        USERNAME: ${{ secrets.SERVER_USERNAME }}
-        PORT: ${{ secrets.SERVER_PORT }}
-        password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
+#        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#        HOST: ${{ secrets.SERVER_HOST }}
+#        USERNAME: ${{ secrets.SERVER_USERNAME }}
+#        PORT: ${{ secrets.SERVER_PORT }}
+#        password: ${{ secrets.NPC_DEV_SERVER_PASSWORD }}
+
+#        PRIVATE_KEY: ${{ secrets.NCP_PRI_KEY }}
+#        HOST: ${{ secrets.NCP_HOST }}
+#        USERNAME: ${{ secrets.NCP_USR_NM }}
+#        PORT: ${{ secrets.NCP_PORT }}
+#        password: ${{ secrets.NCP_USR_PWD }}
+
+         PRIVATE_KEY: ${{ secrets.NCP_PRI_KEY }}
+         HOST: 10.36.68.139
+         USERNAME: root
+         PORT: 3334
+         PASSWORD: Y3!ui9a=La
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 400 private_key.pem
