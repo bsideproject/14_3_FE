@@ -43,7 +43,7 @@ jobs:
         HOST: ${{ secrets.NCP_HOST }}
         USERNAME: ${{ secrets.NCP_USR_NM }}
         PORT: ${{ secrets.NCP_PORT }}
-#        password: ${{ secrets.NCP_PWD }}
+        password: ${{ secrets.NCP_USR_PWD }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 400 private_key.pem
