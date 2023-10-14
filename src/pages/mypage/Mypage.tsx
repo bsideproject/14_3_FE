@@ -161,7 +161,7 @@ const Mypage: React.FC = () => {
             console.log(e);
           });
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   useEffect(() => {
@@ -185,8 +185,8 @@ const Mypage: React.FC = () => {
                   result.gndrClsCd === "M"
                     ? true
                     : result.gndrClsCd === "F"
-                    ? false
-                    : null
+                      ? false
+                      : null
                 );
                 setEmailAgree(result.agreement === "Y" ? true : false);
               } else {
@@ -335,8 +335,8 @@ const Mypage: React.FC = () => {
                     passwordReconfirmSuccessChk === null
                       ? false
                       : passwordReconfirmSuccessChk === false
-                      ? null
-                      : true || newRePasswordExistChk
+                        ? null
+                        : true || newRePasswordExistChk
                   }
                   errObject={
                     passwordReconfirmSuccessChk === true ? (
@@ -452,7 +452,7 @@ const Mypage: React.FC = () => {
               </label>
             </div>
             <div className="caption1-regular margintop-8">
-              *이메일 수신을 동의하시면, 매월 말 월간 회고를 위한 원페이저를
+              *이메일 수신을 동의하시면, 매월 말 월간 회고를 위한 월간고밍을
               보내드립니다.
             </div>
             {/* <button type="button">저장</button> */}

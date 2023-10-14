@@ -63,10 +63,10 @@ const OnePagerMain = () => {
       );
       setFirstDate(
         year +
-          "-" +
-          month +
-          "-" +
-          ("00" + new Date(year, month, 1).getDate()).slice(-2)
+        "-" +
+        month +
+        "-" +
+        ("00" + new Date(year, month, 1).getDate()).slice(-2)
       );
       let tempArray = [];
       let sliceNumber = 33;
@@ -159,7 +159,7 @@ const OnePagerMain = () => {
     setConfirmEmailPopup(false); //팝업닫기
     // const imageURL = await toOnepagerImage();
 
-    setToastText("이메일로 원페이저가 전송되었습니다!");
+    setToastText("이메일로 월간고밍이 전송되었습니다!");
     setToastPopup(true); //토스트 팝업 출력
     setTimeout(() => {
       setToastPopup(false); //토스트 팝업 종료
@@ -339,7 +339,7 @@ const OnePagerMain = () => {
         //confirm popup
         confirmEmailPopup && (
           <ConfirmInputPopup
-            text="원페이저를 받을 이메일 주소가 맞나요?/n다른이메일로 받고 싶다면/n주소를 변경해주세요."
+            text="월간고밍을 받을 이메일 주소가 맞나요?/n다른이메일로 받고 싶다면/n주소를 변경해주세요."
             confirmText="이메일 보내기"
             cancelText="취소하기"
             confirmCallbackFunction={(email: any) => {
