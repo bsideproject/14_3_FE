@@ -249,6 +249,14 @@ const OnePagerMain = () => {
               <span className="body3-bold">이메일로 보내기</span>
             </button>
           </div>
+
+          <div className="register-flex-column-gap4 register-auth-content" style={{ marginTop: "20px" }}>
+            <div className="body3-bold">월간고밍 다운로드가 잘 안된다면?</div>
+            <div className="caption1-regular wgray12" style={{ marginTop: "4px" }}>
+              월간고밍 다운로드는 데스크탑 크롬 브라우저 환경에 최적화 되어 있습니다. 정상적으로 다운로드 되지 않을 시, 데스크탑 {">"} 크롬 브라우저로 진행해주시기 바랍니다.
+            </div>
+          </div>
+
         </div>
 
         {/********************************************************************************************
