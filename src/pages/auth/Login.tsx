@@ -72,9 +72,6 @@ const Login: React.FC = () => {
       setPasswordVerify(true);
     }
 
-    console.log(passwordVerify);
-    console.log(emailFormChk);
-
     if (emailCheckResult && passwordCheckResult) {
       //유효성 검사 통과 시 로그인 로직
       checkRememberEmail(); //이메일 저장 로컬스토리지에 설정
@@ -91,8 +88,6 @@ const Login: React.FC = () => {
         alert(result.data); // 알림컴포넌트창 출력
         return;
       } else {
-        console.log('로그인완료');
-        
         // const userInfoData: TYPE_USER_INFO = result?.data && result?.data;
         const userInfoData: any = result?.data && result?.data;
         if (userInfoData) {

@@ -31,8 +31,6 @@ const MainContent = () => {
   } = useCardState()          //카드 상태 관리 store
 
   useEffect(() => {
-    console.log(fourCards, oneCard)
-    console.log(todayCardSelectStep);
     updateTodayCardSelectStatus(true)
     
     setHeaderText('')
@@ -75,7 +73,7 @@ const MainContent = () => {
             <Header></Header>
             <div style={{margin: '0 16px'}}>
               <TodayDate />      {/* 금일자, 사용자정보 */}
-              <NowSelectionStep nowStep={todayCardSelectStep} /> {/* 잔여 선택회수 */}
+              <NowSelectionStep /> {/* 잔여 선택회수 */}
               <SelectionCard/>  {/* 카드 4개 출력 */}
             </div>
           </div>

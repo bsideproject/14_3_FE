@@ -15,7 +15,6 @@ export const exportToExcel = async (search: string, list:Array<any>) => {
   const workBookName = '추가한 질문 목록';
   const workbook = new Excel.Workbook();
   try {
-    console.log('exportExcel')
     const fileName = search.length > 0 ? search : workBookName;
     const worksheet = workbook.addWorksheet(workSheetName);
 

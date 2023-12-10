@@ -43,7 +43,6 @@ const WithdrawalMain = () => {
 
   //탈퇴 완료 시 이동할 페이지 : 로그인
   const moveToMain = () => {
-    console.log('go to main')
     navigate('/login', {replace: true}) //navigate 초기화
   }
 

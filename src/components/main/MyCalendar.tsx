@@ -93,8 +93,6 @@ const MyCalendar = () => {
     value,
     view,
   }: any) => {
-    console.log("******************************");
-    console.log("month move", activeStartDate);
     initAnsweredList(); //답변목록 초기화
     initAnsweredDateCount(); //날짜별 답변개수 초기화
 
@@ -142,7 +140,6 @@ const MyCalendar = () => {
     const hasData = answeredDateCount?.findIndex(
       (item) => item.date.toString() === convertedDate
     ); // 동일한 일자인지 체크
-    console.log('hasData', hasData);
     if (type === "day" && hasData === -1) {
       initAnsweredList()
     } else {
@@ -219,7 +216,6 @@ const MyCalendar = () => {
 
   //1회만 실행
   useEffect(() => {
-    console.log("useEffect2");
     const newMonth: any = dateFormat.getYearAndMonth(today);
     getQnAList(newMonth, "month");
     setSelectDate(selectedDate); //cardstore 에 selectedDate 기본 설정

@@ -27,7 +27,6 @@ const ETCUpdatePopup = ({updateActive, setUpdateActive}:PROPS ) => {
       alert("모든 항목을 입력해주세요.")
     } else {
       if (updateActive.qcategory === c && updateActive.qquestion === q && updateActive.qwriter === w) {
-        console.log('변경사항이 없습니다.');
         close()
       } else {
         const param = {
