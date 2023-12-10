@@ -54,8 +54,6 @@ type ANSWER_TYPE = {
  * @returns {boolean} true: 이번달 이상, false: 이번달 이하
  */
 const checkIsMonthOver = (date: Date|string): boolean => {
-  console.log("checkIsMonthOver", date);
-  
   return new Date(date).getMonth() >= new Date().getMonth()
 }
 
@@ -76,8 +74,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @return answeredList update
    */
   getAnsweredList: async (param: any) => {
-    console.log(new Date(param.date).getMonth() + 1 + "월 답변 목록 조회");
-    
     //param.date 가 이번 달 혹은 미래의 경우, api 를 조회하지 않고 빈 배열 반환
     if (checkIsMonthOver(param.date)) {
       set({answeredList: { content: [], page: 0, size: 0, totalElements: 0 }});
@@ -90,8 +86,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
           param.email
         }/${param.date.toString()}?size=${param?.size}&page=${param?.page}`
       );
-      console.log("getAnsweredList", result?.data);
-
       if (typeof result?.data === "object") {
         if (result.data?.content?.length > 0) {
           // answer 컬럼의 값이 존재하지 않을 경우 목록에서 해당 객체를 제거
@@ -104,7 +98,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
             }
           }
           const newList = result?.data ? result?.data : []; //값이 없을 경우 빈 배열로 초기화
-          console.log("getAnsweredList 조회 종료:  ", newList);
           set({ answeredList: newList });
         } else {
           set({
@@ -127,9 +120,8 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   getAnsweredDateCount: async (param: any) => {
     if (checkIsMonthOver(param.date)) {
-      console.log("getAnsweredDateCount -- 이번 혹은 미래를 조회하는 경우, api호출X");
-    set({ answeredCount: 0 });
-    set({ answeredDateCount: [] });
+      set({ answeredCount: 0 });
+      set({ answeredDateCount: [] });
     } else {
       const result = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/question/answeredCountDatesInMonth/${param.email}/${param.date}`
@@ -160,7 +152,6 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    */
   getAnsweredCount: async (param: any) => {
     if (checkIsMonthOver(param.date)) {
-      console.log("getAnsweredCount -- 이번 혹은 미래를 조회하는 경우, api호출X");
       set({ answeredCount: 0 });
     } else {
       let url: string = `${process.env.REACT_APP_API_URL}/api/question/answeredCount/${param.email}/`;
@@ -226,11 +217,15 @@ const useAnsweredList = create<ANSWER_LIST>((set) => ({
    * @desc 이번 질문은 넘어갈래요
    */
   passAnswer: async (param: any): Promise<void> => {
-    await axios.put(
-      `${process.env.REACT_APP_API_URL}/api/answers/passAnswer`,
-      param,
-      { withCredentials: false }
-    );
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/answers/passAnswer`,
+        param,
+        { withCredentials: false }
+      );
+    } catch (error) {
+      console.log(error)
+    }
   },
 }));
 

@@ -1,4 +1,5 @@
 import 'assets/components/card-select-main/nowSelectionStep.css'
+import useCardState from 'store/modules/CardState';
 const stepList = [{index: 1}, {index: 2}, {index: 3}];
 
 /**
@@ -7,7 +8,7 @@ const stepList = [{index: 1}, {index: 2}, {index: 3}];
  * @일자 2023.04.10.
  * @내용 잔여 질문뽑기 횟수 안내
  */
-const NowSelectionStep = ({nowStep}: OBJ_NUMBER) => {
+const NowSelectionStep = () => {
   return (
     <>
       <div className="leftselection-wrap">
@@ -17,7 +18,7 @@ const NowSelectionStep = ({nowStep}: OBJ_NUMBER) => {
         <div className="leftselection-numbers-wrap">
           {
             stepList.map(item => (
-              <Step i={item.index} nowStep={nowStep} key={item.index}/>
+              <Step i={item.index} key={item.index}/>
             ))
           }
         </div>
@@ -26,13 +27,15 @@ const NowSelectionStep = ({nowStep}: OBJ_NUMBER) => {
   )
 }
 
-export const Step = ({i, nowStep}:STEP) => {
+export const Step = ({i}:STEP) => {
+  const {todayCardSelectStep} = useCardState() //카드 상태 관리 store
+  
   return (
     <>
       <div className="leftselection-dotted caption1-bold"
-        style={{'backgroundColor': i === nowStep ? '#6E8DBA' : '#FFFFFF'}}
+        style={{'backgroundColor': i === todayCardSelectStep ? '#6E8DBA' : '#FFFFFF'}}
       >
-        <p className="caption1-bold" style={{'color': i === nowStep ? '#E9E7E2':'#7A7670'}}
+        <p className="caption1-bold" style={{'color': i === todayCardSelectStep ? '#E9E7E2':'#7A7670'}}
           >{i}회</p>
       </div>
     </>
@@ -40,9 +43,6 @@ export const Step = ({i, nowStep}:STEP) => {
 }
 type STEP = {
   i: number //index
-  nowStep: number //현재회차
 }
-type OBJ_NUMBER = {
-  nowStep: number //현재회차
-}
+
 export default NowSelectionStep

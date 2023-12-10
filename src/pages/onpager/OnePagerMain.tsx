@@ -168,7 +168,6 @@ const OnePagerMain = () => {
     formData.append("email", userInfo.eml);
     formData.append("sendEmail", email);
     formData.append("date", dateFormat.getYearAndMonth(selectedDate));
-    console.log(formData.get("date"));
     if (formData.get("date") === "NaN-NaN") {
       setToastPopup(true); //토스트 팝업 출력
       setToastText("선택된 파일이 없습니다.");
@@ -194,21 +193,6 @@ const OnePagerMain = () => {
           },
         }
       );
-      // const param: any = {
-      //   email: userInfo.eml,
-      //   sendEmail: email,
-      //   date: firstDate?.slice(0, 7),
-      //   // image: imageURL,
-      // };
-
-      // //db connection
-      // console.log(param);
-      // const result: AxiosResponse<any> = await fetch.post(
-      //   "/api/email/sendByMonth",
-      //   param
-      // );
-      // console.log("result", result);
-      console.log(result);
       if (result.status === 200) {
         console.log("test");
       } else {

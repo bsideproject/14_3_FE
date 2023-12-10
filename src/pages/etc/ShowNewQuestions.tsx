@@ -71,7 +71,6 @@ const ShowNewQuestions = () => {
   //목록 수정
   const updateItem = (item:ETC_QS_TYPE) => {
     setUpdateActive(item)
-    console.log(item);
   }
 
   //엑셀 출력
@@ -92,7 +91,6 @@ const ShowNewQuestions = () => {
   //infinity scroll
   useEffect(() => {
     if (inView && hasNextPage && !isSearched) {
-      console.log("다음페이지를 호출.");
       const param = {page:page+1, size}
       setPage(page+1)
       fetch(param);

@@ -34,13 +34,8 @@ const useAuthStore = create<AUTH_STATE>(
         newLoginState: boolean,
         userInfo: TYPE_USER_INFO
       ): void => {
-        console.log("updateLoginStatus start");
-        console.log("newLoginState", newLoginState);
-        console.log("userInfo", userInfo);
-
         set({ isLogin: newLoginState });
         set({ userInfo: userInfo });
-        console.log("updateLoginStatus end");
       },
       updateInfoChangeStatus: (newInfoChange: boolean): void => {
         set({ isInfoChange: newInfoChange });
