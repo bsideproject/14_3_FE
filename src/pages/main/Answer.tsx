@@ -37,8 +37,6 @@ const Answer = () => {
       setConfirmButtonText("질문 선택하러 가기")
     }
     setHeaderText('답변 작성하기')
-    console.log('useEffect', oneCard[0]);
-
     if (oneCard.length === 0) {
       navigate('/main', {replace:true})
     }
@@ -81,8 +79,6 @@ const Answer = () => {
   // 로그인 되었을 경우
   // 2.답변 저장 - api 호출 - callbackfunction
   const insertAnswer = async () => {
-    console.log(oneCard[0]);
-    
     const param:ANSWER_CONTENT = {
       qNo: oneCard[0].qno,           //질문 index
       aWriter: userInfo.eml,         //작성자
@@ -103,7 +99,8 @@ const Answer = () => {
 
   //다음 질문 카드 뽑으러 가기
   const goToNextQuestion = () => {   
-    updateCardSelectStep(todayCardSelectStep + 1)
+    let newTodayCardSelectStep = todayCardSelectStep
+    updateCardSelectStep(++newTodayCardSelectStep) //단계 추가(답변없음)
     navigate('/main', {replace:true})   //새로운 카드 출력 or 캘린더 화면으로 이동처리
   }
 
@@ -120,7 +117,9 @@ const Answer = () => {
     }
 
     await passAnswer(param) //답변 건너뛰기
-    updateCardSelectStep(todayCardSelectStep + 1) //단계 추가(답변없음)
+    
+    let newTodayCardSelectStep = todayCardSelectStep
+    updateCardSelectStep(++newTodayCardSelectStep) //단계 추가(답변없음)
     resetAllCards()                               //카드 초기화
     navigate('/main', {replace:true})             //메인화면으로 이동(카드선택 화면)
   }

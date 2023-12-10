@@ -42,7 +42,6 @@ const testRegisterStore = create<PillListState>(
         set((state) => ({
           registerInfo: state.registerInfo.map((e) => {
             console.log(e);
-            console.log(usr_no);
             if (e.usr_no === usr_no) {
               console.log({ ...e, nickName, password });
               return { ...e, nickName, password };
