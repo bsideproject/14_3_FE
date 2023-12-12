@@ -31,6 +31,7 @@ const MainContent = () => {
   } = useCardState()          //카드 상태 관리 store
 
   useEffect(() => {
+    (async () => {
     updateTodayCardSelectStatus(true)
     
     setHeaderText('')
@@ -39,7 +40,7 @@ const MainContent = () => {
     /*******************************************************************
      * 메인로직
      *******************************************************************/
-    getCardSelectStep(userInfo.eml)     //금일 남은 답변 횟수 가져오기 [1-3]
+    await getCardSelectStep(userInfo.eml)     //금일 남은 답변 횟수 가져오기 [1-3]
     
     if (todayCardSelectStep > 3) {      //3번 모두 답변했을 경우
       updateTodayCardSelectStatus(false)  //금일 카드 뽑기 가능 여부 업데이트
@@ -49,7 +50,7 @@ const MainContent = () => {
         getCards(userInfo.eml)        // 4개의 카드 정보 가져오기 or 단일 카드 정보 조회
       } 
     }
-    
+  })()
     return () => setIsNavigation(false)
   },[])
 
