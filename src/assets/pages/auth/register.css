@@ -314,7 +314,12 @@
 }
 
 .register-gender-box:disabled {
-  background-color: #c9c6c0;
+  background-color: white;
+  border: 2px solid #c9c6c0 !important;
+}
+.register-gender-box:checked:disabled {
+  background-color: white;
+  border: 4.5px solid #c9c6c0 !important;
 }
 
 .register-gender-box:checked {
@@ -331,6 +336,7 @@
   font-weight: 400;
   color: var(--wgray12);
 }
+
 .register-selectBox {
   width: 100%;
 }
