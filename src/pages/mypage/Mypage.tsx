@@ -12,6 +12,7 @@ import fetch from "utils/fetch";
 import AlertTextPopup from "components/AlertTextPopup";
 import "assets/pages/auth/mypage.css";
 
+
 const Mypage: React.FC = () => {
   //헤더설정
   const { setHeaderText, setIsNavigation } = useDefaultSets();
@@ -378,6 +379,7 @@ const Mypage: React.FC = () => {
                   className="register-gender-label body3-regular wgray12"
                   style={{
                     color: !isInfoChange === true ? "#7A7670" : "#3D3938",
+
                   }}
                 >
                   여성
@@ -434,7 +436,7 @@ const Mypage: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="register-flex-row-gap0 margintop-32">
+            <div className="register-flex-row-gap0 margintop-32" style={{ alignItems: "center" }}>
               <input
                 type="checkbox"
                 className="check-btn"
@@ -443,15 +445,16 @@ const Mypage: React.FC = () => {
                 checked={emailAgree}
                 onChange={handleEmailAgree}
                 disabled={!isInfoChange}
+                style={{ width: "24px", height: "24px" }}
               />
               <label
                 htmlFor="emailAgree"
-                className="body3-regular marginleft-7"
+                className="body3-regular marginleft-7 wgary12"
               >
                 이메일 수신 동의(선택)
               </label>
             </div>
-            <div className="caption1-regular margintop-8">
+            <div className="caption1-regular margintop-8 wgary09">
               *이메일 수신을 동의하시면, 매월 말 월간 회고를 위한 월간고밍을
               보내드립니다.
             </div>
@@ -467,7 +470,7 @@ const Mypage: React.FC = () => {
             </div>
             {isInfoChange === false ? (
               <button
-                className="register-button margintop-48"
+                className="body3-bold register-button margintop-48"
                 style={{ width: "100%" }}
                 onClick={() => {
                   navigate("/password-check");
@@ -479,7 +482,7 @@ const Mypage: React.FC = () => {
               <>
                 <button
                   type="submit"
-                  className="register-button margintop-48"
+                  className="body3-bold register-button margintop-48"
                   style={{ width: "100%" }}
                 >
                   수정하기
