@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useDefaultSets from "store/modules/Defaults";
 import Header from "components/auth/Header";
 import Footer from "components/Footer";
+import fetch from "utils/fetch";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LostInfo = () => {
@@ -22,7 +23,7 @@ const LostInfo = () => {
   const submitEmail = (e: any): void => {
     e.preventDefault();
     if (emailVerify === true && emailFormChk === true) {
-      // fetch('/api/resetUserPassword', email)
+      fetch.post('/api/password/password-reset', { email })
       const rst = 1;
       if (rst === 1) {
         //결과
