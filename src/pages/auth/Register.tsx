@@ -171,7 +171,7 @@ const Register: React.FC = () => {
       );
       console.log(result);
       if (result.data !== "") {
-        console.log("여기왓어?");
+
         setNickNameExistChk(false);
       } else {
         setRegisterInfo((prev) => {
@@ -386,7 +386,17 @@ const Register: React.FC = () => {
   useEffect(() => {
     setHeaderText("회원 가입하기");
     setIsNavigation(false);
-    return () => setIsNavigation(true);
+    setLoading(true);
+
+    // 4초 후에 loading 값을 false로 변경
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+    }, 10000);
+
+    return () => {
+      setIsNavigation(true);
+      clearTimeout(timeoutId);
+    };
   }, []);
   return (
     <>
@@ -405,6 +415,7 @@ const Register: React.FC = () => {
             inputValue={nickName}
             buttonClick={handleNickNameExistCheck}
             isButtonDisable={isNickNameCheck}
+            isClose={!nickNameChk ? true : false}
             inputBlur={() => {
               if (registerInfo.usrNm !== nickName) {
                 setNickNameExistChk(false);
@@ -460,10 +471,11 @@ const Register: React.FC = () => {
             inputMaxLength={30}
             id={"email"}
             isButtonDisable={emailDisable}
-            inputClassName={"register-flex-row-gap8 margintop-32"}
+            inputClassName={`register-flex-row-gap8 margintop-32 `}
             inputChange={handleEmailUpdate}
             inputValue={email}
             buttonClick={handleEmailExistCheck}
+            isClose={emailChk ? true : false}
             errObject={
               emailChk === true ? (
                 <div className="register-input-error-msg">
@@ -491,6 +503,7 @@ const Register: React.FC = () => {
             inputHeight="56px"
             // isDisable={emailCodeChk}
             isButtonDisable={emailCodeChk}
+            isClose={!authNumberChk ? true : false}
             inputBlur={() => {
               if (authNumber.length > 0) {
                 setAuthNumberChk(true);
@@ -602,8 +615,8 @@ const Register: React.FC = () => {
                 passwordReconfirmSuccessChk === null
                   ? false
                   : passwordReconfirmSuccessChk === false
-                  ? null
-                  : true
+                    ? null
+                    : true
               }
               errObject={
                 passwordReconfirmSuccessChk === true ? (
