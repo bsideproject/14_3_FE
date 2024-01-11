@@ -72,7 +72,7 @@ const InputBox = React.memo(
                   ? "register-input body3-bold margintop-8"
                   : isClose === null
                   ? "register-input-success body3-bold margintop-8"
-                  : ""
+                  : "" 
               }
               // style={{ background: nickNameChk ? "" : "red" }}
               onChange={inputChange}
